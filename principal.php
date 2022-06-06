@@ -51,10 +51,8 @@ echo $data->css_custom; ?>
 
 </head>
 <body>
-    <?php //include($data->include_action); ?>
-    <?php //include "templates/perfilador_formulario.php"; ?>
-    <?php //include "templates/perfilador.php"; ?>
-    <?php //include "templates/lineamiento.php"; ?>
+    <?php include 'templates/org_puesto/_alta.php'; ?>
+
     <?php //include "templates/proyecto.php"; ?>
     <?php //include "templates/comentarios.php"; ?>
     <?php //include "templates/menu_resumen.php"; ?>
@@ -62,5 +60,6 @@ echo $data->css_custom; ?>
     <?php //include "templates/resumen.php"; ?>
     <?php //include "templates/hipoteca.php"; ?>
     <?php //include "templates/grafica.php"; ?>
+
 </body>
 </html>
