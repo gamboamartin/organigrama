@@ -1,3 +1,7 @@
+<?php
+/** @var controllers\controlador_org_puesto $controlador */
+include $controlador->include_menu; ?>
+<br>
 <div class="row">
     <div class="col-lg-6">
         <div class="widget  widget-box box-container widget-form form-main" id="form">
