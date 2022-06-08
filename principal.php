@@ -51,8 +51,9 @@ echo $data->css_custom; ?>
 
 </head>
 <body>
-    <?php include 'views/org_puesto/alta.php'; ?>
-    <?php include 'views/org_puesto/lista.php'; ?>
+    <?php include($data->include_action); ?>
+    <?php //include 'views/org_puesto/alta.php'; ?>
+    <?php //include 'views/org_puesto/lista.php'; ?>
 
     <?php //include "templates/proyecto.php"; ?>
     <?php //include "templates/comentarios.php"; ?>
