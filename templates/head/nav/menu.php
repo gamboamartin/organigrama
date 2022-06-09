@@ -8,6 +8,8 @@
         <div class="collapse navbar-collapse" id="main-menu">
             <ul class="nav navbar-nav clearfix">
                 <?php include 'templates/head/nav/links/_alta.php'?>
+                <?php include 'templates/head/nav/links/_lista.php'?>
+                <?php include 'templates/head/nav/links/_modifica.php'?>
             </ul>
         </div>
     </nav>
