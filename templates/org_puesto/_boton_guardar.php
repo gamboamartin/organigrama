@@ -1,5 +1,5 @@
 <div class="control-group">
     <div class="controls">
-        <button type="reset" class="btn btn-default">Limpiar</button>
+        <button type="submit" class="btn btn-default">Guardar</button>
     </div>
 </div>
