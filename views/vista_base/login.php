@@ -1,32 +1,5 @@
-<?php
-/** @var controllers\controlador_adm_session $controlador */
-include $controlador->include_menu;
-?>
-<br>
-<?php
-if($controlador->existe_msj){
-    ?>
-    <div class="alert alert-danger alert-dismissible fade show font_regular col-md-4 offset-4 pc info"  role="alert">
-        <?php echo $controlador->mensaje_html; ?>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-
-    <div class="alert alert-danger alert-dismissible fade show font_regular col-md-12 mobile info" role="alert">
-        <?php echo $controlador->mensaje_html; ?>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-    <?php
-}
-?>
-<br>
-<br>
-<div class="col-md-12 txt_centrado">
-    <img src="./img/logo.webp" class="logo-centrado">
-</div>
-<br>
-<br>
 <div class="container">
-    <form method="post" action="./index.php?seccion=session&accion=loguea">
+    <form method="post" action="./index.php?seccion=adm_session&adm_accion=loguea">
         <div class="row justify-content-center crea-form">
             <div class="col-sm-3  negro_menu alto-medio"></div>
             <div class="col-md-12"></div>
