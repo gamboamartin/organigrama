@@ -1,5 +1,5 @@
 <?php
-/** @var controllers\controlador_session $controlador */
+/** @var controllers\controlador_adm_session $controlador */
 include $controlador->include_menu;
 ?>
 <br>
