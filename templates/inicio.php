@@ -4,6 +4,7 @@
             <section class="header-inner">
                 <div class="container">
                     <?php include 'templates/head/nav/_logos.php' ?>
+                    <?php include 'templates/head/nav/_registro.php' ?>
                     <?php include 'templates/head/nav/menu.php' ?>
                 </div>
             </section><!-- /.menu-->
