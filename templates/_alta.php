@@ -1,10 +1,13 @@
+<?php
+/** @var base\controller\controler $controlador */
+?>
 <div class="row">
     <div class="col-lg-6">
         <div class="widget  widget-box box-container widget-form form-main" id="form">
             <div class="widget-header">
                 <h2>Alta ORG Puesto</h2>
             </div>
-            <form action="#" method="post" class="form-additional">
+            <form action="./index.php?seccion=org_puesto&accion=alta_db&session_id=<?php echo $controlador->session_id; ?>" method="POST" class="form-additional">
 
                 <div class="control-group">
                     <label class="control-label" for="inputUsername2">Descripción</label>
