@@ -52,8 +52,18 @@ class controlador_org_puesto  extends controlador_base{
 
     #[NoReturn] public function alta_bd(bool $header, bool $ws): array|stdClass
     {
-        print_r($_POST);
-
+        //print_r($_POST);
+        $this ->link ->beginTransaction();
+        $r_alta_org_puesto = $this->modelo->alta_registro(registro: $_POST);
+        if(errores::$error) {
+            $this->link->rollBack();
+            $error = $this->retorno_error(mensaje: 'Error al guardar registro', data: $r_alta_org_puesto,
+                header: $header, ws: $ws);
+            print_r($error);
+            die('Error');
+        }
+        //header
+        $this->link->commit();
         exit;
     }
 }
