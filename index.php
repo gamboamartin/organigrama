@@ -14,12 +14,15 @@ if(errores::$error){
     die('Error');
 }
 
+
+
 $data = (new init())->index(aplica_seguridad: (new generales())->aplica_seguridad);
 if(errores::$error){
     $error = (new errores())->error(mensaje: 'Error al inicializar datos',data:  $data);
     print_r($error);
     die('Error');
 }
+
 
 $controlador = $data->controlador;
 
