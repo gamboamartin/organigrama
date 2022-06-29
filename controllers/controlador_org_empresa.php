@@ -11,7 +11,9 @@ namespace controllers;
 use gamboamartin\errores\errores;
 use gamboamartin\system\links_menu;
 use gamboamartin\system\system;
+use html\cat_sat_regimen_fiscal_html;
 use html\org_empresa_html;
+use models\cat_sat_regimen_fiscal;
 use models\org_empresa;
 use PDO;
 use stdClass;
@@ -37,7 +39,7 @@ class controlador_org_empresa extends system {
         }
 
 
-        $select = (new org_empresa_html())->select_cat_sat_regimen_fiscal_id(id_selected:-1,link: $this->link);
+        $select = (new cat_sat_regimen_fiscal_html())->select_cat_sat_regimen_fiscal_id(id_selected:-1,link: $this->link);
         if(errores::$error){
             $error = $this->errores->error(mensaje: 'Error al generar select',data:  $select);
             print_r($error);
@@ -58,7 +60,7 @@ class controlador_org_empresa extends system {
             return $this->retorno_error(mensaje: 'Error al generar template',data:  $r_modifica, header: $header,ws:$ws);
         }
 
-        $select = (new org_empresa_html())->select_cat_sat_regimen_fiscal_id(id_selected:$this->row_upd->cat_sat_regimen_fiscal_id,
+        $select = (new cat_sat_regimen_fiscal_html())->select_cat_sat_regimen_fiscal_id(id_selected:$this->row_upd->cat_sat_regimen_fiscal_id,
             link: $this->link);
         if(errores::$error){
             $error = $this->errores->error(mensaje: 'Error al generar select',data:  $select);
