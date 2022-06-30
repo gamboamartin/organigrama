@@ -9,11 +9,10 @@
 namespace controllers;
 
 use gamboamartin\errores\errores;
-use gamboamartin\system\links_menu;
 use gamboamartin\system\system;
 use html\cat_sat_regimen_fiscal_html;
 use html\org_empresa_html;
-use models\cat_sat_regimen_fiscal;
+use links\secciones\link_org_empresa;
 use models\org_empresa;
 use PDO;
 use stdClass;
@@ -23,7 +22,7 @@ class controlador_org_empresa extends system {
     public function __construct(PDO $link, stdClass $paths_conf = new stdClass()){
         $modelo = new org_empresa(link: $link);
         $html = new org_empresa_html();
-        $obj_link = new links_menu($this->registro_id);
+        $obj_link = new link_org_empresa($this->registro_id);
 
         parent::__construct(html:$html, link: $link,modelo:  $modelo, obj_link: $obj_link, paths_conf: $paths_conf);
 
