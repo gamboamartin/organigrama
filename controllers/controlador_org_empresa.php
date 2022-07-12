@@ -48,6 +48,15 @@ class controlador_org_empresa extends system {
         $this->inputs->select = new stdClass();
         $this->inputs->select->cat_sat_regimen_fiscal_id = $select;
 
+        $in_razon_social = (new org_empresa_html())->input_razon_social(cols: 12,row_upd:  new stdClass(),value_vacio:  true);
+        if(errores::$error){
+            $error = $this->errores->error(mensaje: 'Error al generar input',data:  $in_razon_social);
+            print_r($error);
+            die('Error');
+        }
+        $this->inputs->razon_social = $in_razon_social;
+
+
         return $r_alta;
 
     }
