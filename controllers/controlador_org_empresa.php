@@ -11,6 +11,7 @@ namespace controllers;
 use gamboamartin\errores\errores;
 use gamboamartin\system\system;
 use html\cat_sat_regimen_fiscal_html;
+use html\dp_pais_html;
 use html\org_empresa_html;
 use links\secciones\link_org_empresa;
 use models\org_empresa;
@@ -37,6 +38,7 @@ class controlador_org_empresa extends system {
             return $this->retorno_error(mensaje: 'Error al generar template',data:  $r_alta, header: $header,ws:$ws);
         }
 
+        $this->inputs->select = new stdClass();
 
         $select = (new cat_sat_regimen_fiscal_html())->select_cat_sat_regimen_fiscal_id(cols: 12, con_registros:true,
             id_selected:-1,link: $this->link);
@@ -46,8 +48,21 @@ class controlador_org_empresa extends system {
             die('Error');
         }
 
-        $this->inputs->select = new stdClass();
+
         $this->inputs->select->cat_sat_regimen_fiscal_id = $select;
+
+
+        $select = (new dp_pais_html())->select_dp_pais_id(cols: 12, con_registros:true,
+            id_selected:-1,link: $this->link);
+        if(errores::$error){
+            $error = $this->errores->error(mensaje: 'Error al generar select',data:  $select);
+            print_r($error);
+            die('Error');
+        }
+
+
+        $this->inputs->select->dp_pais_id = $select;
+
 
         $in_razon_social = (new org_empresa_html())->input_razon_social(cols: 12,row_upd:  new stdClass(),value_vacio:  true);
         if(errores::$error){
@@ -85,8 +100,8 @@ class controlador_org_empresa extends system {
             return $this->retorno_error(mensaje: 'Error al generar template',data:  $r_modifica, header: $header,ws:$ws);
         }
 
-        $select = (new cat_sat_regimen_fiscal_html())->select_cat_sat_regimen_fiscal_id(id_selected:$this->row_upd->cat_sat_regimen_fiscal_id,
-            link: $this->link);
+        $select = (new cat_sat_regimen_fiscal_html())->select_cat_sat_regimen_fiscal_id(cols:12,con_registros:true,
+            id_selected:$this->row_upd->cat_sat_regimen_fiscal_id, link: $this->link);
         if(errores::$error){
             $error = $this->errores->error(mensaje: 'Error al generar select',data:  $select);
             print_r($error);
