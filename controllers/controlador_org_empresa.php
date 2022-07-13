@@ -78,7 +78,7 @@ class controlador_org_empresa extends system {
 
         $this->inputs->select->dp_estado_id = $select;
 
-        $select = (new dp_municipio_html())->select_dp_municipio_id(cols: 12, con_registros:false,
+        $select = (new dp_municipio_html())->select_dp_municipio_id(cols: 6, con_registros:false,
             id_selected:-1,link: $this->link);
         if(errores::$error){
             $error = $this->errores->error(mensaje: 'Error al generar select',data:  $select);
@@ -90,7 +90,7 @@ class controlador_org_empresa extends system {
         $this->inputs->select->dp_municipio_id = $select;
 
 
-        $select = (new dp_cp_html())->select_dp_cp_id(cols: 12, con_registros:false,
+        $select = (new dp_cp_html())->select_dp_cp_id(cols: 6, con_registros:false,
             id_selected:-1,link: $this->link);
         if(errores::$error){
             $error = $this->errores->error(mensaje: 'Error al generar select',data:  $select);
