@@ -38,7 +38,8 @@ class controlador_org_empresa extends system {
         }
 
 
-        $select = (new cat_sat_regimen_fiscal_html())->select_cat_sat_regimen_fiscal_id(id_selected:-1,link: $this->link);
+        $select = (new cat_sat_regimen_fiscal_html())->select_cat_sat_regimen_fiscal_id(cols: 12, con_registros:true,
+            id_selected:-1,link: $this->link);
         if(errores::$error){
             $error = $this->errores->error(mensaje: 'Error al generar select',data:  $select);
             print_r($error);
@@ -55,6 +56,22 @@ class controlador_org_empresa extends system {
             die('Error');
         }
         $this->inputs->razon_social = $in_razon_social;
+
+        $in_rfc = (new org_empresa_html())->input_rfc(cols: 6,row_upd:  new stdClass(),value_vacio:  true);
+        if(errores::$error){
+            $error = $this->errores->error(mensaje: 'Error al generar input',data:  $in_razon_social);
+            print_r($error);
+            die('Error');
+        }
+        $this->inputs->rfc = $in_rfc;
+
+        $in_nombre_comercial = (new org_empresa_html())->input_nombre_comercial(cols: 12,row_upd:  new stdClass(),value_vacio:  true);
+        if(errores::$error){
+            $error = $this->errores->error(mensaje: 'Error al generar input',data:  $in_nombre_comercial);
+            print_r($error);
+            die('Error');
+        }
+        $this->inputs->nombre_comercial = $in_nombre_comercial;
 
 
         return $r_alta;
