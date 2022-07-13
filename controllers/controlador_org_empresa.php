@@ -11,6 +11,8 @@ namespace controllers;
 use gamboamartin\errores\errores;
 use gamboamartin\system\system;
 use html\cat_sat_regimen_fiscal_html;
+use html\dp_colonia_html;
+use html\dp_colonia_postal_html;
 use html\dp_cp_html;
 use html\dp_estado_html;
 use html\dp_municipio_html;
@@ -102,6 +104,16 @@ class controlador_org_empresa extends system {
         $this->inputs->select->dp_cp_id = $select;
 
 
+        $select = (new dp_colonia_postal_html())->select_dp_colonia_postal_id(cols: 12, con_registros:false,
+            id_selected:-1,link: $this->link);
+        if(errores::$error){
+            $error = $this->errores->error(mensaje: 'Error al generar select',data:  $select);
+            print_r($error);
+            die('Error');
+        }
+
+
+        $this->inputs->select->dp_colonia_postal_id = $select;
 
 
         $in_razon_social = (new org_empresa_html())->input_razon_social(cols: 12,row_upd:  new stdClass(),value_vacio:  true);
