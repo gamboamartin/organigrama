@@ -8,6 +8,7 @@
 <?php echo $controlador->inputs->select->dp_pais_id; ?>
 <?php echo $controlador->inputs->select->dp_estado_id; ?>
 <?php echo $controlador->inputs->select->dp_municipio_id; ?>
+<?php echo $controlador->inputs->select->dp_cp_id; ?>
 <?php include (new views())->ruta_templates.'botons/submit/alta_bd_otro.php';?>
 
 <div class="control-group btn-alta">
