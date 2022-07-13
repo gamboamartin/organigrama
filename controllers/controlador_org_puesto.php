@@ -45,7 +45,6 @@ class controlador_org_puesto extends system {
             die('Error');
         }
 
-
         $this->inputs->select->org_tipo_puesto_id = $select;
 
         $select = (new org_empresa_html())->select_org_empresa_id(cols:12,con_registros:true,id_selected:-1,link: $this->link);
@@ -55,14 +54,9 @@ class controlador_org_puesto extends system {
             die('Error');
         }
 
-
         $this->inputs->select->org_empresa_id = $select;
 
-
-
-
         return $r_alta;
-
     }
 
 
