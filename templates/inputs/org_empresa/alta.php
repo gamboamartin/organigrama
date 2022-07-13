@@ -16,3 +16,7 @@
 <div class="control-group btn-alta">
     <div class="controls"><?php include 'templates/botons/dp_pais_alta.php';?></div>
 </div>
+
+<div class="control-group btn-alta">
+    <div class="controls"><?php include 'templates/botons/dp_estado_alta.php';?></div>
+</div>
