@@ -96,7 +96,7 @@ sl_dp_cp_id.change(function(){
         $.each(data.registros, function( index, dp_colonia_postal ) {
             integra_new_option("#dp_colonia_postal_id",dp_colonia_postal.dp_colonia_descripcion+' '+dp_colonia_postal.dp_cp_descripcion,dp_colonia_postal.dp_colonia_postal_id);
         });
-        sl_dp_cp_id.selectpicker('refresh');
+        sl_dp_colonia_postal_id.selectpicker('refresh');
     }).fail(function (jqXHR, textStatus, errorThrown){ // Función que se ejecuta si algo ha ido mal
         alert('Error al ejecutar');
         console.log(url);

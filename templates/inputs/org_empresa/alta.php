@@ -31,3 +31,6 @@
 <div class="control-group btn-alta">
     <div class="controls"><?php include 'templates/botons/dp_cp_alta.php';?></div>
 </div>
+<div class="control-group btn-alta">
+    <div class="controls"><?php include 'templates/botons/dp_colonia_postal_alta.php';?></div>
+</div>
