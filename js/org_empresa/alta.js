@@ -115,7 +115,7 @@ sl_dp_colonia_postal_id.change(function(){
     }).done(function( data ) {  // Función que se ejecuta si todo ha ido bien
         console.log(data);
         $.each(data.registros, function( index, dp_calle_pertenece ) {
-            integra_new_option("#dp_calle_pertenece_id",dp_calle_pertenece.dp_colonia_descripcion+' '+dp_calle_pertenece.dp_cp_descripcion+' '+dp_calle_pertenece.dp_calle_descripcion,dp_calle_pertenece.dp_calle_pertence_id);
+            integra_new_option("#dp_calle_pertenece_id",dp_calle_pertenece.dp_colonia_descripcion+' '+dp_calle_pertenece.dp_cp_descripcion+' '+dp_calle_pertenece.dp_calle_descripcion,dp_calle_pertenece.dp_calle_pertenece_id);
         });
         sl_dp_calle_pertenece_id.selectpicker('refresh');
     }).fail(function (jqXHR, textStatus, errorThrown){ // Función que se ejecuta si algo ha ido mal
