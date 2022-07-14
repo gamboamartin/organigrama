@@ -16,6 +16,9 @@
 <?php echo $controlador->inputs->select->dp_cp_id; ?>
 <?php echo $controlador->inputs->select->dp_colonia_postal_id; ?>
 <?php echo $controlador->inputs->select->dp_calle_pertenece_id; ?>
+
+<?php echo $controlador->inputs->exterior; ?>
+
 <?php include (new views())->ruta_templates.'botons/submit/alta_bd_otro.php';?>
 
 <div class="control-group btn-alta col-12">
