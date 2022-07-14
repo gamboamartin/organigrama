@@ -4,6 +4,10 @@
 <?php echo $controlador->inputs->rfc; ?>
 <?php echo $controlador->inputs->razon_social; ?>
 <?php echo $controlador->inputs->nombre_comercial; ?>
+
+<?php echo $controlador->inputs->fecha_inicio_operaciones; ?>
+
+
 <?php echo $controlador->inputs->select->cat_sat_regimen_fiscal_id; ?>
 <?php echo $controlador->inputs->select->dp_pais_id; ?>
 <?php echo $controlador->inputs->select->dp_estado_id; ?>

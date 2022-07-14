@@ -155,6 +155,15 @@ class controlador_org_empresa extends system {
         $this->inputs->nombre_comercial = $in_nombre_comercial;
 
 
+        $fec_fecha_inicio_operaciones = (new org_empresa_html())->fec_fecha_inicio_operaciones(cols: 12,row_upd:  new stdClass(),value_vacio:  true);
+        if(errores::$error){
+            $error = $this->errores->error(mensaje: 'Error al generar input',data:  $in_nombre_comercial);
+            print_r($error);
+            die('Error');
+        }
+        $this->inputs->fecha_inicio_operaciones = $fec_fecha_inicio_operaciones;
+
+
         return $r_alta;
 
     }
