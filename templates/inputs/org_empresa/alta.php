@@ -21,5 +21,6 @@
         <?php include 'templates/botons/dp_municipio_alta.php';?>
         <?php include 'templates/botons/dp_cp_alta.php';?>
         <?php include 'templates/botons/dp_colonia_postal_alta.php';?>
+        <?php include 'templates/botons/dp_calle_pertenece_alta.php';?>
     </div>
 </div>
