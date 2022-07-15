@@ -5,6 +5,7 @@
 <?php echo $controlador->inputs->razon_social; ?>
 <?php echo $controlador->inputs->nombre_comercial; ?>
 
+<?php echo $controlador->inputs->email_sat; ?>
 <?php echo $controlador->inputs->fecha_inicio_operaciones; ?>
 <?php echo $controlador->inputs->fecha_ultimo_cambio_sat; ?>
 
@@ -18,6 +19,12 @@
 <?php echo $controlador->inputs->select->dp_calle_pertenece_id; ?>
 <?php echo $controlador->inputs->select->dp_calle_pertenece_entre1_id; ?>
 <?php echo $controlador->inputs->select->dp_calle_pertenece_entre2_id; ?>
+
+<?php echo $controlador->inputs->telefono_1; ?>
+<?php echo $controlador->inputs->telefono_2; ?>
+<?php echo $controlador->inputs->telefono_3; ?>
+
+
 
 <?php echo $controlador->inputs->exterior; ?>
 
