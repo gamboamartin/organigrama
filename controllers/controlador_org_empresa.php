@@ -82,6 +82,10 @@ class controlador_org_empresa extends system {
             return $this->retorno_error(mensaje: 'Error al generar template',data:  $r_modifica, header: $header,ws:$ws);
         }
 
+        if(!isset($this->row_upd->cat_sat_regimen_fiscal_id)){
+            $this->row_upd->cat_sat_regimen_fiscal_id = -1;
+        }
+
         $select = (new cat_sat_regimen_fiscal_html())->select_cat_sat_regimen_fiscal_id(cols:12,con_registros:true,
             id_selected:$this->row_upd->cat_sat_regimen_fiscal_id, link: $this->link);
         if(errores::$error){
