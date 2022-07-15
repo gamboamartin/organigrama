@@ -9,9 +9,8 @@ class org_empresa extends modelo{
     public function __construct(PDO $link){
         $tabla = __CLASS__;
         $columnas = array($tabla=>false,'cat_sat_regimen_fiscal'=>$tabla);
-        $campos_obligatorios = array('cat_sat_regimen_fiscal_id','nombre_comercial','fecha_inicio_operaciones',
-            'fecha_ultimo_cambio_sat','dp_calle_pertenece_id','exterior','dp_calle_pertenece_entre1_id',
-            'dp_calle_pertenece_entre2_id','email_sat','telefono_1','rfc','razon_social');
+        $campos_obligatorios = array('nombre_comercial','fecha_inicio_operaciones',
+            'fecha_ultimo_cambio_sat','email_sat','rfc','razon_social');
 
         $no_duplicados = array('descripcion','codigo','descripcion_select','alias','codigo_bis','rfc','razon_social');
 
