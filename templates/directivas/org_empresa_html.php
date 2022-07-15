@@ -22,6 +22,8 @@ class org_empresa_html extends html_controler {
         $controler->inputs->select->dp_cp_id = $inputs->selects->dp_cp_id;
         $controler->inputs->select->dp_colonia_postal_id = $inputs->selects->dp_colonia_postal_id;
         $controler->inputs->select->dp_calle_pertenece_id = $inputs->selects->dp_calle_pertenece_id;
+        $controler->inputs->select->dp_calle_pertenece_entre1_id = $inputs->selects->dp_calle_pertenece_entre1_id;
+        $controler->inputs->select->dp_calle_pertenece_entre2_id = $inputs->selects->dp_calle_pertenece_entre2_id;
 
 
         $controler->inputs->fecha_inicio_operaciones = $inputs->fechas->fecha_inicio_operaciones;
@@ -330,6 +332,26 @@ class org_empresa_html extends html_controler {
 
 
         $selects->dp_calle_pertenece_id = $select;
+
+        $select = (new dp_calle_pertenece_html())->select_dp_calle_pertenece_entre1_id(cols: 12, con_registros:false,
+            id_selected:-1,link: $link);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar select',data:  $select);
+
+        }
+
+
+        $selects->dp_calle_pertenece_entre1_id = $select;
+
+        $select = (new dp_calle_pertenece_html())->select_dp_calle_pertenece_entre2_id(cols: 12, con_registros:false,
+            id_selected:-1,link: $link);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar select',data:  $select);
+
+        }
+
+
+        $selects->dp_calle_pertenece_entre2_id = $select;
 
         return $selects;
     }
