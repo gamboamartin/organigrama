@@ -34,8 +34,13 @@ class org_empresa_html extends html_controler {
         $controler->inputs->rfc = $inputs->texts->rfc;
         $controler->inputs->nombre_comercial = $inputs->texts->nombre_comercial;
         $controler->inputs->exterior = $inputs->texts->exterior;
+        $controler->inputs->interior = $inputs->texts->interior;
 
         $controler->inputs->email_sat = $inputs->emails->email_sat;
+
+        $controler->inputs->telefono_1 = $inputs->telefonos->telefono_1;
+        $controler->inputs->telefono_2 = $inputs->telefonos->telefono_2;
+        $controler->inputs->telefono_3 = $inputs->telefonos->telefono_2;
 
         return $controler->inputs;
     }
@@ -214,6 +219,30 @@ class org_empresa_html extends html_controler {
 
         $html =$this->directivas->input_text_required(disable: false,name: 'exterior',place_holder: 'Num Ext',row_upd: $row_upd,
             value_vacio: $value_vacio);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar input', data: $html);
+        }
+
+        $div = $this->directivas->html->div_group(cols: $cols,html:  $html);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al integrar div', data: $div);
+        }
+
+        return $div;
+    }
+
+    public function input_interior(int $cols, stdClass $row_upd, bool $value_vacio): array|string
+    {
+
+        if($cols<=0){
+            return $this->error->error(mensaje: 'Error cold debe ser mayor a 0', data: $cols);
+        }
+        if($cols>=13){
+            return $this->error->error(mensaje: 'Error cold debe ser menor o igual a  12', data: $cols);
+        }
+
+        $html =$this->directivas->input_text(disable: false,name: 'interior',place_holder: 'Num Int', required: false,
+            row_upd: $row_upd, value_vacio: $value_vacio);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input', data: $html);
         }
@@ -485,21 +514,21 @@ class org_empresa_html extends html_controler {
 
         $telefonos = new stdClass();
 
-        $telefono_1 = $this->telefono_1(cols: 12,row_upd:
+        $telefono_1 = $this->telefono_1(cols: 4,row_upd:
             new stdClass(),value_vacio:  true);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input',data:  $telefono_1);
         }
         $telefonos->telefono_1 = $telefono_1;
 
-        $telefono_2 = $this->telefono_2(cols: 12,row_upd:
+        $telefono_2 = $this->telefono_2(cols: 4,row_upd:
             new stdClass(),value_vacio:  true);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input',data:  $telefono_2);
         }
         $telefonos->telefono_2 = $telefono_2;
 
-        $telefono_3 = $this->telefono_3(cols: 12,row_upd:
+        $telefono_3 = $this->telefono_3(cols: 4,row_upd:
             new stdClass(),value_vacio:  true);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input',data:  $telefono_3);
@@ -534,11 +563,17 @@ class org_empresa_html extends html_controler {
         $texts->nombre_comercial = $in_nombre_comercial;
 
 
-        $in_exterior = $this->input_exterior(cols: 12,row_upd:  new stdClass(),value_vacio:  true);
+        $in_exterior = $this->input_exterior(cols: 6,row_upd:  new stdClass(),value_vacio:  true);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input',data:  $in_exterior);
         }
         $texts->exterior = $in_exterior;
+
+        $in_interior = $this->input_interior(cols: 6,row_upd:  new stdClass(),value_vacio:  true);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar input',data:  $in_exterior);
+        }
+        $texts->interior = $in_interior;
 
         return $texts;
     }

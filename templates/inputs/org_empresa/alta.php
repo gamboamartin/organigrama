@@ -20,13 +20,16 @@
 <?php echo $controlador->inputs->select->dp_calle_pertenece_entre1_id; ?>
 <?php echo $controlador->inputs->select->dp_calle_pertenece_entre2_id; ?>
 
+<?php echo $controlador->inputs->exterior; ?>
+<?php echo $controlador->inputs->interior; ?>
+
 <?php echo $controlador->inputs->telefono_1; ?>
 <?php echo $controlador->inputs->telefono_2; ?>
 <?php echo $controlador->inputs->telefono_3; ?>
 
 
 
-<?php echo $controlador->inputs->exterior; ?>
+
 
 <?php include (new views())->ruta_templates.'botons/submit/alta_bd_otro.php';?>
 
