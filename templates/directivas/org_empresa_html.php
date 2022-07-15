@@ -61,6 +61,22 @@ class org_empresa_html extends html_controler {
         return $div;
     }
 
+    private function emails_alta(): array|stdClass
+    {
+
+        $emails = new stdClass();
+
+        $em_email_sat = $this->em_email_sat(cols: 6,row_upd:
+            new stdClass(),value_vacio:  true);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar input',data:  $em_email_sat);
+        }
+        $emails->email_sat = $em_email_sat;
+
+
+        return $emails;
+    }
+
     public function fec_fecha_inicio_operaciones(int $cols, stdClass $row_upd, bool $value_vacio): array|string
     {
 
@@ -162,11 +178,18 @@ class org_empresa_html extends html_controler {
             return $this->error->error(mensaje: 'Error al generar inputs fecha',data:  $fechas);
         }
 
+        $emails = $this->emails_alta();
+
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar inputs fecha',data:  $emails);
+        }
+
         $alta_inputs = new stdClass();
         
         $alta_inputs->texts = $texts;
         $alta_inputs->selects = $selects;
         $alta_inputs->fechas = $fechas;
+        $alta_inputs->emails = $emails;
         return $alta_inputs;
     }
 
