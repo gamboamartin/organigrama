@@ -8,7 +8,9 @@ use stdClass;
 class org_empresa extends modelo{
     public function __construct(PDO $link){
         $tabla = __CLASS__;
-        $columnas = array($tabla=>false,'cat_sat_regimen_fiscal'=>$tabla);
+        $columnas = array($tabla=>false,'cat_sat_regimen_fiscal'=>$tabla,'dp_calle_pertenece'=>$tabla,
+            'dp_colonia_postal'=>'dp_calle_pertenece','dp_cp'=>'dp_colonia_postal','dp_municipio'=>'dp_cp',
+            'dp_estado'=>'dp_municipio','dp_pais'=>'dp_estado');
         $campos_obligatorios = array('nombre_comercial','fecha_inicio_operaciones',
             'fecha_ultimo_cambio_sat','email_sat','rfc','razon_social');
 

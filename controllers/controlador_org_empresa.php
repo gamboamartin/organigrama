@@ -86,16 +86,27 @@ class controlador_org_empresa extends system {
             $this->row_upd->cat_sat_regimen_fiscal_id = -1;
         }
 
-        $select = (new cat_sat_regimen_fiscal_html())->select_cat_sat_regimen_fiscal_id(cols:12,con_registros:true,
-            id_selected:$this->row_upd->cat_sat_regimen_fiscal_id, link: $this->link);
+        $org_empresa = $this->modelo->registro(registro_id: $this->registro_id,retorno_obj: true);
         if(errores::$error){
-            $error = $this->errores->error(mensaje: 'Error al generar select',data:  $select);
+            $error = $this->errores->error(mensaje: 'Error al obtener registro',data:  $org_empresa);
             print_r($error);
             die('Error');
         }
 
-        $this->inputs->select = new stdClass();
-        $this->inputs->select->cat_sat_regimen_fiscal_id = $select;
+
+        $this->row_upd->dp_pais_id = $org_empresa->dp_pais_id;
+        $this->row_upd->dp_estado_id = $org_empresa->dp_estado_id;
+        $this->row_upd->dp_municipio_id = $org_empresa->dp_municipio_id;
+        $this->row_upd->dp_cp_id = $org_empresa->dp_cp_id;
+        $this->row_upd->dp_colonia_postal_id = $org_empresa->dp_colonia_postal_id;
+
+
+        $inputs = (new org_empresa_html())->genera_inputs_modifica(controler: $this, link: $this->link);
+        if(errores::$error){
+            $error = $this->errores->error(mensaje: 'Error al generar inputs',data:  $inputs);
+            print_r($error);
+            die('Error');
+        }
 
         return $r_modifica;
     }
