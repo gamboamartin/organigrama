@@ -41,7 +41,7 @@ class controlador_org_dependencia extends system {
         }
 
         $this->inputs->select = new stdClass();
-        $select = (new org_puesto_html())->select_org_puesto_id(cols:6,con_registros:true,id_selected:-1,link: $this->link);
+        $select = (new org_puesto_html())->select_org_puesto_id(cols:12,con_registros:true,id_selected:-1,link: $this->link);
         if(errores::$error){
             $error = $this->errores->error(mensaje: 'Error al generar select',data:  $select);
             print_r($error);
@@ -50,7 +50,7 @@ class controlador_org_dependencia extends system {
 
         $this->inputs->select->org_puesto_jefe_id = $select;
 
-        $select = (new org_puesto_html())->select_org_puesto_id(cols:6,con_registros:true,id_selected:-1,link: $this->link);
+        $select = (new org_puesto_html())->select_org_puesto_id(cols:12,con_registros:true,id_selected:-1,link: $this->link);
         if(errores::$error){
             $error = $this->errores->error(mensaje: 'Error al generar select',data:  $select);
             print_r($error);
@@ -58,7 +58,7 @@ class controlador_org_dependencia extends system {
         }
         $this->inputs->select->org_puesto_empleado_id = $select;
 
-        $in_descripcion_select = (new org_dependencia_html())->input(cols: 12,row_upd:  new stdClass(),value_vacio:  true, campo: "Descripción select");
+        $in_descripcion_select = (new org_dependencia_html())->input(cols: 6,row_upd:  new stdClass(),value_vacio:  true, campo: "Descripción select");
 
         if(errores::$error){
             $error = $this->errores->error(mensaje: 'Error al generar el input',data:  $in_descripcion_select);
