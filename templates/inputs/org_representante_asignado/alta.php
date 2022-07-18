@@ -3,6 +3,8 @@
 <?php echo $controlador->inputs->codigo; ?>
 <?php echo $controlador->inputs->codigo_bis; ?>
 <?php echo $controlador->inputs->descripcion; ?>
+<?php echo $controlador->inputs->fecha_inicio; ?>
+<?php echo $controlador->inputs->fecha_fin; ?>
 <?php echo $controlador->inputs->select->org_representante_legal_id; ?>
 <?php echo $controlador->inputs->select->org_empresa_id; ?>
 

@@ -1,7 +1,10 @@
 <?php
 namespace models;
 use base\orm\modelo;
+use gamboamartin\errores\errores;
+use html\org_representante_asignado_html;
 use PDO;
+use stdClass;
 
 class org_representante_asignado extends modelo{
     public function __construct(PDO $link){
