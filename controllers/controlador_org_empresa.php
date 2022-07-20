@@ -20,13 +20,14 @@ use stdClass;
 
 class controlador_org_empresa extends system {
 
-    public function __construct(PDO $link, stdClass $paths_conf = new stdClass()){
+    public function __construct(PDO $link, \gamboamartin\template\html $html = new \gamboamartin\template\html(),
+                                stdClass $paths_conf = new stdClass()){
         $modelo = new org_empresa(link: $link);
-        $html_base = new html();
-        $html = new org_empresa_html(html: $html_base);
+
+        $html_ = new org_empresa_html(html: $html);
         $obj_link = new link_org_empresa($this->registro_id);
 
-        parent::__construct(html:$html, link: $link,modelo:  $modelo, obj_link: $obj_link, paths_conf: $paths_conf);
+        parent::__construct(html:$html_, link: $link,modelo:  $modelo, obj_link: $obj_link, paths_conf: $paths_conf);
 
         $this->titulo_lista = 'Empresas';
 
