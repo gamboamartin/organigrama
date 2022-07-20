@@ -94,11 +94,24 @@ class controlador_org_empresa extends system {
         }
 
 
+        $keys_foraneas = array('dp_pais_id','dp_estado_id','dp_municipio_id','dp_cp_id','dp_colonia_postal_id',
+            'dp_calle_pertenece_id','org_empresa_dp_calle_pertenece_entre1_id','org_empresa_dp_calle_pertenece_entre2_id');
+
+        foreach ($keys_foraneas as $campo){
+            if(is_null($org_empresa->$campo)){
+                $org_empresa->$campo = '-1';
+            }
+        }
+
+
         $this->row_upd->dp_pais_id = $org_empresa->dp_pais_id;
         $this->row_upd->dp_estado_id = $org_empresa->dp_estado_id;
         $this->row_upd->dp_municipio_id = $org_empresa->dp_municipio_id;
         $this->row_upd->dp_cp_id = $org_empresa->dp_cp_id;
         $this->row_upd->dp_colonia_postal_id = $org_empresa->dp_colonia_postal_id;
+        $this->row_upd->dp_calle_pertenece_id = $org_empresa->dp_calle_pertenece_id;
+        $this->row_upd->dp_calle_pertenece_entre1_id = $org_empresa->org_empresa_dp_calle_pertenece_entre1_id;
+        $this->row_upd->dp_calle_pertenece_entre2_id = $org_empresa->org_empresa_dp_calle_pertenece_entre2_id;
 
 
         $inputs = (new org_empresa_html())->genera_inputs_modifica(controler: $this, link: $this->link);
