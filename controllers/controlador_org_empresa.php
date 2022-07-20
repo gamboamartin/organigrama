@@ -6,18 +6,12 @@
  * @final En proceso
  *
  */
-namespace controllers;
+namespace gamboamartin\organigrama\controllers;
 
 use gamboamartin\errores\errores;
 use gamboamartin\system\init;
 use gamboamartin\system\system;
-use html\cat_sat_regimen_fiscal_html;
-use html\dp_calle_pertenece_html;
-use html\dp_colonia_postal_html;
-use html\dp_cp_html;
-use html\dp_estado_html;
-use html\dp_municipio_html;
-use html\dp_pais_html;
+use html\html;
 use html\org_empresa_html;
 use links\secciones\link_org_empresa;
 use models\org_empresa;
@@ -28,7 +22,8 @@ class controlador_org_empresa extends system {
 
     public function __construct(PDO $link, stdClass $paths_conf = new stdClass()){
         $modelo = new org_empresa(link: $link);
-        $html = new org_empresa_html();
+        $html_base = new html();
+        $html = new org_empresa_html(html: $html_base);
         $obj_link = new link_org_empresa($this->registro_id);
 
         parent::__construct(html:$html, link: $link,modelo:  $modelo, obj_link: $obj_link, paths_conf: $paths_conf);

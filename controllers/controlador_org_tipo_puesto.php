@@ -6,7 +6,7 @@
  * @final En proceso
  *
  */
-namespace controllers;
+namespace gamboamartin\organigrama\controllers;
 
 use gamboamartin\system\links_menu;
 use gamboamartin\system\system;
