@@ -58,10 +58,21 @@ class controlador_org_representante_asignado extends system {
 
         $this->inputs->select->org_empresa_id = $select;
 
+        $in_fecha_inicio = (new org_representante_asignado_html())->input(cols: 6,row_upd:  new stdClass(),value_vacio:  true, campo: "Fecha Inicio");
+        $in_fecha_fin = (new org_representante_asignado_html())->input(cols: 6,row_upd:  new stdClass(),value_vacio:  true, campo: "Fecha Fin");
 
+        if(errores::$error){
+            $error = $this->errores->error(mensaje: 'Error al generar el input',data:  $in_fecha_inicio);
+            print_r($error);
+            die('Error');
+        }
+
+        $this->inputs->fecha_inicio = $in_fecha_inicio;
+        $this->inputs->fecha_fin = $in_fecha_fin;
 
 
         return $r_alta;
 
     }
+
 }

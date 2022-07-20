@@ -51,9 +51,6 @@ class controlador_org_empresa extends system {
             print_r($error);
             die('Error');
         }
-
-
-
         return $r_alta;
 
     }
