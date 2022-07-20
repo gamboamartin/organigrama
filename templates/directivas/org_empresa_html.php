@@ -397,8 +397,9 @@ class org_empresa_html extends html_controler {
     private function selects_alta(PDO $link): array|stdClass
     {
         $selects = new stdClass();
+        $html_base = new html();
 
-        $select = (new cat_sat_regimen_fiscal_html())->select_cat_sat_regimen_fiscal_id(cols: 12, con_registros:true,
+        $select = (new cat_sat_regimen_fiscal_html(html: $html_base))->select_cat_sat_regimen_fiscal_id(cols: 12, con_registros:true,
             id_selected:-1,link: $link);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $select);
@@ -408,7 +409,7 @@ class org_empresa_html extends html_controler {
         $selects->cat_sat_regimen_fiscal_id = $select;
 
 
-        $select = (new dp_pais_html())->select_dp_pais_id(cols: 6, con_registros:true,
+        $select = (new dp_pais_html(html: $html_base))->select_dp_pais_id(cols: 6, con_registros:true,
             id_selected:-1,link: $link);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $select);
@@ -419,7 +420,7 @@ class org_empresa_html extends html_controler {
         $selects->dp_pais_id = $select;
 
 
-        $select = (new dp_estado_html())->select_dp_estado_id(cols: 6, con_registros:false,
+        $select = (new dp_estado_html(html: $html_base))->select_dp_estado_id(cols: 6, con_registros:false,
             id_selected:-1,link: $link);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $select);
@@ -429,7 +430,7 @@ class org_empresa_html extends html_controler {
 
         $selects->dp_estado_id = $select;
 
-        $select = (new dp_municipio_html())->select_dp_municipio_id(cols: 6, con_registros:false,
+        $select = (new dp_municipio_html(html: $html_base))->select_dp_municipio_id(cols: 6, con_registros:false,
             id_selected:-1,link:$link);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $select);
@@ -440,7 +441,7 @@ class org_empresa_html extends html_controler {
         $selects->dp_municipio_id = $select;
 
 
-        $select = (new dp_cp_html())->select_dp_cp_id(cols: 6, con_registros:false,
+        $select = (new dp_cp_html(html: $html_base))->select_dp_cp_id(cols: 6, con_registros:false,
             id_selected:-1,link: $link);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $select);
@@ -451,7 +452,7 @@ class org_empresa_html extends html_controler {
         $selects->dp_cp_id = $select;
 
 
-        $select = (new dp_colonia_postal_html())->select_dp_colonia_postal_id(cols: 12, con_registros:false,
+        $select = (new dp_colonia_postal_html(html: $html_base))->select_dp_colonia_postal_id(cols: 12, con_registros:false,
             id_selected:-1,link: $link);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $select);
@@ -462,7 +463,7 @@ class org_empresa_html extends html_controler {
         $selects->dp_colonia_postal_id = $select;
 
 
-        $select = (new dp_calle_pertenece_html())->select_dp_calle_pertenece_id(cols: 12, con_registros:false,
+        $select = (new dp_calle_pertenece_html(html: $html_base))->select_dp_calle_pertenece_id(cols: 12, con_registros:false,
             id_selected:-1,link: $link);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $select);
@@ -472,7 +473,7 @@ class org_empresa_html extends html_controler {
 
         $selects->dp_calle_pertenece_id = $select;
 
-        $select = (new dp_calle_pertenece_html())->select_dp_calle_pertenece_entre1_id(cols: 6, con_registros:false,
+        $select = (new dp_calle_pertenece_html(html: $html_base))->select_dp_calle_pertenece_entre1_id(cols: 6, con_registros:false,
             id_selected:-1,link: $link);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $select);
@@ -482,7 +483,7 @@ class org_empresa_html extends html_controler {
 
         $selects->dp_calle_pertenece_entre1_id = $select;
 
-        $select = (new dp_calle_pertenece_html())->select_dp_calle_pertenece_entre2_id(cols: 6, con_registros:false,
+        $select = (new dp_calle_pertenece_html(html: $html_base))->select_dp_calle_pertenece_entre2_id(cols: 6, con_registros:false,
             id_selected:-1,link: $link);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $select);
