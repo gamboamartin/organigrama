@@ -138,20 +138,20 @@ class org_empresa_html extends html_controler {
         return $div;
     }
 
-    private function fechas_alta(): array|stdClass
+    private function fechas_alta(stdClass $row_upd = new stdClass()): array|stdClass
     {
 
         $fechas = new stdClass();
 
-        $fec_fecha_inicio_operaciones = $this->fec_fecha_inicio_operaciones(cols: 6,row_upd:
-            new stdClass(),value_vacio:  true);
+        $fec_fecha_inicio_operaciones = $this->fec_fecha_inicio_operaciones(cols: 6,row_upd: $row_upd,
+            value_vacio:  false);
         if(errores::$error){
            return $this->error->error(mensaje: 'Error al generar input',data:  $fec_fecha_inicio_operaciones);
         }
         $fechas->fecha_inicio_operaciones = $fec_fecha_inicio_operaciones;
 
         $fec_fecha_ultimo_cambio_sat = $this->fec_fecha_ultimo_cambio_sat(cols: 6,row_upd:
-            new stdClass(),value_vacio:  true);
+            $row_upd,value_vacio:  false);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input',data:  $fec_fecha_ultimo_cambio_sat);
         }
@@ -240,7 +240,7 @@ class org_empresa_html extends html_controler {
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar texts',data:  $texts);
         }
-        $fechas = $this->fechas_alta();
+        $fechas = $this->fechas_alta(row_upd: $row_upd);
 
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar inputs fecha',data:  $fechas);
