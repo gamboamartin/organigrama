@@ -5,11 +5,15 @@ namespace html;
 use gamboamartin\errores\errores;
 use gamboamartin\organigrama\controllers\controlador_org_empresa;
 use gamboamartin\system\html_controler;
+
+use gamboamartin\template\html;
 use models\org_empresa;
 use PDO;
 use stdClass;
 
+
 class org_empresa_html extends html_controler {
+
 
 
     private function asigna_inputs(controlador_org_empresa $controler, stdClass $inputs): array|stdClass

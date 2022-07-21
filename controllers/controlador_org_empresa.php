@@ -11,7 +11,8 @@ namespace gamboamartin\organigrama\controllers;
 use gamboamartin\errores\errores;
 use gamboamartin\system\init;
 use gamboamartin\system\system;
-use html\html;
+
+use gamboamartin\template\html;
 use html\org_empresa_html;
 use links\secciones\link_org_empresa;
 use models\org_empresa;
@@ -20,7 +21,7 @@ use stdClass;
 
 class controlador_org_empresa extends system {
 
-    public function __construct(PDO $link, \gamboamartin\template\html $html = new \gamboamartin\template\html(),
+    public function __construct(PDO $link, html $html = new \gamboamartin\template_1\html(),
                                 stdClass $paths_conf = new stdClass()){
         $modelo = new org_empresa(link: $link);
 
@@ -113,6 +114,7 @@ class controlador_org_empresa extends system {
             print_r($error);
             die('Error');
         }
+
 
         return $r_modifica;
     }
