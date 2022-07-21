@@ -40,12 +40,14 @@ class org_empresa_html extends html_controler {
         $controler->inputs->nombre_comercial = $inputs->texts->nombre_comercial;
         $controler->inputs->exterior = $inputs->texts->exterior;
         $controler->inputs->interior = $inputs->texts->interior;
+        $controler->inputs->codigo = $inputs->texts->codigo;
 
         $controler->inputs->email_sat = $inputs->emails->email_sat;
 
         $controler->inputs->telefono_1 = $inputs->telefonos->telefono_1;
         $controler->inputs->telefono_2 = $inputs->telefonos->telefono_2;
         $controler->inputs->telefono_3 = $inputs->telefonos->telefono_2;
+
 
         return $controler->inputs;
     }
@@ -264,6 +266,30 @@ class org_empresa_html extends html_controler {
         $alta_inputs->emails = $emails;
         $alta_inputs->telefonos = $telefonos;
         return $alta_inputs;
+    }
+
+    public function input_codigo(int $cols, stdClass $row_upd, bool $value_vacio): array|string
+    {
+
+        if($cols<=0){
+            return $this->error->error(mensaje: 'Error cold debe ser mayor a 0', data: $cols);
+        }
+        if($cols>=13){
+            return $this->error->error(mensaje: 'Error cold debe ser menor o igual a  12', data: $cols);
+        }
+
+        $html =$this->directivas->input_text_required(disable: false,name: 'codigo',place_holder: 'Codigo',row_upd: $row_upd,
+            value_vacio: $value_vacio);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar input', data: $html);
+        }
+
+        $div = $this->directivas->html->div_group(cols: $cols,html:  $html);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al integrar div', data: $div);
+        }
+
+        return $div;
     }
 
     public function input_exterior(int $cols, stdClass $row_upd, bool $value_vacio): array|string
@@ -704,6 +730,12 @@ class org_empresa_html extends html_controler {
     {
 
         $texts = new stdClass();
+
+        $in_codigo = $this->input_codigo(cols: 6,row_upd:  new stdClass(),value_vacio:  true);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar input',data:  $in_codigo);
+        }
+        $texts->codigo = $in_codigo;
 
         $in_razon_social = $this->input_razon_social(cols: 12,row_upd:  new stdClass(),value_vacio:  true);
         if(errores::$error){
