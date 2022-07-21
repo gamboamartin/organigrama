@@ -196,7 +196,7 @@ class org_empresa_html extends html_controler {
             return $this->error->error(mensaje: 'Error al generar selects',data:  $selects);
         }
 
-        $texts = $this->texts_alta();
+        $texts = $this->texts_alta(row_upd: new stdClass(), value_vacio: true);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar texts',data:  $texts);
         }
@@ -236,7 +236,7 @@ class org_empresa_html extends html_controler {
             return $this->error->error(mensaje: 'Error al generar selects',data:  $selects);
         }
         
-        $texts = $this->texts_alta(row_upd: $row_upd);
+        $texts = $this->texts_alta(row_upd: $row_upd, value_vacio: false);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar texts',data:  $texts);
         }
@@ -729,44 +729,44 @@ class org_empresa_html extends html_controler {
         return $telefonos;
     }
 
-    private function texts_alta(stdClass $row_upd = new stdClass()): array|stdClass
+    private function texts_alta(stdClass $row_upd, bool $value_vacio): array|stdClass
     {
 
         $texts = new stdClass();
         
 
-        $in_codigo = $this->input_codigo(cols: 6,row_upd:  $row_upd,value_vacio:  false);
+        $in_codigo = $this->input_codigo(cols: 6,row_upd:  $row_upd,value_vacio:  $value_vacio);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input',data:  $in_codigo);
         }
         $texts->codigo = $in_codigo;
 
-        $in_razon_social = $this->input_razon_social(cols: 12,row_upd:  $row_upd,value_vacio:  false);
+        $in_razon_social = $this->input_razon_social(cols: 12,row_upd:  $row_upd,value_vacio:  $value_vacio);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input',data:  $in_razon_social);
         }
         $texts->razon_social = $in_razon_social;
 
-        $in_rfc = $this->input_rfc(cols: 6,row_upd:  $row_upd,value_vacio:  false);
+        $in_rfc = $this->input_rfc(cols: 6,row_upd:  $row_upd,value_vacio:  $value_vacio);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input',data:  $in_razon_social);
         }
         $texts->rfc = $in_rfc;
 
-        $in_nombre_comercial = $this->input_nombre_comercial(cols: 12,row_upd: $row_upd,value_vacio:  false);
+        $in_nombre_comercial = $this->input_nombre_comercial(cols: 12,row_upd: $row_upd,value_vacio:  $value_vacio);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input',data:  $in_nombre_comercial);
         }
         $texts->nombre_comercial = $in_nombre_comercial;
 
 
-        $in_exterior = $this->input_exterior(cols: 6,row_upd: $row_upd,value_vacio:  false);
+        $in_exterior = $this->input_exterior(cols: 6,row_upd: $row_upd,value_vacio:  $value_vacio);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input',data:  $in_exterior);
         }
         $texts->exterior = $in_exterior;
 
-        $in_interior = $this->input_interior(cols: 6,row_upd:  $row_upd,value_vacio:  false);
+        $in_interior = $this->input_interior(cols: 6,row_upd:  $row_upd,value_vacio:  $value_vacio);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input',data:  $in_exterior);
         }
