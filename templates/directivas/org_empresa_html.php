@@ -268,14 +268,19 @@ class org_empresa_html extends html_controler {
         return $alta_inputs;
     }
 
+    /**
+     * Genera un input de tipo codigo
+     * @param int $cols Numero de columnas css
+     * @param stdClass $row_upd Registro precargado
+     * @param bool $value_vacio Si es vacio no carga elementos
+     * @return array|string
+     */
     public function input_codigo(int $cols, stdClass $row_upd, bool $value_vacio): array|string
     {
 
-        if($cols<=0){
-            return $this->error->error(mensaje: 'Error cold debe ser mayor a 0', data: $cols);
-        }
-        if($cols>=13){
-            return $this->error->error(mensaje: 'Error cold debe ser menor o igual a  12', data: $cols);
+        $valida = $this->directivas->valida_cols(cols: $cols);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al validar columnas', data: $valida);
         }
 
 
@@ -284,8 +289,6 @@ class org_empresa_html extends html_controler {
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input', data: $html);
         }
-
-
 
         $div = $this->directivas->html->div_group(cols: $cols,html:  $html);
         if(errores::$error){
