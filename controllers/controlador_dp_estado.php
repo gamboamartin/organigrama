@@ -12,14 +12,14 @@ namespace gamboamartin\organigrama\controllers;
 use PDO;
 
 
-class controlador_dp_pais extends \controllers\controlador_dp_pais {
+class controlador_dp_estado extends \controllers\controlador_dp_estado {
 
     public function __construct(PDO $link){
 
 
         parent::__construct(link: $link);
 
-        $this->titulo_lista = 'Paises';
+        $this->titulo_lista = 'Estados';
 
     }
 
