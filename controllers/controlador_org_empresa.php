@@ -107,7 +107,7 @@ class controlador_org_empresa extends system {
         $this->row_upd->dp_calle_pertenece_entre2_id = $org_empresa->org_empresa_dp_calle_pertenece_entre2_id;
 
 
-        $inputs = (new org_empresa_html())->genera_inputs_modifica(controler: $this, link: $this->link);
+        $inputs = (new org_empresa_html(html: $this->html_base))->genera_inputs_modifica(controler: $this, link: $this->link);
         if(errores::$error){
             $error = $this->errores->error(mensaje: 'Error al generar inputs',data:  $inputs);
             print_r($error);
