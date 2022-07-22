@@ -20,7 +20,7 @@ use models\org_empresa;
 use PDO;
 use stdClass;
 
-class controlador_org_empresa extends system {
+class controlador_org_empresa extends system{
 
     public function __construct(PDO $link, html $html = new \gamboamartin\template_1\html(),
                                 stdClass $paths_conf = new stdClass()){
@@ -152,6 +152,29 @@ class controlador_org_empresa extends system {
         $this->header_out(result: $r_modifica_bd, header: $header,ws:  $ws);
 
         return $r_modifica_bd;
+
+    }
+
+    /**
+     * Obtiene los elementos necesarios para la ejecucion de la accion ubicacion donde se cargaran los elementos
+     * de la ubicacion
+     * @param bool $header Si header muestra info en http
+     * @param bool $ws Da salida json
+     * @return array|stdClass
+     */
+    public function ubicacion(bool $header, bool $ws = false): array|stdClass
+    {
+        $org_empresa = $this->modelo->registro( registro_id: $this->registro_id,columnas_en_bruto: true,
+            retorno_obj: true);
+        if(errores::$error){
+
+            return $this->retorno_error(mensaje: 'Error al obtener empresa',data:  $org_empresa,
+                header: $header,ws:$ws);
+        }
+
+        $this->registro = $org_empresa;
+
+        return $org_empresa;
 
     }
 
