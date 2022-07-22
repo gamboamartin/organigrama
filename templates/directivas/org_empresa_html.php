@@ -6,6 +6,7 @@ use gamboamartin\errores\errores;
 use gamboamartin\organigrama\controllers\controlador_org_empresa;
 use gamboamartin\system\html_controler;
 
+use gamboamartin\template\html;
 use models\org_empresa;
 use PDO;
 use stdClass;
@@ -442,10 +443,7 @@ class org_empresa_html extends html_controler {
             return $this->error->error(mensaje: 'Error al generar select',data:  $select);
         }
 
-
-
         $selects->cat_sat_regimen_fiscal_id = $select;
-
 
         $select = (new dp_pais_html(html: $this->html_base))->select_dp_pais_id(cols: 6, con_registros:true,
             id_selected:-1,link: $link);
@@ -490,8 +488,8 @@ class org_empresa_html extends html_controler {
         $selects->dp_cp_id = $select;
 
 
-        $select = (new dp_colonia_postal_html(html: $this->html_base))->select_dp_colonia_postal_id(cols: 12, con_registros:false,
-            id_selected:-1,link: $link);
+        $select = (new dp_colonia_postal_html(html: $this->html_base))->select_dp_colonia_postal_id(cols: 12,
+            con_registros:false, id_selected:-1,link: $link);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $select);
 
@@ -501,8 +499,8 @@ class org_empresa_html extends html_controler {
         $selects->dp_colonia_postal_id = $select;
 
 
-        $select = (new dp_calle_pertenece_html(html: $this->html_base))->select_dp_calle_pertenece_id(cols: 12, con_registros:false,
-            id_selected:-1,link: $link);
+        $select = (new dp_calle_pertenece_html(html: $this->html_base))->select_dp_calle_pertenece_id(cols: 12,
+            con_registros:false, id_selected:-1,link: $link);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $select);
 
@@ -511,8 +509,8 @@ class org_empresa_html extends html_controler {
 
         $selects->dp_calle_pertenece_id = $select;
 
-        $select = (new dp_calle_pertenece_html(html: $this->html_base))->select_dp_calle_pertenece_entre1_id(cols: 6, con_registros:false,
-            id_selected:-1,link: $link);
+        $select = (new dp_calle_pertenece_html(html: $this->html_base))->select_dp_calle_pertenece_entre1_id(cols: 6,
+            con_registros:false, id_selected:-1,link: $link);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $select);
 
@@ -521,8 +519,8 @@ class org_empresa_html extends html_controler {
 
         $selects->dp_calle_pertenece_entre1_id = $select;
 
-        $select = (new dp_calle_pertenece_html(html: $this->html_base))->select_dp_calle_pertenece_entre2_id(cols: 6, con_registros:false,
-            id_selected:-1,link: $link);
+        $select = (new dp_calle_pertenece_html(html: $this->html_base))->select_dp_calle_pertenece_entre2_id(
+            cols: 6, con_registros:false, id_selected:-1,link: $link);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $select);
 
@@ -536,10 +534,15 @@ class org_empresa_html extends html_controler {
 
     private function selects_modifica(PDO $link, stdClass $row_upd): array|stdClass
     {
+        /**
+         * @Kevin Acuña
+         * REFACTORIZAR FUNCION
+         * Centralizar una funcion que genere un select para evitar la duplicidad de codigo
+         */
         $selects = new stdClass();
 
-        $select = (new cat_sat_regimen_fiscal_html(html:$this->html_base))->select_cat_sat_regimen_fiscal_id(cols: 12, con_registros:true,
-            id_selected:$row_upd->cat_sat_regimen_fiscal_id,link: $link);
+        $select = (new cat_sat_regimen_fiscal_html(html:$this->html_base))->select_cat_sat_regimen_fiscal_id(
+            cols: 12, con_registros:true, id_selected:$row_upd->cat_sat_regimen_fiscal_id,link: $link);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $select);
         }
@@ -591,8 +594,8 @@ class org_empresa_html extends html_controler {
         $selects->dp_cp_id = $select;
 
 
-        $select = (new dp_colonia_postal_html(html:$this->html_base))->select_dp_colonia_postal_id(cols: 12, con_registros:false,
-            id_selected:$row_upd->dp_colonia_postal_id,link: $link);
+        $select = (new dp_colonia_postal_html(html:$this->html_base))->select_dp_colonia_postal_id(
+            cols: 12, con_registros:false, id_selected:$row_upd->dp_colonia_postal_id,link: $link);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $select);
 
@@ -602,8 +605,8 @@ class org_empresa_html extends html_controler {
         $selects->dp_colonia_postal_id = $select;
 
 
-        $select = (new dp_calle_pertenece_html(html:$this->html_base))->select_dp_calle_pertenece_id(cols: 12, con_registros:false,
-            id_selected:$row_upd->dp_calle_pertenece_id,link: $link);
+        $select = (new dp_calle_pertenece_html(html:$this->html_base))->select_dp_calle_pertenece_id(
+            cols: 12, con_registros:false, id_selected:$row_upd->dp_calle_pertenece_id,link: $link);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $select);
 
@@ -612,8 +615,8 @@ class org_empresa_html extends html_controler {
 
         $selects->dp_calle_pertenece_id = $select;
 
-        $select = (new dp_calle_pertenece_html(html:$this->html_base))->select_dp_calle_pertenece_entre1_id(cols: 6, con_registros:false,
-            id_selected:$row_upd->dp_calle_pertenece_entre1_id,link: $link);
+        $select = (new dp_calle_pertenece_html(html:$this->html_base))->select_dp_calle_pertenece_entre1_id(
+            cols: 6, con_registros:false, id_selected:$row_upd->dp_calle_pertenece_entre1_id,link: $link);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $select);
 
@@ -622,8 +625,8 @@ class org_empresa_html extends html_controler {
 
         $selects->dp_calle_pertenece_entre1_id = $select;
 
-        $select = (new dp_calle_pertenece_html(html:$this->html_base))->select_dp_calle_pertenece_entre2_id(cols: 6, con_registros:false,
-            id_selected:$row_upd->dp_calle_pertenece_entre2_id,link: $link);
+        $select = (new dp_calle_pertenece_html(html:$this->html_base))->select_dp_calle_pertenece_entre2_id(
+            cols: 6, con_registros:false, id_selected:$row_upd->dp_calle_pertenece_entre2_id,link: $link);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $select);
 
