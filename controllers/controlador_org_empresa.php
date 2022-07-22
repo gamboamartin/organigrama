@@ -14,6 +14,7 @@ use gamboamartin\system\system;
 
 use gamboamartin\template\html;
 use html\org_empresa_html;
+use JsonException;
 use links\secciones\link_org_empresa;
 use models\org_empresa;
 use PDO;
@@ -119,5 +120,39 @@ class controlador_org_empresa extends system {
         return $r_modifica;
     }
 
+    /**
+     * @throws JsonException
+     */
+    public function modifica_generales(bool $header, bool $ws = false): array|stdClass
+    {
+
+        $keys_generales[] = 'codigo';
+        $keys_generales[] = 'rfc';
+        $keys_generales[] = 'razon_social';
+        $keys_generales[] = 'nombre_comercial';
+        $keys_generales[] = 'email_sat';
+        $keys_generales[] = 'fecha_inicio_operaciones';
+        $keys_generales[] = 'fecha_ultimo_cambio_sat';
+
+        $registro = array();
+        foreach ($keys_generales as $key_general){
+
+            if(isset($_POST[$key_general])){
+                $registro[$key_general] = $_POST[$key_general];
+            }
+        }
+        $r_modifica_bd = $this->modelo->modifica_bd(registro: $registro, id: $this->registro_id);
+        if(errores::$error){
+
+            return $this->retorno_error(mensaje: 'Error al modificar generales',data:  $r_modifica_bd,
+                header: $header,ws:$ws);
+        }
+
+        $_SESSION[$r_modifica_bd->salida][]['mensaje'] = $r_modifica_bd->mensaje.' del id '.$this->registro_id;
+        $this->header_out(result: $r_modifica_bd, header: $header,ws:  $ws);
+
+        return $r_modifica_bd;
+
+    }
 
 }
