@@ -11,7 +11,8 @@ namespace gamboamartin\organigrama\controllers;
 use gamboamartin\errores\errores;
 use gamboamartin\system\links_menu;
 use gamboamartin\system\system;
-use html\org_empresa_html;
+use gamboamartin\template\html;
+
 use html\org_sucursal_html;
 use models\org_sucursal;
 use PDO;
@@ -19,9 +20,11 @@ use stdClass;
 
 class controlador_org_sucursal extends system {
 
-    public function __construct(PDO $link, stdClass $paths_conf = new stdClass()){
+    public function __construct(PDO $link, html $html = new \gamboamartin\template_1\html(),
+                                stdClass $paths_conf = new stdClass()){
+
         $modelo = new org_sucursal(link: $link);
-        $html = new org_sucursal_html();
+        $html = new org_sucursal_html($html);
         $obj_link = new links_menu($this->registro_id);
         parent::__construct(html:$html, link: $link,modelo:  $modelo, obj_link: $obj_link, paths_conf: $paths_conf);
 
@@ -37,7 +40,7 @@ class controlador_org_sucursal extends system {
         }
 
 
-        $inputs = (new org_sucursal_html())->genera_inputs_alta(controler: $this, link: $this->link);
+        $inputs = (new org_sucursal_html($this->html_base))->genera_inputs_alta(controler: $this, link: $this->link);
         if(errores::$error){
             $error = $this->errores->error(mensaje: 'Error al generar inputs',data:  $inputs);
             print_r($error);

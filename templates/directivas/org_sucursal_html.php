@@ -1,9 +1,9 @@
 <?php
 namespace html;
 
-use controllers\controlador_org_empresa;
-use controllers\controlador_org_sucursal;
+
 use gamboamartin\errores\errores;
+use gamboamartin\organigrama\controllers\controlador_org_sucursal;
 use gamboamartin\system\html_controler;
 use PDO;
 use stdClass;
@@ -171,7 +171,7 @@ class org_sucursal_html extends html_controler {
     {
         $selects = new stdClass();
 
-        $select = (new dp_calle_pertenece_html())->select_dp_calle_pertenece_id(cols: 6, con_registros:false,
+        $select = (new dp_calle_pertenece_html($this->html_base))->select_dp_calle_pertenece_id(cols: 6, con_registros:false,
             id_selected:-1,link: $link);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $select);
@@ -179,7 +179,7 @@ class org_sucursal_html extends html_controler {
 
         $selects->dp_calle_pertenece_id = $select;
 
-        $select = (new dp_calle_pertenece_html())->select_dp_calle_pertenece_entre1_id(cols: 6, con_registros:false,
+        $select = (new dp_calle_pertenece_html($this->html_base))->select_dp_calle_pertenece_entre1_id(cols: 6, con_registros:false,
             id_selected:-1,link: $link);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $select);
@@ -188,7 +188,7 @@ class org_sucursal_html extends html_controler {
 
         $selects->dp_calle_pertenece_entre1_id = $select;
 
-        $select = (new dp_calle_pertenece_html())->select_dp_calle_pertenece_entre2_id(cols: 6, con_registros:false,
+        $select = (new dp_calle_pertenece_html($this->html_base))->select_dp_calle_pertenece_entre2_id(cols: 6, con_registros:false,
             id_selected:-1,link: $link);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $select);
@@ -197,7 +197,7 @@ class org_sucursal_html extends html_controler {
 
         $selects->dp_calle_pertenece_entre2_id = $select;
 
-        $select = (new org_empresa_html())->select_org_empresa_id(cols: 12, con_registros:false,
+        $select = (new org_empresa_html($this->html_base))->select_org_empresa_id(cols: 12, con_registros:false,
             id_selected:-1,link: $link);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $select);
