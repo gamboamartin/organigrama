@@ -4,7 +4,7 @@ namespace html;
 use gamboamartin\errores\errores;
 use gamboamartin\system\html_controler;
 use models\org_puesto;
-use models\org_representante_legal;
+
 use PDO;
 
 
