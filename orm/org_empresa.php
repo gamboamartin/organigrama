@@ -23,7 +23,7 @@ class org_empresa extends modelo{
 
     public function alta_bd(): array|stdClass
     {
-        $keys = array('razon_social','rfc','descripcion','codigo','nombre_comercial','fecha_inicio_operaciones',
+        $keys = array('razon_social','rfc','codigo','nombre_comercial','fecha_inicio_operaciones',
             'fecha_ultimo_cambio_sat','email_sat');
         $valida = $this->validacion->valida_existencia_keys(keys: $keys, registro: $this->registro);
         if(errores::$error){
