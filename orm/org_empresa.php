@@ -12,8 +12,7 @@ class org_empresa extends modelo{
         $columnas = array($tabla=>false,'cat_sat_regimen_fiscal'=>$tabla,'dp_calle_pertenece'=>$tabla,
             'dp_colonia_postal'=>'dp_calle_pertenece','dp_cp'=>'dp_colonia_postal','dp_municipio'=>'dp_cp',
             'dp_estado'=>'dp_municipio','dp_pais'=>'dp_estado');
-        $campos_obligatorios = array('nombre_comercial','fecha_inicio_operaciones',
-            'fecha_ultimo_cambio_sat','email_sat','rfc','razon_social');
+        $campos_obligatorios = array('codigo','nombre_comercial','rfc','razon_social');
 
         $no_duplicados = array('descripcion','codigo','descripcion_select','alias','codigo_bis','rfc','razon_social');
 
@@ -24,8 +23,7 @@ class org_empresa extends modelo{
 
     public function alta_bd(): array|stdClass
     {
-        $keys = array('razon_social','rfc','codigo','nombre_comercial','fecha_inicio_operaciones',
-            'fecha_ultimo_cambio_sat','email_sat');
+        $keys = array('razon_social','rfc','codigo','nombre_comercial');
         $valida = $this->validacion->valida_existencia_keys(keys: $keys, registro: $this->registro);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al validar registro', data: $valida);
