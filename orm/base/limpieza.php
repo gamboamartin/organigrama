@@ -53,6 +53,16 @@ class limpieza{
         return $controler->row_upd;
     }
 
+    public function init_foraneas(array $keys_foraneas, stdClass $org_empresa): stdClass
+    {
+        foreach ($keys_foraneas as $campo){
+            if(is_null($org_empresa->$campo)){
+                $org_empresa->$campo = '-1';
+            }
+        }
+        return $org_empresa;
+    }
+
     public function init_org_empresa_alta_bd(array $registro): array
     {
         $keys = array('razon_social','rfc');
