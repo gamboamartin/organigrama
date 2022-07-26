@@ -31,24 +31,12 @@ class org_empresa extends modelo{
             return $this->error->error(mensaje: 'Error al validar registro', data: $valida);
         }
 
-        if(!isset($this->registro['descripcion'])){
-            $this->registro['descripcion'] = $this->registro['razon_social'];
-        }
-        if(!isset($this->registro['codigo_bis'])){
-            $this->registro['codigo_bis'] = $this->registro['rfc'];
-        }
-        if(!isset($this->registro['descripcion_select'])){
-            $this->registro['descripcion_select'] = $this->registro['descripcion'];
-        }
-        if(!isset($this->registro['alias'])){
-            $this->registro['alias'] = $this->registro['descripcion'];
-        }
 
-
-        $registro = (new limpieza())->limpia_foraneas_org_empresa(registro:$this->registro);
+        $registro = (new limpieza())->init_org_empresa_alta_bd(registro:$this->registro);
         if(errores::$error){
-            return $this->error->error(mensaje: 'Error al limpiar registro', data: $registro);
+            return $this->error->error(mensaje: 'Error al inicializar registro', data: $registro);
         }
+
 
         $this->registro = $registro;
 
