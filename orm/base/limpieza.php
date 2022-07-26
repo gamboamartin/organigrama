@@ -39,7 +39,7 @@ class limpieza{
         return $registro;
     }
 
-    public function init_data_ubicacion(controler $controler, stdClass $org_empresa): stdClass
+    private function init_data_ubicacion(controler $controler, stdClass $org_empresa): stdClass
     {
         $controler->row_upd->dp_pais_id = $org_empresa->dp_pais_id;
         $controler->row_upd->dp_estado_id = $org_empresa->dp_estado_id;
@@ -53,7 +53,7 @@ class limpieza{
         return $controler->row_upd;
     }
 
-    public function init_foraneas(array $keys_foraneas, stdClass $org_empresa): stdClass
+    private function init_foraneas(array $keys_foraneas, stdClass $org_empresa): stdClass
     {
         foreach ($keys_foraneas as $campo){
             if(is_null($org_empresa->$campo)){
@@ -83,6 +83,26 @@ class limpieza{
         }
 
         return $registro;
+    }
+
+    public function init_upd_org_empresa(controler $controler, stdClass $org_empresa): array|stdClass
+    {
+        $keys_foraneas = array('dp_pais_id','dp_estado_id','dp_municipio_id','dp_cp_id','dp_colonia_postal_id',
+            'dp_calle_pertenece_id','org_empresa_dp_calle_pertenece_entre1_id','org_empresa_dp_calle_pertenece_entre2_id');
+
+
+        $init = $this->init_foraneas(keys_foraneas: $keys_foraneas,org_empresa:  $org_empresa);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al inicializa datos',data:  $init);
+
+        }
+
+
+        $init = $this->init_data_ubicacion(controler: $controler,org_empresa:  $org_empresa);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al inicializa datos',data:  $init);
+        }
+        return $init;
     }
 
     /**

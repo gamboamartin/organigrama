@@ -113,25 +113,13 @@ class controlador_org_empresa extends system{
         }
 
 
-        $keys_foraneas = array('dp_pais_id','dp_estado_id','dp_municipio_id','dp_cp_id','dp_colonia_postal_id',
-            'dp_calle_pertenece_id','org_empresa_dp_calle_pertenece_entre1_id','org_empresa_dp_calle_pertenece_entre2_id');
-
-
-        $init = (new limpieza())->init_foraneas(keys_foraneas: $keys_foraneas,org_empresa:  $org_empresa);
+        $init = (new limpieza())->init_upd_org_empresa(controler: $this,org_empresa:  $org_empresa);
         if(errores::$error){
             $error = $this->errores->error(mensaje: 'Error al inicializa datos',data:  $init);
             print_r($error);
             die('Error');
         }
 
-        
-
-        $init = (new limpieza())->init_data_ubicacion(controler: $this,org_empresa:  $org_empresa);
-        if(errores::$error){
-            $error = $this->errores->error(mensaje: 'Error al inicializa datos',data:  $init);
-            print_r($error);
-            die('Error');
-        }
 
 
 
