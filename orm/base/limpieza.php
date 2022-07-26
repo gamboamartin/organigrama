@@ -1,13 +1,25 @@
 <?php
 namespace models\base;
 use gamboamartin\errores\errores;
+use gamboamartin\validacion\validacion;
 
 class limpieza{
     private errores $error;
+    private validacion $validacion;
     public function __construct(){
         $this->error = new errores();
+        $this->validacion = new validacion();
     }
 
+    /**
+     * Inicializa la descripcion y el codigo de una empresa en alta bd
+     * @param array $registro Registro en ejecucion
+     * @version 0.56.14
+     * @verfuncion 0.1.0
+     * @author mgamboa
+     * @fecha 2022-07-26 09:58
+     * @return array
+     */
     private function init_data_base_org_empresa(array $registro): array
     {
         if(!isset($registro['descripcion'])){
@@ -27,6 +39,12 @@ class limpieza{
 
     public function init_org_empresa_alta_bd(array $registro): array
     {
+        $keys = array('razon_social','rfc');
+        $valida = $this->validacion->valida_existencia_keys(keys: $keys, registro: $registro);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al validar registro', data: $valida);
+        }
+
         $registro = $this->init_data_base_org_empresa(registro:$registro);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al inicializar registro', data: $registro);
