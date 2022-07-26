@@ -16,7 +16,6 @@ use html\org_empresa_html;
 use html\org_puesto_html;
 use html\org_tipo_puesto_html;
 use models\org_puesto;
-use models\org_tipo_puesto;
 use PDO;
 use stdClass;
 
