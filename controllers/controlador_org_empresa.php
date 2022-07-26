@@ -101,26 +101,12 @@ class controlador_org_empresa extends system{
             return $this->retorno_error(mensaje: 'Error al generar template',data:  $r_modifica, header: $header,ws:$ws);
         }
 
-        if(!isset($this->row_upd->cat_sat_regimen_fiscal_id)){
-            $this->row_upd->cat_sat_regimen_fiscal_id = -1;
-        }
-
-        $org_empresa = $this->modelo->registro(registro_id: $this->registro_id,retorno_obj: true);
-        if(errores::$error){
-            $error = $this->errores->error(mensaje: 'Error al obtener registro',data:  $org_empresa);
-            print_r($error);
-            die('Error');
-        }
-
-
-        $init = (new limpieza())->init_upd_org_empresa(controler: $this,org_empresa:  $org_empresa);
+        $init = (new limpieza())->init_modifica_org_empresa(controler: $this);
         if(errores::$error){
             $error = $this->errores->error(mensaje: 'Error al inicializa datos',data:  $init);
             print_r($error);
             die('Error');
         }
-
-
 
 
         $inputs = (new org_empresa_html(html: $this->html_base))->genera_inputs_modifica(controler: $this, link: $this->link);

@@ -63,6 +63,25 @@ class limpieza{
         return $org_empresa;
     }
 
+    public function init_modifica_org_empresa(controler $controler): array|stdClass
+    {
+        if(!isset($controler->row_upd->cat_sat_regimen_fiscal_id)){
+            $controler->row_upd->cat_sat_regimen_fiscal_id = -1;
+        }
+
+        $org_empresa = $controler->modelo->registro(registro_id: $controler->registro_id,retorno_obj: true);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al obtener registro',data:  $org_empresa);
+        }
+
+
+        $init = $this->init_upd_org_empresa(controler: $controler,org_empresa:  $org_empresa);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al inicializa datos',data:  $init);
+        }
+        return $init;
+    }
+
     public function init_org_empresa_alta_bd(array $registro): array
     {
         $keys = array('razon_social','rfc');
@@ -85,7 +104,7 @@ class limpieza{
         return $registro;
     }
 
-    public function init_upd_org_empresa(controler $controler, stdClass $org_empresa): array|stdClass
+    private function init_upd_org_empresa(controler $controler, stdClass $org_empresa): array|stdClass
     {
         $keys_foraneas = array('dp_pais_id','dp_estado_id','dp_municipio_id','dp_cp_id','dp_colonia_postal_id',
             'dp_calle_pertenece_id','org_empresa_dp_calle_pertenece_entre1_id','org_empresa_dp_calle_pertenece_entre2_id');
