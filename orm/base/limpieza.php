@@ -124,6 +124,8 @@ class limpieza{
         return $init;
     }
 
+
+
     /**
      * Limpia la llaves foraneas de la empresa a dar de alta
      * @param array $registro Registro en ejecucion

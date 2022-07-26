@@ -101,21 +101,13 @@ class controlador_org_empresa extends system{
             return $this->retorno_error(mensaje: 'Error al generar template',data:  $r_modifica, header: $header,ws:$ws);
         }
 
-        $init = (new limpieza())->init_modifica_org_empresa(controler: $this);
-        if(errores::$error){
-            $error = $this->errores->error(mensaje: 'Error al inicializa datos',data:  $init);
-            print_r($error);
-            die('Error');
-        }
 
-
-        $inputs = (new org_empresa_html(html: $this->html_base))->genera_inputs_modifica(controler: $this, link: $this->link);
+        $inputs = (new org_empresa_html(html: $this->html_base))->inputs_org_empresa(controlador_org_empresa:$this);
         if(errores::$error){
             $error = $this->errores->error(mensaje: 'Error al generar inputs',data:  $inputs);
             print_r($error);
             die('Error');
         }
-
 
         return $r_modifica;
     }

@@ -7,14 +7,13 @@ use gamboamartin\organigrama\controllers\controlador_org_empresa;
 use gamboamartin\system\html_controler;
 
 use gamboamartin\template\html;
+use models\base\limpieza;
 use models\org_empresa;
 use PDO;
 use stdClass;
 
 
 class org_empresa_html extends html_controler {
-
-
 
     private function asigna_inputs(controlador_org_empresa $controler, stdClass $inputs): array|stdClass
     {
@@ -174,7 +173,7 @@ class org_empresa_html extends html_controler {
         return $inputs_asignados;
     }
 
-    public function genera_inputs_modifica(controlador_org_empresa $controler,PDO $link): array|stdClass
+    private function genera_inputs_modifica(controlador_org_empresa $controler,PDO $link): array|stdClass
     {
         $inputs = $this->init_modifica(link: $link, row_upd: $controler->row_upd);
         if(errores::$error){
@@ -417,6 +416,21 @@ class org_empresa_html extends html_controler {
         }
 
         return $div;
+    }
+
+    public function inputs_org_empresa(controlador_org_empresa $controlador_org_empresa): array|stdClass
+    {
+        $init = (new limpieza())->init_modifica_org_empresa(controler: $controlador_org_empresa);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al inicializa datos',data:  $init);
+        }
+
+
+        $inputs = $this->genera_inputs_modifica(controler: $controlador_org_empresa, link: $controlador_org_empresa->link);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar inputs',data:  $inputs);
+        }
+        return $inputs;
     }
 
     public function select_org_empresa_id(int $cols,bool $con_registros,int $id_selected, PDO $link): array|string
