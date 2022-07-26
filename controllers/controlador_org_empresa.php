@@ -16,6 +16,7 @@ use gamboamartin\template\html;
 use html\org_empresa_html;
 use JsonException;
 use links\secciones\link_org_empresa;
+use models\base\limpieza;
 use models\org_empresa;
 use PDO;
 use stdClass;
@@ -97,16 +98,15 @@ class controlador_org_empresa extends system{
                 $org_empresa->$campo = '-1';
             }
         }
+        
 
+        $init = (new limpieza())->init_data_ubicacion(controler: $this,org_empresa:  $org_empresa);
+        if(errores::$error){
+            $error = $this->errores->error(mensaje: 'Error al inicializa datos',data:  $init);
+            print_r($error);
+            die('Error');
+        }
 
-        $this->row_upd->dp_pais_id = $org_empresa->dp_pais_id;
-        $this->row_upd->dp_estado_id = $org_empresa->dp_estado_id;
-        $this->row_upd->dp_municipio_id = $org_empresa->dp_municipio_id;
-        $this->row_upd->dp_cp_id = $org_empresa->dp_cp_id;
-        $this->row_upd->dp_colonia_postal_id = $org_empresa->dp_colonia_postal_id;
-        $this->row_upd->dp_calle_pertenece_id = $org_empresa->dp_calle_pertenece_id;
-        $this->row_upd->dp_calle_pertenece_entre1_id = $org_empresa->org_empresa_dp_calle_pertenece_entre1_id;
-        $this->row_upd->dp_calle_pertenece_entre2_id = $org_empresa->org_empresa_dp_calle_pertenece_entre2_id;
 
 
         $inputs = (new org_empresa_html(html: $this->html_base))->genera_inputs_modifica(controler: $this, link: $this->link);

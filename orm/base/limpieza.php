@@ -1,7 +1,9 @@
 <?php
 namespace models\base;
+use base\controller\controler;
 use gamboamartin\errores\errores;
 use gamboamartin\validacion\validacion;
+use stdClass;
 
 class limpieza{
     private errores $error;
@@ -35,6 +37,20 @@ class limpieza{
             $registro['alias'] = $registro['descripcion'];
         }
         return $registro;
+    }
+
+    public function init_data_ubicacion(controler $controler, stdClass $org_empresa): stdClass
+    {
+        $controler->row_upd->dp_pais_id = $org_empresa->dp_pais_id;
+        $controler->row_upd->dp_estado_id = $org_empresa->dp_estado_id;
+        $controler->row_upd->dp_municipio_id = $org_empresa->dp_municipio_id;
+        $controler->row_upd->dp_cp_id = $org_empresa->dp_cp_id;
+        $controler->row_upd->dp_colonia_postal_id = $org_empresa->dp_colonia_postal_id;
+        $controler->row_upd->dp_calle_pertenece_id = $org_empresa->dp_calle_pertenece_id;
+        $controler->row_upd->dp_calle_pertenece_entre1_id = $org_empresa->org_empresa_dp_calle_pertenece_entre1_id;
+        $controler->row_upd->dp_calle_pertenece_entre2_id = $org_empresa->org_empresa_dp_calle_pertenece_entre2_id;
+
+        return $controler->row_upd;
     }
 
     public function init_org_empresa_alta_bd(array $registro): array
