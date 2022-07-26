@@ -56,6 +56,51 @@ class limpiezaTest extends test {
         errores::$error = false;
     }
 
+    public function test_limpia_foraneas_org_empresa(): void
+    {
+        errores::$error = false;
+
+        $lim = new limpieza();
+        $lim = new liberator($lim);
+
+        $registro = array();
+        $registro['razon_social'] = 'a';
+        $registro['rfc'] = 'b';
+        $registro['cat_sat_regimen_fiscal_id'] = 'b';
+
+        $resultado = $lim->limpia_foraneas_org_empresa($registro);
+        $this->assertIsArray($resultado);
+        $this->assertNotTrue(errores::$error);
+        $this->assertEquals('b',$resultado['cat_sat_regimen_fiscal_id']);
+
+        errores::$error = false;
+
+        $registro = array();
+        $registro['razon_social'] = 'a';
+        $registro['rfc'] = 'b';
+        $registro['cat_sat_regimen_fiscal_id'] = '1';
+
+        $resultado = $lim->limpia_foraneas_org_empresa($registro);
+        $this->assertIsArray($resultado);
+        $this->assertNotTrue(errores::$error);
+        $this->assertEquals(1,$resultado['cat_sat_regimen_fiscal_id']);
+
+        errores::$error = false;
+
+        $registro = array();
+        $registro['razon_social'] = 'a';
+        $registro['rfc'] = 'b';
+        $registro['cat_sat_regimen_fiscal_id'] = '-1';
+
+        $resultado = $lim->limpia_foraneas_org_empresa($registro);
+        $this->assertIsArray($resultado);
+        $this->assertNotTrue(errores::$error);
+        $this->assertArrayNotHasKey('cat_sat_regimen_fiscal_id',$resultado);
+        errores::$error = false;
+
+    }
+
+
 
 
 

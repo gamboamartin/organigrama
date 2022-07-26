@@ -59,6 +59,15 @@ class limpieza{
         return $registro;
     }
 
+    /**
+     * Limpia la llaves foraneas de la empresa a dar de alta
+     * @param array $registro Registro en ejecucion
+     * @version 0.58.14
+     * @verfuncion 0.1.0
+     * @author mgamboa
+     * @fecha 2022-07-26 10:18
+     * @return array
+     */
     private function limpia_foraneas_org_empresa(array $registro): array
     {
         if(isset($registro['cat_sat_regimen_fiscal_id']) && (int)$registro['cat_sat_regimen_fiscal_id']===-1){
