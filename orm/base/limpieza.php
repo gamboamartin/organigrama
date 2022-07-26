@@ -65,6 +65,9 @@ class limpieza{
 
     public function init_modifica_org_empresa(controler $controler): array|stdClass
     {
+        if(!isset($controler->row_upd)){
+            $controler->row_upd = new stdClass();
+        }
         if(!isset($controler->row_upd->cat_sat_regimen_fiscal_id)){
             $controler->row_upd->cat_sat_regimen_fiscal_id = -1;
         }
