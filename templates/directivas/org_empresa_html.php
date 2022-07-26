@@ -33,7 +33,8 @@ class org_empresa_html extends html_controler {
         $controler->inputs->fecha_inicio_operaciones = $inputs->fechas->fecha_inicio_operaciones;
         $controler->inputs->fecha_ultimo_cambio_sat = $inputs->fechas->fecha_ultimo_cambio_sat;
 
-
+        $controler->inputs->logo = $inputs->texts->logo;
+        $controler->inputs->pagina_web = $inputs->texts->pagina_web;
         $controler->inputs->razon_social = $inputs->texts->razon_social;
         $controler->inputs->rfc = $inputs->texts->rfc;
         $controler->inputs->nombre_comercial = $inputs->texts->nombre_comercial;
@@ -346,6 +347,30 @@ class org_empresa_html extends html_controler {
         return $div;
     }
 
+    public function input_logo(int $cols, stdClass $row_upd, bool $value_vacio): array|string
+    {
+
+        if($cols<=0){
+            return $this->error->error(mensaje: 'Error cold debe ser mayor a 0', data: $cols);
+        }
+        if($cols>=13){
+            return $this->error->error(mensaje: 'Error cold debe ser menor o igual a  12', data: $cols);
+        }
+
+        $html =$this->directivas->input_text_required(disable: false,name: 'logo',place_holder: 'Logo',row_upd: $row_upd,
+            value_vacio: $value_vacio);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar input', data: $html);
+        }
+
+        $div = $this->directivas->html->div_group(cols: $cols,html:  $html);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al integrar div', data: $div);
+        }
+
+        return $div;
+    }
+
     public function input_nombre_comercial(int $cols, stdClass $row_upd, bool $value_vacio): array|string
     {
 
@@ -358,6 +383,30 @@ class org_empresa_html extends html_controler {
 
         $html =$this->directivas->input_text_required(disable: false,name: 'nombre_comercial',
             place_holder: 'Nombre Comercial',row_upd: $row_upd, value_vacio: $value_vacio);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar input', data: $html);
+        }
+
+        $div = $this->directivas->html->div_group(cols: $cols,html:  $html);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al integrar div', data: $div);
+        }
+
+        return $div;
+    }
+
+    public function input_pagina_web(int $cols, stdClass $row_upd, bool $value_vacio): array|string
+    {
+
+        if($cols<=0){
+            return $this->error->error(mensaje: 'Error cold debe ser mayor a 0', data: $cols);
+        }
+        if($cols>=13){
+            return $this->error->error(mensaje: 'Error cold debe ser menor o igual a  12', data: $cols);
+        }
+
+        $html =$this->directivas->input_text_required(disable: false,name: 'pagina-web',place_holder: 'Pagina Web',row_upd: $row_upd,
+            value_vacio: $value_vacio);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input', data: $html);
         }
@@ -768,6 +817,18 @@ class org_empresa_html extends html_controler {
             return $this->error->error(mensaje: 'Error al generar input',data:  $in_razon_social);
         }
         $texts->razon_social = $in_razon_social;
+
+        $in_logo = $this->input_logo(cols: 12,row_upd:  $row_upd,value_vacio:  $value_vacio);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar input',data:  $in_logo);
+        }
+        $texts->logo = $in_logo;
+
+        $in_pagina_web = $this->input_pagina_web(cols: 12,row_upd:  $row_upd,value_vacio:  $value_vacio);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar input',data:  $in_pagina_web);
+        }
+        $texts->pagina_web = $in_pagina_web;
 
         $in_rfc = $this->input_rfc(cols: 6,row_upd:  $row_upd,value_vacio:  $value_vacio);
         if(errores::$error){
