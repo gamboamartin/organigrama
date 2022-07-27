@@ -22,6 +22,8 @@ use PDO;
 use stdClass;
 
 class controlador_org_empresa extends system{
+    public string $rfc = '';
+    public string $razon_social = '';
 
     public function __construct(PDO $link, html $html = new \gamboamartin\template_1\html(),
                                 stdClass $paths_conf = new stdClass()){
@@ -83,6 +85,13 @@ class controlador_org_empresa extends system{
             return $this->retorno_error(mensaje: 'Error al inicializar inputs',data:  $inputs, header: $header,ws:$ws);
         }
 
+        $registro = (new org_empresa($this->link))->asigna_datos(controlador_org_empresa: $this,
+            registro_id: $this->registro_id);
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al maquetar datos',data:  $registro,
+                header: $header,ws:$ws);
+        }
+
         return $inputs;
 
     }
@@ -106,6 +115,13 @@ class controlador_org_empresa extends system{
             return $this->retorno_error(mensaje: 'Error al inicializar inputs',data:  $inputs, header: $header,ws:$ws);
         }
 
+        $registro = (new org_empresa($this->link))->asigna_datos(controlador_org_empresa: $this,
+            registro_id: $this->registro_id);
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al maquetar datos',data:  $registro,
+                header: $header,ws:$ws);
+        }
+
         return $inputs;
 
     }
@@ -120,6 +136,13 @@ class controlador_org_empresa extends system{
         $inputs = (new org_empresa_html(html: $this->html_base))->inputs_org_empresa(controlador_org_empresa:$this);
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al inicializar inputs',data:  $inputs, header: $header,ws:$ws);
+        }
+
+        $registro = (new org_empresa($this->link))->asigna_datos(controlador_org_empresa: $this,
+            registro_id: $this->registro_id);
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al maquetar datos',data:  $registro,
+                header: $header,ws:$ws);
         }
 
         return $inputs;
@@ -138,6 +161,13 @@ class controlador_org_empresa extends system{
             return $this->retorno_error(mensaje: 'Error al inicializar inputs',data:  $inputs, header: $header,ws:$ws);
         }
 
+        $registro = (new org_empresa($this->link))->asigna_datos(controlador_org_empresa: $this,
+            registro_id: $this->registro_id);
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al maquetar datos',data:  $registro,
+                header: $header,ws:$ws);
+        }
+
         return $inputs;
 
     }
@@ -152,6 +182,13 @@ class controlador_org_empresa extends system{
         $inputs = (new org_empresa_html(html: $this->html_base))->inputs_org_empresa(controlador_org_empresa:$this);
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al inicializar inputs',data:  $inputs, header: $header,ws:$ws);
+        }
+
+        $registro = (new org_empresa($this->link))->asigna_datos(controlador_org_empresa: $this,
+            registro_id: $this->registro_id);
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al maquetar datos',data:  $registro,
+                header: $header,ws:$ws);
         }
 
         return $r_modifica;
@@ -207,6 +244,13 @@ class controlador_org_empresa extends system{
         $inputs = (new org_empresa_html(html: $this->html_base))->inputs_org_empresa(controlador_org_empresa:$this);
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al inicializar inputs',data:  $inputs, header: $header,ws:$ws);
+        }
+
+        $registro = (new org_empresa($this->link))->asigna_datos(controlador_org_empresa: $this,
+            registro_id: $this->registro_id);
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al maquetar datos',data:  $registro,
+                header: $header,ws:$ws);
         }
 
         return $inputs;

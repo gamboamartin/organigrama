@@ -2,6 +2,7 @@
 namespace models;
 use base\orm\modelo;
 use gamboamartin\errores\errores;
+use gamboamartin\organigrama\controllers\controlador_org_empresa;
 use models\base\limpieza;
 use PDO;
 use stdClass;
@@ -44,5 +45,16 @@ class org_empresa extends modelo{
             return $this->error->error(mensaje: 'Error al dar de alta empresa', data: $r_alta_bd);
         }
         return $r_alta_bd;
+    }
+
+    public function asigna_datos(controlador_org_empresa $controlador_org_empresa, int $registro_id){
+        $registro = (new org_empresa($this->link))->registro(registro_id: $registro_id);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al inicializar registro empresa', data: $registro);
+        }
+        $controlador_org_empresa->rfc = $registro['org_empresa_rfc'];
+        $controlador_org_empresa->razon_social = $registro['org_empresa_descripcion'];
+
+        return $controlador_org_empresa;
     }
 }
