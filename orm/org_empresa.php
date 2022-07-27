@@ -53,7 +53,7 @@ class org_empresa extends modelo{
             return $this->error->error(mensaje: 'Error al inicializar registro empresa', data: $registro);
         }
         $controlador_org_empresa->rfc = $registro['org_empresa_rfc'];
-        $controlador_org_empresa->razon_social = $registro['org_empresa_descripcion'];
+        $controlador_org_empresa->razon_social = $registro['org_empresa_razon_social'];
 
         return $controlador_org_empresa;
     }
