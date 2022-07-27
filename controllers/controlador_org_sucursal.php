@@ -9,11 +9,12 @@
 namespace gamboamartin\organigrama\controllers;
 
 use gamboamartin\errores\errores;
-use gamboamartin\system\links_menu;
+
 use gamboamartin\system\system;
 use gamboamartin\template\html;
 
 use html\org_sucursal_html;
+use links\secciones\link_org_sucursal;
 use models\org_sucursal;
 use PDO;
 use stdClass;
@@ -25,7 +26,7 @@ class controlador_org_sucursal extends system {
 
         $modelo = new org_sucursal(link: $link);
         $html = new org_sucursal_html($html);
-        $obj_link = new links_menu($this->registro_id);
+        $obj_link = new link_org_sucursal($this->registro_id);
         parent::__construct(html:$html, link: $link,modelo:  $modelo, obj_link: $obj_link, paths_conf: $paths_conf);
 
         $this->titulo_lista = 'Sucursales';
