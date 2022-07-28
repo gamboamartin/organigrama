@@ -18,6 +18,7 @@
 <?php echo $controlador->inputs->select->dp_calle_pertenece_id; ?>
 <?php echo $controlador->inputs->select->dp_calle_pertenece_entre1_id; ?>
 <?php echo $controlador->inputs->select->dp_calle_pertenece_entre2_id; ?>
+<?php echo $controlador->inputs->select->org_tipo_empresa_id; ?>
 
 <?php echo $controlador->inputs->exterior; ?>
 <?php echo $controlador->inputs->interior; ?>

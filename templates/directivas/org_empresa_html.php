@@ -28,6 +28,7 @@ class org_empresa_html extends html_controler {
         $controler->inputs->select->dp_calle_pertenece_id = $inputs->selects->dp_calle_pertenece_id;
         $controler->inputs->select->dp_calle_pertenece_entre1_id = $inputs->selects->dp_calle_pertenece_entre1_id;
         $controler->inputs->select->dp_calle_pertenece_entre2_id = $inputs->selects->dp_calle_pertenece_entre2_id;
+        $controler->inputs->select->org_tipo_empresa_id = $inputs->selects->org_tipo_empresa_id;
 
 
         $controler->inputs->fecha_inicio_operaciones = $inputs->fechas->fecha_inicio_operaciones;
@@ -589,8 +590,17 @@ class org_empresa_html extends html_controler {
 
         }
 
-
         $selects->dp_calle_pertenece_entre2_id = $select;
+
+
+        $select = (new org_tipo_empresa_html(html: $this->html_base))->select_org_tipo_empresa_id(
+            cols: 12, con_registros:false, id_selected:-1,link: $link);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar select',data:  $select);
+
+        }
+
+        $selects->org_tipo_empresa_id = $select;
 
         return $selects;
     }
