@@ -48,7 +48,7 @@ class controlador_org_porcentaje_act_economica extends system {
         }
 
 
-        $this->inputs->select->org_representante_legal_id = $select;
+        $this->inputs->select->cat_sat_actividad_economica_id = $select;
 
         $select = (new org_empresa_html(html: $this->html_base))->select_org_empresa_id(cols:12,con_registros:true,id_selected:-1,link: $this->link);
         if(errores::$error){
