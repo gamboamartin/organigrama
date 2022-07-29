@@ -39,31 +39,14 @@ class controlador_org_porcentaje_act_economica extends system {
             return $this->retorno_error(mensaje: 'Error al generar template',data:  $r_alta, header: $header,ws:$ws);
         }
 
-        $this->inputs->select = new stdClass();
-        $select = (new cat_sat_actividad_economica_html(html: $this->html_base))->select_cat_sat_actividad_economica_id(cols:12,con_registros:true,id_selected:-1,link: $this->link);
+        $inputs = (new org_porcentaje_act_economica_html(html: $this->html_base))->genera_inputs_alta(controler: $this, link: $this->link);
         if(errores::$error){
-            $error = $this->errores->error(mensaje: 'Error al generar select',data:  $select);
+            $error = $this->errores->error(mensaje: 'Error al generar inputs',data:  $inputs);
             print_r($error);
             die('Error');
         }
-
-
-        $this->inputs->select->cat_sat_actividad_economica_id = $select;
-
-        $select = (new org_empresa_html(html: $this->html_base))->select_org_empresa_id(cols:12,con_registros:true,id_selected:-1,link: $this->link);
-        if(errores::$error){
-            $error = $this->errores->error(mensaje: 'Error al generar select',data:  $select);
-            print_r($error);
-            die('Error');
-        }
-
-
-        $this->inputs->select->org_empresa_id = $select;
-
-
-
 
         return $r_alta;
-
     }
+
 }
