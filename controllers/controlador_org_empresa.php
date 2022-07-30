@@ -77,7 +77,7 @@ class controlador_org_empresa extends system{
         $this->link->commit();
 
         if($header){
-            $retorno = (new actions())->retorno_alta_bd(registro_id: $r_alta_bd->registro_id, seccion: $this->tabla,
+            $retorno = (new actions())->retorno_alta_bd(links:$this->obj_link,seccion: $this->tabla,
                 siguiente_view: $r_alta_bd->siguiente_view);
             if(errores::$error){
                 return $this->retorno_error(mensaje: 'Error al dar de alta registro', data: $r_alta_bd, header:  true,
