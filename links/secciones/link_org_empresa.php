@@ -71,7 +71,7 @@ class link_org_empresa extends links_menu {
      */
     private function org_empresa_ubicacion(int $registro_id): string
     {
-        return "./index.php?seccion=org_empresa&accion=alta&registro_id=$registro_id";
+        return "./index.php?seccion=org_empresa&accion=ubicacion&registro_id=$registro_id";
     }
 
 
