@@ -64,6 +64,11 @@ class link_org_empresa extends links_menu {
         return "./index.php?seccion=org_empresa&accion=alta";
     }
 
+    /**
+     * Genera un link de tipo ubicacion
+     * @param int $registro_id Registro identificador
+     * @return string
+     */
     private function org_empresa_ubicacion(int $registro_id): string
     {
         return "./index.php?seccion=org_empresa&accion=alta&registro_id=$registro_id";
