@@ -19,6 +19,10 @@ class link_org_empresa extends links_menu {
         return $org_empresa_alta;
     }
 
+    /**
+     * @param int $registro_id
+     * @return array|string
+     */
     private function link_org_empresa_ubicacion(int $registro_id): array|string
     {
         $org_empresa_ubicacion = $this->org_empresa_ubicacion(registro_id:$registro_id);
@@ -30,6 +34,10 @@ class link_org_empresa extends links_menu {
         return $org_empresa_ubicacion;
     }
 
+    /**
+     * @param int $registro_id
+     * @return stdClass|array
+     */
     protected function links(int $registro_id): stdClass|array
     {
 
@@ -67,6 +75,10 @@ class link_org_empresa extends links_menu {
     /**
      * Genera un link de tipo ubicacion
      * @param int $registro_id Registro identificador
+     * @version 0.85.22
+     * @verfuncion 0.1.0
+     * @author mgamboa
+     * @fecha 2022-07-30 13:38
      * @return string
      */
     private function org_empresa_ubicacion(int $registro_id): string
