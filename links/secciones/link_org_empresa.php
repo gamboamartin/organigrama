@@ -19,6 +19,17 @@ class link_org_empresa extends links_menu {
         return $org_empresa_alta;
     }
 
+    private function link_org_empresa_ubicacion(int $registro_id): array|string
+    {
+        $org_empresa_ubicacion = $this->org_empresa_ubicacion(registro_id:$registro_id);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al obtener link de org_empresa ubicacion', data: $org_empresa_ubicacion);
+        }
+
+        $org_empresa_ubicacion.="&session_id=$this->session_id";
+        return $org_empresa_ubicacion;
+    }
+
     protected function links(int $registro_id): stdClass|array
     {
 
@@ -33,6 +44,13 @@ class link_org_empresa extends links_menu {
         }
         $this->links->org_empresa->nueva_empresa = $org_empresa_alta;
 
+        $org_empresa_ubicacion = $this->link_org_empresa_ubicacion(registro_id: $registro_id);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar link', data: $org_empresa_ubicacion);
+        }
+
+        $this->links->org_empresa->ubicacion = $org_empresa_ubicacion;
+
         return $links;
     }
 
@@ -44,6 +62,11 @@ class link_org_empresa extends links_menu {
     private function org_empresa_alta(): string
     {
         return "./index.php?seccion=org_empresa&accion=alta";
+    }
+
+    private function org_empresa_ubicacion(int $registro_id): string
+    {
+        return "./index.php?seccion=org_empresa&accion=alta&registro_id=$registro_id";
     }
 
 
