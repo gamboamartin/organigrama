@@ -49,6 +49,7 @@ class limpieza{
         $controler->row_upd->dp_calle_pertenece_id = $org_empresa->dp_calle_pertenece_id;
         $controler->row_upd->dp_calle_pertenece_entre1_id = $org_empresa->org_empresa_dp_calle_pertenece_entre1_id;
         $controler->row_upd->dp_calle_pertenece_entre2_id = $org_empresa->org_empresa_dp_calle_pertenece_entre2_id;
+        $controler->row_upd->org_tipo_empresa_id = $org_empresa->org_tipo_empresa_id;
 
         return $controler->row_upd;
     }
@@ -71,6 +72,7 @@ class limpieza{
         if(!isset($controler->row_upd->cat_sat_regimen_fiscal_id)){
             $controler->row_upd->cat_sat_regimen_fiscal_id = -1;
         }
+
 
         $org_empresa = $controler->modelo->registro(registro_id: $controler->registro_id,retorno_obj: true);
         if(errores::$error){
@@ -110,7 +112,8 @@ class limpieza{
     private function init_upd_org_empresa(controler $controler, stdClass $org_empresa): array|stdClass
     {
         $keys_foraneas = array('dp_pais_id','dp_estado_id','dp_municipio_id','dp_cp_id','dp_colonia_postal_id',
-            'dp_calle_pertenece_id','org_empresa_dp_calle_pertenece_entre1_id','org_empresa_dp_calle_pertenece_entre2_id');
+            'dp_calle_pertenece_id','org_empresa_dp_calle_pertenece_entre1_id',
+            'org_empresa_dp_calle_pertenece_entre2_id','org_tipo_empresa_id');
 
 
         $init = $this->init_foraneas(keys_foraneas: $keys_foraneas,org_empresa:  $org_empresa);
