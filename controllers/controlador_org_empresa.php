@@ -221,6 +221,39 @@ class controlador_org_empresa extends system{
     }
 
     /**
+     * @author israel hernandez
+     * @version 1.205.34
+     * @version v0.1.0
+     * @created 2022-08-01
+     * @throws JsonException
+     */
+    public function modifica_cif(bool $header, bool $ws = false): array|stdClass
+    {
+        $keys_cifs[] = 'cat_sat_regimen_fiscal_id';
+        $keys_cifs[] = 'fecha_inicio_operaciones';
+        $keys_cifs[] = 'fecha_ultimo_cambio_sat';
+        $keys_cifs[] = 'email_sat';
+
+        $registro = array();
+        foreach ($keys_cifs as $key_general){
+            if(isset($_POST[$key_general])){
+                $registro[$key_general] = $_POST[$key_general];
+            }
+        }
+        $r_modifica_bd = $this->modelo->modifica_bd(registro: $registro, id: $this->registro_id);
+        if(errores::$error){
+
+            return $this->retorno_error(mensaje: 'Error al modificar generales',data:  $r_modifica_bd,
+                header: $header,ws:$ws);
+        }
+
+        $_SESSION[$r_modifica_bd->salida][]['mensaje'] = $r_modifica_bd->mensaje.' del id '.$this->registro_id;
+        $this->header_out(result: $r_modifica_bd, header: $header,ws:  $ws);
+
+        return $r_modifica_bd;
+    }
+
+    /**
      * @throws JsonException
      */
     public function modifica_generales(bool $header, bool $ws = false): array|stdClass
