@@ -222,7 +222,7 @@ class controlador_org_empresa extends system{
 
     /**
      * @author israel hernandez
-     * @version 1.205.34
+     * @version v0.88.23
      * @version v0.1.0
      * @created 2022-08-01
      * @throws JsonException
