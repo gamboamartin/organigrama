@@ -144,16 +144,20 @@ class org_empresa_html extends html_controler {
 
         $fechas = new stdClass();
 
-        $row_upd->fecha_inicio_operaciones = date('Y-m-d');
+        if(!isset($row_upd->fecha_inicio_operaciones)){
+            $row_upd->fecha_inicio_operaciones = date('Y-m-d');
+        }
 
         $fec_fecha_inicio_operaciones = $this->fec_fecha_inicio_operaciones(cols: 6,row_upd: $row_upd,
             value_vacio:  false);
         if(errores::$error){
-           return $this->error->error(mensaje: 'Error al generar input',data:  $fec_fecha_inicio_operaciones);
+            return $this->error->error(mensaje: 'Error al generar input',data:  $fec_fecha_inicio_operaciones);
         }
         $fechas->fecha_inicio_operaciones = $fec_fecha_inicio_operaciones;
 
-        $row_upd->fecha_ultimo_cambio_sat = date('Y-m-d');
+        if(!isset($row_upd->fecha_ultimo_cambio_sat)){
+            $row_upd->fecha_ultimo_cambio_sat = date('Y-m-d');
+        }
 
         $fec_fecha_ultimo_cambio_sat = $this->fec_fecha_ultimo_cambio_sat(cols: 6,row_upd:
             $row_upd,value_vacio:  false);
