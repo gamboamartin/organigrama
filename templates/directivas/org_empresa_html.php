@@ -144,7 +144,7 @@ class org_empresa_html extends html_controler {
 
         $fechas = new stdClass();
 
-        if(!isset($row_upd->fecha_inicio_operaciones)){
+        if(!isset($row_upd->fecha_inicio_operaciones) || $row_upd->fecha_inicio_operaciones === '0000-00-00') {
             $row_upd->fecha_inicio_operaciones = date('Y-m-d');
         }
 
@@ -155,7 +155,7 @@ class org_empresa_html extends html_controler {
         }
         $fechas->fecha_inicio_operaciones = $fec_fecha_inicio_operaciones;
 
-        if(!isset($row_upd->fecha_ultimo_cambio_sat)){
+        if(!isset($row_upd->fecha_ultimo_cambio_sat) || $row_upd->fecha_ultimo_cambio_sat === '0000-00-00'){
             $row_upd->fecha_ultimo_cambio_sat = date('Y-m-d');
         }
 
