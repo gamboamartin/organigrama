@@ -8,6 +8,7 @@ use gamboamartin\test\test;
 use JsonException;
 use links\secciones\link_org_empresa;
 use models\org_empresa;
+use models\org_sucursal;
 use stdClass;
 
 
@@ -50,6 +51,13 @@ class controlador_org_empresaTest extends test {
         $registro['fecha_inicio_operaciones'] = 'a';
         $registro['fecha_ultimo_cambio_sat'] = 'a';
         $registro['email_sat'] = 'a';
+
+        $r_elimina_sucursales = (new org_sucursal($this->link))->elimina_todo();
+        if(errores::$error){
+            $error = (new errores())->error('Error al eliminar empresa', $r_elimina_sucursales);
+            print_r($error);
+            exit;
+        }
 
         $r_elimina_empresas = (new org_empresa($this->link))->elimina_todo();
         if(errores::$error){

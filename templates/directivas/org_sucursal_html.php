@@ -19,11 +19,14 @@ class org_sucursal_html extends html_controler {
         $controler->inputs->select->dp_calle_pertenece_entre1_id = $inputs->selects->dp_calle_pertenece_entre1_id;
         $controler->inputs->select->dp_calle_pertenece_entre2_id = $inputs->selects->dp_calle_pertenece_entre2_id;
         $controler->inputs->select->org_empresa_id = $inputs->selects->org_empresa_id;
+        $controler->inputs->select->dp_pais_id = $inputs->selects->dp_pais_id;
 
         $controler->inputs->fecha_inicio_operaciones = $inputs->fechas->fecha_inicio_operaciones;
 
         $controler->inputs->exterior = $inputs->texts->exterior;
         $controler->inputs->interior = $inputs->texts->interior;
+        $controler->inputs->codigo = $inputs->texts->codigo;
+        $controler->inputs->codigo_bis = $inputs->texts->codigo_bis;
 
         $controler->inputs->telefono_1 = $inputs->telefonos->telefono_1;
         $controler->inputs->telefono_2 = $inputs->telefonos->telefono_2;
@@ -37,7 +40,7 @@ class org_sucursal_html extends html_controler {
 
         $fechas = new stdClass();
 
-        $fec_fecha_inicio_operaciones = $this->fec_fecha_inicio_operaciones(cols: 6,row_upd:
+        $fec_fecha_inicio_operaciones = $this->fec_fecha_inicio_operaciones(cols: 4,row_upd:
             new stdClass(),value_vacio:  true);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input',data:  $fec_fecha_inicio_operaciones);
@@ -119,6 +122,54 @@ class org_sucursal_html extends html_controler {
         return $alta_inputs;
     }
 
+    public function input_codigo(int $cols, stdClass $row_upd, bool $value_vacio): array|string
+    {
+
+        if($cols<=0){
+            return $this->error->error(mensaje: 'Error cold debe ser mayor a 0', data: $cols);
+        }
+        if($cols>=13){
+            return $this->error->error(mensaje: 'Error cold debe ser menor o igual a  12', data: $cols);
+        }
+
+        $html =$this->directivas->input_text_required(disable: false,name: 'codigo',place_holder: 'Codigo',row_upd: $row_upd,
+            value_vacio: $value_vacio);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar input', data: $html);
+        }
+
+        $div = $this->directivas->html->div_group(cols: $cols,html:  $html);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al integrar div', data: $div);
+        }
+
+        return $div;
+    }
+
+    public function input_codigo_bis(int $cols, stdClass $row_upd, bool $value_vacio): array|string
+    {
+
+        if($cols<=0){
+            return $this->error->error(mensaje: 'Error cold debe ser mayor a 0', data: $cols);
+        }
+        if($cols>=13){
+            return $this->error->error(mensaje: 'Error cold debe ser menor o igual a  12', data: $cols);
+        }
+
+        $html =$this->directivas->input_text_required(disable: false,name: 'codigo_bis',place_holder: 'Codigo BIS',
+            row_upd: $row_upd, value_vacio: $value_vacio);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar input', data: $html);
+        }
+
+        $div = $this->directivas->html->div_group(cols: $cols,html:  $html);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al integrar div', data: $div);
+        }
+
+        return $div;
+    }
+
     public function input_exterior(int $cols, stdClass $row_upd, bool $value_vacio): array|string
     {
 
@@ -170,6 +221,14 @@ class org_sucursal_html extends html_controler {
     private function selects_alta(PDO $link): array|stdClass
     {
         $selects = new stdClass();
+
+        $select = (new dp_pais_html($this->html_base))->select_dp_pais_id(cols: 6, con_registros:false,
+            id_selected:-1,link: $link);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar select',data:  $select);
+        }
+
+        $selects->dp_pais_id = $select;
 
         $select = (new dp_calle_pertenece_html($this->html_base))->select_dp_calle_pertenece_id(cols: 6, con_registros:false,
             id_selected:-1,link: $link);
@@ -324,6 +383,18 @@ class org_sucursal_html extends html_controler {
             return $this->error->error(mensaje: 'Error al generar input',data:  $in_exterior);
         }
         $texts->interior = $in_interior;
+
+        $in_codigo = $this->input_codigo(cols: 4,row_upd:  new stdClass(),value_vacio:  true);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar input',data:  $in_codigo);
+        }
+        $texts->codigo = $in_codigo;
+
+        $in_codigo_bis = $this->input_codigo_bis(cols: 4,row_upd:  new stdClass(),value_vacio:  true);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar input',data:  $in_codigo_bis);
+        }
+        $texts->codigo_bis = $in_codigo_bis;
 
         return $texts;
     }
