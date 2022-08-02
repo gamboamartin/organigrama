@@ -20,6 +20,7 @@ class org_sucursal_html extends html_controler {
         $controler->inputs->select->dp_calle_pertenece_entre2_id = $inputs->selects->dp_calle_pertenece_entre2_id;
         $controler->inputs->select->org_empresa_id = $inputs->selects->org_empresa_id;
         $controler->inputs->select->dp_pais_id = $inputs->selects->dp_pais_id;
+        $controler->inputs->select->dp_estado_id = $inputs->selects->dp_estado_id;
 
         $controler->inputs->fecha_inicio_operaciones = $inputs->fechas->fecha_inicio_operaciones;
 
@@ -229,6 +230,14 @@ class org_sucursal_html extends html_controler {
         }
 
         $selects->dp_pais_id = $select;
+
+        $select = (new dp_estado_html($this->html_base))->select_dp_estado_id(cols: 6, con_registros:false,
+            id_selected:-1,link: $link);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar select',data:  $select);
+        }
+
+        $selects->dp_estado_id = $select;
 
         $select = (new dp_calle_pertenece_html($this->html_base))->select_dp_calle_pertenece_id(cols: 6, con_registros:false,
             id_selected:-1,link: $link);

@@ -40,12 +40,9 @@ class controlador_org_sucursal extends system {
             return $this->retorno_error(mensaje: 'Error al generar template',data:  $r_alta, header: $header,ws:$ws);
         }
 
-
         $inputs = (new org_sucursal_html($this->html_base))->genera_inputs_alta(controler: $this, link: $this->link);
         if(errores::$error){
-            $error = $this->errores->error(mensaje: 'Error al generar inputs',data:  $inputs);
-            print_r($error);
-            die('Error');
+            return $this->retorno_error(mensaje: 'Error al generar inputs',data:  $inputs, header: $header,ws:$ws);
         }
         return $r_alta;
 
