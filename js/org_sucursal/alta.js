@@ -29,6 +29,6 @@ sl_org_empresa_id.change(function(){
     if(fecha_inicio_operaciones !== '0000-00-00'){
         txt_fecha_inicio_operaciones.val(fecha_inicio_operaciones);
     }
-    
+
 });
 
