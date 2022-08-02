@@ -25,9 +25,9 @@ class controlador_org_sucursal extends system {
                                 stdClass $paths_conf = new stdClass()){
 
         $modelo = new org_sucursal(link: $link);
-        $html = new org_sucursal_html($html);
+        $html_ = new org_sucursal_html($html);
         $obj_link = new link_org_sucursal($this->registro_id);
-        parent::__construct(html:$html, link: $link,modelo:  $modelo, obj_link: $obj_link, paths_conf: $paths_conf);
+        parent::__construct(html:$html_, link: $link,modelo:  $modelo, obj_link: $obj_link, paths_conf: $paths_conf);
 
         $this->titulo_lista = 'Sucursales';
 

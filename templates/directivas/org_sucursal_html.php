@@ -197,7 +197,7 @@ class org_sucursal_html extends html_controler {
 
         $selects->dp_calle_pertenece_entre2_id = $select;
 
-        $select = (new org_empresa_html($this->html_base))->select_org_empresa_id(cols: 12, con_registros:false,
+        $select = (new org_empresa_html($this->html_base))->select_org_empresa_id(cols: 12, con_registros:true,
             id_selected:-1,link: $link);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $select);
