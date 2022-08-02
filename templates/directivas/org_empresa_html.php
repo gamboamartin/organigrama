@@ -496,7 +496,7 @@ class org_empresa_html extends html_controler {
         $modelo = new org_empresa($link);
 
         $select = $this->select_catalogo(cols:$cols,con_registros:$con_registros,id_selected:$id_selected,
-            modelo: $modelo);
+            modelo: $modelo,extra_params_keys: array('org_empresa_fecha_inicio_operaciones'));
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select', data: $select);
         }
