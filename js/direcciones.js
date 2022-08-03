@@ -56,9 +56,7 @@ let dp_municipio_id = -1;
 let dp_cp_id = -1;
 let dp_colonia_postal_id = -1;
 
-if(dp_pais_id>0){
-   dp_asigna_estados();
-}
+
 sl_dp_pais_id.change(function(){
     dp_asigna_estados();
 });

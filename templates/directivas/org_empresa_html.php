@@ -533,9 +533,10 @@ class org_empresa_html extends html_controler {
 
         $selects->dp_pais_id = $select;
 
+        $dp_estado_id = $generales->defaults['dp_estado']['id'] ?? -1;
 
-        $select = (new dp_estado_html(html: $this->html_base))->select_dp_estado_id(cols: 6, con_registros:false,
-            id_selected:-1,link: $link);
+        $select = (new dp_estado_html(html: $this->html_base))->select_dp_estado_id(cols: 6, con_registros:true,
+            id_selected:$dp_estado_id,link: $link);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $select);
 
