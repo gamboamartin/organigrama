@@ -13,6 +13,7 @@ document.write('<script src="'+direcciones_js+'"></script>');
 
 let session_id = getParameterByName('session_id');
 
+let sl_local_dp_colonia_postal_id = $("#dp_colonia_postal_id");
 
 
 let sl_dp_calle_pertenece_entre1_id = $("#dp_calle_pertenece_entre1_id");
@@ -20,9 +21,7 @@ let sl_dp_calle_pertenece_entre2_id = $("#dp_calle_pertenece_entre2_id");
 
 
 
-
-
-sl_dp_colonia_postal_id.change(function(){
+sl_local_dp_colonia_postal_id.change(function(){
     dp_colonia_postal_id = $(this).val();
     let url = "index.php?seccion=dp_calle_pertenece&ws=1&accion=get_calle_pertenece&dp_colonia_postal_id="+dp_colonia_postal_id+"&session_id="+session_id;
 

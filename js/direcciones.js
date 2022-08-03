@@ -22,7 +22,7 @@ sl_dp_pais_id.change(function(){
         type: 'GET',
         url: url,
     }).done(function( data ) {  // Función que se ejecuta si todo ha ido bien
-        console.log(data);
+
         $.each(data.registros, function( index, dp_estado ) {
             integra_new_option("#dp_estado_id",dp_estado.dp_pais_descripcion+' '+dp_estado.dp_estado_descripcion,dp_estado.dp_estado_id);
         });
@@ -41,7 +41,7 @@ sl_dp_estado_id.change(function(){
         type: 'GET',
         url: url,
     }).done(function( data ) {  // Función que se ejecuta si todo ha ido bien
-        console.log(data);
+
         $.each(data.registros, function( index, dp_municipio ) {
             integra_new_option("#dp_municipio_id",dp_municipio.dp_estado_descripcion+' '+dp_municipio.dp_municipio_descripcion,dp_municipio.dp_municipio_id);
         });
@@ -61,7 +61,7 @@ sl_dp_municipio_id.change(function(){
         type: 'GET',
         url: url,
     }).done(function( data ) {  // Función que se ejecuta si todo ha ido bien
-        console.log(data);
+
         $.each(data.registros, function( index, dp_cp ) {
             integra_new_option("#dp_cp_id",dp_cp.dp_municipio_descripcion+' '+dp_cp.dp_cp_descripcion,dp_cp.dp_cp_id);
         });
@@ -80,7 +80,7 @@ sl_dp_cp_id.change(function(){
         type: 'GET',
         url: url,
     }).done(function( data ) {  // Función que se ejecuta si todo ha ido bien
-        console.log(data);
+
         $.each(data.registros, function( index, dp_colonia_postal ) {
             integra_new_option("#dp_colonia_postal_id",dp_colonia_postal.dp_colonia_descripcion+' '+dp_colonia_postal.dp_cp_descripcion,dp_colonia_postal.dp_colonia_postal_id);
         });
@@ -94,12 +94,12 @@ sl_dp_cp_id.change(function(){
 sl_dp_colonia_postal_id.change(function(){
     dp_colonia_postal_id = $(this).val();
     let url = "index.php?seccion=dp_calle_pertenece&ws=1&accion=get_calle_pertenece&dp_colonia_postal_id="+dp_colonia_postal_id+"&session_id="+session_id;
-    console.log(url);
+
     $.ajax({
         type: 'GET',
         url: url,
     }).done(function( data ) {  // Función que se ejecuta si todo ha ido bien
-        console.log(data);
+
         $.each(data.registros, function( index, dp_calle_pertenece ) {
             integra_new_option("#dp_calle_pertenece_id",dp_calle_pertenece.dp_colonia_descripcion+' '+dp_calle_pertenece.dp_cp_descripcion+' '+dp_calle_pertenece.dp_calle_descripcion,dp_calle_pertenece.dp_calle_pertenece_id);
         });
