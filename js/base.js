@@ -9,6 +9,7 @@ function integra_new_option(container, descripcion, value){
     $(new_option).appendTo(container);
 }
 
+
 function new_option_sl(descripcion,value){
     return "<option value =" + value + ">" + descripcion + "</option>";
 }

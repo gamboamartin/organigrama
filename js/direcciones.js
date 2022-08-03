@@ -1,20 +1,7 @@
-let sl_dp_pais_id = $("#dp_pais_id");
-let sl_dp_estado_id = $("#dp_estado_id");
-let sl_dp_municipio_id = $("#dp_municipio_id");
-let sl_dp_cp_id = $("#dp_cp_id");
-let sl_dp_colonia_postal_id = $("#dp_colonia_postal_id");
-let sl_dp_calle_pertenece_id = $("#dp_calle_pertenece_id");
-
-
-let dp_pais_id = -1;
-let dp_estado_id = -1;
-let dp_municipio_id = -1;
-let dp_cp_id = -1;
-let dp_colonia_postal_id = -1;
-
-
-sl_dp_pais_id.change(function(){
-    dp_pais_id = $(this).val();
+function dp_asigna_estados(){
+    let sl_dp_pais_id = $("#dp_pais_id");
+    let sl_dp_estado_id = $("#dp_estado_id");
+    dp_pais_id = sl_dp_pais_id.val();
 
     let url = "index.php?seccion=dp_estado&ws=1&accion=get_estado&dp_pais_id="+dp_pais_id+"&session_id="+session_id;
 
@@ -22,7 +9,6 @@ sl_dp_pais_id.change(function(){
         type: 'GET',
         url: url,
     }).done(function( data ) {  // Función que se ejecuta si todo ha ido bien
-
         $.each(data.registros, function( index, dp_estado ) {
             integra_new_option("#dp_estado_id",dp_estado.dp_pais_descripcion+' '+dp_estado.dp_estado_descripcion,dp_estado.dp_estado_id);
         });
@@ -31,10 +17,13 @@ sl_dp_pais_id.change(function(){
         alert('Error al ejecutar');
         console.log("The following error occured: "+ textStatus +" "+ errorThrown);
     });
-});
 
-sl_dp_estado_id.change(function(){
-    dp_estado_id = $(this).val();
+}
+
+function dp_asigna_municipios(){
+    let sl_dp_estado_id = $("#dp_estado_id");
+    let sl_dp_cp_id = $("#dp_cp_id");
+    dp_estado_id = sl_dp_estado_id.val();
     let url = "index.php?seccion=dp_municipio&ws=1&accion=get_municipio&dp_estado_id="+dp_estado_id+"&session_id="+session_id;
 
     $.ajax({
@@ -50,8 +39,33 @@ sl_dp_estado_id.change(function(){
         alert('Error al ejecutar');
         console.log("The following error occured: "+ textStatus +" "+ errorThrown);
     });
+
+}
+
+let sl_dp_pais_id = $("#dp_pais_id");
+let sl_dp_estado_id = $("#dp_estado_id");
+let sl_dp_municipio_id = $("#dp_municipio_id");
+let sl_dp_cp_id = $("#dp_cp_id");
+let sl_dp_colonia_postal_id = $("#dp_colonia_postal_id");
+let sl_dp_calle_pertenece_id = $("#dp_calle_pertenece_id");
+
+
+let dp_pais_id = sl_dp_pais_id.val();
+let dp_estado_id = -1;
+let dp_municipio_id = -1;
+let dp_cp_id = -1;
+let dp_colonia_postal_id = -1;
+
+if(dp_pais_id>0){
+   dp_asigna_estados();
+}
+sl_dp_pais_id.change(function(){
+    dp_asigna_estados();
 });
 
+sl_dp_estado_id.change(function(){
+    dp_asigna_municipios();
+});
 
 sl_dp_municipio_id.change(function(){
     dp_municipio_id = $(this).val();
