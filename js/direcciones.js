@@ -3,6 +3,7 @@ let sl_dp_estado_id = $("#dp_estado_id");
 let sl_dp_municipio_id = $("#dp_municipio_id");
 let sl_dp_cp_id = $("#dp_cp_id");
 let sl_dp_colonia_postal_id = $("#dp_colonia_postal_id");
+let sl_dp_calle_pertenece_id = $("#dp_calle_pertenece_id");
 
 
 let dp_pais_id = -1;
@@ -10,6 +11,7 @@ let dp_estado_id = -1;
 let dp_municipio_id = -1;
 let dp_cp_id = -1;
 let dp_colonia_postal_id = -1;
+
 
 sl_dp_pais_id.change(function(){
     dp_pais_id = $(this).val();
@@ -83,6 +85,25 @@ sl_dp_cp_id.change(function(){
             integra_new_option("#dp_colonia_postal_id",dp_colonia_postal.dp_colonia_descripcion+' '+dp_colonia_postal.dp_cp_descripcion,dp_colonia_postal.dp_colonia_postal_id);
         });
         sl_dp_colonia_postal_id.selectpicker('refresh');
+    }).fail(function (jqXHR, textStatus, errorThrown){ // Función que se ejecuta si algo ha ido mal
+        alert('Error al ejecutar');
+        console.log(url);
+    });
+});
+
+sl_dp_colonia_postal_id.change(function(){
+    dp_colonia_postal_id = $(this).val();
+    let url = "index.php?seccion=dp_calle_pertenece&ws=1&accion=get_calle_pertenece&dp_colonia_postal_id="+dp_colonia_postal_id+"&session_id="+session_id;
+
+    $.ajax({
+        type: 'GET',
+        url: url,
+    }).done(function( data ) {  // Función que se ejecuta si todo ha ido bien
+        console.log(data);
+        $.each(data.registros, function( index, dp_calle_pertenece ) {
+            integra_new_option("#dp_calle_pertenece_id",dp_calle_pertenece.dp_colonia_descripcion+' '+dp_calle_pertenece.dp_cp_descripcion+' '+dp_calle_pertenece.dp_calle_descripcion,dp_calle_pertenece.dp_calle_pertenece_id);
+        });
+        sl_dp_calle_pertenece_id.selectpicker('refresh');
     }).fail(function (jqXHR, textStatus, errorThrown){ // Función que se ejecuta si algo ha ido mal
         alert('Error al ejecutar');
         console.log(url);
