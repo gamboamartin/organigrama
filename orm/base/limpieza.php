@@ -141,7 +141,7 @@ class limpieza{
      * @fecha 2022-07-26 10:18
      * @return array
      */
-    private function limpia_foraneas_org_empresa(array $registro): array
+    public function limpia_foraneas_org_empresa(array $registro): array
     {
         if(isset($registro['cat_sat_regimen_fiscal_id']) && (int)$registro['cat_sat_regimen_fiscal_id']===-1){
             unset($registro['cat_sat_regimen_fiscal_id']);
@@ -157,5 +157,7 @@ class limpieza{
         }
         return $registro;
     }
+
+
 
 }
