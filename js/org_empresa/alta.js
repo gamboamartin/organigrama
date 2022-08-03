@@ -15,13 +15,13 @@ document.write('<script src="'+direcciones_js+'"></script>');
 let session_id = getParameterByName('session_id');
 
 
-let dp_municipio_id = -1;
+
 let dp_cp_id = -1;
 let dp_colonia_postal_id = -1;
 
 
 
-let sl_dp_municipio_id = $("#dp_municipio_id");
+
 let sl_dp_cp_id = $("#dp_cp_id");
 let sl_dp_colonia_postal_id = $("#dp_colonia_postal_id");
 let sl_dp_calle_pertenece_id = $("#dp_calle_pertenece_id");
@@ -30,24 +30,7 @@ let sl_dp_calle_pertenece_entre2_id = $("#dp_calle_pertenece_entre2_id");
 
 
 
-sl_dp_estado_id.change(function(){
-    dp_estado_id = $(this).val();
-    let url = "index.php?seccion=dp_municipio&ws=1&accion=get_municipio&dp_estado_id="+dp_estado_id+"&session_id="+session_id;
 
-    $.ajax({
-        type: 'GET',
-        url: url,
-    }).done(function( data ) {  // Función que se ejecuta si todo ha ido bien
-        console.log(data);
-        $.each(data.registros, function( index, dp_municipio ) {
-            integra_new_option("#dp_municipio_id",dp_municipio.dp_estado_descripcion+' '+dp_municipio.dp_municipio_descripcion,dp_municipio.dp_municipio_id);
-        });
-        sl_dp_municipio_id.selectpicker('refresh');
-    }).fail(function (jqXHR, textStatus, errorThrown){ // Función que se ejecuta si algo ha ido mal
-        alert('Error al ejecutar');
-        console.log("The following error occured: "+ textStatus +" "+ errorThrown);
-    });
-});
 
 
 sl_dp_municipio_id.change(function(){
