@@ -5,16 +5,17 @@ function getAbsolutePath() {
 }
 let url = getAbsolutePath();
 let base_js = url+'js/base.js';
+let direcciones_js = url+'js/direcciones.js';
 document.write('<script src="'+base_js+'"></script>');
+document.write('<script src="'+direcciones_js+'"></script>');
 
 
 
 let session_id = getParameterByName('session_id');
-let dp_pais_id = -1;
+
 let fecha_inicio_operaciones = '0000-00-00';
 
 
-let sl_dp_pais_id = $("#dp_pais_id");
 let sl_org_empresa_id = $("#org_empresa_id");
 
 let txt_fecha_inicio_operaciones = $('#fecha_inicio_operaciones');
