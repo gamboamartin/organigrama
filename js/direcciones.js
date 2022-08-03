@@ -9,7 +9,9 @@ function dp_asigna_estados(){
         type: 'GET',
         url: url,
     }).done(function( data ) {  // Función que se ejecuta si todo ha ido bien
+        sl_dp_estado_id.empty();
         $.each(data.registros, function( index, dp_estado ) {
+
             integra_new_option("#dp_estado_id",dp_estado.dp_pais_descripcion+' '+dp_estado.dp_estado_descripcion,dp_estado.dp_estado_id);
         });
         sl_dp_estado_id.selectpicker('refresh');
@@ -22,7 +24,8 @@ function dp_asigna_estados(){
 
 function dp_asigna_municipios(){
     let sl_dp_estado_id = $("#dp_estado_id");
-    let sl_dp_cp_id = $("#dp_cp_id");
+    let sl_dp_municipio_id = $("#dp_municipio_id");
+
     dp_estado_id = sl_dp_estado_id.val();
     let url = "index.php?seccion=dp_municipio&ws=1&accion=get_municipio&dp_estado_id="+dp_estado_id+"&session_id="+session_id;
 
@@ -30,7 +33,7 @@ function dp_asigna_municipios(){
         type: 'GET',
         url: url,
     }).done(function( data ) {  // Función que se ejecuta si todo ha ido bien
-
+        sl_dp_municipio_id.empty();
         $.each(data.registros, function( index, dp_municipio ) {
             integra_new_option("#dp_municipio_id",dp_municipio.dp_estado_descripcion+' '+dp_municipio.dp_municipio_descripcion,dp_municipio.dp_municipio_id);
         });
@@ -40,6 +43,25 @@ function dp_asigna_municipios(){
         console.log("The following error occured: "+ textStatus +" "+ errorThrown);
     });
 
+}
+
+function dp_asigna_cps(){
+    let sl_dp_municipio_id = $("#dp_municipio_id");
+    let sl_dp_cp_id = $("#dp_cp_id");
+    dp_municipio_id = sl_dp_municipio_id.val();
+    let url = "index.php?seccion=dp_cp&ws=1&accion=get_cp&dp_municipio_id="+dp_municipio_id+"&session_id="+session_id;
+    $.ajax({
+        type: 'GET',
+        url: url,
+    }).done(function( data ) {  // Función que se ejecuta si todo ha ido bien
+        sl_dp_cp_id.empty();
+        $.each(data.registros, function( index, dp_cp ) {
+            integra_new_option("#dp_cp_id",dp_cp.dp_municipio_descripcion+' '+dp_cp.dp_cp_descripcion,dp_cp.dp_cp_id);
+        });
+        sl_dp_cp_id.selectpicker('refresh');
+    }).fail(function (jqXHR, textStatus, errorThrown){ // Función que se ejecuta si algo ha ido mal
+        alert('Error al ejecutar');
+    });
 }
 
 let sl_dp_pais_id = $("#dp_pais_id");
@@ -64,23 +86,8 @@ sl_dp_pais_id.change(function(){
 sl_dp_estado_id.change(function(){
     dp_asigna_municipios();
 });
-
 sl_dp_municipio_id.change(function(){
-    dp_municipio_id = $(this).val();
-    let url = "index.php?seccion=dp_cp&ws=1&accion=get_cp&dp_municipio_id="+dp_municipio_id+"&session_id="+session_id;
-
-    $.ajax({
-        type: 'GET',
-        url: url,
-    }).done(function( data ) {  // Función que se ejecuta si todo ha ido bien
-
-        $.each(data.registros, function( index, dp_cp ) {
-            integra_new_option("#dp_cp_id",dp_cp.dp_municipio_descripcion+' '+dp_cp.dp_cp_descripcion,dp_cp.dp_cp_id);
-        });
-        sl_dp_cp_id.selectpicker('refresh');
-    }).fail(function (jqXHR, textStatus, errorThrown){ // Función que se ejecuta si algo ha ido mal
-        alert('Error al ejecutar');
-    });
+    dp_asigna_cps();
 });
 
 
