@@ -1,4 +1,5 @@
 function dp_asigna_estados(){
+
     let sl_dp_pais_id = $("#dp_pais_id");
     let sl_dp_estado_id = $("#dp_estado_id");
     dp_pais_id = sl_dp_pais_id.val();
@@ -10,6 +11,8 @@ function dp_asigna_estados(){
         url: url,
     }).done(function( data ) {  // Función que se ejecuta si todo ha ido bien
         sl_dp_estado_id.empty();
+        integra_new_option("#dp_estado_id",'Seleccione un estado','-1');
+
         $.each(data.registros, function( index, dp_estado ) {
 
             integra_new_option("#dp_estado_id",dp_estado.dp_pais_descripcion+' '+dp_estado.dp_estado_descripcion,dp_estado.dp_estado_id);
@@ -34,6 +37,9 @@ function dp_asigna_municipios(){
         url: url,
     }).done(function( data ) {  // Función que se ejecuta si todo ha ido bien
         sl_dp_municipio_id.empty();
+
+        integra_new_option("#dp_municipio_id",'Seleccione un municipio','-1');
+
         $.each(data.registros, function( index, dp_municipio ) {
             integra_new_option("#dp_municipio_id",dp_municipio.dp_estado_descripcion+' '+dp_municipio.dp_municipio_descripcion,dp_municipio.dp_municipio_id);
         });
@@ -55,6 +61,7 @@ function dp_asigna_cps(){
         url: url,
     }).done(function( data ) {  // Función que se ejecuta si todo ha ido bien
         sl_dp_cp_id.empty();
+        integra_new_option("#dp_cp_id",'Seleccione un cp','-1');
         $.each(data.registros, function( index, dp_cp ) {
             integra_new_option("#dp_cp_id",dp_cp.dp_municipio_descripcion+' '+dp_cp.dp_cp_descripcion,dp_cp.dp_cp_id);
         });
