@@ -11,6 +11,7 @@
 <?php echo $controlador->inputs->select->dp_estado_id; ?>
 <?php echo $controlador->inputs->select->dp_municipio_id; ?>
 <?php echo $controlador->inputs->select->dp_cp_id; ?>
+<?php echo $controlador->inputs->select->dp_colonia_postal_id; ?>
 <?php echo $controlador->inputs->select->dp_calle_pertenece_id; ?>
 <?php echo $controlador->inputs->select->dp_calle_pertenece_entre1_id; ?>
 <?php echo $controlador->inputs->select->dp_calle_pertenece_entre2_id; ?>

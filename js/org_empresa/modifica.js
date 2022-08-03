@@ -14,11 +14,8 @@ document.write('<script src="'+direcciones_js+'"></script>');
 let session_id = getParameterByName('session_id');
 
 
-let dp_colonia_postal_id = -1;
 
 
-
-let sl_dp_colonia_postal_id = $("#dp_colonia_postal_id");
 let sl_dp_calle_pertenece_id = $("#dp_calle_pertenece_id");
 let sl_dp_calle_pertenece_entre1_id = $("#dp_calle_pertenece_entre1_id");
 let sl_dp_calle_pertenece_entre2_id = $("#dp_calle_pertenece_entre2_id");
@@ -26,25 +23,6 @@ let sl_dp_calle_pertenece_entre2_id = $("#dp_calle_pertenece_entre2_id");
 
 
 
-
-sl_dp_cp_id.change(function(){
-    dp_cp_id = $(this).val();
-    let url = "index.php?seccion=dp_colonia_postal&ws=1&accion=get_colonia_postal&dp_cp_id="+dp_cp_id+"&session_id="+session_id;
-
-    $.ajax({
-        type: 'GET',
-        url: url,
-    }).done(function( data ) {  // Función que se ejecuta si todo ha ido bien
-        console.log(data);
-        $.each(data.registros, function( index, dp_colonia_postal ) {
-            integra_new_option("#dp_colonia_postal_id",dp_colonia_postal.dp_colonia_descripcion+' '+dp_colonia_postal.dp_cp_descripcion,dp_colonia_postal.dp_colonia_postal_id);
-        });
-        sl_dp_colonia_postal_id.selectpicker('refresh');
-    }).fail(function (jqXHR, textStatus, errorThrown){ // Función que se ejecuta si algo ha ido mal
-        alert('Error al ejecutar');
-        console.log(url);
-    });
-});
 
 sl_dp_colonia_postal_id.change(function(){
     dp_colonia_postal_id = $(this).val();

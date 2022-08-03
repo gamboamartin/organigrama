@@ -23,6 +23,7 @@ class org_sucursal_html extends html_controler {
         $controler->inputs->select->dp_estado_id = $inputs->selects->dp_estado_id;
         $controler->inputs->select->dp_municipio_id = $inputs->selects->dp_municipio_id;
         $controler->inputs->select->dp_cp_id = $inputs->selects->dp_cp_id;
+        $controler->inputs->select->dp_colonia_postal_id = $inputs->selects->dp_colonia_postal_id;
 
         $controler->inputs->fecha_inicio_operaciones = $inputs->fechas->fecha_inicio_operaciones;
 
@@ -257,8 +258,16 @@ class org_sucursal_html extends html_controler {
 
         $selects->dp_cp_id = $select;
 
-        $select = (new dp_calle_pertenece_html($this->html_base))->select_dp_calle_pertenece_id(cols: 6, con_registros:false,
-            id_selected:-1,link: $link);
+        $select = (new dp_colonia_postal_html($this->html_base))->select_dp_colonia_postal_id(cols: 6,
+            con_registros:false, id_selected:-1,link: $link);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar select',data:  $select);
+        }
+
+        $selects->dp_colonia_postal_id = $select;
+
+        $select = (new dp_calle_pertenece_html($this->html_base))->select_dp_calle_pertenece_id(cols: 6,
+            con_registros:false, id_selected:-1,link: $link);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $select);
         }
