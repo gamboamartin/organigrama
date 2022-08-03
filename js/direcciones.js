@@ -94,7 +94,7 @@ sl_dp_cp_id.change(function(){
 sl_dp_colonia_postal_id.change(function(){
     dp_colonia_postal_id = $(this).val();
     let url = "index.php?seccion=dp_calle_pertenece&ws=1&accion=get_calle_pertenece&dp_colonia_postal_id="+dp_colonia_postal_id+"&session_id="+session_id;
-
+    console.log(url);
     $.ajax({
         type: 'GET',
         url: url,

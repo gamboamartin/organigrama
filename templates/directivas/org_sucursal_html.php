@@ -15,15 +15,14 @@ class org_sucursal_html extends html_controler {
     private function asigna_inputs(controlador_org_sucursal $controler, stdClass $inputs): array|stdClass
     {
         $controler->inputs->select = new stdClass();
-        $controler->inputs->select->dp_calle_pertenece_id = $inputs->selects->dp_calle_pertenece_id;
-        $controler->inputs->select->dp_calle_pertenece_entre1_id = $inputs->selects->dp_calle_pertenece_entre1_id;
-        $controler->inputs->select->dp_calle_pertenece_entre2_id = $inputs->selects->dp_calle_pertenece_entre2_id;
+
         $controler->inputs->select->org_empresa_id = $inputs->selects->org_empresa_id;
         $controler->inputs->select->dp_pais_id = $inputs->selects->dp_pais_id;
         $controler->inputs->select->dp_estado_id = $inputs->selects->dp_estado_id;
         $controler->inputs->select->dp_municipio_id = $inputs->selects->dp_municipio_id;
         $controler->inputs->select->dp_cp_id = $inputs->selects->dp_cp_id;
         $controler->inputs->select->dp_colonia_postal_id = $inputs->selects->dp_colonia_postal_id;
+        $controler->inputs->select->dp_calle_pertenece_id = $inputs->selects->dp_calle_pertenece_id;
 
         $controler->inputs->fecha_inicio_operaciones = $inputs->fechas->fecha_inicio_operaciones;
 
@@ -274,23 +273,6 @@ class org_sucursal_html extends html_controler {
 
         $selects->dp_calle_pertenece_id = $select;
 
-        $select = (new dp_calle_pertenece_html($this->html_base))->select_dp_calle_pertenece_entre1_id(cols: 6, con_registros:false,
-            id_selected:-1,link: $link);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al generar select',data:  $select);
-
-        }
-
-        $selects->dp_calle_pertenece_entre1_id = $select;
-
-        $select = (new dp_calle_pertenece_html($this->html_base))->select_dp_calle_pertenece_entre2_id(cols: 6, con_registros:false,
-            id_selected:-1,link: $link);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al generar select',data:  $select);
-
-        }
-
-        $selects->dp_calle_pertenece_entre2_id = $select;
 
         $select = (new org_empresa_html($this->html_base))->select_org_empresa_id(cols: 12, con_registros:true,
             id_selected:-1,link: $link);
