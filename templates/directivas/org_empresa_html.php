@@ -2,6 +2,7 @@
 namespace html;
 
 
+use config\generales;
 use gamboamartin\errores\errores;
 use gamboamartin\organigrama\controllers\controlador_org_empresa;
 use gamboamartin\system\html_controler;
@@ -520,13 +521,15 @@ class org_empresa_html extends html_controler {
 
         $selects->cat_sat_regimen_fiscal_id = $select;
 
+        $generales = new generales();
+        $dp_pais_id = $generales->defaults['dp_pais']['id'] ?? -1;
+
         $select = (new dp_pais_html(html: $this->html_base))->select_dp_pais_id(cols: 6, con_registros:true,
-            id_selected:-1,link: $link);
+            id_selected:$dp_pais_id,link: $link);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $select);
 
         }
-
 
         $selects->dp_pais_id = $select;
 
