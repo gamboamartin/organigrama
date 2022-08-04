@@ -251,6 +251,12 @@ class controlador_org_empresa extends system{
     public function modifica_generales(bool $header, bool $ws = false): array|stdClass
     {
 
+        $siguiente_view = (new actions())->init_alta_bd();
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al obtener siguiente accion',data:  $siguiente_view,
+                header: $header,ws:$ws);
+        }
+
         $keys_generales[] = 'codigo';
         $keys_generales[] = 'rfc';
         $keys_generales[] = 'razon_social';
@@ -270,12 +276,15 @@ class controlador_org_empresa extends system{
                 header: $header,ws:$ws);
         }
 
+
+
         $_SESSION[$r_modifica_bd->salida][]['mensaje'] = $r_modifica_bd->mensaje.' del id '.$this->registro_id;
         $this->header_out(result: $r_modifica_bd, header: $header,ws:  $ws);
 
         return $r_modifica_bd;
 
     }
+
 
     public function sucursal(bool $header, bool $ws = false): array|stdClass
     {
