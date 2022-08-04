@@ -723,8 +723,12 @@ class org_empresa_html extends html_controler {
         $selects->dp_colonia_postal_id = $select;
 
 
+        $filtro = array();
+        if($row_upd->dp_colonia_postal_id!==-1){
+            $filtro['dp_colonia_postal.id'] = $row_upd->dp_colonia_postal_id;
+        }
         $select = (new dp_calle_pertenece_html(html:$this->html_base))->select_dp_calle_pertenece_id(
-            cols: 12, con_registros:false, id_selected:$row_upd->dp_calle_pertenece_id,link: $link);
+            cols: 12, con_registros:true, id_selected:$row_upd->dp_calle_pertenece_id,link: $link, filtro:$filtro);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $select);
 
@@ -733,8 +737,14 @@ class org_empresa_html extends html_controler {
 
         $selects->dp_calle_pertenece_id = $select;
 
+        $filtro = array();
+        if($row_upd->dp_colonia_postal_id!==-1){
+            $filtro['dp_colonia_postal.id'] = $row_upd->dp_colonia_postal_id;
+        }
+
         $select = (new dp_calle_pertenece_html(html:$this->html_base))->select_dp_calle_pertenece_entre1_id(
-            cols: 6, con_registros:false, id_selected:$row_upd->dp_calle_pertenece_entre1_id,link: $link);
+            cols: 6, con_registros:true, id_selected:$row_upd->dp_calle_pertenece_entre1_id,link: $link,
+            filtro:$filtro);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $select);
 
@@ -743,8 +753,13 @@ class org_empresa_html extends html_controler {
 
         $selects->dp_calle_pertenece_entre1_id = $select;
 
+        $filtro = array();
+        if($row_upd->dp_colonia_postal_id!==-1){
+            $filtro['dp_colonia_postal.id'] = $row_upd->dp_colonia_postal_id;
+        }
         $select = (new dp_calle_pertenece_html(html:$this->html_base))->select_dp_calle_pertenece_entre2_id(
-            cols: 6, con_registros:false, id_selected:$row_upd->dp_calle_pertenece_entre2_id,link: $link);
+            cols: 6, con_registros:true, id_selected:$row_upd->dp_calle_pertenece_entre2_id,link: $link,
+            filtro:  $filtro);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $select);
 
