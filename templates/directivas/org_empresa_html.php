@@ -683,7 +683,9 @@ class org_empresa_html extends html_controler {
 
         $selects->dp_estado_id = $select;
 
-
+        if((int)$row_upd->dp_municipio_id === -1){
+            $row_upd->dp_municipio_id = (new generales())->defaults['dp_municipio']['id'];
+        }
 
         $filtro = array();
         if($row_upd->dp_estado_id!==-1){
