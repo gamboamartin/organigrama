@@ -691,10 +691,13 @@ class org_empresa_html extends html_controler {
 
 
         $selects->dp_municipio_id = $select;
+        $filtro = array();
+        if($row_upd->dp_municipio_id!==-1){
+            $filtro['dp_municipio.id'] = $row_upd->dp_municipio_id;
+        }
 
-
-        $select = (new dp_cp_html(html:$this->html_base))->select_dp_cp_id(cols: 6, con_registros:false,
-            id_selected:$row_upd->dp_cp_id,link: $link);
+        $select = (new dp_cp_html(html:$this->html_base))->select_dp_cp_id(cols: 6, con_registros:true,
+            id_selected:$row_upd->dp_cp_id,link: $link, filtro: $filtro);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $select);
 
