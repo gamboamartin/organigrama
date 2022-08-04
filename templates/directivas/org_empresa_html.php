@@ -649,6 +649,9 @@ class org_empresa_html extends html_controler {
 
         $selects->cat_sat_regimen_fiscal_id = $select;
 
+        if((int)$row_upd->dp_pais_id === -1){
+            $row_upd->dp_pais_id = (new generales())->defaults['dp_pais']['id'];
+        }
 
         $select = (new dp_pais_html(html:$this->html_base))->select_dp_pais_id(cols: 6, con_registros:true,
             id_selected:$row_upd->dp_pais_id,link: $link);
