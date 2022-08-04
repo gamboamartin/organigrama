@@ -207,6 +207,8 @@ class controlador_org_empresa extends system{
             return $this->retorno_error(mensaje: 'Error al modificar empresa',data:  $r_modifica_bd,
                 header: $header,ws:$ws);
         }
+
+
         $this->header_out(result: $r_modifica_bd, header: $header,ws:  $ws);
         return $r_modifica_bd;
 
@@ -276,12 +278,28 @@ class controlador_org_empresa extends system{
                 header: $header,ws:$ws);
         }
 
-
-
         $_SESSION[$r_modifica_bd->salida][]['mensaje'] = $r_modifica_bd->mensaje.' del id '.$this->registro_id;
-        $this->header_out(result: $r_modifica_bd, header: $header,ws:  $ws);
+        if($header){
 
+
+            $retorno = (new actions())->retorno_alta_bd(registro_id: $r_modifica_bd->registro_id, seccion: $this->tabla,
+                siguiente_view: $siguiente_view);
+            if(errores::$error){
+                return $this->retorno_error(mensaje: 'Error al modificar registro', data: $r_modifica_bd, header:  true,
+                    ws: $ws);
+            }
+            header('Location:'.$retorno);
+            exit;
+        }
+        if($ws){
+            header('Content-Type: application/json');
+            echo json_encode($r_modifica_bd, JSON_THROW_ON_ERROR);
+            exit;
+        }
+        $r_modifica_bd->siguiente_view = $siguiente_view;
         return $r_modifica_bd;
+
+
 
     }
 
