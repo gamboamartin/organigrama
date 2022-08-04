@@ -663,6 +663,9 @@ class org_empresa_html extends html_controler {
 
         $selects->dp_pais_id = $select;
 
+        if((int)$row_upd->dp_estado_id === -1){
+            $row_upd->dp_estado_id = (new generales())->defaults['dp_estado']['id'];
+        }
 
         $filtro = array();
         if($row_upd->dp_pais_id!==-1){
@@ -679,6 +682,8 @@ class org_empresa_html extends html_controler {
 
 
         $selects->dp_estado_id = $select;
+
+
 
         $filtro = array();
         if($row_upd->dp_estado_id!==-1){
