@@ -650,6 +650,7 @@ class org_empresa_html extends html_controler {
 
         $selects->dp_municipio_id = $data_select->select;
         $row_upd = $data_select->row;
+
         $filtro = array();
         $data_select = (new selects())->dp_cp_id(filtro:$filtro,html: $this->html_base,link:  $link, row: $row_upd);
         if(errores::$error){
@@ -658,18 +659,15 @@ class org_empresa_html extends html_controler {
         }
         $selects->dp_cp_id = $data_select->select;
         $row_upd = $data_select->row;
+
         $filtro = array();
-
-
-        $select = (new dp_colonia_postal_html(html:$this->html_base))->select_dp_colonia_postal_id(
-            cols: 12, con_registros:true, id_selected:$row_upd->dp_colonia_postal_id,link: $link, filtro:$filtro);
+        $data_select = (new selects())->dp_colonia_postal_id(filtro:$filtro,html: $this->html_base,link:  $link, row: $row_upd);
         if(errores::$error){
-            return $this->error->error(mensaje: 'Error al generar select',data:  $select);
+            return $this->error->error(mensaje: 'Error al generar select',data:  $data_select);
 
         }
-
-
-        $selects->dp_colonia_postal_id = $select;
+        $selects->dp_colonia_postal_id = $data_select->select;
+        $row_upd = $data_select->row;
 
 
         $filtro = array();
