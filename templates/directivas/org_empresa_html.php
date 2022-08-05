@@ -671,44 +671,42 @@ class org_empresa_html extends html_controler {
         $row_upd = $data_select->row;
 
 
-        $filtro = array();
-
-        $select = (new dp_calle_pertenece_html(html:$this->html_base))->select_dp_calle_pertenece_id(
-            cols: 12, con_registros:true, id_selected:$row_upd->dp_calle_pertenece_id,link: $link, filtro:$filtro);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al generar select',data:  $select);
-
-        }
-
-
-        $selects->dp_calle_pertenece_id = $select;
 
         $filtro = array();
-
-
-        $select = (new dp_calle_pertenece_html(html:$this->html_base))->select_dp_calle_pertenece_entre1_id(
-            cols: 6, con_registros:true, id_selected:$row_upd->dp_calle_pertenece_entre1_id,link: $link,
-            filtro:$filtro);
+        $data_select = (new selects())->dp_calle_pertenece_id(filtro:$filtro,html: $this->html_base,link:  $link, row: $row_upd);
         if(errores::$error){
-            return $this->error->error(mensaje: 'Error al generar select',data:  $select);
+            return $this->error->error(mensaje: 'Error al generar select',data:  $data_select);
 
         }
+        $selects->dp_calle_pertenece_id = $data_select->select;
+        $row_upd = $data_select->row;
 
 
-        $selects->dp_calle_pertenece_entre1_id = $select;
+
 
         $filtro = array();
-
-        $select = (new dp_calle_pertenece_html(html:$this->html_base))->select_dp_calle_pertenece_entre2_id(
-            cols: 6, con_registros:true, id_selected:$row_upd->dp_calle_pertenece_entre2_id,link: $link,
-            filtro:  $filtro);
+        $data_select = (new selects())->dp_calle_pertenece_entre1_id(filtro:$filtro,html: $this->html_base,link:  $link,
+            row: $row_upd);
         if(errores::$error){
-            return $this->error->error(mensaje: 'Error al generar select',data:  $select);
+            return $this->error->error(mensaje: 'Error al generar select',data:  $data_select);
 
         }
+        $selects->dp_calle_pertenece_entre1_id = $data_select->select;
+        $row_upd = $data_select->row;
 
 
-        $selects->dp_calle_pertenece_entre2_id = $select;
+        $filtro = array();
+        $data_select = (new selects())->dp_calle_pertenece_entre2_id(filtro:$filtro,html: $this->html_base,link:  $link,
+            row: $row_upd);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar select',data:  $data_select);
+
+        }
+        $selects->dp_calle_pertenece_entre2_id = $data_select->select;
+        $row_upd = $data_select->row;
+
+
+
 
         $select = (new org_tipo_empresa_html(html: $this->html_base))->select_org_tipo_empresa_id(
             cols: 12, con_registros:true, id_selected:$row_upd->org_tipo_empresa_id,link: $link);
