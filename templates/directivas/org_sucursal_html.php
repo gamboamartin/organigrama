@@ -227,8 +227,8 @@ class org_sucursal_html extends html_controler {
         $selects = new stdClass();
 
         $row_upd = new stdClass();
-
-        $data_select = (new selects())->dp_pais_id(html: $this->html_base,link:  $link, row: $row_upd);
+        $filtro = array();
+        $data_select = (new selects())->dp_pais_id(filtro:$filtro,html: $this->html_base,link:  $link, row: $row_upd);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $data_select);
 
@@ -237,9 +237,9 @@ class org_sucursal_html extends html_controler {
 
         $selects->dp_pais_id = $data_select->select;
         $row_upd = $data_select->row;
+        $filtro = array();
 
-
-        $data_select = (new selects())->dp_estado_id(html: $this->html_base,link:  $link, row: $row_upd);
+        $data_select = (new selects())->dp_estado_id(filtro:$filtro,html: $this->html_base,link:  $link, row: $row_upd);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $data_select);
 
@@ -247,8 +247,8 @@ class org_sucursal_html extends html_controler {
 
         $selects->dp_estado_id = $data_select->select;
         $row_upd = $data_select->row;
-
-        $data_select = (new selects())->dp_municipio_id(html: $this->html_base,link:  $link, row: $row_upd);
+        $filtro = array();
+        $data_select = (new selects())->dp_municipio_id(filtro:$filtro,html: $this->html_base,link:  $link, row: $row_upd);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $data_select);
 
@@ -257,8 +257,8 @@ class org_sucursal_html extends html_controler {
         $selects->dp_municipio_id = $data_select->select;
         $row_upd = $data_select->row;
 
-
-        $data_select = (new selects())->dp_cp_id(html: $this->html_base,link:  $link, row: $row_upd);
+        $filtro = array();
+        $data_select = (new selects())->dp_cp_id(filtro:$filtro,html: $this->html_base,link:  $link, row: $row_upd);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $data_select);
 
