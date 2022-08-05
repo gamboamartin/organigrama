@@ -248,13 +248,15 @@ class org_sucursal_html extends html_controler {
         $selects->dp_estado_id = $data_select->select;
         $row_upd = $data_select->row;
 
-        $select = (new dp_municipio_html($this->html_base))->select_dp_municipio_id(cols: 6, con_registros:false,
-            id_selected:-1,link: $link);
+        $data_select = (new selects())->dp_municipio_id(html: $this->html_base,link:  $link, row: $row_upd);
         if(errores::$error){
-            return $this->error->error(mensaje: 'Error al generar select',data:  $select);
+            return $this->error->error(mensaje: 'Error al generar select',data:  $data_select);
+
         }
 
-        $selects->dp_municipio_id = $select;
+        $selects->dp_municipio_id = $data_select->select;
+        $row_upd = $data_select->row;
+
 
         $select = (new dp_cp_html($this->html_base))->select_dp_cp_id(cols: 6, con_registros:false,
             id_selected:-1,link: $link);
