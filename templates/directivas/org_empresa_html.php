@@ -9,6 +9,7 @@ use gamboamartin\system\html_controler;
 
 use gamboamartin\template\html;
 use models\base\limpieza;
+use models\base\rows;
 use models\org_empresa;
 use PDO;
 use stdClass;
@@ -510,6 +511,7 @@ class org_empresa_html extends html_controler {
     private function selects_alta(PDO $link): array|stdClass
     {
         $selects = new stdClass();
+        $generales = new generales();
 
         $cat_sat_regimen_fiscal_html = new cat_sat_regimen_fiscal_html(html:$this->html_base);
 
@@ -521,37 +523,30 @@ class org_empresa_html extends html_controler {
 
         $selects->cat_sat_regimen_fiscal_id = $select;
 
-        $generales = new generales();
-        $dp_pais_id = $generales->defaults['dp_pais']['id'] ?? -1;
 
-        $select = (new dp_pais_html(html: $this->html_base))->select_dp_pais_id(cols: 6, con_registros:true,
-            id_selected:$dp_pais_id,link: $link);
+        $row_upd = new stdClass();
+
+        $data_select = (new selects())->dp_pais_id(html: $this->html_base,link:  $link, row: $row_upd);
         if(errores::$error){
-            return $this->error->error(mensaje: 'Error al generar select',data:  $select);
-
+            return $this->error->error(mensaje: 'Error al generar select',data:  $data_select);
         }
 
-        $selects->dp_pais_id = $select;
+        $selects->dp_pais_id = $data_select->select;
+        $row_upd = $data_select->row;
 
-        $dp_estado_id = $generales->defaults['dp_estado']['id'] ?? -1;
-        $filtro = array();
-        if($dp_pais_id!==-1){
-            $filtro['dp_pais.id'] = $dp_pais_id;
-        }
-
-        $select = (new dp_estado_html(html: $this->html_base))->select_dp_estado_id(cols: 6, con_registros:true,
-            id_selected:$dp_estado_id,link: $link, filtro: $filtro);
+        $data_select = (new selects())->dp_estado_id(html: $this->html_base,link:  $link, row: $row_upd);
         if(errores::$error){
-            return $this->error->error(mensaje: 'Error al generar select',data:  $select);
+            return $this->error->error(mensaje: 'Error al generar select',data:  $data_select);
 
         }
 
-        $selects->dp_estado_id = $select;
+        $selects->dp_estado_id = $data_select->select;
+        $row_upd = $data_select->row;
 
         $dp_municipio_id = $generales->defaults['dp_estado']['id'] ?? -1;
         $filtro = array();
-        if($dp_estado_id!==-1){
-            $filtro['dp_estado.id'] = $dp_estado_id;
+        if($row_upd->dp_estado_id!==-1){
+            $filtro['dp_estado.id'] = $row_upd->dp_estado_id;
         }
 
         $select = (new dp_municipio_html(html: $this->html_base))->select_dp_municipio_id(cols: 6, con_registros:true,
@@ -649,39 +644,25 @@ class org_empresa_html extends html_controler {
 
         $selects->cat_sat_regimen_fiscal_id = $select;
 
-        if((int)$row_upd->dp_pais_id === -1){
-            $row_upd->dp_pais_id = (new generales())->defaults['dp_pais']['id'];
-        }
 
-        $select = (new dp_pais_html(html:$this->html_base))->select_dp_pais_id(cols: 6, con_registros:true,
-            id_selected:$row_upd->dp_pais_id,link: $link);
+        $data_select = (new selects())->dp_pais_id(html: $this->html_base,link:  $link, row: $row_upd);
         if(errores::$error){
-            return $this->error->error(mensaje: 'Error al generar select',data:  $select);
+            return $this->error->error(mensaje: 'Error al generar select',data:  $data_select);
 
         }
 
+        $selects->dp_pais_id = $data_select->select;
+        $row_upd = $data_select->row;
 
-        $selects->dp_pais_id = $select;
-
-        if((int)$row_upd->dp_estado_id === -1){
-            $row_upd->dp_estado_id = (new generales())->defaults['dp_estado']['id'];
-        }
-
-        $filtro = array();
-        if($row_upd->dp_pais_id!==-1){
-            $filtro['dp_pais.id'] = $row_upd->dp_pais_id;
-        }
-
-
-        $select = (new dp_estado_html(html:$this->html_base))->select_dp_estado_id(cols: 6, con_registros:true,
-            id_selected:$row_upd->dp_estado_id,link: $link,filtro: $filtro);
+        $data_select = (new selects())->dp_estado_id(html: $this->html_base,link:  $link, row: $row_upd);
         if(errores::$error){
-            return $this->error->error(mensaje: 'Error al generar select',data:  $select);
+            return $this->error->error(mensaje: 'Error al generar select',data:  $data_select);
 
         }
 
+        $selects->dp_estado_id = $data_select->select;
+        $row_upd = $data_select->row;
 
-        $selects->dp_estado_id = $select;
 
         if((int)$row_upd->dp_municipio_id === -1){
             $row_upd->dp_municipio_id = (new generales())->defaults['dp_municipio']['id'];

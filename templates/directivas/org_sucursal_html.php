@@ -5,6 +5,7 @@ namespace html;
 use gamboamartin\errores\errores;
 use gamboamartin\organigrama\controllers\controlador_org_sucursal;
 use gamboamartin\system\html_controler;
+use models\base\rows;
 use PDO;
 use stdClass;
 
@@ -225,21 +226,27 @@ class org_sucursal_html extends html_controler {
     {
         $selects = new stdClass();
 
-        $select = (new dp_pais_html($this->html_base))->select_dp_pais_id(cols: 6, con_registros:true,
-            id_selected:-1,link: $link);
+        $row_upd = new stdClass();
+
+        $data_select = (new selects())->dp_pais_id(html: $this->html_base,link:  $link, row: $row_upd);
         if(errores::$error){
-            return $this->error->error(mensaje: 'Error al generar select',data:  $select);
+            return $this->error->error(mensaje: 'Error al generar select',data:  $data_select);
+
         }
 
-        $selects->dp_pais_id = $select;
 
-        $select = (new dp_estado_html($this->html_base))->select_dp_estado_id(cols: 6, con_registros:false,
-            id_selected:-1,link: $link);
+        $selects->dp_pais_id = $data_select->select;
+        $row_upd = $data_select->row;
+
+
+        $data_select = (new selects())->dp_estado_id(html: $this->html_base,link:  $link, row: $row_upd);
         if(errores::$error){
-            return $this->error->error(mensaje: 'Error al generar select',data:  $select);
+            return $this->error->error(mensaje: 'Error al generar select',data:  $data_select);
+
         }
 
-        $selects->dp_estado_id = $select;
+        $selects->dp_estado_id = $data_select->select;
+        $row_upd = $data_select->row;
 
         $select = (new dp_municipio_html($this->html_base))->select_dp_municipio_id(cols: 6, con_registros:false,
             id_selected:-1,link: $link);
