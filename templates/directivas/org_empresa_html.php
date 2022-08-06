@@ -522,75 +522,20 @@ class org_empresa_html extends html_controler {
 
         $selects->cat_sat_regimen_fiscal_id = $select;
 
-
         $row_upd = new stdClass();
-        $filtro = array();
-        $data_select = (new selects())->dp_pais_id(filtro:$filtro,html: $this->html_base,link:  $link, row: $row_upd);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al generar select',data:  $data_select);
+
+        $tablas = array('dp_pais_id','dp_estado_id','dp_municipio_id','dp_cp_id','dp_colonia_postal_id',
+            'dp_calle_pertenece_id','dp_calle_pertenece_entre1_id','dp_calle_pertenece_entre2_id');
+        foreach ($tablas as $key_id){
+            $filtro = array();
+            $data_select = (new selects())->$key_id(filtro:$filtro,html: $this->html_base,link:  $link, row: $row_upd);
+            if(errores::$error){
+                return $this->error->error(mensaje: 'Error al generar select',data:  $data_select);
+
+            }
+            $selects->$key_id = $data_select->select;
+            $row_upd = $data_select->row;
         }
-
-        $selects->dp_pais_id = $data_select->select;
-        $row_upd = $data_select->row;
-        $filtro = array();
-        $data_select = (new selects())->dp_estado_id(filtro:$filtro,html: $this->html_base,link:  $link, row: $row_upd);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al generar select',data:  $data_select);
-
-        }
-
-        $selects->dp_estado_id = $data_select->select;
-        $row_upd = $data_select->row;
-        $filtro = array();
-        $data_select = (new selects())->dp_municipio_id(filtro:$filtro,html: $this->html_base,link:  $link, row: $row_upd);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al generar select',data:  $data_select);
-
-        }
-
-        $selects->dp_municipio_id = $data_select->select;
-        $row_upd = $data_select->row;
-        $filtro = array();
-        $data_select = (new selects())->dp_cp_id(filtro:$filtro,html: $this->html_base,link:  $link, row: $row_upd);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al generar select',data:  $data_select);
-
-        }
-        $selects->dp_cp_id = $data_select->select;
-        $row_upd = $data_select->row;
-        $filtro = array();
-        $data_select = (new selects())->dp_colonia_postal_id(filtro:$filtro,html: $this->html_base,link:  $link, row: $row_upd);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al generar select',data:  $data_select);
-
-        }
-        $selects->dp_colonia_postal_id = $data_select->select;
-        $row_upd = $data_select->row;
-        $filtro = array();
-        $data_select = (new selects())->dp_calle_pertenece_id(filtro:$filtro,html: $this->html_base,link:  $link, row: $row_upd);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al generar select',data:  $data_select);
-
-        }
-        $selects->dp_calle_pertenece_id = $data_select->select;
-        $row_upd = $data_select->row;
-        $filtro = array();
-        $data_select = (new selects())->dp_calle_pertenece_entre1_id(filtro:$filtro,html: $this->html_base,link:  $link,
-            row: $row_upd);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al generar select',data:  $data_select);
-
-        }
-        $selects->dp_calle_pertenece_entre1_id = $data_select->select;
-        $row_upd = $data_select->row;
-        $filtro = array();
-        $data_select = (new selects())->dp_calle_pertenece_entre2_id(filtro:$filtro,html: $this->html_base,link:  $link, row: $row_upd);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al generar select',data:  $data_select);
-
-        }
-        $selects->dp_calle_pertenece_entre2_id = $data_select->select;
-        $row_upd = $data_select->row;
 
 
         $select = (new org_tipo_empresa_html(html: $this->html_base))->select_org_tipo_empresa_id(
@@ -619,91 +564,20 @@ class org_empresa_html extends html_controler {
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $select);
         }
-
-
         $selects->cat_sat_regimen_fiscal_id = $select;
 
-        $filtro = array();
-        $data_select = (new selects())->dp_pais_id(filtro:$filtro,html: $this->html_base,link:  $link, row: $row_upd);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al generar select',data:  $data_select);
+        $tablas = array('dp_pais_id','dp_estado_id','dp_municipio_id','dp_cp_id','dp_colonia_postal_id',
+            'dp_calle_pertenece_id','dp_calle_pertenece_entre1_id','dp_calle_pertenece_entre2_id');
+        foreach ($tablas as $key_id){
+            $filtro = array();
+            $data_select = (new selects())->$key_id(filtro:$filtro,html: $this->html_base,link:  $link, row: $row_upd);
+            if(errores::$error){
+                return $this->error->error(mensaje: 'Error al generar select',data:  $data_select);
 
+            }
+            $selects->$key_id = $data_select->select;
+            $row_upd = $data_select->row;
         }
-
-        $selects->dp_pais_id = $data_select->select;
-        $row_upd = $data_select->row;
-        $filtro = array();
-        $data_select = (new selects())->dp_estado_id(filtro:$filtro,html: $this->html_base,link:  $link, row: $row_upd);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al generar select',data:  $data_select);
-
-        }
-
-        $selects->dp_estado_id = $data_select->select;
-        $row_upd = $data_select->row;
-        $filtro = array();
-
-        $data_select = (new selects())->dp_municipio_id(filtro:$filtro,html: $this->html_base,link:  $link, row: $row_upd);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al generar select',data:  $data_select);
-
-        }
-
-        $selects->dp_municipio_id = $data_select->select;
-        $row_upd = $data_select->row;
-
-        $filtro = array();
-        $data_select = (new selects())->dp_cp_id(filtro:$filtro,html: $this->html_base,link:  $link, row: $row_upd);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al generar select',data:  $data_select);
-
-        }
-        $selects->dp_cp_id = $data_select->select;
-        $row_upd = $data_select->row;
-
-        $filtro = array();
-        $data_select = (new selects())->dp_colonia_postal_id(filtro:$filtro,html: $this->html_base,link:  $link, row: $row_upd);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al generar select',data:  $data_select);
-
-        }
-        $selects->dp_colonia_postal_id = $data_select->select;
-        $row_upd = $data_select->row;
-
-
-
-        $filtro = array();
-        $data_select = (new selects())->dp_calle_pertenece_id(filtro:$filtro,html: $this->html_base,link:  $link, row: $row_upd);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al generar select',data:  $data_select);
-
-        }
-        $selects->dp_calle_pertenece_id = $data_select->select;
-        $row_upd = $data_select->row;
-
-
-
-
-        $filtro = array();
-        $data_select = (new selects())->dp_calle_pertenece_entre1_id(filtro:$filtro,html: $this->html_base,link:  $link,
-            row: $row_upd);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al generar select',data:  $data_select);
-
-        }
-        $selects->dp_calle_pertenece_entre1_id = $data_select->select;
-        $row_upd = $data_select->row;
-
-
-        $filtro = array();
-        $data_select = (new selects())->dp_calle_pertenece_entre2_id(filtro:$filtro,html: $this->html_base,link:  $link,
-            row: $row_upd);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al generar select',data:  $data_select);
-
-        }
-        $selects->dp_calle_pertenece_entre2_id = $data_select->select;
-        $row_upd = $data_select->row;
 
 
 
