@@ -524,17 +524,10 @@ class org_empresa_html extends html_controler {
 
         $row_upd = new stdClass();
 
-        $tablas = array('dp_pais_id','dp_estado_id','dp_municipio_id','dp_cp_id','dp_colonia_postal_id',
-            'dp_calle_pertenece_id','dp_calle_pertenece_entre1_id','dp_calle_pertenece_entre2_id');
-        foreach ($tablas as $key_id){
-            $filtro = array();
-            $data_select = (new selects())->$key_id(filtro:$filtro,html: $this->html_base,link:  $link, row: $row_upd);
-            if(errores::$error){
-                return $this->error->error(mensaje: 'Error al generar select',data:  $data_select);
+        $selects = (new selects())->direcciones(html: $this->html_base,link:  $link,row:  $row_upd,selects:  $selects);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar selects de domicilios',data:  $selects);
 
-            }
-            $selects->$key_id = $data_select->select;
-            $row_upd = $data_select->row;
         }
 
 
@@ -566,17 +559,11 @@ class org_empresa_html extends html_controler {
         }
         $selects->cat_sat_regimen_fiscal_id = $select;
 
-        $tablas = array('dp_pais_id','dp_estado_id','dp_municipio_id','dp_cp_id','dp_colonia_postal_id',
-            'dp_calle_pertenece_id','dp_calle_pertenece_entre1_id','dp_calle_pertenece_entre2_id');
-        foreach ($tablas as $key_id){
-            $filtro = array();
-            $data_select = (new selects())->$key_id(filtro:$filtro,html: $this->html_base,link:  $link, row: $row_upd);
-            if(errores::$error){
-                return $this->error->error(mensaje: 'Error al generar select',data:  $data_select);
 
-            }
-            $selects->$key_id = $data_select->select;
-            $row_upd = $data_select->row;
+        $selects = (new selects())->direcciones(html: $this->html_base,link:  $link,row:  $row_upd,selects:  $selects);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar selects de domicilios',data:  $select);
+
         }
 
 
