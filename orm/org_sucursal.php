@@ -50,4 +50,5 @@ class org_sucursal extends modelo{
         }
         return $r_alta_bd;
     }
+
 }

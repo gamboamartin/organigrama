@@ -48,7 +48,7 @@ class org_empresa extends modelo{
     }
 
     public function asigna_datos(controlador_org_empresa $controlador_org_empresa, int $registro_id){
-        $registro = (new org_empresa($this->link))->registro(registro_id: $registro_id);
+        $registro = $this->registro(registro_id: $registro_id);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al inicializar registro empresa', data: $registro);
         }

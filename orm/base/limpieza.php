@@ -39,7 +39,7 @@ class limpieza{
         return $registro;
     }
 
-    private function init_data_ubicacion(controler $controler, stdClass $org_empresa): stdClass
+    private function init_data_ubicacion_empresa(controler $controler, stdClass $org_empresa): stdClass
     {
         $controler->row_upd->dp_pais_id = $org_empresa->dp_pais_id;
         $controler->row_upd->dp_estado_id = $org_empresa->dp_estado_id;
@@ -50,6 +50,20 @@ class limpieza{
         $controler->row_upd->dp_calle_pertenece_entre1_id = $org_empresa->org_empresa_dp_calle_pertenece_entre1_id;
         $controler->row_upd->dp_calle_pertenece_entre2_id = $org_empresa->org_empresa_dp_calle_pertenece_entre2_id;
         $controler->row_upd->org_tipo_empresa_id = $org_empresa->org_tipo_empresa_id;
+
+        return $controler->row_upd;
+    }
+    private function init_data_ubicacion_sucursal(controler $controler, stdClass $org_sucursal): stdClass
+    {
+        $controler->row_upd->dp_pais_id = $org_sucursal->dp_pais_id;
+        $controler->row_upd->dp_estado_id = $org_sucursal->dp_estado_id;
+        $controler->row_upd->dp_municipio_id = $org_sucursal->dp_municipio_id;
+        $controler->row_upd->dp_cp_id = $org_sucursal->dp_cp_id;
+        $controler->row_upd->dp_colonia_postal_id = $org_sucursal->dp_colonia_postal_id;
+        $controler->row_upd->dp_calle_pertenece_id = $org_sucursal->dp_calle_pertenece_id;
+        $controler->row_upd->dp_calle_pertenece_entre1_id = $org_sucursal->org_empresa_dp_calle_pertenece_entre1_id;
+        $controler->row_upd->dp_calle_pertenece_entre2_id = $org_sucursal->org_empresa_dp_calle_pertenece_entre2_id;
+
 
         return $controler->row_upd;
     }
@@ -81,6 +95,26 @@ class limpieza{
 
 
         $init = $this->init_upd_org_empresa(controler: $controler,org_empresa:  $org_empresa);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al inicializa datos',data:  $init);
+        }
+        return $init;
+    }
+
+    public function init_modifica_org_sucursal(controler $controler): array|stdClass
+    {
+        if(!isset($controler->row_upd)){
+            $controler->row_upd = new stdClass();
+        }
+
+
+        $org_sucursal = $controler->modelo->registro(registro_id: $controler->registro_id,retorno_obj: true);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al obtener registro',data:  $org_sucursal);
+        }
+
+
+        $init = $this->init_upd_org_sucursal(controler: $controler,org_sucursal:  $org_sucursal);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al inicializa datos',data:  $init);
         }
@@ -123,7 +157,27 @@ class limpieza{
         }
 
 
-        $init = $this->init_data_ubicacion(controler: $controler,org_empresa:  $org_empresa);
+        $init = $this->init_data_ubicacion_empresa(controler: $controler,org_empresa:  $org_empresa);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al inicializa datos',data:  $init);
+        }
+        return $init;
+    }
+
+    private function init_upd_org_sucursal(controler $controler, stdClass $org_sucursal): array|stdClass
+    {
+        $keys_foraneas = array('dp_pais_id','dp_estado_id','dp_municipio_id','dp_cp_id','dp_colonia_postal_id',
+            'dp_calle_pertenece_id');
+
+
+        $init = $this->init_foraneas(keys_foraneas: $keys_foraneas,org_empresa:  $org_sucursal);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al inicializa datos',data:  $init);
+
+        }
+
+
+        $init = $this->init_data_ubicacion_sucursal(controler: $controler,org_sucursal:  $org_sucursal);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al inicializa datos',data:  $init);
         }

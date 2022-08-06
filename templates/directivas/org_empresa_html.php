@@ -264,7 +264,7 @@ class org_empresa_html extends html_controler {
             return $this->error->error(mensaje: 'Error al generar inputs fecha',data:  $emails);
         }
 
-        $telefonos = $this->telefonos_alta();
+        $telefonos = $this->telefonos_alta(row_upd: $row_upd);
 
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar inputs $telefonos',data:  $telefonos);
@@ -567,8 +567,6 @@ class org_empresa_html extends html_controler {
         }
 
 
-
-
         $select = (new org_tipo_empresa_html(html: $this->html_base))->select_org_tipo_empresa_id(
             cols: 12, con_registros:true, id_selected:$row_upd->org_tipo_empresa_id,link: $link);
         if(errores::$error){
@@ -650,27 +648,24 @@ class org_empresa_html extends html_controler {
         return $div;
     }
 
-    private function telefonos_alta(): array|stdClass
+    private function telefonos_alta(stdClass $row_upd = new stdClass()): array|stdClass
     {
 
         $telefonos = new stdClass();
 
-        $telefono_1 = $this->telefono_1(cols: 4,row_upd:
-            new stdClass(),value_vacio:  true);
+        $telefono_1 = $this->telefono_1(cols: 4,row_upd: $row_upd,value_vacio:  false);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input',data:  $telefono_1);
         }
         $telefonos->telefono_1 = $telefono_1;
 
-        $telefono_2 = $this->telefono_2(cols: 4,row_upd:
-            new stdClass(),value_vacio:  true);
+        $telefono_2 = $this->telefono_2(cols: 4,row_upd: $row_upd,value_vacio:  false);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input',data:  $telefono_2);
         }
         $telefonos->telefono_2 = $telefono_2;
 
-        $telefono_3 = $this->telefono_3(cols: 4,row_upd:
-            new stdClass(),value_vacio:  true);
+        $telefono_3 = $this->telefono_3(cols: 4,row_upd: $row_upd,value_vacio:  false);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input',data:  $telefono_3);
         }
