@@ -26,9 +26,24 @@ sl_org_empresa_id.change(function(){
     let selected = $(this).find('option:selected');
 
     fecha_inicio_operaciones = selected.data('org_empresa_fecha_inicio_operaciones');
-    dp_pais_id = selected.data('dp_pais_id');
-    dp_estado_id = selected.data('dp_estado_id');
-    dp_municipio_id = selected.data('dp_municipio_id');
+
+
+    let dp_pais_id_pa = selected.data('dp_pais_id');
+    if(dp_pais_id_pa !== ''){
+        dp_pais_id = dp_pais_id_pa;
+    }
+
+    let dp_estado_id_pa = selected.data('dp_estado_id');
+    if(dp_estado_id_pa !== ''){
+        dp_estado_id = dp_estado_id_pa;
+    }
+
+    let dp_municipio_id_pa = selected.data('dp_municipio_id');
+    if(dp_municipio_id_pa !== ''){
+        dp_municipio_id = dp_municipio_id_pa;
+    }
+
+
     dp_cp_id = selected.data('dp_cp_id');
     dp_colonia_postal_id = selected.data('dp_colonia_postal_id');
     dp_calle_pertenece_id = selected.data('dp_calle_pertenece_id');
@@ -36,7 +51,6 @@ sl_org_empresa_id.change(function(){
     if(fecha_inicio_operaciones !== '0000-00-00'){
         txt_fecha_inicio_operaciones.val(fecha_inicio_operaciones);
     }
-
 
     dp_asigna_estados(dp_pais_id,dp_estado_id);
     dp_asigna_municipios(dp_estado_id,dp_municipio_id);

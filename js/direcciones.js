@@ -45,6 +45,7 @@ function dp_asigna_calles_pertenece(dp_colonia_postal_id = '',dp_calle_pertenece
 }
 
 function dp_asigna_municipios(dp_estado_id = '',dp_municipio_id = ''){
+    
     let sl_dp_municipio_id = $("#dp_municipio_id");
 
     let url = "index.php?seccion=dp_municipio&ws=1&accion=get_municipio&dp_estado_id="+dp_estado_id+"&session_id="+session_id;
@@ -130,7 +131,7 @@ sl_dp_pais_id.change(function(){
 });
 
 sl_dp_estado_id.change(function(){
-    dp_estado_id = sl_dp_pais_id.val();
+    dp_estado_id = sl_dp_estado_id.val();
     dp_asigna_municipios(dp_estado_id);
 });
 sl_dp_municipio_id.change(function(){
