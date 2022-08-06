@@ -500,6 +500,11 @@ class org_empresa_html extends html_controler {
         $extra_params_keys = array();
         $extra_params_keys[] = 'org_empresa_fecha_inicio_operaciones';
         $extra_params_keys[] = 'dp_pais_id';
+        $extra_params_keys[] = 'dp_estado_id';
+        $extra_params_keys[] = 'dp_municipio_id';
+        $extra_params_keys[] = 'dp_cp_id';
+        $extra_params_keys[] = 'dp_colonia_postal_id';
+        $extra_params_keys[] = 'dp_calle_pertenece_id';
         $select = $this->select_catalogo(cols:$cols,con_registros:$con_registros,id_selected:$id_selected,
             modelo: $modelo,extra_params_keys: $extra_params_keys);
         if(errores::$error){
