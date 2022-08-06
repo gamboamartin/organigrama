@@ -45,7 +45,7 @@ function dp_asigna_calles_pertenece(dp_colonia_postal_id = '',dp_calle_pertenece
 }
 
 function dp_asigna_municipios(dp_estado_id = '',dp_municipio_id = ''){
-    
+
     let sl_dp_municipio_id = $("#dp_municipio_id");
 
     let url = "index.php?seccion=dp_municipio&ws=1&accion=get_municipio&dp_estado_id="+dp_estado_id+"&session_id="+session_id;
