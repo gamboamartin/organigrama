@@ -37,7 +37,7 @@ class org_puesto_html extends html_controler {
 
     private function genera_inputs_modifica(controlador_org_puesto $controler,PDO $link): array|stdClass
     {
-        $inputs = $this->init_alta(link: $link);
+        $inputs = $this->init_modifica(link: $link, row_upd: $controler->row_upd);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar inputs',data:  $inputs);
         }
@@ -62,6 +62,29 @@ class org_puesto_html extends html_controler {
         return $alta_inputs;
     }
 
+    private function init_modifica(PDO $link, stdClass $row_upd): array|stdClass
+    {
+
+        $selects = $this->selects_modifica(link: $link, row_upd: $row_upd);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar selects',data:  $selects);
+        }
+
+        $alta_inputs = new stdClass();
+        $alta_inputs->selects = $selects;
+
+        return $alta_inputs;
+    }
+
+    public function inputs_org_puesto(controlador_org_puesto $controlador_org_puesto): array|stdClass
+    {
+        $inputs = $this->genera_inputs_modifica(controler: $controlador_org_puesto, link: $controlador_org_puesto->link);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar inputs',data:  $inputs);
+        }
+        return $inputs;
+    }
+
     private function selects_alta(PDO $link): array|stdClass
     {
         $selects = new stdClass();
@@ -71,7 +94,7 @@ class org_puesto_html extends html_controler {
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $select);
         }
-        $selects->org_empresa_id = $select;
+        $selects->org_tipo_puesto_id  = $select;
 
         $select = (new org_empresa_html(html: $this->html_base))->select_org_empresa_id(
             cols: 12, con_registros:true, id_selected:-1,link: $link);
@@ -79,7 +102,7 @@ class org_puesto_html extends html_controler {
             return $this->error->error(mensaje: 'Error al generar select',data:  $select);
 
         }
-        $selects->org_tipo_puesto_id = $select;
+        $selects->org_empresa_id = $select;
 
         return $selects;
     }
@@ -95,12 +118,29 @@ class org_puesto_html extends html_controler {
         return $select;
     }
 
-    public function inputs_org_puesto(controlador_org_puesto $controlador_org_puesto): array|stdClass
+    private function selects_modifica(PDO $link, stdClass $row_upd): array|stdClass
     {
-        $inputs = $this->genera_inputs_modifica(controler: $controlador_org_puesto, link: $controlador_org_puesto->link);
+
+        $selects = new stdClass();
+
+        $select = (new org_tipo_puesto_html(html:$this->html_base))->select_org_tipo_puesto_id(
+            cols: 12, con_registros:true, id_selected:$row_upd->org_tipo_puesto_id,link: $link);
         if(errores::$error){
-            return $this->error->error(mensaje: 'Error al generar inputs',data:  $inputs);
+            return $this->error->error(mensaje: 'Error al generar select',data:  $select);
         }
-        return $inputs;
+
+        $selects->org_tipo_puesto_id = $select;
+
+        $select = (new org_empresa_html(html:$this->html_base))->select_org_empresa_id(
+            cols: 6, con_registros:true, id_selected:$row_upd->org_empresa_id,link: $link);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar select',data:  $select);
+        }
+
+        $selects->org_empresa_id = $select;
+
+        return $selects;
     }
+
+
 }
