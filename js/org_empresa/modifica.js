@@ -29,7 +29,12 @@ sl_local_dp_colonia_postal_id.change(function(){
         type: 'GET',
         url: url,
     }).done(function( data ) {  // Función que se ejecuta si todo ha ido bien
-        console.log(data);
+        sl_dp_calle_pertenece_entre1_id.empty();
+        sl_dp_calle_pertenece_entre2_id.empty();
+
+        integra_new_option("#dp_calle_pertenece_entre1_id",'Seleccione una calle','-1');
+        integra_new_option("#dp_calle_pertenece_entre2_id",'Seleccione una calle','-1');
+
         $.each(data.registros, function( index, dp_calle_pertenece ) {
             integra_new_option("#dp_calle_pertenece_entre1_id",dp_calle_pertenece.dp_colonia_descripcion+' '+dp_calle_pertenece.dp_cp_descripcion+' '+dp_calle_pertenece.dp_calle_descripcion,dp_calle_pertenece.dp_calle_pertenece_id);
             integra_new_option("#dp_calle_pertenece_entre2_id",dp_calle_pertenece.dp_colonia_descripcion+' '+dp_calle_pertenece.dp_cp_descripcion+' '+dp_calle_pertenece.dp_calle_descripcion,dp_calle_pertenece.dp_calle_pertenece_id);
