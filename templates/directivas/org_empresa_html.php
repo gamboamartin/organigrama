@@ -49,7 +49,7 @@ class org_empresa_html extends html_controler {
 
         $controler->inputs->telefono_1 = $inputs->telefonos->telefono_1;
         $controler->inputs->telefono_2 = $inputs->telefonos->telefono_2;
-        $controler->inputs->telefono_3 = $inputs->telefonos->telefono_2;
+        $controler->inputs->telefono_3 = $inputs->telefonos->telefono_3;
 
 
         return $controler->inputs;
