@@ -19,12 +19,12 @@ class org_sucursal_html extends html_controler {
         $controler->inputs->select = new stdClass();
 
         $controler->inputs->select->org_empresa_id = $inputs->selects->org_empresa_id;
-        $controler->inputs->select->dp_pais_id = $inputs->selects->dp_pais_id;
-        $controler->inputs->select->dp_estado_id = $inputs->selects->dp_estado_id;
-        $controler->inputs->select->dp_municipio_id = $inputs->selects->dp_municipio_id;
-        $controler->inputs->select->dp_cp_id = $inputs->selects->dp_cp_id;
-        $controler->inputs->select->dp_colonia_postal_id = $inputs->selects->dp_colonia_postal_id;
-        $controler->inputs->select->dp_calle_pertenece_id = $inputs->selects->dp_calle_pertenece_id;
+
+        $inputs_direcciones_postales = (new inputs_html())->base_direcciones_asignacion(controler:$controler,
+            inputs: $inputs);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al asignar direcciones',data:  $inputs_direcciones_postales);
+        }
 
         $controler->inputs->fecha_inicio_operaciones = $inputs->fechas->fecha_inicio_operaciones;
 

@@ -2,14 +2,11 @@
 namespace html;
 
 
-use config\generales;
 use gamboamartin\errores\errores;
 use gamboamartin\organigrama\controllers\controlador_org_empresa;
 use gamboamartin\system\html_controler;
 
-use gamboamartin\template\html;
 use models\base\limpieza;
-use models\base\rows;
 use models\org_empresa;
 use PDO;
 use stdClass;
@@ -22,12 +19,14 @@ class org_empresa_html extends html_controler {
         $controler->inputs->select = new stdClass();
 
         $controler->inputs->select->cat_sat_regimen_fiscal_id = $inputs->selects->cat_sat_regimen_fiscal_id;
-        $controler->inputs->select->dp_pais_id = $inputs->selects->dp_pais_id;
-        $controler->inputs->select->dp_estado_id = $inputs->selects->dp_estado_id;
-        $controler->inputs->select->dp_municipio_id = $inputs->selects->dp_municipio_id;
-        $controler->inputs->select->dp_cp_id = $inputs->selects->dp_cp_id;
-        $controler->inputs->select->dp_colonia_postal_id = $inputs->selects->dp_colonia_postal_id;
-        $controler->inputs->select->dp_calle_pertenece_id = $inputs->selects->dp_calle_pertenece_id;
+
+
+        $inputs_direcciones_postales = (new inputs_html())->base_direcciones_asignacion(controler:$controler, inputs: $inputs);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al asignar direcciones',data:  $inputs_direcciones_postales);
+        }
+
+
         $controler->inputs->select->dp_calle_pertenece_entre1_id = $inputs->selects->dp_calle_pertenece_entre1_id;
         $controler->inputs->select->dp_calle_pertenece_entre2_id = $inputs->selects->dp_calle_pertenece_entre2_id;
         $controler->inputs->select->org_tipo_empresa_id = $inputs->selects->org_tipo_empresa_id;
