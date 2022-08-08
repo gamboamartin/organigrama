@@ -121,6 +121,15 @@ class limpieza{
         return $init;
     }
 
+    /**
+     * Inicializa los elemento de un registro previo al alta bd
+     * @param array $registro Registro inicializar para el alta
+     * @return array
+     * @version 0.135.27
+     * @verfuncion 0.1.0
+     * @fecha 2022-08-08 12:36
+     * @author mgamboa
+     */
     public function init_org_empresa_alta_bd(array $registro): array
     {
         $keys = array('razon_social','rfc');

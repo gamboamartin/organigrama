@@ -100,6 +100,7 @@ function dp_asigna_cps(dp_municipio_id = '',dp_cp_id = ''){
         type: 'GET',
         url: url,
     }).done(function( data ) {  // Función que se ejecuta si todo ha ido bien
+
         sl_dp_cp_id.empty();
         integra_new_option("#dp_cp_id",'Seleccione un cp','-1');
         $.each(data.registros, function( index, dp_cp ) {

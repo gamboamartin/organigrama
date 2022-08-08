@@ -56,6 +56,28 @@ class limpiezaTest extends test {
         errores::$error = false;
     }
 
+    public function test_init_org_empresa_alta_bd(): void
+    {
+        errores::$error = false;
+
+        $lim = new limpieza();
+        //$lim = new liberator($lim);
+
+        $registro = array();
+        $registro['razon_social'] = 'a';
+        $registro['rfc'] = 'b';
+        $resultado = $lim->init_org_empresa_alta_bd($registro);
+        $this->assertIsArray($resultado);
+        $this->assertNotTrue(errores::$error);
+        $this->assertEquals('a',$resultado['razon_social']);
+        $this->assertEquals('b',$resultado['rfc']);
+        $this->assertEquals('a',$resultado['descripcion']);
+        $this->assertEquals('b',$resultado['codigo_bis']);
+        $this->assertEquals('a',$resultado['descripcion_select']);
+        $this->assertEquals('a',$resultado['alias']);
+        errores::$error = false;
+    }
+
     public function test_limpia_foraneas_org_empresa(): void
     {
         errores::$error = false;

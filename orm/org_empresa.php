@@ -17,9 +17,12 @@ class org_empresa extends modelo{
 
         $no_duplicados = array('descripcion','codigo','descripcion_select','alias','codigo_bis','rfc','razon_social');
 
+        $tipo_campos['telefono_1'] = 'telefono';
+        $tipo_campos['telefono_2'] = 'telefono';
+        $tipo_campos['telefono_3'] = 'telefono';
 
         parent::__construct(link: $link,tabla:  $tabla, campos_obligatorios: $campos_obligatorios,
-            columnas: $columnas,no_duplicados: $no_duplicados);
+            columnas: $columnas,no_duplicados: $no_duplicados,tipo_campos: $tipo_campos);
     }
 
     public function alta_bd(): array|stdClass
