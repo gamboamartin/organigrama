@@ -4,9 +4,9 @@ function getAbsolutePath() {
     return loc.href.substring(0, loc.href.length - ((loc.pathname + loc.search + loc.hash).length - pathName.length));
 }
 let url = getAbsolutePath();
-let base_js = url+'js/base.js';
+
 let direcciones_js = url+'js/direcciones.js';
-document.write('<script src="'+base_js+'"></script>');
+
 document.write('<script src="'+direcciones_js+'"></script>');
 
 
