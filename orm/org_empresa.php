@@ -53,7 +53,11 @@ class org_empresa extends modelo{
         $org_sucursal_ins['org_empresa_id'] = $r_alta_bd->registro_id;
         $org_sucursal_ins['codigo'] = $registro['codigo'];
         $org_sucursal_ins['codigo_bis'] = $registro['codigo_bis'];
-        $org_sucursal_ins['fecha_inicio_operaciones'] = $registro['fecha_inicio_operaciones'];
+
+
+        if(isset($registro['fecha_inicio_operaciones'])){
+            $org_sucursal_ins['fecha_inicio_operaciones'] = $registro['fecha_inicio_operaciones'];
+        }
 
         if(isset($registro['dp_calle_pertenece_id'])){
             $org_sucursal_ins['dp_calle_pertenece_id'] = $registro['dp_calle_pertenece_id'];
