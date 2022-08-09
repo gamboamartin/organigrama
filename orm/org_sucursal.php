@@ -36,10 +36,15 @@ class org_sucursal extends modelo{
             return $this->error->error(mensaje: 'Error al validar registro', data: $valida);
         }
 
-
         $row = (new limpieza())->init_row_sucursal_alta(modelo: $this);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al inicializar row',data:  $row);
+        }
+
+        $keys = array('org_empresa_id','org_tipo_sucursal_id');
+        $valida = $this->validacion->valida_ids(keys:$keys,registro:  $this->registro);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al validar registro', data: $valida);
         }
 
 
