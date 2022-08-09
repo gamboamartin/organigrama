@@ -262,23 +262,20 @@ class limpieza{
         return $modelo->registro;
     }
 
+    /**
+     * Limpia un row cuando este tiene calle sus parents
+     * @param array $registro registro a limpiar
+     * @return array
+     */
     private function limpia_domicilio_con_calle(array $registro): array
     {
-        if(isset($registro['dp_pais_id'])){
-            unset($registro['dp_pais_id']);
+        $keys = array('dp_pais_id','dp_estado_id','dp_municipio_id','dp_cp_id','dp_colonia_postal_id');
+        foreach ($keys as $key){
+            if(isset($registro[$key])){
+                unset($registro[$key]);
+            }
         }
-        if(isset($registro['dp_estado_id'])){
-            unset($registro['dp_estado_id']);
-        }
-        if(isset($registro['dp_municipio_id'])){
-            unset($registro['dp_municipio_id']);
-        }
-        if(isset($registro['dp_cp_id'])){
-            unset($registro['dp_cp_id']);
-        }
-        if(isset($registro['dp_colonia_postal_id'])){
-            unset($registro['dp_colonia_postal_id']);
-        }
+
         return $registro;
     }
 
