@@ -79,9 +79,9 @@ class org_sucursal_html extends html_controler {
         return $div;
     }
 
-    public function genera_inputs_alta(controlador_org_sucursal $controler,PDO $link, int $org_sucursal_id): array|stdClass
+    public function genera_inputs_alta(controlador_org_sucursal $controler,PDO $link, int $org_empresa_id): array|stdClass
     {
-        $inputs = $this->init_alta(link: $link, org_sucursal_id: $org_sucursal_id);
+        $inputs = $this->init_alta(link: $link, org_empresa_id: $org_empresa_id);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar inputs',data:  $inputs);
 
@@ -112,10 +112,10 @@ class org_sucursal_html extends html_controler {
 
 
 
-    private function init_alta(PDO $link, int $org_sucursal_id): array|stdClass
+    private function init_alta(PDO $link, int $org_empresa_id): array|stdClass
     {
         $row_upd = new stdClass();
-        $selects = $this->selects_alta( link: $link, org_sucursal_id: $org_sucursal_id);
+        $selects = $this->selects_alta( link: $link, org_empresa_id: $org_empresa_id);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar selects',data:  $selects);
         }
@@ -289,7 +289,7 @@ class org_sucursal_html extends html_controler {
         return $inputs;
     }
 
-    private function selects_alta( PDO $link, int $org_sucursal_id): array|stdClass
+    private function selects_alta( PDO $link, int $org_empresa_id): array|stdClass
     {
         $selects = new stdClass();
 
@@ -302,7 +302,7 @@ class org_sucursal_html extends html_controler {
         }
 
         $select = (new org_empresa_html($this->html_base))->select_org_empresa_id(cols: 12, con_registros:true,
-            id_selected:$org_sucursal_id,link: $link);
+            id_selected:$org_empresa_id,link: $link);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $select);
 

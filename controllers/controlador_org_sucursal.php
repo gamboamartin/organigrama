@@ -21,7 +21,7 @@ use PDO;
 use stdClass;
 
 class controlador_org_sucursal extends system {
-    protected int $org_sucursal_id = -1;
+    protected int $org_empresa_id = -1;
 
     public function __construct(PDO $link, html $html = new \gamboamartin\template_1\html(),
                                 stdClass $paths_conf = new stdClass()){
@@ -43,7 +43,7 @@ class controlador_org_sucursal extends system {
         }
 
         $inputs = (new org_sucursal_html($this->html_base))->genera_inputs_alta(controler: $this, link: $this->link,
-            org_sucursal_id: $this->org_sucursal_id);
+            org_empresa_id: $this->org_empresa_id);
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al generar inputs',data:  $inputs, header: $header,ws:$ws);
         }
