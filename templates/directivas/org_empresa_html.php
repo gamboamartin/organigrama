@@ -494,10 +494,10 @@ class org_empresa_html extends html_controler {
 
     /**
      * Genera un select de tipo empresa
-     * @param int $cols
-     * @param bool $con_registros
-     * @param int $id_selected
-     * @param PDO $link
+     * @param int $cols numero de columnas en css
+     * @param bool $con_registros si con registros mostrara los registros en los options
+     * @param int $id_selected id del catalog seleccionado
+     * @param PDO $link conexion a la base de datos
      * @return array|string
      */
     public function select_org_empresa_id(int $cols,bool $con_registros,int $id_selected, PDO $link): array|string
