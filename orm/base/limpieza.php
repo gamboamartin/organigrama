@@ -1,8 +1,13 @@
 <?php
 namespace models\base;
 use base\controller\controler;
+use config\generales;
 use gamboamartin\errores\errores;
 use gamboamartin\validacion\validacion;
+use models\dp_calle_pertenece;
+use models\org_empresa;
+use models\org_sucursal;
+use PDO;
 use stdClass;
 
 class limpieza{
@@ -11,6 +16,39 @@ class limpieza{
     public function __construct(){
         $this->error = new errores();
         $this->validacion = new validacion();
+    }
+
+    private function descripcion_sucursal(array $dp_calle_pertenece, array $org_empresa, array $registro): string
+    {
+        $descripcion = $org_empresa['org_empresa_descripcion'];
+        $descripcion .= ' '.$dp_calle_pertenece['dp_municipio_descripcion'];
+        $descripcion .= ' '.$dp_calle_pertenece['dp_estado_descripcion'];
+        $descripcion .= ' '.$dp_calle_pertenece['dp_cp_descripcion'];
+        $descripcion .= ' '.$registro['codigo'];
+
+        return $descripcion;
+    }
+
+    private function genera_descripcion(int $dp_calle_pertenece_id, PDO $link, int $org_empresa_id, array $registro): array|string
+    {
+        $org_empresa = (new org_empresa($link))->registro(registro_id: $org_empresa_id);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al obtener empresa', data: $org_empresa);
+        }
+
+        $dp_calle_pertenece = (new dp_calle_pertenece($link))->registro(registro_id: $dp_calle_pertenece_id);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al obtener calle', data: $dp_calle_pertenece);
+        }
+
+
+        $descripcion = $this->descripcion_sucursal(dp_calle_pertenece:$dp_calle_pertenece,
+            org_empresa: $org_empresa,registro:  $registro);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al obtener descripcion', data: $descripcion);
+        }
+
+        return $descripcion;
     }
 
     /**
@@ -193,6 +231,57 @@ class limpieza{
         return $init;
     }
 
+    public function init_row_sucursal_alta(org_sucursal $modelo): array
+    {
+        $registro = $this->limpia_domicilio_con_calle(registro:$modelo->registro);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al limpiar sucursal', data: $registro);
+        }
+
+        $modelo->registro = $registro;
+
+
+        $descripcion = $this->genera_descripcion(
+            dp_calle_pertenece_id: $registro['dp_calle_pertenece_id'],link:  $modelo->link,
+            org_empresa_id:  $registro['org_empresa_id'],registro:   $registro);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al obtener descripcion', data: $descripcion);
+        }
+
+        $registro['descripcion'] = $descripcion;
+        $registro['descripcion_select'] = strtoupper($descripcion);
+        $registro['alias'] = $registro['codigo'];
+
+        $modelo->registro = $registro;
+
+
+        $org_tipo_sucursal_id =$this->row_tipo_sucursal_id(modelo: $modelo);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al asignar tipo sucursal',data:  $org_tipo_sucursal_id);
+        }
+        return $modelo->registro;
+    }
+
+    private function limpia_domicilio_con_calle(array $registro): array
+    {
+        if(isset($registro['dp_pais_id'])){
+            unset($registro['dp_pais_id']);
+        }
+        if(isset($registro['dp_estado_id'])){
+            unset($registro['dp_estado_id']);
+        }
+        if(isset($registro['dp_municipio_id'])){
+            unset($registro['dp_municipio_id']);
+        }
+        if(isset($registro['dp_cp_id'])){
+            unset($registro['dp_cp_id']);
+        }
+        if(isset($registro['dp_colonia_postal_id'])){
+            unset($registro['dp_colonia_postal_id']);
+        }
+        return $registro;
+    }
+
 
 
     /**
@@ -219,6 +308,74 @@ class limpieza{
             unset($registro['dp_calle_pertenece_entre1_id']);
         }
         return $registro;
+    }
+
+    private function row_tipo_sucursal_id(org_sucursal $modelo): int|array
+    {
+        if(!isset($modelo->registro['tipo_sucursal_id'])){
+
+            $t_sucursal = $this->tipos_sucursal();
+            if(errores::$error){
+                return $this->error->error(mensaje: 'Error al obtener tipos de sucursal', data: $t_sucursal);
+            }
+
+            $org_tipo_sucursal_id = $this->tipo_sucursal_id(modelo: $modelo, t_sucursal: $t_sucursal);
+            if(errores::$error){
+                return $this->error->error(mensaje: 'Error al obtener tipo sucursal',data:  $org_tipo_sucursal_id);
+            }
+
+            $modelo->registro['org_tipo_sucursal_id'] = $org_tipo_sucursal_id;
+
+        }
+        return  (int)$modelo->registro['org_tipo_sucursal_id'];
+    }
+
+    private function tipos_sucursal(): stdClass
+    {
+        $generales = (new generales());
+        $tipo_sucursal_base_id = -1;
+        $tipo_sucursal_matriz_id = -1;
+        if(isset($generales->tipo_sucursal_base_id)){
+            $tipo_sucursal_base_id = $generales->tipo_sucursal_base_id;
+        }
+        if(isset($generales->tipo_sucursal_matriz_id)){
+            $tipo_sucursal_matriz_id = $generales->tipo_sucursal_matriz_id;
+        }
+
+        $data = new stdClass();
+        $data->tipo_sucursal_base_id = $tipo_sucursal_base_id;
+        $data->tipo_sucursal_matriz_id = $tipo_sucursal_matriz_id;
+        return $data;
+    }
+
+    private function tipo_sucursal_id(org_sucursal $modelo, stdClass $t_sucursal): array|int
+    {
+        $org_tipo_sucursal_id = -1;
+        $filtro = array();
+        $filtro['org_empresa.id'] = $modelo->registro['org_empresa_id'];
+        $n_sucursales = $modelo->cuenta(filtro: $filtro);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al contar sucursales',data:  $n_sucursales);
+        }
+        if((int)$n_sucursales === 0){
+            $org_tipo_sucursal_id = $t_sucursal->tipo_sucursal_matriz_id;
+        }
+        if((int)$n_sucursales >0){
+            $filtro = array();
+            $filtro['org_empresa.id'] = $modelo->registro['org_empresa_id'];
+            $filtro['org_tipo_sucursal.id'] = $t_sucursal->tipo_sucursal_matriz_id;
+            $n_sucursales = $modelo->cuenta(filtro: $filtro);
+            if(errores::$error){
+                return $this->error->error(mensaje: 'Error al contar sucursales',data:  $n_sucursales);
+            }
+            if((int)$n_sucursales === 0){
+                $org_tipo_sucursal_id = $t_sucursal->tipo_sucursal_matriz_id;
+            }
+            else{
+                $org_tipo_sucursal_id = $t_sucursal->tipo_sucursal_base_id;
+            }
+        }
+        return $org_tipo_sucursal_id;
     }
 
 
