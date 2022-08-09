@@ -54,10 +54,10 @@ class limpieza{
 
     /**
      * Genera una descripcion basada en org empresa
-     * @param int $dp_calle_pertenece_id
-     * @param PDO $link
-     * @param int $org_empresa_id
-     * @param array $registro
+     * @param int $dp_calle_pertenece_id identificador de calle
+     * @param PDO $link conexion a la bd
+     * @param int $org_empresa_id identificador de empresa
+     * @param array $registro registro previo
      * @return array|string
      */
     private function genera_descripcion(int $dp_calle_pertenece_id, PDO $link, int $org_empresa_id, array $registro): array|string
@@ -264,7 +264,7 @@ class limpieza{
 
     /**
      * Inicializa un registro previo al alta de sucursal desde empresa alta
-     * @param org_sucursal $modelo
+     * @param org_sucursal $modelo Modelo de org sucursal datos
      * @return array
      */
     public function init_row_sucursal_alta(org_sucursal $modelo): array
