@@ -307,6 +307,29 @@ class limpieza{
         return $registro;
     }
 
+    public function org_sucursal_ins(int $org_empresa_id, array $org_empresa): array
+    {
+        $org_sucursal_ins['org_empresa_id'] = $org_empresa_id;
+        $org_sucursal_ins['codigo'] = $org_empresa['codigo'];
+        $org_sucursal_ins['codigo_bis'] = $org_empresa['codigo_bis'];
+
+
+        if(isset($org_empresa['fecha_inicio_operaciones'])){
+            $org_sucursal_ins['fecha_inicio_operaciones'] = $org_empresa['fecha_inicio_operaciones'];
+        }
+        if(isset($org_empresa['dp_calle_pertenece_id'])){
+            $org_sucursal_ins['dp_calle_pertenece_id'] = $org_empresa['dp_calle_pertenece_id'];
+        }
+        if(isset($org_empresa['telefono_1'])){
+            $org_sucursal_ins['telefono_1'] = $org_empresa['telefono_1'];
+        }
+        if(isset($org_empresa['exterior'])){
+            $org_sucursal_ins['exterior'] = $org_empresa['exterior'];
+        }
+
+        return $org_sucursal_ins;
+    }
+
     private function row_tipo_sucursal_id(org_sucursal $modelo): int|array
     {
         if(!isset($modelo->registro['tipo_sucursal_id'])){
