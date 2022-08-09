@@ -15,8 +15,8 @@ class org_sucursal extends modelo{
             'dp_calle' => 'dp_calle_pertenece', 'dp_colonia_postal'=>'dp_calle_pertenece',
             'dp_colonia'=>'dp_colonia_postal', 'dp_cp'=>'dp_colonia_postal', 'dp_municipio'=>'dp_cp',
             'dp_estado'=>'dp_municipio','dp_pais'=>'dp_estado','org_tipo_sucursal'=>$tabla);
-        $campos_obligatorios = array('descripcion','dp_calle_pertenece_id','exterior','org_empresa_id',
-            'org_tipo_sucursal_id','telefono_1');
+        $campos_obligatorios = array('descripcion','dp_calle_pertenece_id','org_empresa_id',
+            'org_tipo_sucursal_id');
 
         $tipo_campos['telefono_1'] = 'telefono_mx';
         $tipo_campos['telefono_2'] = 'telefono_mx';
@@ -29,8 +29,7 @@ class org_sucursal extends modelo{
     public function alta_bd(): array|\stdClass
     {
 
-        $keys = array('org_empresa_id','codigo','codigo_bis','fecha_inicio_operaciones','dp_calle_pertenece_id',
-            'exterior','telefono_1');
+        $keys = array('org_empresa_id','codigo','codigo_bis','fecha_inicio_operaciones');
         $valida = $this->validacion->valida_existencia_keys(keys: $keys, registro: $this->registro);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al validar registro', data: $valida);

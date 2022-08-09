@@ -47,6 +47,33 @@ class org_empresa extends modelo{
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al dar de alta empresa', data: $r_alta_bd);
         }
+
+        $org_sucursal_modelo = new org_sucursal($this->link);
+
+        $org_sucursal_ins['org_empresa_id'] = $r_alta_bd->registro_id;
+        $org_sucursal_ins['codigo'] = $registro['codigo'];
+        $org_sucursal_ins['codigo_bis'] = $registro['codigo_bis'];
+        $org_sucursal_ins['fecha_inicio_operaciones'] = $registro['fecha_inicio_operaciones'];
+
+        if(isset($registro['dp_calle_pertenece_id'])){
+            $org_sucursal_ins['dp_calle_pertenece_id'] = $registro['dp_calle_pertenece_id'];
+        }
+        if(isset($registro['telefono_1'])){
+            $org_sucursal_ins['telefono_1'] = $registro['telefono_1'];
+        }
+        if(isset($registro['exterior'])){
+            $org_sucursal_ins['exterior'] = $registro['exterior'];
+        }
+
+
+        $org_sucursal_modelo->registro = $org_sucursal_ins;
+
+        $r_alta_sucursal = $org_sucursal_modelo->alta_bd();
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al dar de alta sucursal matriz', data: $r_alta_sucursal);
+        }
+
+
         return $r_alta_bd;
     }
 
