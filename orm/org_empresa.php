@@ -47,7 +47,7 @@ class org_empresa extends modelo{
             return $this->error->error(mensaje: 'Error al dar de alta empresa', data: $r_alta_bd);
         }
 
-        $r_alta_sucursal = $this->inserta_sucursal(org_empresa_id: $r_alta_bd->registro_id,registro: $registro);
+        $r_alta_sucursal = $this->inserta_sucursal(org_empresa_id: $r_alta_bd->registro_id,registro: $this->registro);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al dar de alta sucursal matriz', data: $r_alta_sucursal);
         }

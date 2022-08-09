@@ -274,20 +274,13 @@ class limpieza{
             return $this->error->error(mensaje: 'Error al limpiar sucursal', data: $registro);
         }
 
-        $modelo->registro = $registro;
-
-        $descripcion = $registro['codigo'];
-        if(isset($registro['dp_calle_pertenece_id'])) {
-            $descripcion = $this->genera_descripcion(
-                dp_calle_pertenece_id: $registro['dp_calle_pertenece_id'], link: $modelo->link,
-                org_empresa_id: $registro['org_empresa_id'], registro: $registro);
-            if (errores::$error) {
-                return $this->error->error(mensaje: 'Error al obtener descripcion', data: $descripcion);
-            }
+        $keys = array('descripcion');
+        $valida = $this->validacion->valida_existencia_keys(keys: $keys,registro:  $registro);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al validar registro', data: $valida);
         }
 
-        $registro['descripcion'] = $descripcion;
-        $registro['descripcion_select'] = strtoupper($descripcion);
+        $registro['descripcion_select'] = strtoupper($registro['descripcion']);
         $registro['alias'] = $registro['codigo'];
 
         $modelo->registro = $registro;
@@ -364,6 +357,7 @@ class limpieza{
         $org_sucursal_ins['org_empresa_id'] = $org_empresa_id;
         $org_sucursal_ins['codigo'] = $org_empresa_['codigo'];
         $org_sucursal_ins['codigo_bis'] = $org_empresa_['codigo_bis'];
+        $org_sucursal_ins['descripcion'] = $org_empresa_['descripcion'];
 
 
         if(isset($org_empresa_['fecha_inicio_operaciones'])){
