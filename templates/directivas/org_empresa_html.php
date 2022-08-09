@@ -492,6 +492,14 @@ class org_empresa_html extends html_controler {
         return $inputs;
     }
 
+    /**
+     * Genera un select de tipo empresa
+     * @param int $cols
+     * @param bool $con_registros
+     * @param int $id_selected
+     * @param PDO $link
+     * @return array|string
+     */
     public function select_org_empresa_id(int $cols,bool $con_registros,int $id_selected, PDO $link): array|string
     {
         $modelo = new org_empresa($link);
