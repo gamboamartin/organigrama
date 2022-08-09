@@ -71,19 +71,17 @@ class org_empresa extends modelo{
      */
     private function inserta_sucursal(int $org_empresa_id, array $registro): array|stdClass
     {
-        $org_sucursal_modelo = new org_sucursal($this->link);
-
         $org_sucursal_ins = (new limpieza())->org_sucursal_ins(org_empresa_id: $org_empresa_id, org_empresa: $registro);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al obtener sucursal ins', data: $org_sucursal_ins);
         }
 
-        $org_sucursal_modelo->registro = $org_sucursal_ins;
 
-        $r_alta_sucursal = $org_sucursal_modelo->alta_bd();
+        $r_alta_sucursal = (new org_sucursal($this->link))->alta_registro(registro: $org_sucursal_ins);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al dar de alta sucursal matriz', data: $r_alta_sucursal);
         }
+
         return $r_alta_sucursal;
     }
 }
