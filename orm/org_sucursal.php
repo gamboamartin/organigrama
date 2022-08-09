@@ -15,8 +15,7 @@ class org_sucursal extends modelo{
             'dp_calle' => 'dp_calle_pertenece', 'dp_colonia_postal'=>'dp_calle_pertenece',
             'dp_colonia'=>'dp_colonia_postal', 'dp_cp'=>'dp_colonia_postal', 'dp_municipio'=>'dp_cp',
             'dp_estado'=>'dp_municipio','dp_pais'=>'dp_estado','org_tipo_sucursal'=>$tabla);
-        $campos_obligatorios = array('descripcion','dp_calle_pertenece_id','org_empresa_id',
-            'org_tipo_sucursal_id');
+        $campos_obligatorios = array('descripcion','org_empresa_id', 'org_tipo_sucursal_id');
 
         $tipo_campos['telefono_1'] = 'telefono_mx';
         $tipo_campos['telefono_2'] = 'telefono_mx';
