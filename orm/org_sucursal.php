@@ -14,8 +14,12 @@ class org_sucursal extends modelo{
             'dp_estado'=>'dp_municipio','dp_pais'=>'dp_estado');
         $campos_obligatorios = array('org_empresa_id','dp_calle_pertenece_id','exterior','telefono_1');
 
+        $tipo_campos['telefono_1'] = 'telefono_mx';
+        $tipo_campos['telefono_2'] = 'telefono_mx';
+        $tipo_campos['telefono_3'] = 'telefono_mx';
+
         parent::__construct(link: $link,tabla:  $tabla, campos_obligatorios: $campos_obligatorios,
-            columnas: $columnas);
+            columnas: $columnas, tipo_campos: $tipo_campos);
     }
     public function alta_bd(): array|\stdClass
     {
