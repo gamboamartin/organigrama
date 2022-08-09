@@ -18,6 +18,13 @@ class limpieza{
         $this->validacion = new validacion();
     }
 
+    /**
+     * Genera la descripcion de una sucursal
+     * @param array $dp_calle_pertenece
+     * @param array $org_empresa
+     * @param array $registro
+     * @return string
+     */
     private function descripcion_sucursal(array $dp_calle_pertenece, array $org_empresa, array $registro): string
     {
         $descripcion = $org_empresa['org_empresa_descripcion'];
@@ -266,6 +273,7 @@ class limpieza{
      * Limpia un row cuando este tiene calle sus parents
      * @param array $registro registro a limpiar
      * @return array
+     * @version 0.153.31
      */
     private function limpia_domicilio_con_calle(array $registro): array
     {

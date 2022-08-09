@@ -78,6 +78,22 @@ class limpiezaTest extends test {
         errores::$error = false;
     }
 
+    public function test_limpia_domicilio_con_calle(): void
+    {
+        errores::$error = false;
+
+        $lim = new limpieza();
+        $lim = new liberator($lim);
+
+        $registro = array('dp_pais_id'=>'1');
+
+        $resultado = $lim->limpia_domicilio_con_calle($registro);
+        $this->assertIsArray($resultado);
+        $this->assertNotTrue(errores::$error);
+        $this->assertEmpty($resultado);
+        errores::$error = false;
+    }
+
     public function test_limpia_foraneas_org_empresa(): void
     {
         errores::$error = false;
