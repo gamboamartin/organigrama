@@ -20,6 +20,8 @@ class org_sucursal extends modelo{
         $tipo_campos['telefono_1'] = 'telefono_mx';
         $tipo_campos['telefono_2'] = 'telefono_mx';
         $tipo_campos['telefono_3'] = 'telefono_mx';
+        $tipo_campos['org_tipo_sucursal_id'] = 'id';
+        $tipo_campos['org_empresa_id'] = 'id';
 
 
         parent::__construct(link: $link,tabla:  $tabla, campos_obligatorios: $campos_obligatorios,
