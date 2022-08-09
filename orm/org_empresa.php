@@ -76,7 +76,6 @@ class org_empresa extends modelo{
             return $this->error->error(mensaje: 'Error al obtener sucursal ins', data: $org_sucursal_ins);
         }
 
-
         $r_alta_sucursal = (new org_sucursal($this->link))->alta_registro(registro: $org_sucursal_ins);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al dar de alta sucursal matriz', data: $r_alta_sucursal);

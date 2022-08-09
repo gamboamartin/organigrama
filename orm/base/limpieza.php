@@ -346,6 +346,12 @@ class limpieza{
         return $registro;
     }
 
+    /**
+     * Maqueta un arreglo con los datos para la insersion de una sucursal con datos de la empresa
+     * @param int $org_empresa_id identificador
+     * @param array $org_empresa registro de tipo empresa
+     * @return array
+     */
     public function org_sucursal_ins(int $org_empresa_id, array $org_empresa): array
     {
         $org_sucursal_ins['org_empresa_id'] = $org_empresa_id;
