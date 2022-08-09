@@ -498,9 +498,11 @@ class org_empresa_html extends html_controler {
      * @param bool $con_registros si con registros mostrara los registros en los options
      * @param int $id_selected id del catalog seleccionado
      * @param PDO $link conexion a la base de datos
+     * @param bool $disabled
      * @return array|string
      */
-    public function select_org_empresa_id(int $cols,bool $con_registros,int $id_selected, PDO $link): array|string
+    public function select_org_empresa_id(int $cols,bool $con_registros,int $id_selected, PDO $link,
+                                          bool $disabled = false): array|string
     {
         $modelo = new org_empresa($link);
 
@@ -513,7 +515,8 @@ class org_empresa_html extends html_controler {
         $extra_params_keys[] = 'dp_colonia_postal_id';
         $extra_params_keys[] = 'dp_calle_pertenece_id';
         $select = $this->select_catalogo(cols:$cols,con_registros:$con_registros,id_selected:$id_selected,
-            modelo: $modelo,extra_params_keys: $extra_params_keys, label: "Empresa", required: true);
+            modelo: $modelo, disabled: $disabled,extra_params_keys: $extra_params_keys, label: "Empresa",
+            required: true);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select', data: $select);
         }
