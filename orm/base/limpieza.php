@@ -23,10 +23,26 @@ class limpieza{
      * @param array $dp_calle_pertenece registro de tipo calle
      * @param array $org_empresa registro de tipo empresa
      * @param array $registro registro de tipo sucursal
-     * @return string
+     * @return string|array
+     * @version 0.156.31
      */
-    private function descripcion_sucursal(array $dp_calle_pertenece, array $org_empresa, array $registro): string
+    private function descripcion_sucursal(array $dp_calle_pertenece, array $org_empresa, array $registro): string|array
     {
+        $keys = array('org_empresa_descripcion');
+        $valida = (new validacion())->valida_existencia_keys(keys: $keys,registro:  $org_empresa);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al validar org_empresa', data: $valida);
+        }
+        $keys = array('dp_municipio_descripcion','dp_estado_descripcion','dp_cp_descripcion');
+        $valida = (new validacion())->valida_existencia_keys(keys: $keys,registro:  $dp_calle_pertenece);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al validar $dp_calle_pertenece', data: $valida);
+        }
+        $keys = array('codigo');
+        $valida = (new validacion())->valida_existencia_keys(keys: $keys,registro:  $registro);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al validar $registro', data: $valida);
+        }
         $descripcion = $org_empresa['org_empresa_descripcion'];
         $descripcion .= ' '.$dp_calle_pertenece['dp_municipio_descripcion'];
         $descripcion .= ' '.$dp_calle_pertenece['dp_estado_descripcion'];
@@ -36,6 +52,14 @@ class limpieza{
         return $descripcion;
     }
 
+    /**
+     * Genera una descripcion basada en org empresa
+     * @param int $dp_calle_pertenece_id
+     * @param PDO $link
+     * @param int $org_empresa_id
+     * @param array $registro
+     * @return array|string
+     */
     private function genera_descripcion(int $dp_calle_pertenece_id, PDO $link, int $org_empresa_id, array $registro): array|string
     {
         $org_empresa = (new org_empresa($link))->registro(registro_id: $org_empresa_id);
@@ -238,6 +262,11 @@ class limpieza{
         return $init;
     }
 
+    /**
+     * Inicializa un registro previo al alta de sucursal desde empresa alta
+     * @param org_sucursal $modelo
+     * @return array
+     */
     public function init_row_sucursal_alta(org_sucursal $modelo): array
     {
         $registro = $this->limpia_domicilio_con_calle(registro:$modelo->registro);

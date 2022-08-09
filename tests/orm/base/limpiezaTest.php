@@ -56,6 +56,31 @@ class limpiezaTest extends test {
         errores::$error = false;
     }
 
+    public function test_descripcion_sucursal(): void
+    {
+        errores::$error = false;
+
+        $lim = new limpieza();
+        $lim = new liberator($lim);
+
+        $dp_calle_pertenece = array();
+        $org_empresa = array();
+        $registro = array();
+
+        $org_empresa['org_empresa_descripcion'] = 'a';
+        $dp_calle_pertenece['dp_municipio_descripcion'] = 'b';
+        $dp_calle_pertenece['dp_estado_descripcion'] = 'b';
+        $dp_calle_pertenece['dp_cp_descripcion'] = 'b';
+        $registro['codigo'] = 'c';
+
+
+        $resultado = $lim->descripcion_sucursal($dp_calle_pertenece, $org_empresa, $registro);
+        $this->assertIsString($resultado);
+        $this->assertNotTrue(errores::$error);
+        $this->assertEquals('a b b b c',$resultado);
+        errores::$error = false;
+    }
+
     public function test_init_org_empresa_alta_bd(): void
     {
         errores::$error = false;
