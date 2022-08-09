@@ -247,12 +247,14 @@ class limpieza{
 
         $modelo->registro = $registro;
 
-
-        $descripcion = $this->genera_descripcion(
-            dp_calle_pertenece_id: $registro['dp_calle_pertenece_id'],link:  $modelo->link,
-            org_empresa_id:  $registro['org_empresa_id'],registro:   $registro);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al obtener descripcion', data: $descripcion);
+        $descripcion = $registro['codigo'];
+        if(isset($registro['dp_calle_pertenece_id'])) {
+            $descripcion = $this->genera_descripcion(
+                dp_calle_pertenece_id: $registro['dp_calle_pertenece_id'], link: $modelo->link,
+                org_empresa_id: $registro['org_empresa_id'], registro: $registro);
+            if (errores::$error) {
+                return $this->error->error(mensaje: 'Error al obtener descripcion', data: $descripcion);
+            }
         }
 
         $registro['descripcion'] = $descripcion;
