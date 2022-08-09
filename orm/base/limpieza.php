@@ -20,9 +20,9 @@ class limpieza{
 
     /**
      * Genera la descripcion de una sucursal
-     * @param array $dp_calle_pertenece
-     * @param array $org_empresa
-     * @param array $registro
+     * @param array $dp_calle_pertenece registro de tipo calle
+     * @param array $org_empresa registro de tipo empresa
+     * @param array $registro registro de tipo sucursal
      * @return string
      */
     private function descripcion_sucursal(array $dp_calle_pertenece, array $org_empresa, array $registro): string
