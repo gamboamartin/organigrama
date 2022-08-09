@@ -361,7 +361,6 @@ class limpieza{
             $org_empresa_ = (new org_empresa($link))->registro(registro_id: $org_empresa_id,columnas_en_bruto: true);
         }
 
-
         $org_sucursal_ins['org_empresa_id'] = $org_empresa_id;
         $org_sucursal_ins['codigo'] = $org_empresa_['codigo'];
         $org_sucursal_ins['codigo_bis'] = $org_empresa_['codigo_bis'];

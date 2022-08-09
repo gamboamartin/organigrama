@@ -68,6 +68,10 @@ class org_empresa extends modelo{
     }
 
     /**
+     * Inserta una sucursal basada en empresa
+     * @param int $org_empresa_id
+     * @param array $registro
+     * @return array|stdClass
      * @throws JsonException
      */
     private function inserta_sucursal(int $org_empresa_id, array $registro): array|stdClass
