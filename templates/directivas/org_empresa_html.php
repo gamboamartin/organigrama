@@ -501,6 +501,7 @@ class org_empresa_html extends html_controler {
      * @param PDO $link conexion a la base de datos
      * @param bool $disabled Si disabled el input quedara inactivo
      * @return array|string
+     * @version 0.172.32
      */
     public function select_org_empresa_id(int $cols,bool $con_registros,int $id_selected, PDO $link,
                                           bool $disabled = false): array|string
