@@ -28,6 +28,8 @@ class org_sucursal_html extends html_controler {
 
         $controler->inputs->fecha_inicio_operaciones = $inputs->fechas->fecha_inicio_operaciones;
 
+        $controler->inputs->serie = $inputs->texts->serie;
+
         $controler->inputs->exterior = $inputs->texts->exterior;
         $controler->inputs->interior = $inputs->texts->interior;
         $controler->inputs->codigo = $inputs->texts->codigo;
@@ -278,6 +280,30 @@ class org_sucursal_html extends html_controler {
         return $div;
     }
 
+    public function input_serie(int $cols, stdClass $row_upd, bool $value_vacio): array|string
+    {
+
+        if($cols<=0){
+            return $this->error->error(mensaje: 'Error cold debe ser mayor a 0', data: $cols);
+        }
+        if($cols>=13){
+            return $this->error->error(mensaje: 'Error cold debe ser menor o igual a  12', data: $cols);
+        }
+
+        $html =$this->directivas->input_text_required(disable: false,name: 'serie',place_holder: 'Serie',row_upd: $row_upd,
+            value_vacio: $value_vacio);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar input', data: $html);
+        }
+
+        $div = $this->directivas->html->div_group(cols: $cols,html:  $html);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al integrar div', data: $div);
+        }
+
+        return $div;
+    }
+
     public function inputs_org_sucursal(controlador_org_sucursal $controlador_org_sucursal): array|stdClass
     {
         $init = (new limpieza())->init_modifica_org_sucursal(controler: $controlador_org_sucursal);
@@ -446,6 +472,11 @@ class org_sucursal_html extends html_controler {
     {
 
         $texts = new stdClass();
+
+        $in_serie = $this->input_serie(cols: 6,row_upd:  $row_upd,value_vacio:  $value_vacio);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar input',data:  $in_serie);
+        }
 
         $in_exterior = $this->input_exterior(cols: 6,row_upd:  $row_upd,value_vacio:  $value_vacio);
         if(errores::$error){
