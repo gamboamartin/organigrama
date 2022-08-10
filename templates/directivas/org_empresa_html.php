@@ -185,9 +185,10 @@ class org_empresa_html extends html_controler {
         return $inputs_asignados;
     }
 
-    private function genera_inputs_modifica(controlador_org_empresa $controler,PDO $link): array|stdClass
+    private function genera_inputs_modifica(controlador_org_empresa $controler,PDO $link,
+                                            stdClass $params = new stdClass()): array|stdClass
     {
-        $inputs = $this->init_modifica(link: $link, row_upd: $controler->row_upd);
+        $inputs = $this->init_modifica(link: $link, row_upd: $controler->row_upd, params: $params);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar inputs',data:  $inputs);
 
@@ -240,7 +241,7 @@ class org_empresa_html extends html_controler {
         return $alta_inputs;
     }
 
-    private function init_modifica(PDO $link, stdClass $row_upd): array|stdClass
+    private function init_modifica(PDO $link, stdClass $row_upd, stdClass $params = new stdClass()): array|stdClass
     {
 
         $selects = $this->selects_modifica(link: $link, row_upd: $row_upd);
@@ -248,7 +249,7 @@ class org_empresa_html extends html_controler {
             return $this->error->error(mensaje: 'Error al generar selects',data:  $selects);
         }
         
-        $texts = $this->texts_alta(row_upd: $row_upd, value_vacio: false);
+        $texts = $this->texts_alta(row_upd: $row_upd, value_vacio: false, params: $params);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar texts',data:  $texts);
         }
@@ -478,7 +479,8 @@ class org_empresa_html extends html_controler {
         return $div;
     }
 
-    public function inputs_org_empresa(controlador_org_empresa $controlador_org_empresa): array|stdClass
+    public function inputs_org_empresa(controlador_org_empresa $controlador_org_empresa,
+                                       stdClass $params = new stdClass()): array|stdClass
     {
         $init = (new limpieza())->init_modifica_org_empresa(controler: $controlador_org_empresa);
         if(errores::$error){
@@ -486,7 +488,8 @@ class org_empresa_html extends html_controler {
         }
 
 
-        $inputs = $this->genera_inputs_modifica(controler: $controlador_org_empresa, link: $controlador_org_empresa->link);
+        $inputs = $this->genera_inputs_modifica(controler: $controlador_org_empresa,
+            link: $controlador_org_empresa->link, params: $params);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar inputs',data:  $inputs);
         }
@@ -697,13 +700,19 @@ class org_empresa_html extends html_controler {
         return $telefonos;
     }
 
-    private function texts_alta(stdClass $row_upd, bool $value_vacio): array|stdClass
+    private function texts_alta(stdClass $row_upd, bool $value_vacio, stdClass $params = new stdClass()): array|stdClass
     {
 
         $texts = new stdClass();
-        
 
-        $in_codigo = $this->input_codigo(cols: 6,row_upd:  $row_upd,value_vacio:  $value_vacio);
+        $cols_codigo = 6;
+
+        if(isset($params->codigo->cols)){
+            $cols_codigo = $params->codigo->cols;
+        }
+
+
+        $in_codigo = $this->input_codigo(cols: $cols_codigo,row_upd:  $row_upd,value_vacio:  $value_vacio);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input',data:  $in_codigo);
         }
