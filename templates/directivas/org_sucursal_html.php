@@ -112,10 +112,11 @@ class org_sucursal_html extends html_controler {
 
 
 
-    private function init_alta(PDO $link, int $org_empresa_id): array|stdClass
+    private function init_alta(PDO $link, int $org_empresa_id, bool $org_empresa_id_disabled = false): array|stdClass
     {
         $row_upd = new stdClass();
-        $selects = $this->selects_alta( link: $link, org_empresa_id: $org_empresa_id);
+        $selects = $this->selects_alta( link: $link, org_empresa_id: $org_empresa_id,
+            org_empresa_id_disabled: $org_empresa_id_disabled);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar selects',data:  $selects);
         }
