@@ -289,8 +289,13 @@ class controlador_org_empresa extends system{
     {
 
         $params = new stdClass();
+
         $params->codigo = new stdClass();
         $params->codigo->cols = 4;
+
+        $params->fecha_inicio_operaciones = new stdClass();
+        $params->fecha_inicio_operaciones->cols = 4;
+
         $base = $this->base(params: $params);
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al maquetar datos',data:  $base,

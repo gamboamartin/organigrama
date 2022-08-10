@@ -141,7 +141,7 @@ class org_empresa_html extends html_controler {
         return $div;
     }
 
-    private function fechas_alta(stdClass $row_upd = new stdClass()): array|stdClass
+    private function fechas_alta(stdClass $row_upd = new stdClass(), stdClass $params = new stdClass()): array|stdClass
     {
 
         $fechas = new stdClass();
@@ -150,8 +150,10 @@ class org_empresa_html extends html_controler {
             $row_upd->fecha_inicio_operaciones = date('Y-m-d');
         }
 
-        $fec_fecha_inicio_operaciones = $this->fec_fecha_inicio_operaciones(cols: 6,row_upd: $row_upd,
-            value_vacio:  false);
+        $cols_fecha_inicio_operaciones = $params->fecha_inicio_operaciones->cols ?? 6;
+
+        $fec_fecha_inicio_operaciones = $this->fec_fecha_inicio_operaciones(cols: $cols_fecha_inicio_operaciones,
+            row_upd: $row_upd, value_vacio:  false);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input',data:  $fec_fecha_inicio_operaciones);
         }
@@ -253,7 +255,7 @@ class org_empresa_html extends html_controler {
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar texts',data:  $texts);
         }
-        $fechas = $this->fechas_alta(row_upd: $row_upd);
+        $fechas = $this->fechas_alta(row_upd: $row_upd, params: $params);
 
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar inputs fecha',data:  $fechas);
@@ -705,11 +707,7 @@ class org_empresa_html extends html_controler {
 
         $texts = new stdClass();
 
-        $cols_codigo = 6;
-
-        if(isset($params->codigo->cols)){
-            $cols_codigo = $params->codigo->cols;
-        }
+        $cols_codigo = $params->codigo->cols ?? 6;
 
 
         $in_codigo = $this->input_codigo(cols: $cols_codigo,row_upd:  $row_upd,value_vacio:  $value_vacio);
