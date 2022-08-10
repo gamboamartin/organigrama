@@ -47,6 +47,32 @@ class org_empresa_htmlTest extends test {
         errores::$error = false;
     }
 
+    /**
+     */
+    public function test_select_org_empresa_id(): void
+    {
+        errores::$error = false;
+
+        $_GET['seccion'] = 'cat_sat_tipo_persona';
+        $_GET['accion'] = 'lista';
+        $_SESSION['grupo_id'] = 1;
+        $_GET['session_id'] = '1';
+        $html_ = new html();
+        $html = new org_empresa_html($html_);
+        //$link = new liberator($link);
+
+        $cols = 2;
+        $con_registros = false;
+        $id_selected = -1;
+        $disabled = false;
+        $resultado = $html->select_org_empresa_id($cols, $con_registros, $id_selected, $this->link, $disabled);
+        $this->assertIsString($resultado);
+        $this->assertNotTrue(errores::$error);
+        $this->assertStringContainsStringIgnoringCase("<div class='control-group col-sm-2'><label class='control-label' for='org_empresa_id'>Empresa", $resultado);
+
+        errores::$error = false;
+    }
+
 
 
 

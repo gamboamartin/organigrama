@@ -2,6 +2,7 @@
 namespace html;
 
 
+use base\frontend\directivas;
 use gamboamartin\errores\errores;
 use gamboamartin\organigrama\controllers\controlador_org_empresa;
 use gamboamartin\system\html_controler;
@@ -504,6 +505,11 @@ class org_empresa_html extends html_controler {
     public function select_org_empresa_id(int $cols,bool $con_registros,int $id_selected, PDO $link,
                                           bool $disabled = false): array|string
     {
+        $valida = (new \gamboamartin\template\directivas(html: $this->html_base))->valida_cols(cols:$cols);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al validar cols', data: $valida);
+        }
+
         $modelo = new org_empresa($link);
 
         $extra_params_keys = array();
