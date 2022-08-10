@@ -79,9 +79,11 @@ class org_sucursal_html extends html_controler {
         return $div;
     }
 
-    public function genera_inputs_alta(controlador_org_sucursal $controler,PDO $link, int $org_empresa_id): array|stdClass
+    public function genera_inputs_alta(controlador_org_sucursal $controler,PDO $link, int $org_empresa_id,
+                                       bool $org_empresa_id_disabled) : array|stdClass
     {
-        $inputs = $this->init_alta(link: $link, org_empresa_id: $org_empresa_id);
+        $inputs = $this->init_alta(link: $link, org_empresa_id: $org_empresa_id,
+            org_empresa_id_disabled: $org_empresa_id_disabled);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar inputs',data:  $inputs);
 
