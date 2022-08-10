@@ -289,7 +289,7 @@ class org_sucursal_html extends html_controler {
         return $inputs;
     }
 
-    private function selects_alta( PDO $link, int $org_empresa_id): array|stdClass
+    private function selects_alta( PDO $link, int $org_empresa_id, bool $org_empresa_id_disabled = false): array|stdClass
     {
         $selects = new stdClass();
 
@@ -302,7 +302,7 @@ class org_sucursal_html extends html_controler {
         }
 
         $select = (new org_empresa_html($this->html_base))->select_org_empresa_id(cols: 12, con_registros:true,
-            id_selected:$org_empresa_id,link: $link);
+            id_selected:$org_empresa_id,link: $link, disabled: $org_empresa_id_disabled);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $select);
 
