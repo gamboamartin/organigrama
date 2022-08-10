@@ -292,6 +292,13 @@ class org_sucursal_html extends html_controler {
         return $inputs;
     }
 
+    /**
+     * Gemera los inputs de un alta para sucursal
+     * @param PDO $link
+     * @param int $org_empresa_id
+     * @param bool $org_empresa_id_disabled
+     * @return array|stdClass
+     */
     private function selects_alta( PDO $link, int $org_empresa_id, bool $org_empresa_id_disabled = false): array|stdClass
     {
         $selects = new stdClass();
