@@ -498,7 +498,7 @@ class org_empresa_html extends html_controler {
      * @param bool $con_registros si con registros mostrara los registros en los options
      * @param int $id_selected id del catalog seleccionado
      * @param PDO $link conexion a la base de datos
-     * @param bool $disabled
+     * @param bool $disabled Si disabled el input quedara inactivo
      * @return array|string
      */
     public function select_org_empresa_id(int $cols,bool $con_registros,int $id_selected, PDO $link,
