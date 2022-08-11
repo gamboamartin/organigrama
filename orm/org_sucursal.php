@@ -59,9 +59,15 @@ class org_sucursal extends modelo{
      * Obtiene las sucursales de una empresa
      * @param int $org_empresa_id Identificador de empresa
      * @return array|stdClass
+     * @version 0.188.33
+     * @verfuncion 0.1.0
+     * @functions org_sucursal->filtro_and
      */
     public function sucursales(int $org_empresa_id): array|stdClass
     {
+        if($org_empresa_id <=0){
+            return $this->error->error(mensaje: 'Error $org_empresa_id debe ser mayor a 0', data: $org_empresa_id);
+        }
         $filtro['org_empresa.id'] = $org_empresa_id;
         $r_org_sucursal = $this->filtro_and(filtro: $filtro);
         if(errores::$error){
