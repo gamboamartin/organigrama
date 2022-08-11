@@ -7,6 +7,7 @@ use gamboamartin\validacion\validacion;
 use models\dp_calle_pertenece;
 use models\org_empresa;
 use models\org_sucursal;
+use models\org_tipo_sucursal;
 use PDO;
 use stdClass;
 
@@ -274,6 +275,32 @@ class limpieza{
             return $this->error->error(mensaje: 'Error al limpiar sucursal', data: $registro);
         }
 
+        if(isset($registro['guarda'])){
+            unset($registro['guarda']);
+        }
+
+        $org_tipo_sucursal_id =$this->row_tipo_sucursal_id(link:$modelo->link, org_sucursal: $registro);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al asignar tipo sucursal',data:  $org_tipo_sucursal_id);
+        }
+        $registro['org_tipo_sucursal_id'] = $org_tipo_sucursal_id;
+
+        if(!isset($registro['descripcion'])){
+            $org_empresa = (new org_empresa($modelo->link))->registro(registro_id: $registro['org_empresa_id']);
+            if(errores::$error){
+                return $this->error->error(mensaje: 'Error al obtener empresa', data: $org_empresa);
+            }
+            $tipo_sucursal = (new org_tipo_sucursal($modelo->link))->registro(registro_id:$org_tipo_sucursal_id );
+
+            if(errores::$error){
+                return $this->error->error(mensaje: 'Error al obtener tipo de sucursal', data: $tipo_sucursal);
+            }
+
+            $descripcion = $registro['codigo'].' '.$org_empresa['org_empresa_descripcion'].' ';
+            $descripcion .= $tipo_sucursal['org_tipo_sucursal_descripcion'];
+            $registro['descripcion'] = $descripcion;
+        }
+
         $keys = array('descripcion');
         $valida = $this->validacion->valida_existencia_keys(keys: $keys,registro:  $registro);
         if(errores::$error){
@@ -283,13 +310,9 @@ class limpieza{
         $registro['descripcion_select'] = strtoupper($registro['descripcion']);
         $registro['alias'] = $registro['codigo'];
 
+
         $modelo->registro = $registro;
 
-
-        $org_tipo_sucursal_id =$this->row_tipo_sucursal_id(modelo: $modelo);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al asignar tipo sucursal',data:  $org_tipo_sucursal_id);
-        }
         return $modelo->registro;
     }
 
@@ -385,24 +408,24 @@ class limpieza{
         return $org_sucursal_ins;
     }
 
-    private function row_tipo_sucursal_id(org_sucursal $modelo): int|array
+    private function row_tipo_sucursal_id(PDO $link, array $org_sucursal): array|int
     {
-        if(!isset($modelo->registro['tipo_sucursal_id'])){
 
-            $t_sucursal = $this->tipos_sucursal();
-            if(errores::$error){
-                return $this->error->error(mensaje: 'Error al obtener tipos de sucursal', data: $t_sucursal);
-            }
-
-            $org_tipo_sucursal_id = $this->tipo_sucursal_id(modelo: $modelo, t_sucursal: $t_sucursal);
-            if(errores::$error){
-                return $this->error->error(mensaje: 'Error al obtener tipo sucursal',data:  $org_tipo_sucursal_id);
-            }
-
-            $modelo->registro['org_tipo_sucursal_id'] = $org_tipo_sucursal_id;
-
+        $t_sucursal = $this->tipos_sucursal();
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al obtener tipos de sucursal', data: $t_sucursal);
         }
-        return  (int)$modelo->registro['org_tipo_sucursal_id'];
+
+        $org_tipo_sucursal_id = $this->tipo_sucursal_id(link: $link, org_sucursal: $org_sucursal,
+            t_sucursal: $t_sucursal);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al obtener tipo sucursal',data:  $org_tipo_sucursal_id);
+        }
+        if(isset($org_sucursal['org_tipo_sucursal_id']) && (int)$org_sucursal['org_tipo_sucursal_id'] > 0){
+            $org_tipo_sucursal_id = $org_sucursal['org_tipo_sucursal_id'];
+        }
+
+        return  $org_tipo_sucursal_id;
     }
 
     private function tipos_sucursal(): stdClass
@@ -423,12 +446,12 @@ class limpieza{
         return $data;
     }
 
-    private function tipo_sucursal_id(org_sucursal $modelo, stdClass $t_sucursal): array|int
+    private function tipo_sucursal_id(PDO $link, array $org_sucursal, stdClass $t_sucursal): array|int
     {
         $org_tipo_sucursal_id = -1;
         $filtro = array();
-        $filtro['org_empresa.id'] = $modelo->registro['org_empresa_id'];
-        $n_sucursales = $modelo->cuenta(filtro: $filtro);
+        $filtro['org_empresa.id'] = $org_sucursal['org_empresa_id'];
+        $n_sucursales = (new org_sucursal($link))->cuenta(filtro: $filtro);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al contar sucursales',data:  $n_sucursales);
         }
@@ -437,9 +460,9 @@ class limpieza{
         }
         if((int)$n_sucursales >0){
             $filtro = array();
-            $filtro['org_empresa.id'] = $modelo->registro['org_empresa_id'];
+            $filtro['org_empresa.id'] = $org_sucursal['org_empresa_id'];
             $filtro['org_tipo_sucursal.id'] = $t_sucursal->tipo_sucursal_matriz_id;
-            $n_sucursales = $modelo->cuenta(filtro: $filtro);
+            $n_sucursales = (new org_sucursal($link))->cuenta(filtro: $filtro);
             if(errores::$error){
                 return $this->error->error(mensaje: 'Error al contar sucursales',data:  $n_sucursales);
             }

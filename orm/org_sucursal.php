@@ -30,6 +30,7 @@ class org_sucursal extends modelo{
     public function alta_bd(): array|\stdClass
     {
 
+
         $keys = array('org_empresa_id','codigo','codigo_bis');
         $valida = $this->validacion->valida_existencia_keys(keys: $keys, registro: $this->registro);
         if(errores::$error){
