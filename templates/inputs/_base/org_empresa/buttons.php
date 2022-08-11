@@ -1,6 +1,6 @@
 <div class="control-group btn-alta col-12">
     <div class="controls">
-        <?php include 'templates/botons/cat_sat_regimen_fiscal_alta.php';?>
+        <?php //include 'templates/botons/cat_sat_regimen_fiscal_alta.php';?>
         <?php include 'templates/botons/dp_pais_alta.php';?>
         <?php include 'templates/botons/dp_estado_alta.php';?>
         <?php include 'templates/botons/dp_municipio_alta.php';?>
