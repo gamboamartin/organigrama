@@ -154,6 +154,11 @@ class controlador_org_empresa extends system{
 
     }
 
+    /**
+     * @param string $key_general Key enviado a asignar
+     * @param array $registro Registro de tipo org_empresa en forma alta
+     * @return array
+     */
     private function asigna_key_post(string $key_general, array $registro): array
     {
         if(isset($_POST[$key_general])){
@@ -162,6 +167,10 @@ class controlador_org_empresa extends system{
         return $registro;
     }
 
+    /**
+     * @param array $keys_generales Keys a reasignar si existen en POST
+     * @return array
+     */
     private function asigna_keys_post(array $keys_generales): array
     {
         $registro = array();
@@ -276,9 +285,11 @@ class controlador_org_empresa extends system{
     }
 
     /**
-     * @author israel hernandez
+     *
+     * @author israel hernandez 0.1.0
      * @version v0.88.23
      * @version v0.1.0
+     * @version v0.2.0
      * @created 2022-08-01
      * @throws JsonException
      */
@@ -403,6 +414,8 @@ class controlador_org_empresa extends system{
     }
 
     /**
+     * @param array $keys_generales Keys a reasignar si existen en POST
+     * @return array|stdClass
      * @throws JsonException
      */
     private function upd_base(array $keys_generales): array|stdClass
