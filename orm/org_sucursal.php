@@ -76,7 +76,7 @@ class org_sucursal extends modelo{
     public function es_matriz(int $org_sucursal_id): bool|array
     {
         $filtro = array();
-        $filtro['org_sucursal_id.id'] = $org_sucursal_id;
+        $filtro['org_sucursal.id'] = $org_sucursal_id;
         $filtro['org_tipo_sucursal.id'] = (new generales())->tipo_sucursal_matriz_id;
 
         $existe = $this->existe(filtro: $filtro);
