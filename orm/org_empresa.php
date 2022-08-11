@@ -103,7 +103,7 @@ class org_empresa extends modelo{
             return $this->error->error(mensaje: 'Error al obtener sucursal upd', data: $org_sucursal_upd);
         }
 
-        $sucursal_matriz_id = (new org_sucursal($this->link))->sucursal_matriz(org_empresa_id:$id);
+        $sucursal_matriz_id = (new org_sucursal($this->link))->sucursal_matriz_id(org_empresa_id:$id);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al obtener sucursal matriz', data: $sucursal_matriz_id);
         }
