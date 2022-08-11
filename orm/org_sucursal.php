@@ -1,12 +1,11 @@
 <?php
 namespace models;
 use base\orm\modelo;
-use config\generales;
-use config\views;
 use gamboamartin\errores\errores;
 
 use models\base\limpieza;
 use PDO;
+use stdClass;
 
 class org_sucursal extends modelo{
     public function __construct(PDO $link){
@@ -27,7 +26,7 @@ class org_sucursal extends modelo{
         parent::__construct(link: $link,tabla:  $tabla, campos_obligatorios: $campos_obligatorios,
             columnas: $columnas, tipo_campos: $tipo_campos);
     }
-    public function alta_bd(): array|\stdClass
+    public function alta_bd(): array|stdClass
     {
 
 
@@ -54,6 +53,16 @@ class org_sucursal extends modelo{
             return $this->error->error(mensaje: 'Error al dar de alta empresa', data: $r_alta_bd);
         }
         return $r_alta_bd;
+    }
+
+    public function sucursales(int $org_empresa_id): array|stdClass
+    {
+        $filtro['org_empresa.id'] = $org_empresa_id;
+        $r_org_sucursal = $this->filtro_and(filtro: $filtro);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al obtener sucursales', data: $r_org_sucursal);
+        }
+        return $r_org_sucursal->registros;
     }
 
 }

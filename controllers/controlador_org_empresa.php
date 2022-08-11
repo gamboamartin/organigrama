@@ -28,6 +28,7 @@ class controlador_org_empresa extends system{
     public string $razon_social = '';
     public string $rfc = '';
     public int $org_empresa_id = -1;
+    public array $sucursales = array();
 
     public function __construct(PDO $link, html $html = new \gamboamartin\template_1\html(),
                                 stdClass $paths_conf = new stdClass()){
@@ -414,6 +415,14 @@ class controlador_org_empresa extends system{
                 header: $header,ws:$ws);
         }
         $this->inputs->select->org_empresa_id = $select;
+
+        $sucursales = (new org_sucursal($this->link))->sucursales(org_empresa_id: $this->org_empresa_id);
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al obtener sucursales',data:  $sucursales, header: $header,ws:$ws);
+        }
+        
+
+        $this->sucursales = $sucursales;
 
         return $base;
 
