@@ -37,12 +37,14 @@ class controlador_org_empresa extends system{
         parent::__construct(html:$html_, link: $link,modelo:  $modelo, obj_link: $obj_link, paths_conf: $paths_conf);
 
         $this->titulo_lista = 'Empresas';
-
-        $generales = new generales();
-        $this->link_org_sucursal_alta_bd = $generales->url_base;
-        $this->link_org_sucursal_alta_bd .= 'index.php?seccion=org_empresa&accion=alta_sucursal_bd';
-        $this->link_org_sucursal_alta_bd .= '&session_id='.$generales->session_id;
-        $this->link_org_sucursal_alta_bd .= '&registro_id='.$this->registro_id;
+        
+        $link_org_sucursal_alta_bd = $obj_link->link_org_sucursal_alta_bd(org_empresa_id: $this->registro_id);
+        if(errores::$error){
+            $error = $this->errores->error(mensaje: 'Error al generar link sucursal alta',
+                data:  $link_org_sucursal_alta_bd);
+            print_r($error);
+            exit;
+        }
 
     }
 

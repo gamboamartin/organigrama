@@ -1,5 +1,6 @@
 <?php
 namespace links\secciones;
+use config\generales;
 use gamboamartin\errores\errores;
 use gamboamartin\system\links_menu;
 use stdClass;
@@ -32,6 +33,22 @@ class link_org_empresa extends links_menu {
 
         $org_empresa_ubicacion.="&session_id=$this->session_id";
         return $org_empresa_ubicacion;
+    }
+
+    /**
+     * Genera un link con llama seccion org sucursal accion alta_sucursal_bd con el registro aplicado de emepresa
+     * @param int $org_empresa_id identificador de empresa
+     * @return string
+     */
+    public function link_org_sucursal_alta_bd(int $org_empresa_id): string
+    {
+        $generales = new generales();
+        $link_org_sucursal_alta_bd = $generales->url_base;
+        $link_org_sucursal_alta_bd .= 'index.php?seccion=org_empresa&accion=alta_sucursal_bd';
+        $link_org_sucursal_alta_bd .= '&session_id='.$generales->session_id;
+        $link_org_sucursal_alta_bd .= '&registro_id='.$org_empresa_id;
+
+        return $link_org_sucursal_alta_bd;
     }
 
     /**
