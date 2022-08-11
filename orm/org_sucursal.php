@@ -62,7 +62,7 @@ class org_sucursal extends modelo{
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al obtener sucursales', data: $r_org_sucursal);
         }
-        return $r_org_sucursal->registros;
+        return $r_org_sucursal;
     }
 
 }

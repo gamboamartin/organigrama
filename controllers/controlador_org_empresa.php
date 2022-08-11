@@ -28,7 +28,7 @@ class controlador_org_empresa extends system{
     public string $razon_social = '';
     public string $rfc = '';
     public int $org_empresa_id = -1;
-    public array $sucursales = array();
+    public stdClass $sucursales ;
 
     public function __construct(PDO $link, html $html = new \gamboamartin\template_1\html(),
                                 stdClass $paths_conf = new stdClass()){
@@ -420,7 +420,7 @@ class controlador_org_empresa extends system{
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al obtener sucursales',data:  $sucursales, header: $header,ws:$ws);
         }
-        
+
 
         $this->sucursales = $sucursales;
 
