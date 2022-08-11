@@ -155,6 +155,7 @@ class controlador_org_empresa extends system{
     }
 
     /**
+     * SIN PROBAR
      * @param string $key_general Key enviado a asignar
      * @param array $registro Registro de tipo org_empresa en forma alta
      * @return array
@@ -168,6 +169,7 @@ class controlador_org_empresa extends system{
     }
 
     /**
+     * SIN PROBAR
      * @param array $keys_generales Keys a reasignar si existen en POST
      * @return array
      */
@@ -285,7 +287,7 @@ class controlador_org_empresa extends system{
     }
 
     /**
-     *
+     * SIN PROBAR
      * @author israel hernandez 0.1.0
      * @version v0.88.23
      * @version v0.1.0
@@ -414,6 +416,7 @@ class controlador_org_empresa extends system{
     }
 
     /**
+     * SIN PROBAR
      * @param array $keys_generales Keys a reasignar si existen en POST
      * @return array|stdClass
      * @throws JsonException
