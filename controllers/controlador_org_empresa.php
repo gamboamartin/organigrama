@@ -247,6 +247,37 @@ class controlador_org_empresa extends system{
 
     }
 
+    private function data_sucursal_btn(array $sucursal): array
+    {
+
+        $params['org_sucursal_id'] = $sucursal['org_sucursal_id'];
+
+        $btn_elimina = $this->html_base->button_href(accion:'elimina_bd',etiqueta:  'Elimina',
+            registro_id:  $sucursal['org_sucursal_id'], seccion: 'org_sucursal',style:  'danger');
+
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al generar btn',data:  $btn_elimina);
+        }
+        $sucursal['link_elimina'] = $btn_elimina;
+
+        $btn_modifica = $this->html_base->button_href(accion:'modifica_sucursal',etiqueta:  'Modifica',
+            registro_id:  $sucursal['org_empresa_id'], seccion: 'org_empresa',style:  'warning');
+
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al generar btn',data:  $btn_elimina);
+        }
+        $sucursal['link_modifica'] = $btn_modifica;
+
+        $btn_ve = $this->html_base->button_href(accion:'ve_sucursal',etiqueta:  'Ver',
+            registro_id:  $sucursal['org_empresa_id'], seccion: 'org_empresa',style:  'info', params: $params);
+
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al generar btn',data:  $btn_elimina);
+        }
+        $sucursal['link_ve'] = $btn_ve;
+        return $sucursal;
+    }
+
     public function identidad(bool $header, bool $ws = false): array|stdClass
     {
         $base = $this->base();
@@ -424,35 +455,13 @@ class controlador_org_empresa extends system{
 
         foreach ($sucursales->registros as $indice=>$sucursal){
 
-            $btn_elimina = $this->html_base->button_href(accion:'elimina_bd',etiqueta:  'Elimina',
-                registro_id:  $sucursal['org_sucursal_id'], seccion: 'org_sucursal',style:  'danger');
-
+            $sucursal = $this->data_sucursal_btn(sucursal:$sucursal);
             if(errores::$error){
-                return $this->retorno_error(mensaje: 'Error al generar btn',data:  $btn_elimina, header: $header,ws:$ws);
+                return $this->retorno_error(mensaje: 'Error al asignar botones',data:  $sucursal, header: $header,ws:$ws);
             }
-            $sucursal['link_elimina'] = $btn_elimina;
-
-            $btn_modifica = $this->html_base->button_href(accion:'modifica_sucursal',etiqueta:  'Modifica',
-                registro_id:  $sucursal['org_sucursal_id'], seccion: 'org_empresa',style:  'warning');
-
-            if(errores::$error){
-                return $this->retorno_error(mensaje: 'Error al generar btn',data:  $btn_elimina, header: $header,ws:$ws);
-            }
-            $sucursal['link_modifica'] = $btn_modifica;
-
-            $btn_ve = $this->html_base->button_href(accion:'ve_sucursal',etiqueta:  'Ver',
-                registro_id:  $sucursal['org_sucursal_id'], seccion: 'org_empresa',style:  'info');
-
-            if(errores::$error){
-                return $this->retorno_error(mensaje: 'Error al generar btn',data:  $btn_elimina, header: $header,ws:$ws);
-            }
-            $sucursal['link_ve'] = $btn_ve;
-
-
             $sucursales->registros[$indice] = $sucursal;
 
         }
-
 
         $this->sucursales = $sucursales;
 
@@ -499,6 +508,17 @@ class controlador_org_empresa extends system{
             return $this->errores->error(mensaje: 'Error al modificar generales',data:  $r_modifica_bd);
         }
         return $r_modifica_bd;
+    }
+
+    public function ve_sucursal(bool $header, bool $ws = false): array|stdClass
+    {
+        $base = $this->base();
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al maquetar datos',data:  $base,
+                header: $header,ws:$ws);
+        }
+
+        return $base;
     }
 
 }
