@@ -76,6 +76,8 @@ class link_org_empresa extends links_menu {
 
         $this->links->org_empresa->ubicacion = $org_empresa_ubicacion;
 
+
+
         return $links;
     }
 
