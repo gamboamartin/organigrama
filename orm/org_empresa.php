@@ -103,28 +103,13 @@ class org_empresa extends modelo{
             return $this->error->error(mensaje: 'Error al obtener sucursal upd', data: $org_sucursal_upd);
         }
 
-        $filtro = array();
-        $filtro['org_empresa.id'] = $id;
-        $filtro['org_tipo_sucursal.id'] = (new generales())->tipo_sucursal_matriz_id;
-
-        $r_sucursal_matriz = (new org_sucursal($this->link))->filtro_and(filtro: $filtro);
+        $sucursal_matriz_id = (new org_sucursal($this->link))->sucursal_matriz(org_empresa_id:$id);
         if(errores::$error){
-            return $this->error->error(mensaje: 'Error al obtener sucursal matriz', data: $r_sucursal_matriz);
+            return $this->error->error(mensaje: 'Error al obtener sucursal matriz', data: $sucursal_matriz_id);
         }
-
-        if((int)$r_sucursal_matriz->n_registros > 1){
-            return $this->error->error(mensaje: 'Error solo puede existir una sucursal matriz por empresa',
-                data: $r_sucursal_matriz);
-        }
-        if((int)$r_sucursal_matriz->n_registros === 0){
-            return $this->error->error(mensaje: 'Error no existe sucursal matriz de la empresa',
-                data: $r_sucursal_matriz);
-        }
-
-
 
         $r_modifica_suc = (new org_sucursal($this->link))->modifica_bd(registro: $org_sucursal_upd,
-            id:  $r_sucursal_matriz->registros[0]['org_sucursal_id']);
+            id:  $sucursal_matriz_id);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al al modificar sucursal matriz', data: $r_modifica_suc);
         }
