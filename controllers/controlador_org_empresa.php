@@ -431,6 +431,24 @@ class controlador_org_empresa extends system{
                 return $this->retorno_error(mensaje: 'Error al generar btn',data:  $btn_elimina, header: $header,ws:$ws);
             }
             $sucursal['link_elimina'] = $btn_elimina;
+
+            $btn_modifica = $this->html_base->button_href(accion:'modifica_sucursal',etiqueta:  'Modifica',
+                registro_id:  $sucursal['org_sucursal_id'], seccion: 'org_empresa',style:  'warning');
+
+            if(errores::$error){
+                return $this->retorno_error(mensaje: 'Error al generar btn',data:  $btn_elimina, header: $header,ws:$ws);
+            }
+            $sucursal['link_modifica'] = $btn_modifica;
+
+            $btn_ve = $this->html_base->button_href(accion:'ve_sucursal',etiqueta:  'Ver',
+                registro_id:  $sucursal['org_sucursal_id'], seccion: 'org_empresa',style:  'info');
+
+            if(errores::$error){
+                return $this->retorno_error(mensaje: 'Error al generar btn',data:  $btn_elimina, header: $header,ws:$ws);
+            }
+            $sucursal['link_ve'] = $btn_ve;
+
+
             $sucursales->registros[$indice] = $sucursal;
 
         }

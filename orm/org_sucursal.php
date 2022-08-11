@@ -55,6 +55,11 @@ class org_sucursal extends modelo{
         return $r_alta_bd;
     }
 
+    /**
+     * Obtiene las sucursales de una empresa
+     * @param int $org_empresa_id Identificador de empresa
+     * @return array|stdClass
+     */
     public function sucursales(int $org_empresa_id): array|stdClass
     {
         $filtro['org_empresa.id'] = $org_empresa_id;
