@@ -421,7 +421,7 @@ class limpieza{
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al asignar dato', data: $org_sucursal_ins);
         }
-        
+
 
         return $org_sucursal_ins;
     }
