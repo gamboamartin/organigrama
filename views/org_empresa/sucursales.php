@@ -66,6 +66,8 @@
                             <th>Edo</th>
                             <th>Tel</th>
                             <th>Serie</th>
+                            <th>Elimina</th>
+                            
                             <tbody>
                             <?php foreach ($controlador->sucursales->registros as $sucursal){ ?>
                             <tr>
@@ -83,6 +85,8 @@
                                 <td><?php echo $sucursal['dp_estado_descripcion']; ?></td>
                                 <td><?php echo $sucursal['org_sucursal_telefono_1']; ?></td>
                                 <td><?php echo $sucursal['org_sucursal_serie']; ?></td>
+                                <td><?php echo $sucursal['link_elimina']; ?></td>
+
                             </tr>
                             <?php } ?>
                             </tbody>

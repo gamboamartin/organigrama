@@ -18,6 +18,7 @@ use gamboamartin\template\html;
 use html\org_empresa_html;
 use JsonException;
 use links\secciones\link_org_empresa;
+use links\secciones\link_org_sucursal;
 use models\org_empresa;
 use models\org_sucursal;
 use PDO;
@@ -419,6 +420,19 @@ class controlador_org_empresa extends system{
         $sucursales = (new org_sucursal($this->link))->sucursales(org_empresa_id: $this->org_empresa_id);
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al obtener sucursales',data:  $sucursales, header: $header,ws:$ws);
+        }
+
+        foreach ($sucursales->registros as $indice=>$sucursal){
+
+            $btn_elimina = $this->html_base->button_href(accion:'elimina_bd',etiqueta:  'Elimina',
+                registro_id:  $sucursal['org_sucursal_id'], seccion: 'org_sucursal',style:  'danger');
+
+            if(errores::$error){
+                return $this->retorno_error(mensaje: 'Error al generar btn',data:  $btn_elimina, header: $header,ws:$ws);
+            }
+            $sucursal['link_elimina'] = $btn_elimina;
+            $sucursales->registros[$indice] = $sucursal;
+
         }
 
 
