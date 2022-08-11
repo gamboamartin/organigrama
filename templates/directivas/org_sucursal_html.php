@@ -7,6 +7,7 @@ use gamboamartin\organigrama\controllers\controlador_org_sucursal;
 use gamboamartin\system\html_controler;
 use models\base\limpieza;
 use models\base\rows;
+use models\org_sucursal;
 use PDO;
 use stdClass;
 
@@ -370,6 +371,18 @@ class org_sucursal_html extends html_controler {
         $selects->org_empresa_id = $select;
 
         return $selects;
+    }
+
+    public function select_org_sucursal_id(int $cols, bool $con_registros, int $id_selected, PDO $link): array|string
+    {
+        $modelo = new org_sucursal(link: $link);
+
+        $select = $this->select_catalogo(cols:$cols,con_registros:$con_registros,id_selected:$id_selected,
+            modelo: $modelo,label: 'Sucursal',required: true);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar select', data: $select);
+        }
+        return $select;
     }
 
     public function telefono_1(int $cols, stdClass $row_upd, bool $value_vacio): array|string

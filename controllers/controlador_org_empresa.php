@@ -8,6 +8,7 @@
  */
 namespace gamboamartin\organigrama\controllers;
 
+use config\generales;
 use gamboamartin\errores\errores;
 use gamboamartin\system\actions;
 use gamboamartin\system\init;
@@ -17,14 +18,14 @@ use gamboamartin\template\html;
 use html\org_empresa_html;
 use JsonException;
 use links\secciones\link_org_empresa;
-use models\base\limpieza;
 use models\org_empresa;
 use PDO;
 use stdClass;
 
 class controlador_org_empresa extends system{
-    public string $rfc = '';
+    public string $link_org_sucursal_alta_bd = '';
     public string $razon_social = '';
+    public string $rfc = '';
 
     public function __construct(PDO $link, html $html = new \gamboamartin\template_1\html(),
                                 stdClass $paths_conf = new stdClass()){
@@ -36,6 +37,14 @@ class controlador_org_empresa extends system{
         parent::__construct(html:$html_, link: $link,modelo:  $modelo, obj_link: $obj_link, paths_conf: $paths_conf);
 
         $this->titulo_lista = 'Empresas';
+        
+        $link_org_sucursal_alta_bd = $obj_link->link_org_sucursal_alta_bd(org_empresa_id: $this->registro_id);
+        if(errores::$error){
+            $error = $this->errores->error(mensaje: 'Error al generar link sucursal alta',
+                data:  $link_org_sucursal_alta_bd);
+            print_r($error);
+            exit;
+        }
 
     }
 
