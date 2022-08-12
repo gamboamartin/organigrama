@@ -17,11 +17,13 @@ use gamboamartin\system\system;
 use gamboamartin\template\html;
 use html\org_empresa_html;
 use html\org_sucursal_html;
+use html\org_tipo_sucursal_html;
 use JsonException;
 use links\secciones\link_org_empresa;
 use links\secciones\link_org_sucursal;
 use models\org_empresa;
 use models\org_sucursal;
+use models\org_tipo_sucursal;
 use PDO;
 use stdClass;
 
@@ -562,7 +564,7 @@ class controlador_org_empresa extends system{
 
         $org_sucursal_html = (new org_sucursal_html(html: $this->html_base));
 
-        $org_sucursal_id = $org_sucursal_html->input_id(cols: 3,row_upd:  $org_sucursal, value_vacio: false,
+        $org_sucursal_id = $org_sucursal_html->input_id(cols: 4,row_upd:  $org_sucursal, value_vacio: false,
             disabled: true);
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al obtener sucursal_id select',data:  $org_sucursal_id,
@@ -571,7 +573,7 @@ class controlador_org_empresa extends system{
 
         $this->inputs->org_sucursal_id = $org_sucursal_id;
 
-        $org_sucursal_codigo = $org_sucursal_html->input_codigo(cols: 3,row_upd:  $org_sucursal, value_vacio: false,
+        $org_sucursal_codigo = $org_sucursal_html->input_codigo(cols: 4,row_upd:  $org_sucursal, value_vacio: false,
             disabled: true);
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al obtener sucursal_codigo select',data:  $org_sucursal_codigo,
@@ -579,6 +581,45 @@ class controlador_org_empresa extends system{
         }
 
         $this->inputs->org_sucursal_codigo = $org_sucursal_codigo;
+
+
+        $org_sucursal_codigo_bis = $org_sucursal_html->input_codigo_bis(cols: 4,row_upd:  $org_sucursal,
+            value_vacio: false, disabled: true);
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al obtener sucursal_codigo_bis',data:  $org_sucursal_codigo_bis,
+                header: $header,ws:$ws);
+        }
+
+        $this->inputs->org_sucursal_codigo_bis = $org_sucursal_codigo_bis;
+
+        $org_sucursal_descripcion = $org_sucursal_html->input_descripcion(cols: 12,row_upd:  $org_sucursal,
+            value_vacio: false, disabled: true);
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al obtener descripcion',data:  $org_sucursal_descripcion,
+                header: $header,ws:$ws);
+        }
+
+        $this->inputs->org_sucursal_descripcion = $org_sucursal_descripcion;
+
+
+
+        $org_tipo_sucursal_html = (new org_tipo_sucursal_html(html: $this->html_base));
+
+        $org_tipo_sucursal = (new org_tipo_sucursal($this->link))->registro(registro_id: $org_sucursal->org_tipo_sucursal_id,
+            columnas_en_bruto: true,retorno_obj: true);
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al obtener tipo sucursal',data:  $org_tipo_sucursal,
+                header: $header,ws:$ws);
+        }
+
+        $org_tipo_sucursal_descripcion = $org_tipo_sucursal_html->input_descripcion(cols: 12,row_upd:  $org_tipo_sucursal,
+            value_vacio: false, disabled: true);
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al obtener descripcion',data:  $org_sucursal_descripcion,
+                header: $header,ws:$ws);
+        }
+
+        $this->inputs->org_sucursal_tipo_sucursal_descricpion = $org_tipo_sucursal_descripcion;
 
         return $base;
     }
