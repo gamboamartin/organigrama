@@ -616,6 +616,9 @@ class controlador_org_empresa extends system{
         $params->codigo = new stdClass();
         $params->codigo->cols = 4;
 
+        $params->codigo_bis = new stdClass();
+        $params->codigo_bis->cols = 4;
+
         $params->fecha_inicio_operaciones = new stdClass();
         $params->fecha_inicio_operaciones->cols = 4;
 
