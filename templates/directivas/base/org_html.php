@@ -1,22 +1,23 @@
 <?php
 namespace html\base;
 
-
-use base\controller\controlador_base;
-use base\controller\controler;
 use gamboamartin\errores\errores;
-use gamboamartin\organigrama\controllers\controlador_org_sucursal;
 use gamboamartin\system\html_controler;
 use gamboamartin\system\system;
 use html\inputs_html;
 use html\selects;
-use models\base\limpieza;
-use models\org_sucursal;
 use PDO;
 use stdClass;
 
 
 class org_html extends html_controler {
+
+    /**
+     * Asigna la integracion de inputs generados previamente
+     * @param system $controler
+     * @param stdClass $inputs
+     * @return array|stdClass
+     */
     protected function asigna_inputs(system $controler, stdClass $inputs): array|stdClass
     {
         $controler->inputs->select = new stdClass();
