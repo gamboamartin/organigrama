@@ -140,7 +140,7 @@ class org_sucursal_html extends org_html {
 
 
 
-    public function input_exterior(int $cols, stdClass $row_upd, bool $value_vacio): array|string
+    public function input_exterior(int $cols, stdClass $row_upd, bool $value_vacio, bool $disabled = false): array|string
     {
 
         if($cols<=0){
@@ -150,7 +150,7 @@ class org_sucursal_html extends org_html {
             return $this->error->error(mensaje: 'Error cold debe ser menor o igual a  12', data: $cols);
         }
 
-        $html =$this->directivas->input_text_required(disable: false,name: 'exterior',place_holder: 'Num Ext',row_upd: $row_upd,
+        $html =$this->directivas->input_text_required(disable: $disabled,name: 'exterior',place_holder: 'Num Ext',row_upd: $row_upd,
             value_vacio: $value_vacio);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input', data: $html);
@@ -166,7 +166,7 @@ class org_sucursal_html extends org_html {
 
 
 
-    public function input_interior(int $cols, stdClass $row_upd, bool $value_vacio): array|string
+    public function input_interior(int $cols, stdClass $row_upd, bool $value_vacio, bool $disabled = false): array|string
     {
 
         if($cols<=0){
@@ -176,7 +176,7 @@ class org_sucursal_html extends org_html {
             return $this->error->error(mensaje: 'Error cold debe ser menor o igual a  12', data: $cols);
         }
 
-        $html =$this->directivas->input_text(disable: false,name: 'interior',place_holder: 'Num Int', required: false,
+        $html =$this->directivas->input_text(disable: $disabled,name: 'interior',place_holder: 'Num Int', required: false,
             row_upd: $row_upd, value_vacio: $value_vacio);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input', data: $html);
@@ -291,7 +291,7 @@ class org_sucursal_html extends org_html {
         return $select;
     }
 
-    public function telefono_1(int $cols, stdClass $row_upd, bool $value_vacio): array|string
+    public function telefono_1(int $cols, stdClass $row_upd, bool $value_vacio, bool $disabled = false): array|string
     {
         if($cols<=0){
             return $this->error->error(mensaje: 'Error cold debe ser mayor a 0', data: $cols);
@@ -300,7 +300,7 @@ class org_sucursal_html extends org_html {
             return $this->error->error(mensaje: 'Error cold debe ser menor o igual a  12', data: $cols);
         }
 
-        $html =$this->directivas->input_text_required(disable: false,name: 'telefono_1',
+        $html =$this->directivas->input_text_required(disable: $disabled,name: 'telefono_1',
             place_holder: 'Telefono 1',row_upd: $row_upd, value_vacio: $value_vacio);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input', data: $html);
@@ -314,7 +314,7 @@ class org_sucursal_html extends org_html {
         return $div;
     }
 
-    public function telefono_2(int $cols, stdClass $row_upd, bool $value_vacio): array|string
+    public function telefono_2(int $cols, stdClass $row_upd, bool $value_vacio, bool $disabled = false): array|string
     {
         if($cols<=0){
             return $this->error->error(mensaje: 'Error cold debe ser mayor a 0', data: $cols);
@@ -323,7 +323,7 @@ class org_sucursal_html extends org_html {
             return $this->error->error(mensaje: 'Error cold debe ser menor o igual a  12', data: $cols);
         }
 
-        $html =$this->directivas->input_text(disable: false,name: 'telefono_2',
+        $html =$this->directivas->input_text(disable: $disabled,name: 'telefono_2',
             place_holder: 'Telefono 2',required: false,row_upd: $row_upd, value_vacio: $value_vacio);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input', data: $html);
@@ -337,7 +337,7 @@ class org_sucursal_html extends org_html {
         return $div;
     }
 
-    public function telefono_3(int $cols, stdClass $row_upd, bool $value_vacio): array|string
+    public function telefono_3(int $cols, stdClass $row_upd, bool $value_vacio, bool $disabled = false): array|string
     {
         if($cols<=0){
             return $this->error->error(mensaje: 'Error cold debe ser mayor a 0', data: $cols);
@@ -346,7 +346,7 @@ class org_sucursal_html extends org_html {
             return $this->error->error(mensaje: 'Error cold debe ser menor o igual a  12', data: $cols);
         }
 
-        $html =$this->directivas->input_text(disable: false,name: 'telefono_3',
+        $html =$this->directivas->input_text(disable: $disabled,name: 'telefono_3',
             place_holder: 'Telefono 3',required: false,row_upd: $row_upd, value_vacio: $value_vacio);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input', data: $html);

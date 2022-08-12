@@ -328,6 +328,141 @@ class controlador_org_empresa extends system{
 
     }
 
+    private function inputs_direcciones_by_sucursal(stdClass $data_dp, stdClass $htmls): array|stdClass
+    {
+        $dp_estado_descripcion = $htmls->dp_estado->input_descripcion(cols: 3,row_upd:  $data_dp->estado,
+            value_vacio: false, disabled: true, place_holder: 'Estado');
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al obtener descripcion',data:  $dp_estado_descripcion);
+        }
+
+        $this->inputs->org_sucursal_dp_estado_descripcion = $dp_estado_descripcion;
+
+
+        $dp_municipio_descripcion = $htmls->dp_municipio->input_descripcion(cols: 3,row_upd:  $data_dp->municipio,
+            value_vacio: false, disabled: true, place_holder: 'Municipio');
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al obtener descripcion',data:  $dp_municipio_descripcion);
+        }
+
+        $this->inputs->org_sucursal_dp_municipio_descripcion = $dp_municipio_descripcion;
+
+
+        $dp_colonia_descripcion = $htmls->dp_colonia->input_descripcion(cols: 3,row_upd:  $data_dp->colonia,
+            value_vacio: false, disabled: true, place_holder: 'Colonia');
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al obtener $dp_colonia_descripcion',
+                data:  $dp_colonia_descripcion);
+        }
+
+        $this->inputs->org_sucursal_dp_colonia_descripcion = $dp_colonia_descripcion;
+
+
+
+        $dp_cp_descripcion = $htmls->dp_cp->input_descripcion(cols: 3,row_upd:  $data_dp->cp,
+            value_vacio: false, disabled: true, place_holder: 'CP');
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al obtener $dp_cp_descripcion',
+                data:  $dp_cp_descripcion);
+        }
+
+        $this->inputs->org_sucursal_dp_cp_descripcion = $dp_cp_descripcion;
+
+
+        $dp_calle_descripcion = $htmls->dp_calle->input_descripcion(cols: 3,row_upd:  $data_dp->calle,
+            value_vacio: false, disabled: true, place_holder: 'Calle');
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al obtener $dp_calle_descripcion',
+                data:  $dp_calle_descripcion);
+        }
+
+        $this->inputs->org_sucursal_dp_calle_descripcion = $dp_calle_descripcion;
+
+        return $this->inputs;
+    }
+
+    private function inputs_sucursal(org_sucursal_html $html, stdClass $org_sucursal): array|stdClass
+    {
+
+
+        $org_sucursal_codigo = $html->input_codigo(cols: 4,row_upd:  $org_sucursal, value_vacio: false, disabled: true);
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al obtener sucursal_codigo select',data:  $org_sucursal_codigo);
+        }
+
+        $org_sucursal_codigo_bis = $html->input_codigo_bis(cols: 4,row_upd:  $org_sucursal, value_vacio: false,
+            disabled: true);
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al obtener sucursal_codigo_bis',
+                data:  $org_sucursal_codigo_bis);
+        }
+
+
+        $org_sucursal_descripcion = $html->input_descripcion(cols: 12,row_upd:  $org_sucursal, value_vacio: false,
+            disabled: true);
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al obtener descripcion',data:  $org_sucursal_descripcion);
+        }
+
+
+        $org_sucursal_fecha_inicio_operaciones = $html->fec_fecha_inicio_operaciones(cols: 6, row_upd:  $org_sucursal,
+            value_vacio: false, disabled: true);
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al obtener fecha_inicio_operaciones',data:  $org_sucursal_fecha_inicio_operaciones);
+        }
+
+        $org_sucursal_exterior = $html->input_exterior(cols: 6, row_upd:  $org_sucursal,
+            value_vacio: false, disabled: true);
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al obtener $org_sucursal_exterior',data:  $org_sucursal_exterior);
+        }
+
+        $org_sucursal_id = $html->input_id(cols: 4,row_upd:  $org_sucursal, value_vacio: false, disabled: true);
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al obtener sucursal_id select',data:  $org_sucursal_id);
+        }
+
+        $org_sucursal_interior = $html->input_interior(cols: 6, row_upd:  $org_sucursal,
+            value_vacio: false, disabled: true);
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al obtener $org_sucursal_interior',data:  $org_sucursal_interior);
+        }
+
+
+        $org_sucursal_serie = $html->input_serie(cols: 6,row_upd:  $org_sucursal, value_vacio: false, disabled: true);
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al obtener serie',data:  $org_sucursal_serie);
+        }
+
+        $org_sucursal_telefono_1 = $html->telefono_1(cols: 6,row_upd:  $org_sucursal, value_vacio: false, disabled: true);
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al obtener serie',data:  $org_sucursal_telefono_1);
+        }
+        $org_sucursal_telefono_2 = $html->telefono_2(cols: 6,row_upd:  $org_sucursal, value_vacio: false, disabled: true);
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al obtener serie',data:  $org_sucursal_telefono_1);
+        }
+        $org_sucursal_telefono_3 = $html->telefono_3(cols: 6,row_upd:  $org_sucursal, value_vacio: false, disabled: true);
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al obtener serie',data:  $org_sucursal_telefono_1);
+        }
+
+
+        $this->inputs->org_sucursal_codigo = $org_sucursal_codigo;
+        $this->inputs->org_sucursal_codigo_bis = $org_sucursal_codigo_bis;
+        $this->inputs->org_sucursal_descripcion = $org_sucursal_descripcion;
+        $this->inputs->org_sucursal_exterior = $org_sucursal_exterior;
+        $this->inputs->org_sucursal_fecha_inicio_operaciones = $org_sucursal_fecha_inicio_operaciones;
+        $this->inputs->org_sucursal_id = $org_sucursal_id;
+        $this->inputs->org_sucursal_interior = $org_sucursal_interior;
+        $this->inputs->org_sucursal_serie = $org_sucursal_serie;
+        $this->inputs->org_sucursal_telefono_1 = $org_sucursal_telefono_1;
+        $this->inputs->org_sucursal_telefono_2 = $org_sucursal_telefono_2;
+        $this->inputs->org_sucursal_telefono_3 = $org_sucursal_telefono_3;
+
+        return $this->inputs;
+    }
+
     public function lista(bool $header, bool $ws = false): array
     {
         $r_lista = parent::lista($header, $ws); // TODO: Change the autogenerated stub
@@ -607,127 +742,26 @@ class controlador_org_empresa extends system{
             return $this->retorno_error(mensaje: 'Error al obtener htmls',data:  $htmls, header: $header,ws:$ws);
         }
 
-
-        $org_sucursal_id = $htmls->org_sucursal->input_id(cols: 4,row_upd:  $data_sucursal->org_sucursal, value_vacio: false,
-            disabled: true);
+        $inputs_sucursal = $this->inputs_sucursal(html:$htmls->org_sucursal, org_sucursal: $data_sucursal->org_sucursal);
         if(errores::$error){
-            return $this->retorno_error(mensaje: 'Error al obtener sucursal_id select',data:  $org_sucursal_id,
-                header: $header,ws:$ws);
+            return $this->retorno_error(mensaje: 'Error al generar inputs sucursal',
+                data:  $inputs_sucursal, header: $header,ws:$ws);
         }
 
-        $this->inputs->org_sucursal_id = $org_sucursal_id;
-
-        $org_sucursal_codigo = $htmls->org_sucursal->input_codigo(cols: 4,row_upd:  $data_sucursal->org_sucursal, value_vacio: false,
-            disabled: true);
+        $org_tipo_sucursal_descripcion = $htmls->org_tipo_sucursal->input_descripcion(cols: 12,
+            row_upd:  $data_sucursal->org_tipo_sucursal, value_vacio: false, disabled: true);
         if(errores::$error){
-            return $this->retorno_error(mensaje: 'Error al obtener sucursal_codigo select',data:  $org_sucursal_codigo,
-                header: $header,ws:$ws);
-        }
-
-        $this->inputs->org_sucursal_codigo = $org_sucursal_codigo;
-
-
-        $org_sucursal_codigo_bis = $htmls->org_sucursal->input_codigo_bis(cols: 4,row_upd:  $data_sucursal->org_sucursal,
-            value_vacio: false, disabled: true);
-        if(errores::$error){
-            return $this->retorno_error(mensaje: 'Error al obtener sucursal_codigo_bis',data:  $org_sucursal_codigo_bis,
-                header: $header,ws:$ws);
-        }
-
-        $this->inputs->org_sucursal_codigo_bis = $org_sucursal_codigo_bis;
-
-        $org_sucursal_descripcion = $htmls->org_sucursal->input_descripcion(cols: 12,row_upd:  $data_sucursal->org_sucursal,
-            value_vacio: false, disabled: true);
-        if(errores::$error){
-            return $this->retorno_error(mensaje: 'Error al obtener descripcion',data:  $org_sucursal_descripcion,
-                header: $header,ws:$ws);
-        }
-
-        $this->inputs->org_sucursal_descripcion = $org_sucursal_descripcion;
-
-
-        $org_sucursal_fecha_inicio_operaciones = $htmls->org_sucursal->fec_fecha_inicio_operaciones(cols: 6,
-            row_upd:  $data_sucursal->org_sucursal, value_vacio: false, disabled: true);
-        if(errores::$error){
-            return $this->retorno_error(mensaje: 'Error al obtener fecha_inicio_operaciones',data:  $org_sucursal_fecha_inicio_operaciones,
-                header: $header,ws:$ws);
-        }
-
-        $this->inputs->org_sucursal_fecha_inicio_operaciones = $org_sucursal_fecha_inicio_operaciones;
-
-
-        $org_sucursal_serie = $htmls->org_sucursal->input_serie(cols: 6,row_upd:  $data_sucursal->org_sucursal,
-            value_vacio: false, disabled: true);
-        if(errores::$error){
-            return $this->retorno_error(mensaje: 'Error al obtener serie',data:  $org_sucursal_serie,
-                header: $header,ws:$ws);
-        }
-
-        $this->inputs->org_sucursal_serie = $org_sucursal_serie;
-
-
-        $org_tipo_sucursal_descripcion = $htmls->org_tipo_sucursal->input_descripcion(cols: 12,row_upd:  $data_sucursal->org_tipo_sucursal,
-            value_vacio: false, disabled: true);
-        if(errores::$error){
-            return $this->retorno_error(mensaje: 'Error al obtener descripcion',data:  $org_sucursal_descripcion,
+            return $this->retorno_error(mensaje: 'Error al obtener descripcion',data:  $org_tipo_sucursal_descripcion,
                 header: $header,ws:$ws);
         }
 
         $this->inputs->org_sucursal_tipo_sucursal_descricpion = $org_tipo_sucursal_descripcion;
 
-
-        $dp_estado_descripcion = $htmls->dp_estado->input_descripcion(cols: 3,row_upd:  $data_dp->estado,
-            value_vacio: false, disabled: true, place_holder: 'Estado');
+        $inputs_dp = $this->inputs_direcciones_by_sucursal(data_dp: $data_dp,htmls:  $htmls);
         if(errores::$error){
-            return $this->retorno_error(mensaje: 'Error al obtener descripcion',data:  $org_sucursal_descripcion,
-                header: $header,ws:$ws);
+            return $this->retorno_error(mensaje: 'Error al generar inputs de direcciones',
+                data:  $inputs_dp, header: $header,ws:$ws);
         }
-
-        $this->inputs->org_sucursal_dp_estado_descripcion = $dp_estado_descripcion;
-
-
-        $dp_municipio_descripcion = $htmls->dp_municipio->input_descripcion(cols: 3,row_upd:  $data_dp->municipio,
-            value_vacio: false, disabled: true, place_holder: 'Municipio');
-        if(errores::$error){
-            return $this->retorno_error(mensaje: 'Error al obtener descripcion',data:  $org_sucursal_descripcion,
-                header: $header,ws:$ws);
-        }
-
-        $this->inputs->org_sucursal_dp_municipio_descripcion = $dp_municipio_descripcion;
-
-
-        $dp_colonia_descripcion = $htmls->dp_colonia->input_descripcion(cols: 3,row_upd:  $data_dp->colonia,
-            value_vacio: false, disabled: true, place_holder: 'Colonia');
-        if(errores::$error){
-            return $this->retorno_error(mensaje: 'Error al obtener $dp_colonia_descripcion',
-                data:  $dp_colonia_descripcion, header: $header,ws:$ws);
-        }
-
-        $this->inputs->org_sucursal_dp_colonia_descripcion = $dp_colonia_descripcion;
-
-
-
-        $dp_cp_descripcion = $htmls->dp_cp->input_descripcion(cols: 3,row_upd:  $data_dp->cp,
-            value_vacio: false, disabled: true, place_holder: 'CP');
-        if(errores::$error){
-            return $this->retorno_error(mensaje: 'Error al obtener $dp_cp_descripcion',
-                data:  $dp_cp_descripcion, header: $header,ws:$ws);
-        }
-
-        $this->inputs->org_sucursal_dp_cp_descripcion = $dp_cp_descripcion;
-
-
-
-        $dp_calle_descripcion = $htmls->dp_calle->input_descripcion(cols: 3,row_upd:  $data_dp->calle,
-            value_vacio: false, disabled: true, place_holder: 'Calle');
-        if(errores::$error){
-            return $this->retorno_error(mensaje: 'Error al obtener $dp_calle_descripcion',
-                data:  $dp_calle_descripcion, header: $header,ws:$ws);
-        }
-
-        $this->inputs->org_sucursal_dp_calle_descripcion = $dp_calle_descripcion;
-
-
 
         return $base;
     }
