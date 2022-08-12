@@ -561,6 +561,7 @@ class controlador_org_empresa extends system{
         }
 
         $org_sucursal_html = (new org_sucursal_html(html: $this->html_base));
+
         $org_sucursal_id = $org_sucursal_html->input_id(cols: 3,row_upd:  $org_sucursal, value_vacio: false,
             disabled: true);
         if(errores::$error){
@@ -569,6 +570,15 @@ class controlador_org_empresa extends system{
         }
 
         $this->inputs->org_sucursal_id = $org_sucursal_id;
+
+        $org_sucursal_codigo = $org_sucursal_html->input_codigo(cols: 3,row_upd:  $org_sucursal, value_vacio: false,
+            disabled: true);
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al obtener sucursal_codigo select',data:  $org_sucursal_codigo,
+                header: $header,ws:$ws);
+        }
+
+        $this->inputs->org_sucursal_codigo = $org_sucursal_codigo;
 
         return $base;
     }
