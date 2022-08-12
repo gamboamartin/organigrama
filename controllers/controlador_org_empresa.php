@@ -15,14 +15,20 @@ use gamboamartin\system\init;
 use gamboamartin\system\system;
 
 use gamboamartin\template\html;
+use html\dp_calle_html;
+use html\dp_colonia_html;
+use html\dp_cp_html;
 use html\dp_estado_html;
+use html\dp_municipio_html;
 use html\org_empresa_html;
 use html\org_sucursal_html;
 use html\org_tipo_sucursal_html;
 use JsonException;
 use links\secciones\link_org_empresa;
 use links\secciones\link_org_sucursal;
+use models\dp_calle;
 use models\dp_calle_pertenece;
+use models\dp_colonia;
 use models\dp_colonia_postal;
 use models\dp_cp;
 use models\dp_estado;
@@ -287,6 +293,27 @@ class controlador_org_empresa extends system{
         }
         $sucursal['link_ve'] = $btn_ve;
         return $sucursal;
+    }
+
+    private function htmls_sucursal(): stdClass
+    {
+        $org_sucursal_html = (new org_sucursal_html(html: $this->html_base));
+        $org_tipo_sucursal_html = (new org_tipo_sucursal_html(html: $this->html_base));
+        $dp_estado_html = (new dp_estado_html(html: $this->html_base));
+        $dp_municipio_html = (new dp_municipio_html(html: $this->html_base));
+        $dp_colonia_html = (new dp_colonia_html(html: $this->html_base));
+        $dp_cp_html = (new dp_cp_html(html: $this->html_base));
+        $dp_calle_html = (new dp_calle_html(html: $this->html_base));
+
+        $data = new stdClass();
+        $data->org_sucursal = $org_sucursal_html;
+        $data->org_tipo_sucursal = $org_tipo_sucursal_html;
+        $data->dp_estado = $dp_estado_html;
+        $data->dp_municipio = $dp_municipio_html;
+        $data->dp_colonia = $dp_colonia_html;
+        $data->dp_cp = $dp_cp_html;
+        $data->dp_calle = $dp_calle_html;
+        return $data;
     }
 
     public function identidad(bool $header, bool $ws = false): array|stdClass
@@ -568,9 +595,28 @@ class controlador_org_empresa extends system{
                 header: $header,ws:$ws);
         }
 
-        $org_sucursal_html = (new org_sucursal_html(html: $this->html_base));
+        $org_tipo_sucursal = (new org_tipo_sucursal($this->link))->registro(registro_id: $org_sucursal->org_tipo_sucursal_id,
+            columnas_en_bruto: true,retorno_obj: true);
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al obtener tipo sucursal',data:  $org_tipo_sucursal,
+                header: $header,ws:$ws);
+        }
 
-        $org_sucursal_id = $org_sucursal_html->input_id(cols: 4,row_upd:  $org_sucursal, value_vacio: false,
+
+        $data_dp = (new dp_calle_pertenece($this->link))->objs_direcciones(
+            dp_calle_pertenece_id: $org_sucursal->dp_calle_pertenece_id);
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al obtener datos de direcciones',data:  $data_dp,
+                header: $header,ws:$ws);
+        }
+
+        $htmls = $this->htmls_sucursal();
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al obtener htmls',data:  $htmls, header: $header,ws:$ws);
+        }
+
+
+        $org_sucursal_id = $htmls->org_sucursal->input_id(cols: 4,row_upd:  $org_sucursal, value_vacio: false,
             disabled: true);
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al obtener sucursal_id select',data:  $org_sucursal_id,
@@ -579,7 +625,7 @@ class controlador_org_empresa extends system{
 
         $this->inputs->org_sucursal_id = $org_sucursal_id;
 
-        $org_sucursal_codigo = $org_sucursal_html->input_codigo(cols: 4,row_upd:  $org_sucursal, value_vacio: false,
+        $org_sucursal_codigo = $htmls->org_sucursal->input_codigo(cols: 4,row_upd:  $org_sucursal, value_vacio: false,
             disabled: true);
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al obtener sucursal_codigo select',data:  $org_sucursal_codigo,
@@ -589,7 +635,7 @@ class controlador_org_empresa extends system{
         $this->inputs->org_sucursal_codigo = $org_sucursal_codigo;
 
 
-        $org_sucursal_codigo_bis = $org_sucursal_html->input_codigo_bis(cols: 4,row_upd:  $org_sucursal,
+        $org_sucursal_codigo_bis = $htmls->org_sucursal->input_codigo_bis(cols: 4,row_upd:  $org_sucursal,
             value_vacio: false, disabled: true);
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al obtener sucursal_codigo_bis',data:  $org_sucursal_codigo_bis,
@@ -598,7 +644,7 @@ class controlador_org_empresa extends system{
 
         $this->inputs->org_sucursal_codigo_bis = $org_sucursal_codigo_bis;
 
-        $org_sucursal_descripcion = $org_sucursal_html->input_descripcion(cols: 12,row_upd:  $org_sucursal,
+        $org_sucursal_descripcion = $htmls->org_sucursal->input_descripcion(cols: 12,row_upd:  $org_sucursal,
             value_vacio: false, disabled: true);
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al obtener descripcion',data:  $org_sucursal_descripcion,
@@ -608,7 +654,7 @@ class controlador_org_empresa extends system{
         $this->inputs->org_sucursal_descripcion = $org_sucursal_descripcion;
 
 
-        $org_sucursal_fecha_inicio_operaciones = $org_sucursal_html->fec_fecha_inicio_operaciones(cols: 6,
+        $org_sucursal_fecha_inicio_operaciones = $htmls->org_sucursal->fec_fecha_inicio_operaciones(cols: 6,
             row_upd:  $org_sucursal, value_vacio: false, disabled: true);
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al obtener fecha_inicio_operaciones',data:  $org_sucursal_fecha_inicio_operaciones,
@@ -618,7 +664,7 @@ class controlador_org_empresa extends system{
         $this->inputs->org_sucursal_fecha_inicio_operaciones = $org_sucursal_fecha_inicio_operaciones;
 
 
-        $org_sucursal_serie = $org_sucursal_html->input_serie(cols: 6,row_upd:  $org_sucursal,
+        $org_sucursal_serie = $htmls->org_sucursal->input_serie(cols: 6,row_upd:  $org_sucursal,
             value_vacio: false, disabled: true);
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al obtener serie',data:  $org_sucursal_serie,
@@ -628,17 +674,7 @@ class controlador_org_empresa extends system{
         $this->inputs->org_sucursal_serie = $org_sucursal_serie;
 
 
-
-        $org_tipo_sucursal_html = (new org_tipo_sucursal_html(html: $this->html_base));
-
-        $org_tipo_sucursal = (new org_tipo_sucursal($this->link))->registro(registro_id: $org_sucursal->org_tipo_sucursal_id,
-            columnas_en_bruto: true,retorno_obj: true);
-        if(errores::$error){
-            return $this->retorno_error(mensaje: 'Error al obtener tipo sucursal',data:  $org_tipo_sucursal,
-                header: $header,ws:$ws);
-        }
-
-        $org_tipo_sucursal_descripcion = $org_tipo_sucursal_html->input_descripcion(cols: 12,row_upd:  $org_tipo_sucursal,
+        $org_tipo_sucursal_descripcion = $htmls->org_tipo_sucursal->input_descripcion(cols: 12,row_upd:  $org_tipo_sucursal,
             value_vacio: false, disabled: true);
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al obtener descripcion',data:  $org_sucursal_descripcion,
@@ -648,46 +684,8 @@ class controlador_org_empresa extends system{
         $this->inputs->org_sucursal_tipo_sucursal_descricpion = $org_tipo_sucursal_descripcion;
 
 
-        $dp_calle_pertenece = (new dp_calle_pertenece($this->link))->registro(
-            registro_id: $org_sucursal->dp_calle_pertenece_id, columnas_en_bruto: true,retorno_obj: true);
-        if(errores::$error){
-            return $this->retorno_error(mensaje: 'Error al obtener calle pertenece',data:  $dp_calle_pertenece,
-                header: $header,ws:$ws);
-        }
-
-        $dp_colonia_postal = (new dp_colonia_postal($this->link))->registro(
-            registro_id: $dp_calle_pertenece->dp_colonia_postal_id, columnas_en_bruto: true,retorno_obj: true);
-        if(errores::$error){
-            return $this->retorno_error(mensaje: 'Error al obtener $dp_colonia_postal',data:  $dp_colonia_postal,
-                header: $header,ws:$ws);
-        }
-
-        $dp_cp = (new dp_cp($this->link))->registro(
-            registro_id: $dp_colonia_postal->dp_cp_id, columnas_en_bruto: true,retorno_obj: true);
-        if(errores::$error){
-            return $this->retorno_error(mensaje: 'Error al obtener $dp_cp',data:  $dp_cp,
-                header: $header,ws:$ws);
-        }
-
-        $dp_municipio = (new dp_municipio($this->link))->registro(
-            registro_id: $dp_cp->dp_municipio_id, columnas_en_bruto: true,retorno_obj: true);
-        if(errores::$error){
-            return $this->retorno_error(mensaje: 'Error al obtener $dp_municipio',data:  $dp_municipio,
-                header: $header,ws:$ws);
-        }
-
-
-        $dp_estado_html = (new dp_estado_html(html: $this->html_base));
-
-        $dp_estado = (new dp_estado($this->link))->registro(registro_id: $dp_municipio->dp_estado_id,
-            columnas_en_bruto: true,retorno_obj: true);
-        if(errores::$error){
-            return $this->retorno_error(mensaje: 'Error al obtener estado',data:  $dp_estado,
-                header: $header,ws:$ws);
-        }
-
-        $dp_estado_descripcion = $dp_estado_html->input_descripcion(cols: 12,row_upd:  $dp_estado,
-            value_vacio: false, disabled: true);
+        $dp_estado_descripcion = $htmls->dp_estado->input_descripcion(cols: 3,row_upd:  $data_dp->estado,
+            value_vacio: false, disabled: true, place_holder: 'Estado');
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al obtener descripcion',data:  $org_sucursal_descripcion,
                 header: $header,ws:$ws);
@@ -695,6 +693,47 @@ class controlador_org_empresa extends system{
 
         $this->inputs->org_sucursal_dp_estado_descripcion = $dp_estado_descripcion;
 
+
+        $dp_municipio_descripcion = $htmls->dp_municipio->input_descripcion(cols: 3,row_upd:  $data_dp->municipio,
+            value_vacio: false, disabled: true, place_holder: 'Municipio');
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al obtener descripcion',data:  $org_sucursal_descripcion,
+                header: $header,ws:$ws);
+        }
+
+        $this->inputs->org_sucursal_dp_municipio_descripcion = $dp_municipio_descripcion;
+
+
+        $dp_colonia_descripcion = $htmls->dp_colonia->input_descripcion(cols: 3,row_upd:  $data_dp->colonia,
+            value_vacio: false, disabled: true, place_holder: 'Colonia');
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al obtener $dp_colonia_descripcion',
+                data:  $dp_colonia_descripcion, header: $header,ws:$ws);
+        }
+
+        $this->inputs->org_sucursal_dp_colonia_descripcion = $dp_colonia_descripcion;
+
+
+
+        $dp_cp_descripcion = $htmls->dp_cp->input_descripcion(cols: 3,row_upd:  $data_dp->cp,
+            value_vacio: false, disabled: true, place_holder: 'CP');
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al obtener $dp_cp_descripcion',
+                data:  $dp_cp_descripcion, header: $header,ws:$ws);
+        }
+
+        $this->inputs->org_sucursal_dp_cp_descripcion = $dp_cp_descripcion;
+
+
+
+        $dp_calle_descripcion = $htmls->dp_calle->input_descripcion(cols: 3,row_upd:  $data_dp->calle,
+            value_vacio: false, disabled: true, place_holder: 'Calle');
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al obtener $dp_calle_descripcion',
+                data:  $dp_calle_descripcion, header: $header,ws:$ws);
+        }
+
+        $this->inputs->org_sucursal_dp_calle_descripcion = $dp_calle_descripcion;
 
 
 

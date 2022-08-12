@@ -25,6 +25,8 @@
                 <?php echo $controlador->inputs->org_sucursal_fecha_inicio_operaciones; ?>
                 <?php echo $controlador->inputs->org_sucursal_dp_estado_descripcion; ?>
                 <?php echo $controlador->inputs->org_sucursal_dp_municipio_descripcion; ?>
+                <?php echo $controlador->inputs->org_sucursal_dp_colonia_descripcion; ?>
+                <?php echo $controlador->inputs->org_sucursal_dp_cp_descripcion; ?>
                 <?php echo $controlador->inputs->org_sucursal_dp_calle_descripcion; ?>
                 <?php echo $controlador->inputs->org_sucursal_exterior; ?>
                 <?php echo $controlador->inputs->org_sucursal_interior; ?>
