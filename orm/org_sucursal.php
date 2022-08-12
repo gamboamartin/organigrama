@@ -56,6 +56,53 @@ class org_sucursal extends modelo{
         return $r_alta_bd;
     }
 
+    /**
+     * Obtiene el conjunto de objetos relacionados de una sucursal
+     * @param int $org_sucursal_id identificador de la sucursal
+     * @return array|stdClass
+     */
+    public function data_sucursal_obj(int $org_sucursal_id): array|stdClass
+    {
+
+
+        $org_sucursal = $this->registro(registro_id: $org_sucursal_id, columnas_en_bruto: true,retorno_obj: true);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al obtener sucursal',data:  $org_sucursal);
+        }
+
+        $org_tipo_sucursal = (new org_tipo_sucursal($this->link))->registro(
+            registro_id: $org_sucursal->org_tipo_sucursal_id, columnas_en_bruto: true,retorno_obj: true);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al obtener tipo sucursal',data:  $org_tipo_sucursal);
+        }
+        $org_empresa = (new org_empresa($this->link))->registro(
+            registro_id: $org_sucursal->org_empresa_id, columnas_en_bruto: true,retorno_obj: true);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al obtener $org_empresa',data:  $org_empresa);
+        }
+
+
+        $keys = array('org_tipo_empresa_id');
+        $valida = $this->validacion->valida_existencia_keys(keys: $keys,registro:  $org_empresa);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al validar $org_empresa',data:  $valida);
+        }
+
+        $org_tipo_empresa = (new org_tipo_empresa($this->link))->registro(
+            registro_id: $org_empresa->org_tipo_empresa_id, columnas_en_bruto: true,retorno_obj: true);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al obtener $org_empresa',data:  $org_tipo_empresa);
+        }
+
+        $data = new stdClass();
+        $data->org_sucursal = $org_sucursal;
+        $data->org_empresa = $org_empresa;
+        $data->org_tipo_empresa = $org_tipo_empresa;
+        $data->org_tipo_sucursal = $org_tipo_sucursal;
+
+        return $data;
+    }
+
     public function elimina_bd(int $id): array
     {
         $es_matriz = $this->es_matriz(org_sucursal_id: $id);

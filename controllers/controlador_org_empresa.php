@@ -588,23 +588,15 @@ class controlador_org_empresa extends system{
                 header: $header,ws:$ws);
         }
 
-        $org_sucursal = (new org_sucursal($this->link))->registro(registro_id: $_GET['org_sucursal_id'],
-            columnas_en_bruto: true,retorno_obj: true);
+        $data_sucursal = (new org_sucursal($this->link))->data_sucursal_obj(org_sucursal_id: $_GET['org_sucursal_id']);
         if(errores::$error){
-            return $this->retorno_error(mensaje: 'Error al obtener sucursal',data:  $org_sucursal,
-                header: $header,ws:$ws);
-        }
-
-        $org_tipo_sucursal = (new org_tipo_sucursal($this->link))->registro(registro_id: $org_sucursal->org_tipo_sucursal_id,
-            columnas_en_bruto: true,retorno_obj: true);
-        if(errores::$error){
-            return $this->retorno_error(mensaje: 'Error al obtener tipo sucursal',data:  $org_tipo_sucursal,
+            return $this->retorno_error(mensaje: 'Error al obtener sucursal',data:  $data_sucursal,
                 header: $header,ws:$ws);
         }
 
 
         $data_dp = (new dp_calle_pertenece($this->link))->objs_direcciones(
-            dp_calle_pertenece_id: $org_sucursal->dp_calle_pertenece_id);
+            dp_calle_pertenece_id: $data_sucursal->org_sucursal->dp_calle_pertenece_id);
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al obtener datos de direcciones',data:  $data_dp,
                 header: $header,ws:$ws);
@@ -616,7 +608,7 @@ class controlador_org_empresa extends system{
         }
 
 
-        $org_sucursal_id = $htmls->org_sucursal->input_id(cols: 4,row_upd:  $org_sucursal, value_vacio: false,
+        $org_sucursal_id = $htmls->org_sucursal->input_id(cols: 4,row_upd:  $data_sucursal->org_sucursal, value_vacio: false,
             disabled: true);
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al obtener sucursal_id select',data:  $org_sucursal_id,
@@ -625,7 +617,7 @@ class controlador_org_empresa extends system{
 
         $this->inputs->org_sucursal_id = $org_sucursal_id;
 
-        $org_sucursal_codigo = $htmls->org_sucursal->input_codigo(cols: 4,row_upd:  $org_sucursal, value_vacio: false,
+        $org_sucursal_codigo = $htmls->org_sucursal->input_codigo(cols: 4,row_upd:  $data_sucursal->org_sucursal, value_vacio: false,
             disabled: true);
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al obtener sucursal_codigo select',data:  $org_sucursal_codigo,
@@ -635,7 +627,7 @@ class controlador_org_empresa extends system{
         $this->inputs->org_sucursal_codigo = $org_sucursal_codigo;
 
 
-        $org_sucursal_codigo_bis = $htmls->org_sucursal->input_codigo_bis(cols: 4,row_upd:  $org_sucursal,
+        $org_sucursal_codigo_bis = $htmls->org_sucursal->input_codigo_bis(cols: 4,row_upd:  $data_sucursal->org_sucursal,
             value_vacio: false, disabled: true);
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al obtener sucursal_codigo_bis',data:  $org_sucursal_codigo_bis,
@@ -644,7 +636,7 @@ class controlador_org_empresa extends system{
 
         $this->inputs->org_sucursal_codigo_bis = $org_sucursal_codigo_bis;
 
-        $org_sucursal_descripcion = $htmls->org_sucursal->input_descripcion(cols: 12,row_upd:  $org_sucursal,
+        $org_sucursal_descripcion = $htmls->org_sucursal->input_descripcion(cols: 12,row_upd:  $data_sucursal->org_sucursal,
             value_vacio: false, disabled: true);
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al obtener descripcion',data:  $org_sucursal_descripcion,
@@ -655,7 +647,7 @@ class controlador_org_empresa extends system{
 
 
         $org_sucursal_fecha_inicio_operaciones = $htmls->org_sucursal->fec_fecha_inicio_operaciones(cols: 6,
-            row_upd:  $org_sucursal, value_vacio: false, disabled: true);
+            row_upd:  $data_sucursal->org_sucursal, value_vacio: false, disabled: true);
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al obtener fecha_inicio_operaciones',data:  $org_sucursal_fecha_inicio_operaciones,
                 header: $header,ws:$ws);
@@ -664,7 +656,7 @@ class controlador_org_empresa extends system{
         $this->inputs->org_sucursal_fecha_inicio_operaciones = $org_sucursal_fecha_inicio_operaciones;
 
 
-        $org_sucursal_serie = $htmls->org_sucursal->input_serie(cols: 6,row_upd:  $org_sucursal,
+        $org_sucursal_serie = $htmls->org_sucursal->input_serie(cols: 6,row_upd:  $data_sucursal->org_sucursal,
             value_vacio: false, disabled: true);
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al obtener serie',data:  $org_sucursal_serie,
@@ -674,7 +666,7 @@ class controlador_org_empresa extends system{
         $this->inputs->org_sucursal_serie = $org_sucursal_serie;
 
 
-        $org_tipo_sucursal_descripcion = $htmls->org_tipo_sucursal->input_descripcion(cols: 12,row_upd:  $org_tipo_sucursal,
+        $org_tipo_sucursal_descripcion = $htmls->org_tipo_sucursal->input_descripcion(cols: 12,row_upd:  $data_sucursal->org_tipo_sucursal,
             value_vacio: false, disabled: true);
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al obtener descripcion',data:  $org_sucursal_descripcion,
