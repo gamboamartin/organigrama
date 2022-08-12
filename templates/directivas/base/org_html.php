@@ -14,8 +14,8 @@ class org_html extends html_controler {
 
     /**
      * Asigna la integracion de inputs generados previamente
-     * @param system $controler
-     * @param stdClass $inputs
+     * @param system $controler Controlador en ejecucion
+     * @param stdClass $inputs Inputs precargados
      * @return array|stdClass
      */
     protected function asigna_inputs(system $controler, stdClass $inputs): array|stdClass
