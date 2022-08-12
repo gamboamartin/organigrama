@@ -53,6 +53,8 @@ class controlador_org_empresa extends system{
         }
         $this->link_org_sucursal_alta_bd = $link_org_sucursal_alta_bd;
 
+        $this->seccion_titulo = 'EMPRESAS';
+
     }
 
     public function alta(bool $header, bool $ws = false): array|string
