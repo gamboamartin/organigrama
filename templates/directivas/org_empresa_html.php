@@ -2,55 +2,40 @@
 namespace html;
 
 
-use base\frontend\directivas;
 use gamboamartin\errores\errores;
 use gamboamartin\organigrama\controllers\controlador_org_empresa;
-use gamboamartin\system\html_controler;
 
+
+use gamboamartin\system\system;
+use html\base\org_html;
 use models\base\limpieza;
 use models\org_empresa;
 use PDO;
 use stdClass;
 
 
-class org_empresa_html extends html_controler {
+class org_empresa_html extends org_html {
 
-    private function asigna_inputs(controlador_org_empresa $controler, stdClass $inputs): array|stdClass
+    protected function asigna_inputs(system $controler, stdClass $inputs): array|stdClass
     {
-        $controler->inputs->select = new stdClass();
 
-        $controler->inputs->select->cat_sat_regimen_fiscal_id = $inputs->selects->cat_sat_regimen_fiscal_id;
-
-
-        $inputs_direcciones_postales = (new inputs_html())->base_direcciones_asignacion(controler:$controler, inputs: $inputs);
+        $r_inputs = parent::asigna_inputs(controler: $controler,inputs:  $inputs);
         if(errores::$error){
-            return $this->error->error(mensaje: 'Error al asignar direcciones',data:  $inputs_direcciones_postales);
+            return $this->error->error(mensaje: 'Error al generar inputs',data:  $r_inputs);
         }
+
+        $controler->inputs->email_sat = $inputs->emails->email_sat;
+        $controler->inputs->fecha_ultimo_cambio_sat = $inputs->fechas->fecha_ultimo_cambio_sat;
+        $controler->inputs->logo = $inputs->texts->logo;
+        $controler->inputs->nombre_comercial = $inputs->texts->nombre_comercial;
+        $controler->inputs->pagina_web = $inputs->texts->pagina_web;
+        $controler->inputs->razon_social = $inputs->texts->razon_social;
+        $controler->inputs->rfc = $inputs->texts->rfc;
 
 
         $controler->inputs->select->dp_calle_pertenece_entre1_id = $inputs->selects->dp_calle_pertenece_entre1_id;
         $controler->inputs->select->dp_calle_pertenece_entre2_id = $inputs->selects->dp_calle_pertenece_entre2_id;
         $controler->inputs->select->org_tipo_empresa_id = $inputs->selects->org_tipo_empresa_id;
-
-
-        $controler->inputs->fecha_inicio_operaciones = $inputs->fechas->fecha_inicio_operaciones;
-        $controler->inputs->fecha_ultimo_cambio_sat = $inputs->fechas->fecha_ultimo_cambio_sat;
-
-        $controler->inputs->logo = $inputs->texts->logo;
-        $controler->inputs->pagina_web = $inputs->texts->pagina_web;
-        $controler->inputs->razon_social = $inputs->texts->razon_social;
-        $controler->inputs->rfc = $inputs->texts->rfc;
-        $controler->inputs->nombre_comercial = $inputs->texts->nombre_comercial;
-        $controler->inputs->exterior = $inputs->texts->exterior;
-        $controler->inputs->interior = $inputs->texts->interior;
-        $controler->inputs->codigo = $inputs->texts->codigo;
-        $controler->inputs->codigo_bis = $inputs->texts->codigo_bis;
-
-        $controler->inputs->email_sat = $inputs->emails->email_sat;
-
-        $controler->inputs->telefono_1 = $inputs->telefonos->telefono_1;
-        $controler->inputs->telefono_2 = $inputs->telefonos->telefono_2;
-        $controler->inputs->telefono_3 = $inputs->telefonos->telefono_3;
 
 
         return $controler->inputs;
@@ -94,29 +79,7 @@ class org_empresa_html extends html_controler {
         return $emails;
     }
 
-    public function fec_fecha_inicio_operaciones(int $cols, stdClass $row_upd, bool $value_vacio): array|string
-    {
 
-        if($cols<=0){
-            return $this->error->error(mensaje: 'Error cold debe ser mayor a 0', data: $cols);
-        }
-        if($cols>=13){
-            return $this->error->error(mensaje: 'Error cold debe ser menor o igual a  12', data: $cols);
-        }
-
-        $html =$this->directivas->fecha_required(disable: false,name: 'fecha_inicio_operaciones',
-            place_holder: 'Inicio de Operaciones',row_upd: $row_upd, value_vacio: $value_vacio);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al generar input', data: $html);
-        }
-
-        $div = $this->directivas->html->div_group(cols: $cols,html:  $html);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al integrar div', data: $div);
-        }
-
-        return $div;
-    }
 
     public function fec_fecha_ultimo_cambio_sat(int $cols, stdClass $row_upd, bool $value_vacio): array|string
     {
@@ -142,23 +105,14 @@ class org_empresa_html extends html_controler {
         return $div;
     }
 
-    private function fechas_alta(stdClass $row_upd = new stdClass(), stdClass $params = new stdClass()): array|stdClass
+    protected function fechas_alta(stdClass $row_upd = new stdClass(), stdClass $params = new stdClass()): array|stdClass
     {
 
-        $fechas = new stdClass();
-
-        if(!isset($row_upd->fecha_inicio_operaciones) || $row_upd->fecha_inicio_operaciones === '0000-00-00') {
-            $row_upd->fecha_inicio_operaciones = date('Y-m-d');
-        }
-
-        $cols_fecha_inicio_operaciones = $params->fecha_inicio_operaciones->cols ?? 6;
-
-        $fec_fecha_inicio_operaciones = $this->fec_fecha_inicio_operaciones(cols: $cols_fecha_inicio_operaciones,
-            row_upd: $row_upd, value_vacio:  false);
+        $fechas = parent::fechas_alta(row_upd: $row_upd,params: $params);
         if(errores::$error){
-            return $this->error->error(mensaje: 'Error al generar input',data:  $fec_fecha_inicio_operaciones);
+            return $this->error->error(mensaje: 'Error al generar fechas',data:  $fechas);
         }
-        $fechas->fecha_inicio_operaciones = $fec_fecha_inicio_operaciones;
+
 
         if(!isset($row_upd->fecha_ultimo_cambio_sat) || $row_upd->fecha_ultimo_cambio_sat === '0000-00-00'){
             $row_upd->fecha_ultimo_cambio_sat = date('Y-m-d');
@@ -508,9 +462,13 @@ class org_empresa_html extends html_controler {
         return $select;
     }
 
-    private function selects_alta(PDO $link): array|stdClass
+    protected function selects_alta(PDO $link): array|stdClass
     {
-        $selects = new stdClass();
+        $selects = parent::selects_alta(link: $link);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar selects',data:  $selects);
+
+        }
 
         $cat_sat_regimen_fiscal_html = new cat_sat_regimen_fiscal_html(html:$this->html_base);
 
@@ -521,15 +479,6 @@ class org_empresa_html extends html_controler {
         }
 
         $selects->cat_sat_regimen_fiscal_id = $select;
-
-        $row_upd = new stdClass();
-
-        $selects = (new selects())->direcciones(html: $this->html_base,link:  $link,row:  $row_upd,selects:  $selects);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al generar selects de domicilios',data:  $selects);
-
-        }
-
 
         $select = (new org_tipo_empresa_html(html: $this->html_base))->select_org_tipo_empresa_id(
             cols: 12, con_registros:true, id_selected:-1,link: $link);

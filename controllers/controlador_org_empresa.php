@@ -601,6 +601,17 @@ class controlador_org_empresa extends system{
 
         $this->inputs->org_sucursal_descripcion = $org_sucursal_descripcion;
 
+        $org_sucursal_serie = $org_sucursal_html->input_serie(cols: 3,row_upd:  $org_sucursal,
+            value_vacio: false, disabled: true);
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al obtener serie',data:  $org_sucursal_serie,
+                header: $header,ws:$ws);
+        }
+
+        $this->inputs->org_sucursal_serie = $org_sucursal_serie;
+
+
+
 
 
         $org_tipo_sucursal_html = (new org_tipo_sucursal_html(html: $this->html_base));
