@@ -15,12 +15,18 @@ use gamboamartin\system\init;
 use gamboamartin\system\system;
 
 use gamboamartin\template\html;
+use html\dp_estado_html;
 use html\org_empresa_html;
 use html\org_sucursal_html;
 use html\org_tipo_sucursal_html;
 use JsonException;
 use links\secciones\link_org_empresa;
 use links\secciones\link_org_sucursal;
+use models\dp_calle_pertenece;
+use models\dp_colonia_postal;
+use models\dp_cp;
+use models\dp_estado;
+use models\dp_municipio;
 use models\org_empresa;
 use models\org_sucursal;
 use models\org_tipo_sucursal;
@@ -601,7 +607,18 @@ class controlador_org_empresa extends system{
 
         $this->inputs->org_sucursal_descripcion = $org_sucursal_descripcion;
 
-        $org_sucursal_serie = $org_sucursal_html->input_serie(cols: 3,row_upd:  $org_sucursal,
+
+        $org_sucursal_fecha_inicio_operaciones = $org_sucursal_html->fec_fecha_inicio_operaciones(cols: 6,
+            row_upd:  $org_sucursal, value_vacio: false, disabled: true);
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al obtener fecha_inicio_operaciones',data:  $org_sucursal_fecha_inicio_operaciones,
+                header: $header,ws:$ws);
+        }
+
+        $this->inputs->org_sucursal_fecha_inicio_operaciones = $org_sucursal_fecha_inicio_operaciones;
+
+
+        $org_sucursal_serie = $org_sucursal_html->input_serie(cols: 6,row_upd:  $org_sucursal,
             value_vacio: false, disabled: true);
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al obtener serie',data:  $org_sucursal_serie,
@@ -609,8 +626,6 @@ class controlador_org_empresa extends system{
         }
 
         $this->inputs->org_sucursal_serie = $org_sucursal_serie;
-
-
 
 
 
@@ -631,6 +646,57 @@ class controlador_org_empresa extends system{
         }
 
         $this->inputs->org_sucursal_tipo_sucursal_descricpion = $org_tipo_sucursal_descripcion;
+
+
+        $dp_calle_pertenece = (new dp_calle_pertenece($this->link))->registro(
+            registro_id: $org_sucursal->dp_calle_pertenece_id, columnas_en_bruto: true,retorno_obj: true);
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al obtener calle pertenece',data:  $dp_calle_pertenece,
+                header: $header,ws:$ws);
+        }
+
+        $dp_colonia_postal = (new dp_colonia_postal($this->link))->registro(
+            registro_id: $dp_calle_pertenece->dp_colonia_postal_id, columnas_en_bruto: true,retorno_obj: true);
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al obtener $dp_colonia_postal',data:  $dp_colonia_postal,
+                header: $header,ws:$ws);
+        }
+
+        $dp_cp = (new dp_cp($this->link))->registro(
+            registro_id: $dp_colonia_postal->dp_cp_id, columnas_en_bruto: true,retorno_obj: true);
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al obtener $dp_cp',data:  $dp_cp,
+                header: $header,ws:$ws);
+        }
+
+        $dp_municipio = (new dp_municipio($this->link))->registro(
+            registro_id: $dp_cp->dp_municipio_id, columnas_en_bruto: true,retorno_obj: true);
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al obtener $dp_municipio',data:  $dp_municipio,
+                header: $header,ws:$ws);
+        }
+
+
+        $dp_estado_html = (new dp_estado_html(html: $this->html_base));
+
+        $dp_estado = (new dp_estado($this->link))->registro(registro_id: $dp_municipio->dp_estado_id,
+            columnas_en_bruto: true,retorno_obj: true);
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al obtener estado',data:  $dp_estado,
+                header: $header,ws:$ws);
+        }
+
+        $dp_estado_descripcion = $dp_estado_html->input_descripcion(cols: 12,row_upd:  $dp_estado,
+            value_vacio: false, disabled: true);
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al obtener descripcion',data:  $org_sucursal_descripcion,
+                header: $header,ws:$ws);
+        }
+
+        $this->inputs->org_sucursal_dp_estado_descripcion = $dp_estado_descripcion;
+
+
+
 
         return $base;
     }
