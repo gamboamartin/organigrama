@@ -6,7 +6,6 @@ use gamboamartin\errores\errores;
 use gamboamartin\organigrama\controllers\controlador_org_sucursal;
 use gamboamartin\system\html_controler;
 use models\base\limpieza;
-use models\base\rows;
 use models\org_sucursal;
 use PDO;
 use stdClass;
@@ -256,6 +255,8 @@ class org_sucursal_html extends html_controler {
 
         return $div;
     }
+
+
 
     public function input_interior(int $cols, stdClass $row_upd, bool $value_vacio): array|string
     {

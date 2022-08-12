@@ -16,6 +16,7 @@ use gamboamartin\system\system;
 
 use gamboamartin\template\html;
 use html\org_empresa_html;
+use html\org_sucursal_html;
 use JsonException;
 use links\secciones\link_org_empresa;
 use links\secciones\link_org_sucursal;
@@ -551,6 +552,23 @@ class controlador_org_empresa extends system{
             return $this->retorno_error(mensaje: 'Error al generar select datos',data:  $select,
                 header: $header,ws:$ws);
         }
+
+        $org_sucursal = (new org_sucursal($this->link))->registro(registro_id: $_GET['org_sucursal_id'],
+            columnas_en_bruto: true,retorno_obj: true);
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al obtener sucursal',data:  $org_sucursal,
+                header: $header,ws:$ws);
+        }
+
+        $org_sucursal_html = (new org_sucursal_html(html: $this->html_base));
+        $org_sucursal_id = $org_sucursal_html->input_id(cols: 3,row_upd:  $org_sucursal, value_vacio: false,
+            disabled: true);
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al obtener sucursal_id select',data:  $org_sucursal_id,
+                header: $header,ws:$ws);
+        }
+
+        $this->inputs->org_sucursal_id = $org_sucursal_id;
 
         return $base;
     }
