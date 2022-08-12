@@ -486,10 +486,17 @@ class org_sucursal_html extends html_controler {
 
         $texts = new stdClass();
 
-        $in_serie = $this->input_serie(cols: 6,row_upd:  $row_upd,value_vacio:  $value_vacio);
+        $in_codigo = $this->input_codigo(cols: 4,row_upd:  $row_upd,value_vacio:  $value_vacio);
         if(errores::$error){
-            return $this->error->error(mensaje: 'Error al generar input',data:  $in_serie);
+            return $this->error->error(mensaje: 'Error al generar input',data:  $in_codigo);
         }
+        $texts->codigo = $in_codigo;
+
+        $in_codigo_bis = $this->input_codigo_bis(cols: 4,row_upd:  $row_upd,value_vacio:  $value_vacio);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar input',data:  $in_codigo_bis);
+        }
+        $texts->codigo_bis = $in_codigo_bis;
 
         $in_exterior = $this->input_exterior(cols: 6,row_upd:  $row_upd,value_vacio:  $value_vacio);
         if(errores::$error){
@@ -503,17 +510,11 @@ class org_sucursal_html extends html_controler {
         }
         $texts->interior = $in_interior;
 
-        $in_codigo = $this->input_codigo(cols: 4,row_upd:  $row_upd,value_vacio:  $value_vacio);
+        $in_serie = $this->input_serie(cols: 6,row_upd:  $row_upd,value_vacio:  $value_vacio);
         if(errores::$error){
-            return $this->error->error(mensaje: 'Error al generar input',data:  $in_codigo);
+            return $this->error->error(mensaje: 'Error al generar input',data:  $in_serie);
         }
-        $texts->codigo = $in_codigo;
-
-        $in_codigo_bis = $this->input_codigo_bis(cols: 4,row_upd:  $row_upd,value_vacio:  $value_vacio);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al generar input',data:  $in_codigo_bis);
-        }
-        $texts->codigo_bis = $in_codigo_bis;
+        $texts->serie = $in_serie;
 
 
 

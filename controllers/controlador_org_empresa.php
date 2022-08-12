@@ -421,6 +421,19 @@ class controlador_org_empresa extends system{
 
     }
 
+    private function select_org_empresa_id(): array|string
+    {
+        $select = (new org_empresa_html(html: $this->html_base))->select_org_empresa_id(cols:12,con_registros: true,
+            id_selected: $this->registro_id,link:  $this->link, disabled: true);
+
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al generar select datos',data:  $select);
+        }
+        $this->inputs->select->org_empresa_id = $select;
+
+        return $select;
+    }
+
 
     public function sucursales(bool $header, bool $ws = false): array|stdClass
     {
@@ -439,14 +452,13 @@ class controlador_org_empresa extends system{
                 header: $header,ws:$ws);
         }
 
-        $select = (new org_empresa_html(html: $this->html_base))->select_org_empresa_id(cols:12,con_registros: true,
-            id_selected: $this->registro_id,link:  $this->link, disabled: true);
+        $select = $this->select_org_empresa_id();
 
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al generar select datos',data:  $select,
                 header: $header,ws:$ws);
         }
-        $this->inputs->select->org_empresa_id = $select;
+
 
         $sucursales = (new org_sucursal($this->link))->sucursales(org_empresa_id: $this->org_empresa_id);
         if(errores::$error){
@@ -512,9 +524,29 @@ class controlador_org_empresa extends system{
 
     public function ve_sucursal(bool $header, bool $ws = false): array|stdClass
     {
-        $base = $this->base();
+
+        $params = new stdClass();
+
+        $params->codigo= new stdClass();
+        $params->codigo->disabled = true;
+
+        $params->codigo_bis = new stdClass();
+        $params->codigo_bis->cols = 6;
+        $params->codigo_bis->disabled = true;
+
+        $params->razon_social = new stdClass();
+        $params->razon_social->disabled = true;
+
+
+        $base = $this->base(params: $params);
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al maquetar datos',data:  $base,
+                header: $header,ws:$ws);
+        }
+        $select = $this->select_org_empresa_id();
+
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al generar select datos',data:  $select,
                 header: $header,ws:$ws);
         }
 

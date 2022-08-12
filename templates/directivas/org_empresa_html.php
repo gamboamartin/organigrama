@@ -44,6 +44,7 @@ class org_empresa_html extends html_controler {
         $controler->inputs->exterior = $inputs->texts->exterior;
         $controler->inputs->interior = $inputs->texts->interior;
         $controler->inputs->codigo = $inputs->texts->codigo;
+        $controler->inputs->codigo_bis = $inputs->texts->codigo_bis;
 
         $controler->inputs->email_sat = $inputs->emails->email_sat;
 
@@ -288,9 +289,10 @@ class org_empresa_html extends html_controler {
      * @param int $cols Numero de columnas css
      * @param stdClass $row_upd Registro precargado
      * @param bool $value_vacio Si es vacio no carga elementos
+     * @param bool $disabled Si disabled dej ain input como disabled
      * @return array|string
      */
-    public function input_codigo(int $cols, stdClass $row_upd, bool $value_vacio): array|string
+    public function input_codigo(int $cols, stdClass $row_upd, bool $value_vacio, bool $disabled = false): array|string
     {
 
         $valida = $this->directivas->valida_cols(cols: $cols);
@@ -299,7 +301,53 @@ class org_empresa_html extends html_controler {
         }
 
 
-        $html =$this->directivas->input_text_required(disable: false,name: 'codigo',place_holder: 'Codigo',
+        $html =$this->directivas->input_text_required(disable: $disabled,name: 'codigo',place_holder: 'Codigo',
+            row_upd: $row_upd, value_vacio: $value_vacio);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar input', data: $html);
+        }
+
+        $div = $this->directivas->html->div_group(cols: $cols,html:  $html);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al integrar div', data: $div);
+        }
+
+        return $div;
+    }
+
+    public function input_codigo_bis(int $cols, stdClass $row_upd, bool $value_vacio, bool $disabled = false): array|string
+    {
+
+        $valida = $this->directivas->valida_cols(cols: $cols);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al validar columnas', data: $valida);
+        }
+
+
+        $html =$this->directivas->input_text_required(disable: $disabled,name: 'codigo_bis',place_holder: 'Codigo BIS',
+            row_upd: $row_upd, value_vacio: $value_vacio);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar input', data: $html);
+        }
+
+        $div = $this->directivas->html->div_group(cols: $cols,html:  $html);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al integrar div', data: $div);
+        }
+
+        return $div;
+    }
+
+    public function input_descripcion(int $cols, stdClass $row_upd, bool $value_vacio, bool $disabled = false): array|string
+    {
+
+        $valida = $this->directivas->valida_cols(cols: $cols);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al validar columnas', data: $valida);
+        }
+
+
+        $html =$this->directivas->input_text_required(disable: $disabled,name: 'descripcion',place_holder: 'Descripcion',
             row_upd: $row_upd, value_vacio: $value_vacio);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input', data: $html);
@@ -433,7 +481,7 @@ class org_empresa_html extends html_controler {
         return $div;
     }
 
-    public function input_razon_social(int $cols, stdClass $row_upd, bool $value_vacio): array|string
+    public function input_razon_social(int $cols, stdClass $row_upd, bool $value_vacio, bool $disabled = false): array|string
     {
 
         if($cols<=0){
@@ -443,7 +491,8 @@ class org_empresa_html extends html_controler {
             return $this->error->error(mensaje: 'Error cold debe ser menor o igual a  12', data: $cols);
         }
 
-        $html =$this->directivas->input_text_required(disable: false,name: 'razon_social',place_holder: 'Razon Social',row_upd: $row_upd,
+        $html =$this->directivas->input_text_required(disable: $disabled,name: 'razon_social',
+            place_holder: 'Razon Social',row_upd: $row_upd,
             value_vacio: $value_vacio);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input', data: $html);
@@ -708,44 +757,26 @@ class org_empresa_html extends html_controler {
         $texts = new stdClass();
 
         $cols_codigo = $params->codigo->cols ?? 6;
+        $disabled_codigo = $params->codigo->disabled ?? false;
 
 
-        $in_codigo = $this->input_codigo(cols: $cols_codigo,row_upd:  $row_upd,value_vacio:  $value_vacio);
+        $in_codigo = $this->input_codigo(cols: $cols_codigo,row_upd:  $row_upd,value_vacio:  $value_vacio,
+            disabled: $disabled_codigo);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input',data:  $in_codigo);
         }
         $texts->codigo = $in_codigo;
 
-        $in_razon_social = $this->input_razon_social(cols: 12,row_upd:  $row_upd,value_vacio:  $value_vacio);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al generar input',data:  $in_razon_social);
-        }
-        $texts->razon_social = $in_razon_social;
+        $cols_codigo_bis = $params->codigo_bis->cols ?? 6;
+        $disabled_codigo_bis = $params->codigo_bis->disabled ?? false;
 
-        $in_logo = $this->input_logo(cols: 12,row_upd:  $row_upd,value_vacio:  $value_vacio);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al generar input',data:  $in_logo);
-        }
-        $texts->logo = $in_logo;
 
-        $in_pagina_web = $this->input_pagina_web(cols: 12,row_upd:  $row_upd,value_vacio:  $value_vacio);
+        $in_codigo_bis = $this->input_codigo_bis(cols: $cols_codigo_bis,row_upd:  $row_upd,value_vacio:  $value_vacio,
+            disabled:$disabled_codigo_bis);
         if(errores::$error){
-            return $this->error->error(mensaje: 'Error al generar input',data:  $in_pagina_web);
+            return $this->error->error(mensaje: 'Error al generar input',data:  $in_codigo);
         }
-        $texts->pagina_web = $in_pagina_web;
-
-        $in_rfc = $this->input_rfc(cols: 6,row_upd:  $row_upd,value_vacio:  $value_vacio);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al generar input',data:  $in_razon_social);
-        }
-        $texts->rfc = $in_rfc;
-
-        $in_nombre_comercial = $this->input_nombre_comercial(cols: 12,row_upd: $row_upd,value_vacio:  $value_vacio);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al generar input',data:  $in_nombre_comercial);
-        }
-        $texts->nombre_comercial = $in_nombre_comercial;
-
+        $texts->codigo_bis = $in_codigo_bis;
 
         $in_exterior = $this->input_exterior(cols: 6,row_upd: $row_upd,value_vacio:  $value_vacio);
         if(errores::$error){
@@ -758,6 +789,47 @@ class org_empresa_html extends html_controler {
             return $this->error->error(mensaje: 'Error al generar input',data:  $in_exterior);
         }
         $texts->interior = $in_interior;
+
+
+        $in_logo = $this->input_logo(cols: 12,row_upd:  $row_upd,value_vacio:  $value_vacio);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar input',data:  $in_logo);
+        }
+        $texts->logo = $in_logo;
+
+        $in_nombre_comercial = $this->input_nombre_comercial(cols: 12,row_upd: $row_upd,value_vacio:  $value_vacio);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar input',data:  $in_nombre_comercial);
+        }
+        $texts->nombre_comercial = $in_nombre_comercial;
+
+        $in_pagina_web = $this->input_pagina_web(cols: 12,row_upd:  $row_upd,value_vacio:  $value_vacio);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar input',data:  $in_pagina_web);
+        }
+        $texts->pagina_web = $in_pagina_web;
+
+        $in_rfc = $this->input_rfc(cols: 6,row_upd:  $row_upd,value_vacio:  $value_vacio);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar input',data:  $in_rfc);
+        }
+        $texts->rfc = $in_rfc;
+
+
+        $disabled_razon_social = $params->razon_social->disabled ?? false;
+        $in_razon_social = $this->input_razon_social(cols: 12,row_upd:  $row_upd,value_vacio:  $value_vacio,
+            disabled:$disabled_razon_social);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar input',data:  $in_razon_social);
+        }
+        $texts->razon_social = $in_razon_social;
+
+
+
+
+
+
+
 
         return $texts;
     }
