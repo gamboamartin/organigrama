@@ -24,6 +24,7 @@ class org_empresa_html extends org_html {
             return $this->error->error(mensaje: 'Error al generar inputs',data:  $r_inputs);
         }
 
+
         $controler->inputs->email_sat = $inputs->emails->email_sat;
         $controler->inputs->fecha_ultimo_cambio_sat = $inputs->fechas->fecha_ultimo_cambio_sat;
         $controler->inputs->logo = $inputs->texts->logo;
@@ -33,6 +34,7 @@ class org_empresa_html extends org_html {
         $controler->inputs->rfc = $inputs->texts->rfc;
 
 
+        $controler->inputs->select->cat_sat_regimen_fiscal_id = $inputs->selects->cat_sat_regimen_fiscal_id;
         $controler->inputs->select->dp_calle_pertenece_entre1_id = $inputs->selects->dp_calle_pertenece_entre1_id;
         $controler->inputs->select->dp_calle_pertenece_entre2_id = $inputs->selects->dp_calle_pertenece_entre2_id;
         $controler->inputs->select->org_tipo_empresa_id = $inputs->selects->org_tipo_empresa_id;
