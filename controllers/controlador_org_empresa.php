@@ -277,8 +277,9 @@ class controlador_org_empresa extends system{
         }
         $sucursal['link_elimina'] = $btn_elimina;
 
+
         $btn_modifica = $this->html_base->button_href(accion:'modifica_sucursal',etiqueta:  'Modifica',
-            registro_id:  $sucursal['org_empresa_id'], seccion: 'org_empresa',style:  'warning');
+            registro_id:  $sucursal['org_empresa_id'], seccion: 'org_empresa',style:  'warning', params: $params);
 
         if(errores::$error){
             return $this->errores->error(mensaje: 'Error al generar btn',data:  $btn_elimina);
@@ -514,6 +515,77 @@ class controlador_org_empresa extends system{
         $this->header_out(result: $r_modifica_bd, header: $header,ws:  $ws);
         return $r_modifica_bd;
 
+    }
+
+    public function modifica_sucursal(bool $header, bool $ws = false): array|stdClass
+    {
+
+        $params = new stdClass();
+
+        $params->codigo= new stdClass();
+        $params->codigo->disabled = true;
+
+        $params->codigo_bis = new stdClass();
+        $params->codigo_bis->cols = 6;
+        $params->codigo_bis->disabled = true;
+
+        $params->razon_social = new stdClass();
+        $params->razon_social->disabled = true;
+
+
+        $base = $this->base(params: $params);
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al maquetar datos',data:  $base,
+                header: $header,ws:$ws);
+        }
+        $select = $this->select_org_empresa_id();
+
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al generar select datos',data:  $select,
+                header: $header,ws:$ws);
+        }
+
+        $data_sucursal = (new org_sucursal($this->link))->data_sucursal_obj(org_sucursal_id: $_GET['org_sucursal_id']);
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al obtener sucursal',data:  $data_sucursal,
+                header: $header,ws:$ws);
+        }
+
+
+        $data_dp = (new dp_calle_pertenece($this->link))->objs_direcciones(
+            dp_calle_pertenece_id: $data_sucursal->org_sucursal->dp_calle_pertenece_id);
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al obtener datos de direcciones',data:  $data_dp,
+                header: $header,ws:$ws);
+        }
+
+        $htmls = $this->htmls_sucursal();
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al obtener htmls',data:  $htmls, header: $header,ws:$ws);
+        }
+
+        $inputs_sucursal = $this->inputs_sucursal(html:$htmls->org_sucursal, org_sucursal: $data_sucursal->org_sucursal);
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al generar inputs sucursal',
+                data:  $inputs_sucursal, header: $header,ws:$ws);
+        }
+
+        $org_tipo_sucursal_descripcion = $htmls->org_tipo_sucursal->input_descripcion(cols: 12,
+            row_upd:  $data_sucursal->org_tipo_sucursal, value_vacio: false, disabled: true);
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al obtener descripcion',data:  $org_tipo_sucursal_descripcion,
+                header: $header,ws:$ws);
+        }
+
+        $this->inputs->org_sucursal_tipo_sucursal_descricpion = $org_tipo_sucursal_descripcion;
+
+        $inputs_dp = $this->inputs_direcciones_by_sucursal(data_dp: $data_dp,htmls:  $htmls);
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al generar inputs de direcciones',
+                data:  $inputs_dp, header: $header,ws:$ws);
+        }
+
+        return $base;
     }
 
     /**
