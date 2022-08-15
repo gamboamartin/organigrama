@@ -207,7 +207,7 @@ class org_empresa_html extends org_html {
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar selects',data:  $selects);
         }
-        
+
         $texts = $this->texts_alta(row_upd: $row_upd, value_vacio: false, params: $params);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar texts',data:  $texts);
@@ -634,13 +634,13 @@ class org_empresa_html extends org_html {
         $cols_codigo = $params->codigo->cols ?? 6;
         $disabled_codigo = $params->codigo->disabled ?? false;
 
-
         $in_codigo = $this->input_codigo(cols: $cols_codigo,row_upd:  $row_upd,value_vacio:  $value_vacio,
             disabled: $disabled_codigo);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input',data:  $in_codigo);
         }
         $texts->codigo = $in_codigo;
+
 
         $cols_codigo_bis = $params->codigo_bis->cols ?? 6;
         $disabled_codigo_bis = $params->codigo_bis->disabled ?? false;
@@ -698,12 +698,6 @@ class org_empresa_html extends org_html {
             return $this->error->error(mensaje: 'Error al generar input',data:  $in_razon_social);
         }
         $texts->razon_social = $in_razon_social;
-
-
-
-
-
-
 
 
         return $texts;

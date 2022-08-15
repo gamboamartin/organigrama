@@ -398,6 +398,8 @@ class org_sucursal_html extends org_html {
         }
         $texts->codigo = $in_codigo;
 
+
+
         $in_codigo_bis = $this->input_codigo_bis(cols: 4,row_upd:  $row_upd,value_vacio:  $value_vacio);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input',data:  $in_codigo_bis);
