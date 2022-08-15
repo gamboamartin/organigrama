@@ -23,6 +23,7 @@ use html\dp_municipio_html;
 use html\org_empresa_html;
 use html\org_sucursal_html;
 use html\org_tipo_sucursal_html;
+use html\selects;
 use JsonException;
 use links\secciones\link_org_empresa;
 use links\secciones\link_org_sucursal;
@@ -373,7 +374,6 @@ class controlador_org_empresa extends system{
 
         $this->inputs->org_sucursal_dp_estado_descripcion = $dp_estado_descripcion;
 
-
         $dp_municipio_descripcion = $htmls->dp_municipio->input_descripcion(cols: 3,row_upd:  $data_dp->municipio,
             value_vacio: false, disabled: true, place_holder: 'Municipio');
         if(errores::$error){
@@ -381,7 +381,6 @@ class controlador_org_empresa extends system{
         }
 
         $this->inputs->org_sucursal_dp_municipio_descripcion = $dp_municipio_descripcion;
-
 
         $dp_colonia_descripcion = $htmls->dp_colonia->input_descripcion(cols: 3,row_upd:  $data_dp->colonia,
             value_vacio: false, disabled: true, place_holder: 'Colonia');
@@ -393,7 +392,6 @@ class controlador_org_empresa extends system{
         $this->inputs->org_sucursal_dp_colonia_descripcion = $dp_colonia_descripcion;
 
 
-
         $dp_cp_descripcion = $htmls->dp_cp->input_descripcion(cols: 3,row_upd:  $data_dp->cp,
             value_vacio: false, disabled: true, place_holder: 'CP');
         if(errores::$error){
@@ -403,7 +401,6 @@ class controlador_org_empresa extends system{
 
         $this->inputs->org_sucursal_dp_cp_descripcion = $dp_cp_descripcion;
 
-
         $dp_calle_descripcion = $htmls->dp_calle->input_descripcion(cols: 3,row_upd:  $data_dp->calle,
             value_vacio: false, disabled: true, place_holder: 'Calle');
         if(errores::$error){
@@ -412,6 +409,8 @@ class controlador_org_empresa extends system{
         }
 
         $this->inputs->org_sucursal_dp_calle_descripcion = $dp_calle_descripcion;
+
+
 
         return $this->inputs;
     }
@@ -699,7 +698,6 @@ class controlador_org_empresa extends system{
         }
 
 
-
         $params = $this->params_keys_disabled_sucursal(org_sucursal_id: $_GET['org_sucursal_id']);
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al asignar disabled sucursal ',data:  $params,
@@ -727,6 +725,20 @@ class controlador_org_empresa extends system{
             return $this->retorno_error(mensaje: 'Error al generar inputs de direcciones',
                 data:  $inputs_dp, header: $header,ws:$ws);
         }
+
+        $selects = new stdClass();
+        $direcciones = (new selects())->direcciones(html: $this->html_base, link: $this->link,row:  new stdClass(),selects:  $selects);
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al generar inputs de direcciones', data:  $direcciones, header: $header,ws:$ws);
+        }
+
+
+
+        $this->inputs->org_sucursal_dp_estado_id = $direcciones->dp_estado_id;
+        $this->inputs->org_sucursal_dp_municipio_id = $direcciones->dp_municipio_id;
+        $this->inputs->org_sucursal_dp_cp_id = $direcciones->dp_cp_id;
+        $this->inputs->org_sucursal_dp_colonia_postal_id = $direcciones->dp_colonia_postal_id;
+        $this->inputs->org_sucursal_dp_calle_pertenece_id = $direcciones->dp_calle_pertenece_id;
 
         return $base;
     }
