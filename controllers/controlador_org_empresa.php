@@ -264,6 +264,11 @@ class controlador_org_empresa extends system{
 
     }
 
+    /**
+     * Genera los botones par ala lista de sucursales en empresas
+     * @param array $sucursal Sucursal de la lista
+     * @return array
+     */
     private function data_sucursal_btn(array $sucursal): array
     {
 
@@ -679,7 +684,12 @@ class controlador_org_empresa extends system{
         return $select;
     }
 
-
+    /**
+     * Vista que integra la empresa y las sucursales asignadas a esa empresa
+     * @param bool $header
+     * @param bool $ws
+     * @return array|stdClass
+     */
     public function sucursales(bool $header, bool $ws = false): array|stdClass
     {
 
