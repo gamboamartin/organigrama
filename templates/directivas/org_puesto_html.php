@@ -4,6 +4,7 @@ namespace html;
 use gamboamartin\errores\errores;
 use gamboamartin\organigrama\controllers\controlador_org_puesto;
 use gamboamartin\system\html_controler;
+use gamboamartin\template\directivas;
 use models\org_puesto;
 
 use PDO;
@@ -107,8 +108,17 @@ class org_puesto_html extends html_controler {
         return $selects;
     }
 
-    public function select_org_puesto_id(int $cols, bool $con_registros, int $id_selected, PDO $link): array|string
+    public function select_org_puesto_id(int $cols, bool $con_registros, int|NULL $id_selected, PDO $link): array|string
     {
+        $valida = (new directivas(html:$this->html_base))->valida_cols(cols:$cols);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al validar cols', data: $valida);
+        }
+        
+        if(is_null($id_selected)){
+            $id_selected = -1;
+        }
+
         $modelo = new org_puesto($link);
 
         $select = $this->select_catalogo(cols:$cols,con_registros:$con_registros,id_selected:$id_selected, modelo: $modelo, label: "Puesto");
