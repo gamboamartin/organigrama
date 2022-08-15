@@ -52,6 +52,7 @@ class controlador_org_empresaTest extends test {
         $registro['fecha_ultimo_cambio_sat'] = 'a';
         $registro['email_sat'] = 'a';
         $registro['dp_calle_pertenece_id'] = 1;
+        $registro['org_tipo_empresa_id'] = 1;
 
         $r_elimina_sucursales = (new org_sucursal($this->link))->elimina_todo();
         if(errores::$error){
