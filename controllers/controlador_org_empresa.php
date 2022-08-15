@@ -670,7 +670,30 @@ class controlador_org_empresa extends system{
             return $this->retorno_error(mensaje: 'Error al obtener htmls',data:  $htmls, header: $header,ws:$ws);
         }
 
-        $inputs_sucursal = $this->inputs_sucursal(html:$htmls->org_sucursal, org_sucursal: $data_sucursal->org_sucursal);
+
+        $es_matriz = (new org_sucursal($this->link))->es_matriz(org_sucursal_id: $_GET['org_sucursal_id']);
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al verificar si sucursal es matriz ',data:  $htmls,
+                header: $header,ws:$ws);
+        }
+
+        $disabled_inputs_sucursal = false;
+        if($es_matriz){
+            $disabled_inputs_sucursal = true;
+        }
+
+        $params = new stdClass();
+
+
+        $keys_disabled = array('sucursal_codigo','sucursal_codigo_bis','sucursal_descripcion',
+            'sucursal_fecha_inicio_operaciones','sucursal_serie');
+        foreach ($keys_disabled as $key_disabled){
+            $params->$key_disabled= new stdClass();
+            $params->$key_disabled->disabled = $disabled_inputs_sucursal;
+        }
+
+        $inputs_sucursal = $this->inputs_sucursal(html:$htmls->org_sucursal,
+            org_sucursal: $data_sucursal->org_sucursal, params: $params);
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al generar inputs sucursal',
                 data:  $inputs_sucursal, header: $header,ws:$ws);
