@@ -5,82 +5,33 @@ namespace html;
 use gamboamartin\errores\errores;
 use gamboamartin\organigrama\controllers\controlador_org_sucursal;
 use gamboamartin\system\html_controler;
+use gamboamartin\system\system;
+use html\base\org_html;
 use models\base\limpieza;
-use models\base\rows;
 use models\org_sucursal;
 use PDO;
 use stdClass;
 
 
-class org_sucursal_html extends html_controler {
+class org_sucursal_html extends org_html {
 
 
-    private function asigna_inputs(controlador_org_sucursal $controler, stdClass $inputs): array|stdClass
+    protected function asigna_inputs(system $controler, stdClass $inputs): array|stdClass
     {
-        $controler->inputs->select = new stdClass();
-
-        $controler->inputs->select->org_empresa_id = $inputs->selects->org_empresa_id;
-
-        $inputs_direcciones_postales = (new inputs_html())->base_direcciones_asignacion(controler:$controler,
-            inputs: $inputs);
+        $r_inputs = parent::asigna_inputs(controler: $controler,inputs:  $inputs);
         if(errores::$error){
-            return $this->error->error(mensaje: 'Error al asignar direcciones',data:  $inputs_direcciones_postales);
+            return $this->error->error(mensaje: 'Error al generar inputs',data:  $r_inputs);
         }
 
-        $controler->inputs->fecha_inicio_operaciones = $inputs->fechas->fecha_inicio_operaciones;
-
+        $controler->inputs->select->org_empresa_id = $inputs->selects->org_empresa_id;
         $controler->inputs->serie = $inputs->texts->serie;
 
-        $controler->inputs->exterior = $inputs->texts->exterior;
-        $controler->inputs->interior = $inputs->texts->interior;
-        $controler->inputs->codigo = $inputs->texts->codigo;
-        $controler->inputs->codigo_bis = $inputs->texts->codigo_bis;
-
-        $controler->inputs->telefono_1 = $inputs->telefonos->telefono_1;
-        $controler->inputs->telefono_2 = $inputs->telefonos->telefono_2;
-        $controler->inputs->telefono_3 = $inputs->telefonos->telefono_3;
 
         return $controler->inputs;
     }
 
-    private function fechas_alta(stdClass $row_upd = new stdClass()): array|stdClass
-    {
 
-        $fechas = new stdClass();
 
-        $fec_fecha_inicio_operaciones = $this->fec_fecha_inicio_operaciones(cols: 4,row_upd: $row_upd,
-            value_vacio:  false);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al generar input',data:  $fec_fecha_inicio_operaciones);
-        }
-        $fechas->fecha_inicio_operaciones = $fec_fecha_inicio_operaciones;
-
-        return $fechas;
-    }
-
-    public function fec_fecha_inicio_operaciones(int $cols, stdClass $row_upd, bool $value_vacio): array|string
-    {
-
-        if($cols<=0){
-            return $this->error->error(mensaje: 'Error cold debe ser mayor a 0', data: $cols);
-        }
-        if($cols>=13){
-            return $this->error->error(mensaje: 'Error cold debe ser menor o igual a  12', data: $cols);
-        }
-
-        $html =$this->directivas->fecha_required(disable: false,name: 'fecha_inicio_operaciones',
-            place_holder: 'Inicio de Operaciones',row_upd: $row_upd, value_vacio: $value_vacio);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al generar input', data: $html);
-        }
-
-        $div = $this->directivas->html->div_group(cols: $cols,html:  $html);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al integrar div', data: $div);
-        }
-
-        return $div;
-    }
 
     public function genera_inputs_alta(controlador_org_sucursal $controler,PDO $link, int $org_empresa_id,
                                        bool $org_empresa_id_disabled) : array|stdClass
@@ -185,7 +136,11 @@ class org_sucursal_html extends html_controler {
         return $alta_inputs;
     }
 
-    public function input_codigo(int $cols, stdClass $row_upd, bool $value_vacio): array|string
+
+
+
+
+    public function input_exterior(int $cols, stdClass $row_upd, bool $value_vacio, bool $disabled = false): array|string
     {
 
         if($cols<=0){
@@ -195,7 +150,7 @@ class org_sucursal_html extends html_controler {
             return $this->error->error(mensaje: 'Error cold debe ser menor o igual a  12', data: $cols);
         }
 
-        $html =$this->directivas->input_text_required(disable: false,name: 'codigo',place_holder: 'Codigo',row_upd: $row_upd,
+        $html =$this->directivas->input_text_required(disable: $disabled,name: 'exterior',place_holder: 'Num Ext',row_upd: $row_upd,
             value_vacio: $value_vacio);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input', data: $html);
@@ -209,7 +164,9 @@ class org_sucursal_html extends html_controler {
         return $div;
     }
 
-    public function input_codigo_bis(int $cols, stdClass $row_upd, bool $value_vacio): array|string
+
+
+    public function input_interior(int $cols, stdClass $row_upd, bool $value_vacio, bool $disabled = false): array|string
     {
 
         if($cols<=0){
@@ -219,7 +176,7 @@ class org_sucursal_html extends html_controler {
             return $this->error->error(mensaje: 'Error cold debe ser menor o igual a  12', data: $cols);
         }
 
-        $html =$this->directivas->input_text_required(disable: false,name: 'codigo_bis',place_holder: 'Codigo BIS',
+        $html =$this->directivas->input_text(disable: $disabled,name: 'interior',place_holder: 'Num Int', required: false,
             row_upd: $row_upd, value_vacio: $value_vacio);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input', data: $html);
@@ -233,7 +190,8 @@ class org_sucursal_html extends html_controler {
         return $div;
     }
 
-    public function input_exterior(int $cols, stdClass $row_upd, bool $value_vacio): array|string
+    public function input_serie(int $cols, stdClass $row_upd, bool $value_vacio, bool $disabled = false,
+                                string $place_holder = 'Serie'): array|string
     {
 
         if($cols<=0){
@@ -243,56 +201,8 @@ class org_sucursal_html extends html_controler {
             return $this->error->error(mensaje: 'Error cold debe ser menor o igual a  12', data: $cols);
         }
 
-        $html =$this->directivas->input_text_required(disable: false,name: 'exterior',place_holder: 'Num Ext',row_upd: $row_upd,
-            value_vacio: $value_vacio);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al generar input', data: $html);
-        }
-
-        $div = $this->directivas->html->div_group(cols: $cols,html:  $html);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al integrar div', data: $div);
-        }
-
-        return $div;
-    }
-
-    public function input_interior(int $cols, stdClass $row_upd, bool $value_vacio): array|string
-    {
-
-        if($cols<=0){
-            return $this->error->error(mensaje: 'Error cold debe ser mayor a 0', data: $cols);
-        }
-        if($cols>=13){
-            return $this->error->error(mensaje: 'Error cold debe ser menor o igual a  12', data: $cols);
-        }
-
-        $html =$this->directivas->input_text(disable: false,name: 'interior',place_holder: 'Num Int', required: false,
+        $html =$this->directivas->input_text_required(disable: $disabled,name: 'serie',place_holder: $place_holder,
             row_upd: $row_upd, value_vacio: $value_vacio);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al generar input', data: $html);
-        }
-
-        $div = $this->directivas->html->div_group(cols: $cols,html:  $html);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al integrar div', data: $div);
-        }
-
-        return $div;
-    }
-
-    public function input_serie(int $cols, stdClass $row_upd, bool $value_vacio): array|string
-    {
-
-        if($cols<=0){
-            return $this->error->error(mensaje: 'Error cold debe ser mayor a 0', data: $cols);
-        }
-        if($cols>=13){
-            return $this->error->error(mensaje: 'Error cold debe ser menor o igual a  12', data: $cols);
-        }
-
-        $html =$this->directivas->input_text_required(disable: false,name: 'serie',place_holder: 'Serie',row_upd: $row_upd,
-            value_vacio: $value_vacio);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input', data: $html);
         }
@@ -326,15 +236,11 @@ class org_sucursal_html extends html_controler {
      * @param bool $org_empresa_id_disabled
      * @return array|stdClass
      */
-    private function selects_alta( PDO $link, int $org_empresa_id, bool $org_empresa_id_disabled = false): array|stdClass
+    protected function selects_alta(PDO $link, int $org_empresa_id = -1, bool $org_empresa_id_disabled = false): array|stdClass
     {
-        $selects = new stdClass();
-
-        $row_upd = new stdClass();
-
-        $selects = (new selects())->direcciones(html: $this->html_base,link:  $link,row:  $row_upd,selects:  $selects);
+        $selects = parent::selects_alta(link: $link);
         if(errores::$error){
-            return $this->error->error(mensaje: 'Error al generar selects de domicilios',data:  $selects);
+            return $this->error->error(mensaje: 'Error al generar selects',data:  $selects);
 
         }
 
@@ -385,7 +291,7 @@ class org_sucursal_html extends html_controler {
         return $select;
     }
 
-    public function telefono_1(int $cols, stdClass $row_upd, bool $value_vacio): array|string
+    public function telefono_1(int $cols, stdClass $row_upd, bool $value_vacio, bool $disabled = false): array|string
     {
         if($cols<=0){
             return $this->error->error(mensaje: 'Error cold debe ser mayor a 0', data: $cols);
@@ -394,7 +300,7 @@ class org_sucursal_html extends html_controler {
             return $this->error->error(mensaje: 'Error cold debe ser menor o igual a  12', data: $cols);
         }
 
-        $html =$this->directivas->input_text_required(disable: false,name: 'telefono_1',
+        $html =$this->directivas->input_text_required(disable: $disabled,name: 'telefono_1',
             place_holder: 'Telefono 1',row_upd: $row_upd, value_vacio: $value_vacio);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input', data: $html);
@@ -408,7 +314,7 @@ class org_sucursal_html extends html_controler {
         return $div;
     }
 
-    public function telefono_2(int $cols, stdClass $row_upd, bool $value_vacio): array|string
+    public function telefono_2(int $cols, stdClass $row_upd, bool $value_vacio, bool $disabled = false): array|string
     {
         if($cols<=0){
             return $this->error->error(mensaje: 'Error cold debe ser mayor a 0', data: $cols);
@@ -417,7 +323,7 @@ class org_sucursal_html extends html_controler {
             return $this->error->error(mensaje: 'Error cold debe ser menor o igual a  12', data: $cols);
         }
 
-        $html =$this->directivas->input_text(disable: false,name: 'telefono_2',
+        $html =$this->directivas->input_text(disable: $disabled,name: 'telefono_2',
             place_holder: 'Telefono 2',required: false,row_upd: $row_upd, value_vacio: $value_vacio);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input', data: $html);
@@ -431,7 +337,7 @@ class org_sucursal_html extends html_controler {
         return $div;
     }
 
-    public function telefono_3(int $cols, stdClass $row_upd, bool $value_vacio): array|string
+    public function telefono_3(int $cols, stdClass $row_upd, bool $value_vacio, bool $disabled = false): array|string
     {
         if($cols<=0){
             return $this->error->error(mensaje: 'Error cold debe ser mayor a 0', data: $cols);
@@ -440,7 +346,7 @@ class org_sucursal_html extends html_controler {
             return $this->error->error(mensaje: 'Error cold debe ser menor o igual a  12', data: $cols);
         }
 
-        $html =$this->directivas->input_text(disable: false,name: 'telefono_3',
+        $html =$this->directivas->input_text(disable: $disabled,name: 'telefono_3',
             place_holder: 'Telefono 3',required: false,row_upd: $row_upd, value_vacio: $value_vacio);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input', data: $html);
@@ -486,10 +392,17 @@ class org_sucursal_html extends html_controler {
 
         $texts = new stdClass();
 
-        $in_serie = $this->input_serie(cols: 6,row_upd:  $row_upd,value_vacio:  $value_vacio);
+        $in_codigo = $this->input_codigo(cols: 4,row_upd:  $row_upd,value_vacio:  $value_vacio);
         if(errores::$error){
-            return $this->error->error(mensaje: 'Error al generar input',data:  $in_serie);
+            return $this->error->error(mensaje: 'Error al generar input',data:  $in_codigo);
         }
+        $texts->codigo = $in_codigo;
+
+        $in_codigo_bis = $this->input_codigo_bis(cols: 4,row_upd:  $row_upd,value_vacio:  $value_vacio);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar input',data:  $in_codigo_bis);
+        }
+        $texts->codigo_bis = $in_codigo_bis;
 
         $in_exterior = $this->input_exterior(cols: 6,row_upd:  $row_upd,value_vacio:  $value_vacio);
         if(errores::$error){
@@ -503,17 +416,11 @@ class org_sucursal_html extends html_controler {
         }
         $texts->interior = $in_interior;
 
-        $in_codigo = $this->input_codigo(cols: 4,row_upd:  $row_upd,value_vacio:  $value_vacio);
+        $in_serie = $this->input_serie(cols: 6,row_upd:  $row_upd,value_vacio:  $value_vacio);
         if(errores::$error){
-            return $this->error->error(mensaje: 'Error al generar input',data:  $in_codigo);
+            return $this->error->error(mensaje: 'Error al generar input',data:  $in_serie);
         }
-        $texts->codigo = $in_codigo;
-
-        $in_codigo_bis = $this->input_codigo_bis(cols: 4,row_upd:  $row_upd,value_vacio:  $value_vacio);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al generar input',data:  $in_codigo_bis);
-        }
-        $texts->codigo_bis = $in_codigo_bis;
+        $texts->serie = $in_serie;
 
 
 

@@ -2,54 +2,42 @@
 namespace html;
 
 
-use base\frontend\directivas;
 use gamboamartin\errores\errores;
 use gamboamartin\organigrama\controllers\controlador_org_empresa;
-use gamboamartin\system\html_controler;
 
+
+use gamboamartin\system\system;
+use html\base\org_html;
 use models\base\limpieza;
 use models\org_empresa;
 use PDO;
 use stdClass;
 
 
-class org_empresa_html extends html_controler {
+class org_empresa_html extends org_html {
 
-    private function asigna_inputs(controlador_org_empresa $controler, stdClass $inputs): array|stdClass
+    protected function asigna_inputs(system $controler, stdClass $inputs): array|stdClass
     {
-        $controler->inputs->select = new stdClass();
 
-        $controler->inputs->select->cat_sat_regimen_fiscal_id = $inputs->selects->cat_sat_regimen_fiscal_id;
-
-
-        $inputs_direcciones_postales = (new inputs_html())->base_direcciones_asignacion(controler:$controler, inputs: $inputs);
+        $r_inputs = parent::asigna_inputs(controler: $controler,inputs:  $inputs);
         if(errores::$error){
-            return $this->error->error(mensaje: 'Error al asignar direcciones',data:  $inputs_direcciones_postales);
+            return $this->error->error(mensaje: 'Error al generar inputs',data:  $r_inputs);
         }
 
 
-        $controler->inputs->select->dp_calle_pertenece_entre1_id = $inputs->selects->dp_calle_pertenece_entre1_id;
-        $controler->inputs->select->dp_calle_pertenece_entre2_id = $inputs->selects->dp_calle_pertenece_entre2_id;
-        $controler->inputs->select->org_tipo_empresa_id = $inputs->selects->org_tipo_empresa_id;
-
-
-        $controler->inputs->fecha_inicio_operaciones = $inputs->fechas->fecha_inicio_operaciones;
+        $controler->inputs->email_sat = $inputs->emails->email_sat;
         $controler->inputs->fecha_ultimo_cambio_sat = $inputs->fechas->fecha_ultimo_cambio_sat;
-
         $controler->inputs->logo = $inputs->texts->logo;
+        $controler->inputs->nombre_comercial = $inputs->texts->nombre_comercial;
         $controler->inputs->pagina_web = $inputs->texts->pagina_web;
         $controler->inputs->razon_social = $inputs->texts->razon_social;
         $controler->inputs->rfc = $inputs->texts->rfc;
-        $controler->inputs->nombre_comercial = $inputs->texts->nombre_comercial;
-        $controler->inputs->exterior = $inputs->texts->exterior;
-        $controler->inputs->interior = $inputs->texts->interior;
-        $controler->inputs->codigo = $inputs->texts->codigo;
 
-        $controler->inputs->email_sat = $inputs->emails->email_sat;
 
-        $controler->inputs->telefono_1 = $inputs->telefonos->telefono_1;
-        $controler->inputs->telefono_2 = $inputs->telefonos->telefono_2;
-        $controler->inputs->telefono_3 = $inputs->telefonos->telefono_3;
+        $controler->inputs->select->cat_sat_regimen_fiscal_id = $inputs->selects->cat_sat_regimen_fiscal_id;
+        $controler->inputs->select->dp_calle_pertenece_entre1_id = $inputs->selects->dp_calle_pertenece_entre1_id;
+        $controler->inputs->select->dp_calle_pertenece_entre2_id = $inputs->selects->dp_calle_pertenece_entre2_id;
+        $controler->inputs->select->org_tipo_empresa_id = $inputs->selects->org_tipo_empresa_id;
 
 
         return $controler->inputs;
@@ -93,29 +81,7 @@ class org_empresa_html extends html_controler {
         return $emails;
     }
 
-    public function fec_fecha_inicio_operaciones(int $cols, stdClass $row_upd, bool $value_vacio): array|string
-    {
 
-        if($cols<=0){
-            return $this->error->error(mensaje: 'Error cold debe ser mayor a 0', data: $cols);
-        }
-        if($cols>=13){
-            return $this->error->error(mensaje: 'Error cold debe ser menor o igual a  12', data: $cols);
-        }
-
-        $html =$this->directivas->fecha_required(disable: false,name: 'fecha_inicio_operaciones',
-            place_holder: 'Inicio de Operaciones',row_upd: $row_upd, value_vacio: $value_vacio);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al generar input', data: $html);
-        }
-
-        $div = $this->directivas->html->div_group(cols: $cols,html:  $html);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al integrar div', data: $div);
-        }
-
-        return $div;
-    }
 
     public function fec_fecha_ultimo_cambio_sat(int $cols, stdClass $row_upd, bool $value_vacio): array|string
     {
@@ -141,23 +107,14 @@ class org_empresa_html extends html_controler {
         return $div;
     }
 
-    private function fechas_alta(stdClass $row_upd = new stdClass(), stdClass $params = new stdClass()): array|stdClass
+    protected function fechas_alta(stdClass $row_upd = new stdClass(), stdClass $params = new stdClass()): array|stdClass
     {
 
-        $fechas = new stdClass();
-
-        if(!isset($row_upd->fecha_inicio_operaciones) || $row_upd->fecha_inicio_operaciones === '0000-00-00') {
-            $row_upd->fecha_inicio_operaciones = date('Y-m-d');
-        }
-
-        $cols_fecha_inicio_operaciones = $params->fecha_inicio_operaciones->cols ?? 6;
-
-        $fec_fecha_inicio_operaciones = $this->fec_fecha_inicio_operaciones(cols: $cols_fecha_inicio_operaciones,
-            row_upd: $row_upd, value_vacio:  false);
+        $fechas = parent::fechas_alta(row_upd: $row_upd,params: $params);
         if(errores::$error){
-            return $this->error->error(mensaje: 'Error al generar input',data:  $fec_fecha_inicio_operaciones);
+            return $this->error->error(mensaje: 'Error al generar fechas',data:  $fechas);
         }
-        $fechas->fecha_inicio_operaciones = $fec_fecha_inicio_operaciones;
+
 
         if(!isset($row_upd->fecha_ultimo_cambio_sat) || $row_upd->fecha_ultimo_cambio_sat === '0000-00-00'){
             $row_upd->fecha_ultimo_cambio_sat = date('Y-m-d');
@@ -283,35 +240,6 @@ class org_empresa_html extends html_controler {
         return $alta_inputs;
     }
 
-    /**
-     * Genera un input de tipo codigo
-     * @param int $cols Numero de columnas css
-     * @param stdClass $row_upd Registro precargado
-     * @param bool $value_vacio Si es vacio no carga elementos
-     * @return array|string
-     */
-    public function input_codigo(int $cols, stdClass $row_upd, bool $value_vacio): array|string
-    {
-
-        $valida = $this->directivas->valida_cols(cols: $cols);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al validar columnas', data: $valida);
-        }
-
-
-        $html =$this->directivas->input_text_required(disable: false,name: 'codigo',place_holder: 'Codigo',
-            row_upd: $row_upd, value_vacio: $value_vacio);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al generar input', data: $html);
-        }
-
-        $div = $this->directivas->html->div_group(cols: $cols,html:  $html);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al integrar div', data: $div);
-        }
-
-        return $div;
-    }
 
     public function input_exterior(int $cols, stdClass $row_upd, bool $value_vacio): array|string
     {
@@ -433,7 +361,7 @@ class org_empresa_html extends html_controler {
         return $div;
     }
 
-    public function input_razon_social(int $cols, stdClass $row_upd, bool $value_vacio): array|string
+    public function input_razon_social(int $cols, stdClass $row_upd, bool $value_vacio, bool $disabled = false): array|string
     {
 
         if($cols<=0){
@@ -443,7 +371,8 @@ class org_empresa_html extends html_controler {
             return $this->error->error(mensaje: 'Error cold debe ser menor o igual a  12', data: $cols);
         }
 
-        $html =$this->directivas->input_text_required(disable: false,name: 'razon_social',place_holder: 'Razon Social',row_upd: $row_upd,
+        $html =$this->directivas->input_text_required(disable: $disabled,name: 'razon_social',
+            place_holder: 'Razon Social',row_upd: $row_upd,
             value_vacio: $value_vacio);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input', data: $html);
@@ -535,9 +464,13 @@ class org_empresa_html extends html_controler {
         return $select;
     }
 
-    private function selects_alta(PDO $link): array|stdClass
+    protected function selects_alta(PDO $link): array|stdClass
     {
-        $selects = new stdClass();
+        $selects = parent::selects_alta(link: $link);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar selects',data:  $selects);
+
+        }
 
         $cat_sat_regimen_fiscal_html = new cat_sat_regimen_fiscal_html(html:$this->html_base);
 
@@ -548,15 +481,6 @@ class org_empresa_html extends html_controler {
         }
 
         $selects->cat_sat_regimen_fiscal_id = $select;
-
-        $row_upd = new stdClass();
-
-        $selects = (new selects())->direcciones(html: $this->html_base,link:  $link,row:  $row_upd,selects:  $selects);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al generar selects de domicilios',data:  $selects);
-
-        }
-
 
         $select = (new org_tipo_empresa_html(html: $this->html_base))->select_org_tipo_empresa_id(
             cols: 12, con_registros:true, id_selected:-1,link: $link);
@@ -708,44 +632,26 @@ class org_empresa_html extends html_controler {
         $texts = new stdClass();
 
         $cols_codigo = $params->codigo->cols ?? 6;
+        $disabled_codigo = $params->codigo->disabled ?? false;
 
 
-        $in_codigo = $this->input_codigo(cols: $cols_codigo,row_upd:  $row_upd,value_vacio:  $value_vacio);
+        $in_codigo = $this->input_codigo(cols: $cols_codigo,row_upd:  $row_upd,value_vacio:  $value_vacio,
+            disabled: $disabled_codigo);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input',data:  $in_codigo);
         }
         $texts->codigo = $in_codigo;
 
-        $in_razon_social = $this->input_razon_social(cols: 12,row_upd:  $row_upd,value_vacio:  $value_vacio);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al generar input',data:  $in_razon_social);
-        }
-        $texts->razon_social = $in_razon_social;
+        $cols_codigo_bis = $params->codigo_bis->cols ?? 6;
+        $disabled_codigo_bis = $params->codigo_bis->disabled ?? false;
 
-        $in_logo = $this->input_logo(cols: 12,row_upd:  $row_upd,value_vacio:  $value_vacio);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al generar input',data:  $in_logo);
-        }
-        $texts->logo = $in_logo;
 
-        $in_pagina_web = $this->input_pagina_web(cols: 12,row_upd:  $row_upd,value_vacio:  $value_vacio);
+        $in_codigo_bis = $this->input_codigo_bis(cols: $cols_codigo_bis,row_upd:  $row_upd,value_vacio:  $value_vacio,
+            disabled:$disabled_codigo_bis);
         if(errores::$error){
-            return $this->error->error(mensaje: 'Error al generar input',data:  $in_pagina_web);
+            return $this->error->error(mensaje: 'Error al generar input',data:  $in_codigo);
         }
-        $texts->pagina_web = $in_pagina_web;
-
-        $in_rfc = $this->input_rfc(cols: 6,row_upd:  $row_upd,value_vacio:  $value_vacio);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al generar input',data:  $in_razon_social);
-        }
-        $texts->rfc = $in_rfc;
-
-        $in_nombre_comercial = $this->input_nombre_comercial(cols: 12,row_upd: $row_upd,value_vacio:  $value_vacio);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al generar input',data:  $in_nombre_comercial);
-        }
-        $texts->nombre_comercial = $in_nombre_comercial;
-
+        $texts->codigo_bis = $in_codigo_bis;
 
         $in_exterior = $this->input_exterior(cols: 6,row_upd: $row_upd,value_vacio:  $value_vacio);
         if(errores::$error){
@@ -758,6 +664,47 @@ class org_empresa_html extends html_controler {
             return $this->error->error(mensaje: 'Error al generar input',data:  $in_exterior);
         }
         $texts->interior = $in_interior;
+
+
+        $in_logo = $this->input_logo(cols: 12,row_upd:  $row_upd,value_vacio:  $value_vacio);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar input',data:  $in_logo);
+        }
+        $texts->logo = $in_logo;
+
+        $in_nombre_comercial = $this->input_nombre_comercial(cols: 12,row_upd: $row_upd,value_vacio:  $value_vacio);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar input',data:  $in_nombre_comercial);
+        }
+        $texts->nombre_comercial = $in_nombre_comercial;
+
+        $in_pagina_web = $this->input_pagina_web(cols: 12,row_upd:  $row_upd,value_vacio:  $value_vacio);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar input',data:  $in_pagina_web);
+        }
+        $texts->pagina_web = $in_pagina_web;
+
+        $in_rfc = $this->input_rfc(cols: 6,row_upd:  $row_upd,value_vacio:  $value_vacio);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar input',data:  $in_rfc);
+        }
+        $texts->rfc = $in_rfc;
+
+
+        $disabled_razon_social = $params->razon_social->disabled ?? false;
+        $in_razon_social = $this->input_razon_social(cols: 12,row_upd:  $row_upd,value_vacio:  $value_vacio,
+            disabled:$disabled_razon_social);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar input',data:  $in_razon_social);
+        }
+        $texts->razon_social = $in_razon_social;
+
+
+
+
+
+
+
 
         return $texts;
     }
