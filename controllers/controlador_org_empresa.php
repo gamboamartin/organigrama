@@ -302,6 +302,34 @@ class controlador_org_empresa extends system{
         return $sucursal;
     }
 
+    private function disabled_inputs_sucursal(int $org_sucursal_id): bool|array
+    {
+        $es_matriz = (new org_sucursal($this->link))->es_matriz(org_sucursal_id: $org_sucursal_id);
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al verificar si sucursal es matriz ',data:  $es_matriz);
+        }
+
+        $disabled_inputs_sucursal = false;
+        if($es_matriz){
+            $disabled_inputs_sucursal = true;
+        }
+
+        return $disabled_inputs_sucursal;
+    }
+
+    private function genera_keys_disabled(bool $disabled, array $keys_disabled, stdClass $params): array|stdClass
+    {
+        foreach ($keys_disabled as $key_disabled){
+
+            $params = $this->param_key_disabled(disabled: $disabled, key_disabled: $key_disabled,
+                params:  $params);
+            if(errores::$error){
+                return $this->errores->error(mensaje: 'Error al asignar disabled sucursal ',data:  $params);
+            }
+        }
+        return $params;
+    }
+
     private function htmls_sucursal(): stdClass
     {
         $org_sucursal_html = (new org_sucursal_html(html: $this->html_base));
@@ -671,25 +699,11 @@ class controlador_org_empresa extends system{
         }
 
 
-        $es_matriz = (new org_sucursal($this->link))->es_matriz(org_sucursal_id: $_GET['org_sucursal_id']);
+
+        $params = $this->params_keys_disabled_sucursal(org_sucursal_id: $_GET['org_sucursal_id']);
         if(errores::$error){
-            return $this->retorno_error(mensaje: 'Error al verificar si sucursal es matriz ',data:  $htmls,
+            return $this->retorno_error(mensaje: 'Error al asignar disabled sucursal ',data:  $params,
                 header: $header,ws:$ws);
-        }
-
-        $disabled_inputs_sucursal = false;
-        if($es_matriz){
-            $disabled_inputs_sucursal = true;
-        }
-
-        $params = new stdClass();
-
-
-        $keys_disabled = array('sucursal_codigo','sucursal_codigo_bis','sucursal_descripcion',
-            'sucursal_fecha_inicio_operaciones','sucursal_serie');
-        foreach ($keys_disabled as $key_disabled){
-            $params->$key_disabled= new stdClass();
-            $params->$key_disabled->disabled = $disabled_inputs_sucursal;
         }
 
         $inputs_sucursal = $this->inputs_sucursal(html:$htmls->org_sucursal,
@@ -715,6 +729,38 @@ class controlador_org_empresa extends system{
         }
 
         return $base;
+    }
+
+    private function param_key_disabled(bool $disabled, string $key_disabled, stdClass $params): stdClass
+    {
+        if(!isset($params->$key_disabled)){
+            $params->$key_disabled= new stdClass();
+        }
+
+        $params->$key_disabled->disabled = $disabled;
+
+        return $params;
+    }
+
+    private function params_keys_disabled_sucursal(int $org_sucursal_id): array|stdClass
+    {
+        $disabled_inputs_sucursal = $this->disabled_inputs_sucursal(org_sucursal_id: $org_sucursal_id);
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al verificar disabled sucursal ',
+                data:  $disabled_inputs_sucursal);
+        }
+
+        $params = new stdClass();
+
+        $keys_disabled = array('sucursal_codigo','sucursal_codigo_bis','sucursal_descripcion',
+            'sucursal_fecha_inicio_operaciones','sucursal_serie');
+
+        $params = $this->genera_keys_disabled(disabled: $disabled_inputs_sucursal,keys_disabled:  $keys_disabled,
+            params:  $params);
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al asignar disabled sucursal ',data:  $params);
+        }
+        return $params;
     }
 
     private function select_org_empresa_id(): array|string
