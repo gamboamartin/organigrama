@@ -711,8 +711,11 @@ class controlador_org_empresa extends system{
                 data:  $inputs_sucursal, header: $header,ws:$ws);
         }
 
+        /**
+         * @var org_tipo_sucursal_html $htmls->org_tipo_sucursal
+         */
         $org_tipo_sucursal_descripcion = $htmls->org_tipo_sucursal->input_descripcion(cols: 12,
-            row_upd:  $data_sucursal->org_tipo_sucursal, value_vacio: false, disabled: true);
+            row_upd:  $data_sucursal->org_tipo_sucursal, value_vacio: false, disabled: true, place_holder:'Tipo');
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al obtener descripcion',data:  $org_tipo_sucursal_descripcion,
                 header: $header,ws:$ws);
@@ -935,6 +938,7 @@ class controlador_org_empresa extends system{
             return $this->retorno_error(mensaje: 'Error al generar inputs sucursal',
                 data:  $inputs_sucursal, header: $header,ws:$ws);
         }
+
 
         $org_tipo_sucursal_descripcion = $htmls->org_tipo_sucursal->input_descripcion(cols: 12,
             row_upd:  $data_sucursal->org_tipo_sucursal, value_vacio: false, disabled: true);
