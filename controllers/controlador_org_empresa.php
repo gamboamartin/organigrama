@@ -935,12 +935,23 @@ class controlador_org_empresa extends system{
                 header: $header,ws:$ws);
         }
 
-
-        $data_dp = (new dp_calle_pertenece($this->link))->objs_direcciones(
-            dp_calle_pertenece_id: $data_sucursal->org_sucursal->dp_calle_pertenece_id);
-        if(errores::$error){
-            return $this->retorno_error(mensaje: 'Error al obtener datos de direcciones',data:  $data_dp,
-                header: $header,ws:$ws);
+        $accede_postales = true;
+        if(is_null($data_sucursal->org_sucursal->dp_calle_pertenece_id)){
+            $accede_postales = false;
+        }
+        $data_dp = new stdClass();
+        $data_dp->estado = new stdClass();
+        $data_dp->municipio = new stdClass();
+        $data_dp->colonia = new stdClass();
+        $data_dp->cp = new stdClass();
+        $data_dp->calle = new stdClass();
+        if($accede_postales) {
+            $data_dp = (new dp_calle_pertenece($this->link))->objs_direcciones(
+                dp_calle_pertenece_id: $data_sucursal->org_sucursal->dp_calle_pertenece_id);
+            if (errores::$error) {
+                return $this->retorno_error(mensaje: 'Error al obtener datos de direcciones', data: $data_dp,
+                    header: $header, ws: $ws);
+            }
         }
 
         $htmls = $this->htmls_sucursal();
