@@ -235,6 +235,26 @@ class controlador_org_empresa extends system{
         return $data;
     }
 
+    private function base_empresa_suc(): array|stdClass
+    {
+        $params = $this->params_empresa();
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al generar params',data:  $params);
+        }
+
+        $base = $this->base(params: $params);
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al maquetar datos',data:  $base);
+        }
+
+        $select = $this->select_org_empresa_id();
+
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al generar select datos',data:  $select);
+        }
+        return $base;
+    }
+
     public function cif(bool $header, bool $ws = false): array|stdClass
     {
         $base = $this->base();
@@ -264,6 +284,30 @@ class controlador_org_empresa extends system{
 
         return $base;
 
+    }
+
+    private function data_dp(stdClass $data_sucursal): array|stdClass
+    {
+        $accede_postales = true;
+        if(is_null($data_sucursal->org_sucursal->dp_calle_pertenece_id)){
+            $accede_postales = false;
+        }
+
+        $data_dp = $this->init_data_dp();
+        if (errores::$error) {
+            return $this->errores->error(mensaje: 'Error al inicializar datos de direcciones', data: $data_dp);
+        }
+
+
+        if($accede_postales) {
+            $data_dp = (new dp_calle_pertenece($this->link))->objs_direcciones(
+                dp_calle_pertenece_id: $data_sucursal->org_sucursal->dp_calle_pertenece_id);
+            if (errores::$error) {
+                return $this->errores->error(mensaje: 'Error al obtener datos de direcciones', data: $data_dp);
+            }
+        }
+
+        return $data_dp;
     }
 
     /**
@@ -366,6 +410,17 @@ class controlador_org_empresa extends system{
 
         return $base;
 
+    }
+
+    private function init_data_dp(): stdClass
+    {
+        $data_dp = new stdClass();
+        $data_dp->estado = new stdClass();
+        $data_dp->municipio = new stdClass();
+        $data_dp->colonia = new stdClass();
+        $data_dp->cp = new stdClass();
+        $data_dp->calle = new stdClass();
+        return $data_dp;
     }
 
     private function inputs_direcciones_by_sucursal(stdClass $data_dp, stdClass $htmls): array|stdClass
@@ -657,28 +712,9 @@ class controlador_org_empresa extends system{
     {
 
 
-        $params = new stdClass();
-
-        $params->codigo= new stdClass();
-        $params->codigo->disabled = true;
-
-        $params->codigo_bis = new stdClass();
-        $params->codigo_bis->cols = 6;
-        $params->codigo_bis->disabled = true;
-
-        $params->razon_social = new stdClass();
-        $params->razon_social->disabled = true;
-
-
-        $base = $this->base(params: $params);
+        $base = $this->base_empresa_suc();
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al maquetar datos',data:  $base,
-                header: $header,ws:$ws);
-        }
-        $select = $this->select_org_empresa_id();
-
-        if(errores::$error){
-            return $this->retorno_error(mensaje: 'Error al generar select datos',data:  $select,
                 header: $header,ws:$ws);
         }
 
@@ -689,11 +725,10 @@ class controlador_org_empresa extends system{
         }
 
 
-        $data_dp = (new dp_calle_pertenece($this->link))->objs_direcciones(
-            dp_calle_pertenece_id: $data_sucursal->org_sucursal->dp_calle_pertenece_id);
-        if(errores::$error){
-            return $this->retorno_error(mensaje: 'Error al obtener datos de direcciones',data:  $data_dp,
-                header: $header,ws:$ws);
+        $data_dp = $this->data_dp(data_sucursal: $data_sucursal);
+        if (errores::$error) {
+            return $this->retorno_error(mensaje: 'Error al cargar datos de direcciones', data: $data_dp,
+                header: $header, ws: $ws);
         }
 
         $htmls = $this->htmls_sucursal();
@@ -767,6 +802,22 @@ class controlador_org_empresa extends system{
 
         $params->$key_disabled->disabled = $disabled;
 
+        return $params;
+    }
+
+    private function params_empresa(): stdClass
+    {
+        $params = new stdClass();
+
+        $params->codigo= new stdClass();
+        $params->codigo->disabled = true;
+
+        $params->codigo_bis = new stdClass();
+        $params->codigo_bis->cols = 6;
+        $params->codigo_bis->disabled = true;
+
+        $params->razon_social = new stdClass();
+        $params->razon_social->disabled = true;
         return $params;
     }
 
@@ -904,28 +955,10 @@ class controlador_org_empresa extends system{
     public function ve_sucursal(bool $header, bool $ws = false): array|stdClass
     {
 
-        $params = new stdClass();
 
-        $params->codigo= new stdClass();
-        $params->codigo->disabled = true;
-
-        $params->codigo_bis = new stdClass();
-        $params->codigo_bis->cols = 6;
-        $params->codigo_bis->disabled = true;
-
-        $params->razon_social = new stdClass();
-        $params->razon_social->disabled = true;
-
-
-        $base = $this->base(params: $params);
+        $base = $this->base_empresa_suc();
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al maquetar datos',data:  $base,
-                header: $header,ws:$ws);
-        }
-        $select = $this->select_org_empresa_id();
-
-        if(errores::$error){
-            return $this->retorno_error(mensaje: 'Error al generar select datos',data:  $select,
                 header: $header,ws:$ws);
         }
 
@@ -935,24 +968,14 @@ class controlador_org_empresa extends system{
                 header: $header,ws:$ws);
         }
 
-        $accede_postales = true;
-        if(is_null($data_sucursal->org_sucursal->dp_calle_pertenece_id)){
-            $accede_postales = false;
+
+
+        $data_dp = $this->data_dp(data_sucursal: $data_sucursal);
+        if (errores::$error) {
+            return $this->retorno_error(mensaje: 'Error al cargar datos de direcciones', data: $data_dp,
+                header: $header, ws: $ws);
         }
-        $data_dp = new stdClass();
-        $data_dp->estado = new stdClass();
-        $data_dp->municipio = new stdClass();
-        $data_dp->colonia = new stdClass();
-        $data_dp->cp = new stdClass();
-        $data_dp->calle = new stdClass();
-        if($accede_postales) {
-            $data_dp = (new dp_calle_pertenece($this->link))->objs_direcciones(
-                dp_calle_pertenece_id: $data_sucursal->org_sucursal->dp_calle_pertenece_id);
-            if (errores::$error) {
-                return $this->retorno_error(mensaje: 'Error al obtener datos de direcciones', data: $data_dp,
-                    header: $header, ws: $ws);
-            }
-        }
+
 
         $htmls = $this->htmls_sucursal();
         if(errores::$error){
