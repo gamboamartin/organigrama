@@ -778,7 +778,13 @@ class controlador_org_empresa extends system{
             $disabled = true;
         }
 
-        $direcciones = (new selects())->direcciones(html: $this->html_base, link: $this->link,row:  new stdClass(),
+        $row = (new org_sucursal($this->link))->registro(registro_id: $_GET['org_sucursal_id'], retorno_obj: true);
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al obtener sucursal', data:  $row,
+                header: $header,ws:$ws);
+        }
+
+        $direcciones = (new selects())->direcciones(html: $this->html_base, link: $this->link,row: $row,
             selects:  $selects, disabled: $disabled);
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al generar inputs de direcciones', data:  $direcciones,
@@ -805,6 +811,10 @@ class controlador_org_empresa extends system{
         return $params;
     }
 
+    /**
+     * Inicializa los parametros de una empresa para views upd
+     * @return stdClass
+     */
     private function params_empresa(): stdClass
     {
         $params = new stdClass();
@@ -967,8 +977,6 @@ class controlador_org_empresa extends system{
             return $this->retorno_error(mensaje: 'Error al obtener sucursal',data:  $data_sucursal,
                 header: $header,ws:$ws);
         }
-
-
 
         $data_dp = $this->data_dp(data_sucursal: $data_sucursal);
         if (errores::$error) {
