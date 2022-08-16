@@ -628,8 +628,6 @@ class controlador_org_empresa extends system{
 
     }
 
-
-
     /**
      * SIN PROBAR
      * @author israel hernandez 0.1.0
@@ -768,6 +766,14 @@ class controlador_org_empresa extends system{
 
         $selects = new stdClass();
 
+
+
+        $row = (new org_sucursal($this->link))->registro(registro_id: $_GET['org_sucursal_id'], retorno_obj: true);
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al obtener sucursal', data:  $row,
+                header: $header,ws:$ws);
+        }
+
         $es_matriz = (new org_sucursal($this->link))->es_matriz(org_sucursal_id: $_GET['org_sucursal_id']);
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al verificar sucursal', data:  $es_matriz,
@@ -778,14 +784,30 @@ class controlador_org_empresa extends system{
             $disabled = true;
         }
 
-        $row = (new org_sucursal($this->link))->registro(registro_id: $_GET['org_sucursal_id'], retorno_obj: true);
-        if(errores::$error){
-            return $this->retorno_error(mensaje: 'Error al obtener sucursal', data:  $row,
-                header: $header,ws:$ws);
-        }
+        $params = new stdClass();
+
+        $params->dp_estado_id = new stdClass();
+        $params->dp_estado_id->cols = 4;
+        $params->dp_estado_id->disabled = $disabled;
+
+        $params->dp_municipio_id = new stdClass();
+        $params->dp_municipio_id->cols = 4;
+        $params->dp_municipio_id->disabled = $disabled;
+
+        $params->dp_cp_id = new stdClass();
+        $params->dp_cp_id->cols = 4;
+        $params->dp_cp_id->disabled = $disabled;
+
+        $params->dp_colonia_postal_id = new stdClass();
+        $params->dp_colonia_postal_id->cols = 4;
+        $params->dp_colonia_postal_id->disabled = $disabled;
+
+        $params->dp_calle_pertenece_id = new stdClass();
+        $params->dp_calle_pertenece_id->cols = 4;
+        $params->dp_calle_pertenece_id->disabled = $disabled;
 
         $direcciones = (new selects())->direcciones(html: $this->html_base, link: $this->link,row: $row,
-            selects:  $selects, disabled: $disabled);
+            selects:  $selects, params: $params);
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al generar inputs de direcciones', data:  $direcciones,
                 header: $header,ws:$ws);
