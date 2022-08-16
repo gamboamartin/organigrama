@@ -386,7 +386,7 @@ class controlador_org_empresa extends system{
 
         $this->inputs->org_sucursal_dp_municipio_descripcion = $dp_municipio_descripcion;
 
-        $dp_colonia_descripcion = $htmls->dp_colonia->input_descripcion(cols: 3,row_upd:  $data_dp->colonia,
+        $dp_colonia_descripcion = $htmls->dp_colonia->input_descripcion(cols: 6,row_upd:  $data_dp->colonia,
             value_vacio: false, disabled: true, place_holder: 'Colonia');
         if(errores::$error){
             return $this->errores->error(mensaje: 'Error al obtener $dp_colonia_descripcion',
@@ -405,7 +405,7 @@ class controlador_org_empresa extends system{
 
         $this->inputs->org_sucursal_dp_cp_descripcion = $dp_cp_descripcion;
 
-        $dp_calle_descripcion = $htmls->dp_calle->input_descripcion(cols: 3,row_upd:  $data_dp->calle,
+        $dp_calle_descripcion = $htmls->dp_calle->input_descripcion(cols: 9,row_upd:  $data_dp->calle,
             value_vacio: false, disabled: true, place_holder: 'Calle');
         if(errores::$error){
             return $this->errores->error(mensaje: 'Error al obtener $dp_calle_descripcion',
@@ -448,7 +448,7 @@ class controlador_org_empresa extends system{
         }
 
         $sucursal_fecha_inicio_operaciones_disabled = $params->sucursal_fecha_inicio_operaciones->disabled ?? true;
-        $org_sucursal_fecha_inicio_operaciones = $html->fec_fecha_inicio_operaciones(cols: 6, row_upd:  $org_sucursal,
+        $org_sucursal_fecha_inicio_operaciones = $html->fec_fecha_inicio_operaciones(cols: 4, row_upd:  $org_sucursal,
             value_vacio: false, disabled: $sucursal_fecha_inicio_operaciones_disabled);
         if(errores::$error){
             return $this->errores->error(mensaje: 'Error al obtener fecha_inicio_operaciones',
@@ -477,28 +477,28 @@ class controlador_org_empresa extends system{
         }
 
         $sucursal_serie_disabled = $params->sucursal_serie->disabled ?? true;
-        $org_sucursal_serie = $html->input_serie(cols: 6,row_upd:  $org_sucursal, value_vacio: false,
+        $org_sucursal_serie = $html->input_serie(cols: 4,row_upd:  $org_sucursal, value_vacio: false,
             disabled: $sucursal_serie_disabled);
         if(errores::$error){
             return $this->errores->error(mensaje: 'Error al obtener serie',data:  $org_sucursal_serie);
         }
 
         $sucursal_telefono_1_disabled = $params->sucursal_telefono_1->disabled ?? true;
-        $org_sucursal_telefono_1 = $html->telefono_1(cols: 6,row_upd:  $org_sucursal, value_vacio: false,
+        $org_sucursal_telefono_1 = $html->telefono_1(cols: 4,row_upd:  $org_sucursal, value_vacio: false,
             disabled: $sucursal_telefono_1_disabled);
         if(errores::$error){
             return $this->errores->error(mensaje: 'Error al obtener serie',data:  $org_sucursal_telefono_1);
         }
 
         $sucursal_telefono_2_disabled = $params->sucursal_telefono_2->disabled ?? true;
-        $org_sucursal_telefono_2 = $html->telefono_2(cols: 6,row_upd:  $org_sucursal, value_vacio: false,
+        $org_sucursal_telefono_2 = $html->telefono_2(cols: 4,row_upd:  $org_sucursal, value_vacio: false,
             disabled: $sucursal_telefono_2_disabled);
         if(errores::$error){
             return $this->errores->error(mensaje: 'Error al obtener serie',data:  $org_sucursal_telefono_1);
         }
 
         $sucursal_telefono_3_disabled = $params->sucursal_telefono_3->disabled ?? true;
-        $org_sucursal_telefono_3 = $html->telefono_3(cols: 6,row_upd:  $org_sucursal, value_vacio: false,
+        $org_sucursal_telefono_3 = $html->telefono_3(cols: 4,row_upd:  $org_sucursal, value_vacio: false,
             disabled: $sucursal_telefono_3_disabled);
         if(errores::$error){
             return $this->errores->error(mensaje: 'Error al obtener serie',data:  $org_sucursal_telefono_1);
@@ -716,7 +716,7 @@ class controlador_org_empresa extends system{
         }
 
 
-        $org_tipo_sucursal_descripcion = $htmls->org_tipo_sucursal->input_descripcion(cols: 12,
+        $org_tipo_sucursal_descripcion = $htmls->org_tipo_sucursal->input_descripcion(cols: 4,
             row_upd:  $data_sucursal->org_tipo_sucursal, value_vacio: false, disabled: true, place_holder:'Tipo');
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al obtener descripcion',data:  $org_tipo_sucursal_descripcion,
@@ -746,7 +746,8 @@ class controlador_org_empresa extends system{
         $direcciones = (new selects())->direcciones(html: $this->html_base, link: $this->link,row:  new stdClass(),
             selects:  $selects, disabled: $disabled);
         if(errores::$error){
-            return $this->retorno_error(mensaje: 'Error al generar inputs de direcciones', data:  $direcciones, header: $header,ws:$ws);
+            return $this->retorno_error(mensaje: 'Error al generar inputs de direcciones', data:  $direcciones,
+                header: $header,ws:$ws);
         }
 
         $this->inputs->org_sucursal_dp_estado_id = $direcciones->dp_estado_id;
@@ -954,8 +955,8 @@ class controlador_org_empresa extends system{
         }
 
 
-        $org_tipo_sucursal_descripcion = $htmls->org_tipo_sucursal->input_descripcion(cols: 12,
-            row_upd:  $data_sucursal->org_tipo_sucursal, value_vacio: false, disabled: true);
+        $org_tipo_sucursal_descripcion = $htmls->org_tipo_sucursal->input_descripcion(cols: 4,
+            row_upd:  $data_sucursal->org_tipo_sucursal, value_vacio: false, disabled: true, place_holder:'Tipo');
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al obtener descripcion',data:  $org_tipo_sucursal_descripcion,
                 header: $header,ws:$ws);
