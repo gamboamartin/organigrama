@@ -331,6 +331,10 @@ class controlador_org_empresa extends system{
         return $params;
     }
 
+    /**
+     * @return object - org_tipo_sucursal_html org_sorg_sucursal
+     * @return object - org_tipo_sucursal_html org_sorg_sucursal
+     */
     private function htmls_sucursal(): stdClass
     {
         $org_sucursal_html = (new org_sucursal_html(html: $this->html_base));
@@ -711,9 +715,7 @@ class controlador_org_empresa extends system{
                 data:  $inputs_sucursal, header: $header,ws:$ws);
         }
 
-        /**
-         * @var org_tipo_sucursal_html $htmls->org_tipo_sucursal
-         */
+
         $org_tipo_sucursal_descripcion = $htmls->org_tipo_sucursal->input_descripcion(cols: 12,
             row_upd:  $data_sucursal->org_tipo_sucursal, value_vacio: false, disabled: true, place_holder:'Tipo');
         if(errores::$error){
@@ -730,7 +732,19 @@ class controlador_org_empresa extends system{
         }
 
         $selects = new stdClass();
-        $direcciones = (new selects())->direcciones(html: $this->html_base, link: $this->link,row:  new stdClass(),selects:  $selects);
+
+        $es_matriz = (new org_sucursal($this->link))->es_matriz(org_sucursal_id: $_GET['org_sucursal_id']);
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al verificar sucursal', data:  $es_matriz,
+                header: $header,ws:$ws);
+        }
+        $disabled = false;
+        if($es_matriz){
+            $disabled = true;
+        }
+
+        $direcciones = (new selects())->direcciones(html: $this->html_base, link: $this->link,row:  new stdClass(),
+            selects:  $selects, disabled: $disabled);
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al generar inputs de direcciones', data:  $direcciones, header: $header,ws:$ws);
         }
