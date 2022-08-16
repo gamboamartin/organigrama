@@ -763,7 +763,8 @@ class controlador_org_empresa extends system{
         $params = new stdClass();
 
         $keys_disabled = array('sucursal_codigo','sucursal_codigo_bis','sucursal_descripcion',
-            'sucursal_fecha_inicio_operaciones','sucursal_serie');
+            'sucursal_fecha_inicio_operaciones','sucursal_exterior','sucursal_interior','sucursal_serie',
+            'sucursal_telefono_1','sucursal_telefono_2','sucursal_telefono_3');
 
         $params = $this->genera_keys_disabled(disabled: $disabled_inputs_sucursal,keys_disabled:  $keys_disabled,
             params:  $params);
