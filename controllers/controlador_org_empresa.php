@@ -26,25 +26,22 @@ use html\org_tipo_sucursal_html;
 use html\selects;
 use JsonException;
 use links\secciones\link_org_empresa;
-use links\secciones\link_org_sucursal;
-use models\dp_calle;
+
 use models\dp_calle_pertenece;
-use models\dp_colonia;
-use models\dp_colonia_postal;
-use models\dp_cp;
-use models\dp_estado;
-use models\dp_municipio;
+
 use models\org_empresa;
 use models\org_sucursal;
-use models\org_tipo_sucursal;
+
 use PDO;
 use stdClass;
 
 class controlador_org_empresa extends system{
     public string $link_org_sucursal_alta_bd = '';
+    public string $link_org_sucursal_modifica_bd = '';
     public string $razon_social = '';
     public string $rfc = '';
     public int $org_empresa_id = -1;
+    public int $org_sucursal_id = -1;
     public stdClass $sucursales ;
 
     public function __construct(PDO $link, html $html = new \gamboamartin\template_1\html(),
@@ -55,6 +52,10 @@ class controlador_org_empresa extends system{
         $obj_link = new link_org_empresa($this->registro_id);
 
         parent::__construct(html:$html_, link: $link,modelo:  $modelo, obj_link: $obj_link, paths_conf: $paths_conf);
+
+        if(isset($_GET['org_sucursal_id'])){
+            $this->org_sucursal_id = $_GET['org_sucursal_id'];
+        }
 
         $this->org_empresa_id = $this->registro_id;
 
@@ -68,6 +69,16 @@ class controlador_org_empresa extends system{
             exit;
         }
         $this->link_org_sucursal_alta_bd = $link_org_sucursal_alta_bd;
+
+        $link_org_sucursal_modifica_bd = $obj_link->link_org_sucursal_modifica_bd(org_empresa_id: $this->registro_id,
+            org_sucursal_id: $this->org_sucursal_id);
+        if(errores::$error){
+            $error = $this->errores->error(mensaje: 'Error al generar link sucursal modifica',
+                data:  $link_org_sucursal_alta_bd);
+            print_r($error);
+            exit;
+        }
+        $this->link_org_sucursal_modifica_bd = $link_org_sucursal_modifica_bd;
 
         $this->seccion_titulo = 'EMPRESAS';
 

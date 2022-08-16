@@ -4,6 +4,7 @@
 <main class="main section-color-primary">
     <div class="container">
         <div class="row">
+            <form method="post" action="<?php echo $controlador->link_org_sucursal_modifica_bd; ?>" class="form-additional">
             <div class="col-lg-12">
 
 
@@ -34,6 +35,7 @@
                 <?php echo $controlador->inputs->org_sucursal_telefono_2; ?>
                 <?php echo $controlador->inputs->org_sucursal_telefono_3; ?>
             </div>
+            </form>
             </div>
 
 

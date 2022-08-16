@@ -7,7 +7,7 @@ use stdClass;
 
 class link_org_empresa extends links_menu {
     public stdClass $links;
-
+    
 
     private function link_org_empresa_alta(): array|string
     {
@@ -42,13 +42,25 @@ class link_org_empresa extends links_menu {
      */
     public function link_org_sucursal_alta_bd(int $org_empresa_id): string
     {
-        $generales = new generales();
-        $link_org_sucursal_alta_bd = $generales->url_base;
-        $link_org_sucursal_alta_bd .= 'index.php?seccion=org_empresa&accion=alta_sucursal_bd';
-        $link_org_sucursal_alta_bd .= '&session_id='.$generales->session_id;
-        $link_org_sucursal_alta_bd .= '&registro_id='.$org_empresa_id;
 
-        return $link_org_sucursal_alta_bd;
+        $link = $this->link_con_id(accion:'alta_sucursal_bd', registro_id: $org_empresa_id,seccion:  'org_empresa');
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar link', data: $link);
+        }
+
+        return $link;
+    }
+
+
+    public function link_org_sucursal_modifica_bd(int $org_empresa_id, int $org_sucursal_id): string
+    {
+        $link = $this->link_con_id(accion:'modifica_sucursal_bd', registro_id: $org_empresa_id,seccion:  'org_empresa');
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar link', data: $link);
+        }
+        $link .= '&org_sucursal_id='.$org_sucursal_id;
+
+        return $link;
     }
 
     /**
