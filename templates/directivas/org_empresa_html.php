@@ -513,7 +513,7 @@ class org_empresa_html extends org_html {
 
         $selects = (new selects())->direcciones(html: $this->html_base,link:  $link,row:  $row_upd,selects:  $selects);
         if(errores::$error){
-            return $this->error->error(mensaje: 'Error al generar selects de domicilios',data:  $select);
+            return $this->error->error(mensaje: 'Error al generar selects de domicilios',data:  $selects);
 
         }
 

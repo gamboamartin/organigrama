@@ -10,11 +10,13 @@ use PDO;
 class org_tipo_empresa_html extends html_controler {
 
     /**
-     * @param int $cols
-     * @param bool $con_registros
-     * @param int $id_selected
-     * @param PDO $link
+     * Genera un select de tipo org_tipo_empresa
+     * @param int $cols No de columnas en css
+     * @param bool $con_registros si no con registros el select queda libre de options
+     * @param int $id_selected identificador del select
+     * @param PDO $link conexion a la base de datos
      * @return array|string
+     *
      */
     public function select_org_tipo_empresa_id(int $cols,bool $con_registros,int $id_selected, PDO $link): array|string
     {

@@ -732,8 +732,6 @@ class controlador_org_empresa extends system{
             return $this->retorno_error(mensaje: 'Error al generar inputs de direcciones', data:  $direcciones, header: $header,ws:$ws);
         }
 
-
-
         $this->inputs->org_sucursal_dp_estado_id = $direcciones->dp_estado_id;
         $this->inputs->org_sucursal_dp_municipio_id = $direcciones->dp_municipio_id;
         $this->inputs->org_sucursal_dp_cp_id = $direcciones->dp_cp_id;
