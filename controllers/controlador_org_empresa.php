@@ -799,11 +799,11 @@ class controlador_org_empresa extends system{
         $params->dp_cp_id->disabled = $disabled;
 
         $params->dp_colonia_postal_id = new stdClass();
-        $params->dp_colonia_postal_id->cols = 4;
+        $params->dp_colonia_postal_id->cols = 12;
         $params->dp_colonia_postal_id->disabled = $disabled;
 
         $params->dp_calle_pertenece_id = new stdClass();
-        $params->dp_calle_pertenece_id->cols = 4;
+        $params->dp_calle_pertenece_id->cols = 12;
         $params->dp_calle_pertenece_id->disabled = $disabled;
 
         $direcciones = (new selects())->direcciones(html: $this->html_base, link: $this->link,row: $row,
