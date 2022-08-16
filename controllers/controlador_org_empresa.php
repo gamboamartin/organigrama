@@ -814,6 +814,7 @@ class controlador_org_empresa extends system{
     /**
      * Inicializa los parametros de una empresa para views upd
      * @return stdClass
+     * @version 0.224.34
      */
     private function params_empresa(): stdClass
     {

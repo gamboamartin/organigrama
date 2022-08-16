@@ -28,6 +28,30 @@ class controlador_org_empresaTest extends test {
     }
 
     /**
+     */
+    public function test_params_empresa(): void
+    {
+        errores::$error = false;
+
+        $_GET['seccion'] = 'org_empresa';
+        $_GET['accion'] = 'ubicacion';
+
+        $_SESSION['grupo_id'] = 1;
+        $_GET['session_id'] = '1';
+        $_SESSION['usuario_id'] = '2';
+        $ctl = new controlador_org_empresa(link: $this->link, paths_conf: $this->paths_conf);
+        $ctl = new liberator($ctl);
+        $resultado = $ctl->params_empresa();
+        $this->assertIsObject($resultado);
+        $this->assertNotTrue(errores::$error);
+        $this->assertTrue($resultado->codigo->disabled);
+        $this->assertTrue($resultado->codigo_bis->disabled);
+        $this->assertTrue($resultado->razon_social->disabled);
+        $this->assertEquals(6, $resultado->codigo_bis->cols);
+        errores::$error = false;
+    }
+
+    /**
      * @throws JsonException
      */
     public function test_ubicacion(): void
