@@ -21,6 +21,28 @@ class link_org_empresaTest extends test {
     /**
      * @throws JsonException
      */
+    public function test_link_org_sucursal_alta_bd(): void
+    {
+        errores::$error = false;
+
+        $_GET['seccion'] = 'cat_sat_tipo_persona';
+        $_GET['accion'] = 'lista';
+        $_SESSION['grupo_id'] = 1;
+        $_GET['session_id'] = '1';
+        $link = new link_org_empresa(-1);
+        //$link = new liberator($link);
+
+        $org_empresa_id = -1;
+        $resultado = $link->link_org_sucursal_alta_bd($org_empresa_id);
+        $this->assertIsString($resultado);
+        $this->assertNotTrue(errores::$error);
+        $this->assertEquals('./index.php?seccion=org_empresa&accion=alta_sucursal_bd&registro_id=-1&session_id=1', $resultado);
+        errores::$error = false;
+    }
+
+    /**
+     * @throws JsonException
+     */
     public function test_org_empresa_alta(): void
     {
         errores::$error = false;

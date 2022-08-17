@@ -39,6 +39,8 @@ class link_org_empresa extends links_menu {
      * Genera un link con llama seccion org sucursal accion alta_sucursal_bd con el registro aplicado de emepresa
      * @param int $org_empresa_id identificador de empresa
      * @return string
+     * @version 0.251.34
+     *
      */
     public function link_org_sucursal_alta_bd(int $org_empresa_id): string
     {
