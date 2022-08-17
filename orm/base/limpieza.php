@@ -446,6 +446,10 @@ class limpieza{
         return  $org_tipo_sucursal_id;
     }
 
+    /**
+     * Obtiene el tipo de sucursal a asignar
+     * @return stdClass
+     */
     private function tipos_sucursal(): stdClass
     {
         $generales = (new generales());

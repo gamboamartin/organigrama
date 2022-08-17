@@ -26,8 +26,8 @@ class org_sucursal extends modelo{
         $no_duplicados[] = 'codigo';
         $no_duplicados[] = 'codigo_bis';
 
-        parent::__construct(link: $link,tabla:  $tabla, no_duplicados: $no_duplicados, campos_obligatorios: $campos_obligatorios,
-            columnas: $columnas, tipo_campos: $tipo_campos);
+        parent::__construct(link: $link, tabla: $tabla, campos_obligatorios: $campos_obligatorios, columnas: $columnas,
+            no_duplicados: $no_duplicados, tipo_campos: $tipo_campos);
     }
     public function alta_bd(): array|stdClass
     {
