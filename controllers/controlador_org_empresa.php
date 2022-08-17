@@ -712,6 +712,18 @@ class controlador_org_empresa extends empresas {
         return $r_lista;
     }
 
+    private function org_tipo_sucursal_descripcion(stdClass $org_tipo_sucursal, org_tipo_sucursal_html $html): array|string
+    {
+        $org_tipo_sucursal_descripcion = $html->input_descripcion(cols: 4, row_upd:  $org_tipo_sucursal,
+            value_vacio: false, disabled: true, place_holder:'Tipo');
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al obtener descripcion',data:  $org_tipo_sucursal_descripcion);
+        }
+
+        $this->inputs->org_sucursal_tipo_sucursal_descricpion = $org_tipo_sucursal_descripcion;
+        return $org_tipo_sucursal_descripcion;
+    }
+
     private function maqueta_registros_lista(array $registros): array
     {
         foreach ($registros as $indice=> $row){
@@ -839,14 +851,12 @@ class controlador_org_empresa extends empresas {
                 data:  $inputs_sucursal, header: $header,ws:$ws);
         }
 
-        $org_tipo_sucursal_descripcion = $data_base->htmls->org_tipo_sucursal->input_descripcion(cols: 4,
-            row_upd:  $data_base->data->data_sucursal->org_tipo_sucursal, value_vacio: false, disabled: true, place_holder:'Tipo');
+        $org_tipo_sucursal_descripcion = $this->org_tipo_sucursal_descripcion(org_tipo_sucursal:
+            $data_base->data->data_sucursal->org_tipo_sucursal, html: $data_base->htmls->org_tipo_sucursal);
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al obtener descripcion',data:  $org_tipo_sucursal_descripcion,
                 header: $header,ws:$ws);
         }
-
-        $this->inputs->org_sucursal_tipo_sucursal_descricpion = $org_tipo_sucursal_descripcion;
 
         $inputs_dp = $this->inputs_direcciones_by_sucursal(data_dp:$data_base->data->data_dp,htmls:  $data_base->htmls);
         if(errores::$error){
@@ -1200,14 +1210,13 @@ class controlador_org_empresa extends empresas {
         }
 
 
-        $org_tipo_sucursal_descripcion =$data_base->htmls->org_tipo_sucursal->input_descripcion(cols: 4,
-            row_upd:  $data_base->data->data_sucursal->org_tipo_sucursal, value_vacio: false, disabled: true, place_holder:'Tipo');
+        $org_tipo_sucursal_descripcion = $this->org_tipo_sucursal_descripcion(org_tipo_sucursal:
+            $data_base->data->data_sucursal->org_tipo_sucursal, html: $data_base->htmls->org_tipo_sucursal);
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al obtener descripcion',data:  $org_tipo_sucursal_descripcion,
                 header: $header,ws:$ws);
         }
 
-        $this->inputs->org_sucursal_tipo_sucursal_descricpion = $org_tipo_sucursal_descripcion;
 
         $inputs_dp = $this->inputs_direcciones_by_sucursal(data_dp: $data_base->data->data_dp,htmls:  $data_base->htmls);
         if(errores::$error){
