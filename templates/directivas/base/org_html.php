@@ -88,6 +88,11 @@ class org_html extends html_controler {
         return $fechas;
     }
 
+    /**
+     * Genera un conjunto de selects para views por default direcciones
+     * @param PDO $link conexion a la base de datos
+     * @return array|stdClass
+     */
     protected function selects_alta(PDO $link): array|stdClass
     {
         $selects = new stdClass();
