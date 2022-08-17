@@ -119,8 +119,7 @@ class controlador_org_empresa extends empresas {
         }
 
         $this->btns['modifica'] = $btn_modifica;
-
-
+        
 
         return $r_alta;
     }
