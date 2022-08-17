@@ -100,7 +100,7 @@ class controlador_org_empresa extends empresas {
         }
 
 
-        $btn_modifica = (new org_empresa_html(html: $this->html_base))->btn_next_action(label: 'Modifica',
+        $btn_modifica = (new org_empresa_html(html: $this->html_base))->btn_next_action(label: 'Guarda',
             value: 'modifica');
 
         if(errores::$error){
@@ -108,6 +108,7 @@ class controlador_org_empresa extends empresas {
             print_r($error);
             die('Error');
         }
+        $this->btns['guarda'] = $btn_modifica;
 
         $btn_siguiente = (new org_empresa_html(html: $this->html_base))->btn_next_action(label: 'Siguiente',
             value: 'ubicacion');
@@ -118,7 +119,7 @@ class controlador_org_empresa extends empresas {
             die('Error');
         }
 
-        $this->btns['modifica'] = $btn_modifica;
+        $this->btns['siguiente'] = $btn_siguiente;
 
 
         return $r_alta;
