@@ -46,7 +46,7 @@ class org_empresa_html extends org_html {
     public function btn_next_action(string $label, string $value): array|string
     {
 
-        $btn = $this->directivas->btn_action_next(label: $label, value: $value);
+        $btn = $this->directivas->btn_action_next_div(label: $label, value: $value);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar btn', data: $btn);
         }
