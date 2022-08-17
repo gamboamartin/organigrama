@@ -284,7 +284,7 @@ class org_sucursal_html extends org_html {
         $modelo = new org_sucursal(link: $link);
 
         $select = $this->select_catalogo(cols:$cols,con_registros:$con_registros,id_selected:$id_selected,
-            modelo: $modelo,label: 'Sucursal',required: true);
+            modelo: $modelo,label: 'Empresa',required: true);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select', data: $select);
         }
