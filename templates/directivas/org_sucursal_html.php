@@ -280,6 +280,15 @@ class org_sucursal_html extends org_html {
         return $selects;
     }
 
+    /**
+     * Genera un select para sucursal
+     * @param int $cols
+     * @param bool $con_registros
+     * @param int $id_selected
+     * @param PDO $link
+     * @param string $label
+     * @return array|string
+     */
     public function select_org_sucursal_id(int $cols, bool $con_registros, int $id_selected, PDO $link,
                                            string $label = 'Empresa'): array|string
     {
