@@ -1180,6 +1180,11 @@ class controlador_org_empresa extends empresas {
     public function ve_sucursal(bool $header, bool $ws = false): array|stdClass
     {
 
+        $keys = array('org_sucursal_id','registro_id');
+        $valida = $this->validacion->valida_ids(keys: $keys, registro: $_GET);
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al validar GET',data:  $valida, header: $header,ws:$ws);
+        }
 
         $data_base = $this->base_data_sucursal(org_sucursal_id: $_GET['org_sucursal_id']);
         if(errores::$error){
