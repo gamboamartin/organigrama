@@ -256,9 +256,16 @@ class controlador_org_empresa extends empresas {
      * Asigna los elementos de un link a un registro
      * @param stdClass $row registro en proceso
      * @return array|stdClass
+     * @version 0.254.34
      */
     private function asigna_link_sucursal_row(stdClass $row): array|stdClass
     {
+        $keys = array('org_empresa_id');
+        $valida = $this->validacion->valida_ids(keys: $keys,registro:  $row);
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al validar row',data:  $valida);
+        }
+
         $link_sucursales = $this->obj_link->link_con_id(accion:'sucursales',registro_id:  $row->org_empresa_id,
             seccion:  $this->tabla);
         if(errores::$error){

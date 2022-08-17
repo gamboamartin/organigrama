@@ -29,6 +29,31 @@ class controlador_org_empresaTest extends test {
 
     /**
      */
+    public function test_asigna_link_sucursal_row(): void
+    {
+        errores::$error = false;
+
+        $_GET['seccion'] = 'org_empresa';
+        $_GET['accion'] = 'ubicacion';
+
+        $_SESSION['grupo_id'] = 1;
+        $_GET['session_id'] = '1';
+        $_SESSION['usuario_id'] = '2';
+        $ctl = new controlador_org_empresa(link: $this->link, paths_conf: $this->paths_conf);
+        $ctl = new liberator($ctl);
+        $row = new stdClass();
+        $row->org_empresa_id = 1;
+        $resultado = $ctl->asigna_link_sucursal_row($row);
+        $this->assertIsObject($resultado);
+        $this->assertNotTrue(errores::$error);
+        $this->assertEquals(1,$resultado->org_empresa_id);
+        $this->assertEquals('./index.php?seccion=org_empresa&accion=sucursales&registro_id=1&session_id=1',$resultado->link_sucursales);
+        $this->assertEquals('info',$resultado->link_sucursales_style);
+        errores::$error = false;
+    }
+
+    /**
+     */
     public function test_params_empresa(): void
     {
         errores::$error = false;
