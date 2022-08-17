@@ -120,6 +120,11 @@ class org_sucursal extends modelo{
 
     }
 
+    /**
+     * Verifica si una sucursal es matriz
+     * @param int $org_sucursal_id Identificador de sucursal
+     * @return bool|array
+     */
     public function es_matriz(int $org_sucursal_id): bool|array
     {
         $filtro = array();
