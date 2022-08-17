@@ -147,6 +147,21 @@ class controlador_org_empresa extends empresas {
 
         $this->link->beginTransaction();
 
+        $siguiente_view = (new actions())->init_alta_bd();
+        if(errores::$error){
+            $this->link->rollBack();
+            return $this->retorno_error(mensaje: 'Error al obtener siguiente view', data: $siguiente_view,
+                header:  $header, ws: $ws);
+        }
+        
+
+        if(isset($_POST['guarda'])){
+            unset($_POST['guarda']);
+        }
+        if(isset($_POST['btn_action_next'])){
+            unset($_POST['btn_action_next']);
+        }
+
 
         $registro = $_POST;
         $registro['org_empresa_id'] = $this->registro_id;
@@ -161,12 +176,7 @@ class controlador_org_empresa extends empresas {
 
         $this->link->commit();
 
-        $siguiente_view = (new actions())->init_alta_bd();
-        if(errores::$error){
-            $this->link->rollBack();
-            return $this->retorno_error(mensaje: 'Error al obtener siguiente view', data: $siguiente_view,
-                header:  $header, ws: $ws);
-        }
+
 
         if($header){
 
@@ -852,9 +862,20 @@ class controlador_org_empresa extends empresas {
             return $this->retorno_error(mensaje: 'Error al limpiar datos',data:  $_POST, header: $header,ws:$ws);
         }
 
+        $siguiente_view = (new actions())->siguiente_view();
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al obtener siguiente view sucursal',data:  $siguiente_view,
+                header: $header,ws:$ws);
+        }
+
         if(isset($_POST['guarda'])){
             unset($_POST['guarda']);
         }
+        if(isset($_POST['btn_action_next'])){
+            unset($_POST['btn_action_next']);
+        }
+
+
 
         $org_sucursal_modelo = new org_sucursal($this->link);
 
@@ -867,6 +888,8 @@ class controlador_org_empresa extends empresas {
             return $this->retorno_error(mensaje: 'Error al modificar sucursal',data:  $r_modifica_bd,
                 header: $header,ws:$ws);
         }
+
+
 
 
         $this->header_out(result: $r_modifica_bd, header: $header,ws:  $ws);

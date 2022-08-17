@@ -34,7 +34,11 @@
                     <?php echo $controlador->inputs->telefono_2; ?>
                     <?php echo $controlador->inputs->telefono_3; ?>
 
-                    <?php include (new views())->ruta_templates.'botons/submit/alta_bd_otro.php';?>
+                        <div class="control-group btn-alta">
+                            <div class="controls">
+                                <button type="submit" class="btn btn-success" value="sucursales" name="btn_action_next">Alta</button><br>
+                            </div>
+                        </div>
 
                     </form>
                 </div>
