@@ -6,6 +6,7 @@ use gamboamartin\errores\errores;
 use gamboamartin\organigrama\controllers\controlador_org_sucursal;
 use gamboamartin\system\html_controler;
 use gamboamartin\system\system;
+use gamboamartin\template\directivas;
 use html\base\org_html;
 use models\base\limpieza;
 use models\org_sucursal;
@@ -279,12 +280,21 @@ class org_sucursal_html extends org_html {
         return $selects;
     }
 
-    public function select_org_sucursal_id(int $cols, bool $con_registros, int $id_selected, PDO $link): array|string
+    public function select_org_sucursal_id(int $cols, bool $con_registros, int $id_selected, PDO $link,
+                                           string $label = 'Empresa'): array|string
     {
+        $valida = (new directivas(html:$this->html_base))->valida_cols(cols:$cols);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al validar cols', data: $valida);
+        }
         $modelo = new org_sucursal(link: $link);
 
+        if(is_null($id_selected)){
+            $id_selected = -1;
+        }
+
         $select = $this->select_catalogo(cols:$cols,con_registros:$con_registros,id_selected:$id_selected,
-            modelo: $modelo,label: 'Empresa',required: true);
+            modelo: $modelo,label: $label,required: true);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select', data: $select);
         }
