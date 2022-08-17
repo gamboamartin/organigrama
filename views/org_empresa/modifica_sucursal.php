@@ -34,6 +34,7 @@
                 <?php echo $controlador->inputs->org_sucursal_telefono_1; ?>
                 <?php echo $controlador->inputs->org_sucursal_telefono_2; ?>
                 <?php echo $controlador->inputs->org_sucursal_telefono_3; ?>
+                <?php include (new views())->ruta_templates.'botons/submit/alta_bd_otro.php';?>
             </div>
             </form>
             </div>

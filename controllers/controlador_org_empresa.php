@@ -13,7 +13,6 @@ use gamboamartin\errores\errores;
 use gamboamartin\organigrama\controllers\base\empresas;
 use gamboamartin\system\actions;
 use gamboamartin\system\init;
-use gamboamartin\system\system;
 
 use gamboamartin\template\html;
 use html\dp_calle_html;
@@ -245,6 +244,30 @@ class controlador_org_empresa extends empresas {
         $data->registro = $registro;
 
         return $data;
+    }
+
+    private function base_data_sucursal(int $org_sucursal_id): array|stdClass
+    {
+        $base = $this->base_empresa_suc();
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al maquetar datos',data:  $base);
+        }
+
+        $data = $this->data_sucursal(org_sucursal_id: $org_sucursal_id);
+        if (errores::$error) {
+            return $this->errores->error(mensaje: 'Error al cargar datos de sucursal', data: $data);
+        }
+
+
+        $htmls = $this->htmls_sucursal();
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al obtener htmls',data:  $htmls);
+        }
+        $data_return = new stdClass();
+        $data_return->base = $base;
+        $data_return->data = $data;
+        $data_return->htmls = $htmls;
+        return $data_return;
     }
 
     private function base_empresa_suc(): array|stdClass
@@ -724,23 +747,11 @@ class controlador_org_empresa extends empresas {
     {
 
 
-        $base = $this->base_empresa_suc();
+        $data_base = $this->base_data_sucursal(org_sucursal_id: $_GET['org_sucursal_id']);
         if(errores::$error){
-            return $this->retorno_error(mensaje: 'Error al maquetar datos',data:  $base,
+            return $this->retorno_error(mensaje: 'Error al generar base',data:  $data_base->htmls,
                 header: $header,ws:$ws);
         }
-
-        $data = $this->data_sucursal(org_sucursal_id: $_GET['org_sucursal_id']);
-        if (errores::$error) {
-            return $this->retorno_error(mensaje: 'Error al cargar datos de sucursal', data: $data,
-                header: $header, ws: $ws);
-        }
-
-        $htmls = $this->htmls_sucursal();
-        if(errores::$error){
-            return $this->retorno_error(mensaje: 'Error al obtener htmls',data:  $htmls, header: $header,ws:$ws);
-        }
-
 
         $params = $this->params_keys_disabled_sucursal(org_sucursal_id: $_GET['org_sucursal_id']);
         if(errores::$error){
@@ -748,16 +759,16 @@ class controlador_org_empresa extends empresas {
                 header: $header,ws:$ws);
         }
 
-        $inputs_sucursal = $this->inputs_sucursal(html:$htmls->org_sucursal,
-            org_sucursal: $data->data_sucursal->org_sucursal, params: $params);
+        $inputs_sucursal = $this->inputs_sucursal(html:$data_base->htmls->org_sucursal,
+            org_sucursal: $data_base->data->data_sucursal->org_sucursal, params: $params);
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al generar inputs sucursal',
                 data:  $inputs_sucursal, header: $header,ws:$ws);
         }
 
 
-        $org_tipo_sucursal_descripcion = $htmls->org_tipo_sucursal->input_descripcion(cols: 4,
-            row_upd:  $data->data_sucursal->org_tipo_sucursal, value_vacio: false, disabled: true, place_holder:'Tipo');
+        $org_tipo_sucursal_descripcion = $data_base->htmls->org_tipo_sucursal->input_descripcion(cols: 4,
+            row_upd:  $data_base->data->data_sucursal->org_tipo_sucursal, value_vacio: false, disabled: true, place_holder:'Tipo');
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al obtener descripcion',data:  $org_tipo_sucursal_descripcion,
                 header: $header,ws:$ws);
@@ -765,7 +776,7 @@ class controlador_org_empresa extends empresas {
 
         $this->inputs->org_sucursal_tipo_sucursal_descricpion = $org_tipo_sucursal_descripcion;
 
-        $inputs_dp = $this->inputs_direcciones_by_sucursal(data_dp: $data->data_dp,htmls:  $htmls);
+        $inputs_dp = $this->inputs_direcciones_by_sucursal(data_dp:$data_base->data->data_dp,htmls:  $data_base->htmls);
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al generar inputs de direcciones',
                 data:  $inputs_dp, header: $header,ws:$ws);
@@ -826,7 +837,39 @@ class controlador_org_empresa extends empresas {
         $this->inputs->org_sucursal_dp_colonia_postal_id = $direcciones->dp_colonia_postal_id;
         $this->inputs->org_sucursal_dp_calle_pertenece_id = $direcciones->dp_calle_pertenece_id;
 
-        return $base;
+        return $data_base->base;
+    }
+
+    /**
+     * @throws JsonException
+     */
+    public function modifica_sucursal_bd(bool $header, bool $ws = false): array|stdClass
+    {
+        $_POST = $this->limpia_post_dp();
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al limpiar datos',data:  $_POST, header: $header,ws:$ws);
+        }
+
+        if(isset($_POST['guarda'])){
+            unset($_POST['guarda']);
+        }
+
+        $org_sucursal_modelo = new org_sucursal($this->link);
+
+        $org_sucursal_ins = $_POST;
+        $org_sucursal_ins['org_empresa_id'] = $this->registro_id;
+
+
+        $r_modifica_bd = $org_sucursal_modelo->modifica_bd(registro:$org_sucursal_ins, id: $this->org_sucursal_id);
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al modificar sucursal',data:  $r_modifica_bd,
+                header: $header,ws:$ws);
+        }
+
+
+        $this->header_out(result: $r_modifica_bd, header: $header,ws:  $ws);
+        return $r_modifica_bd;
+
     }
 
     private function param_key_disabled(bool $disabled, string $key_disabled, stdClass $params): stdClass
@@ -996,33 +1039,22 @@ class controlador_org_empresa extends empresas {
     {
 
 
-        $base = $this->base_empresa_suc();
+        $data_base = $this->base_data_sucursal(org_sucursal_id: $_GET['org_sucursal_id']);
         if(errores::$error){
-            return $this->retorno_error(mensaje: 'Error al maquetar datos',data:  $base,
+            return $this->retorno_error(mensaje: 'Error al generar base',data:  $data_base->htmls,
                 header: $header,ws:$ws);
         }
 
-        $data = $this->data_sucursal(org_sucursal_id: $_GET['org_sucursal_id']);
-        if (errores::$error) {
-            return $this->retorno_error(mensaje: 'Error al cargar datos de sucursal', data: $data,
-                header: $header, ws: $ws);
-        }
-
-
-        $htmls = $this->htmls_sucursal();
-        if(errores::$error){
-            return $this->retorno_error(mensaje: 'Error al obtener htmls',data:  $htmls, header: $header,ws:$ws);
-        }
-
-        $inputs_sucursal = $this->inputs_sucursal(html:$htmls->org_sucursal, org_sucursal: $data->data_sucursal->org_sucursal);
+        $inputs_sucursal = $this->inputs_sucursal(html:$data_base->htmls->org_sucursal,
+            org_sucursal: $data_base->data->data_sucursal->org_sucursal);
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al generar inputs sucursal',
                 data:  $inputs_sucursal, header: $header,ws:$ws);
         }
 
 
-        $org_tipo_sucursal_descripcion = $htmls->org_tipo_sucursal->input_descripcion(cols: 4,
-            row_upd:  $data->data_sucursal->org_tipo_sucursal, value_vacio: false, disabled: true, place_holder:'Tipo');
+        $org_tipo_sucursal_descripcion =$data_base->htmls->org_tipo_sucursal->input_descripcion(cols: 4,
+            row_upd:  $data_base->data->data_sucursal->org_tipo_sucursal, value_vacio: false, disabled: true, place_holder:'Tipo');
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al obtener descripcion',data:  $org_tipo_sucursal_descripcion,
                 header: $header,ws:$ws);
@@ -1030,13 +1062,13 @@ class controlador_org_empresa extends empresas {
 
         $this->inputs->org_sucursal_tipo_sucursal_descricpion = $org_tipo_sucursal_descripcion;
 
-        $inputs_dp = $this->inputs_direcciones_by_sucursal(data_dp: $data->data_dp,htmls:  $htmls);
+        $inputs_dp = $this->inputs_direcciones_by_sucursal(data_dp: $data_base->data->data_dp,htmls:  $data_base->htmls);
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al generar inputs de direcciones',
                 data:  $inputs_dp, header: $header,ws:$ws);
         }
 
-        return $base;
+        return $data_base->base;
     }
 
 }

@@ -12,7 +12,7 @@ class empresas extends system{
      * @return array
      * @version 0.230.35
      */
-    private function limpia_post_dp(): array
+    protected function limpia_post_dp(): array
     {
         $keys = array('dp_pais_id','dp_estado_id','dp_municipio_id','dp_cp_id','dp_colonia_postal_id');
         $_POST = (new init())->limpia_rows(keys: $keys,row:  $_POST);
