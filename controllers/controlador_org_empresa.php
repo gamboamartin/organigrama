@@ -43,6 +43,7 @@ class controlador_org_empresa extends empresas {
     public int $org_empresa_id = -1;
     public int $org_sucursal_id = -1;
     public stdClass $sucursales ;
+    public bool $muestra_btn_upd = true;
 
     public function __construct(PDO $link, html $html = new \gamboamartin\template_1\html(),
                                 stdClass $paths_conf = new stdClass()){
@@ -749,7 +750,7 @@ class controlador_org_empresa extends empresas {
 
         $data_base = $this->base_data_sucursal(org_sucursal_id: $_GET['org_sucursal_id']);
         if(errores::$error){
-            return $this->retorno_error(mensaje: 'Error al generar base',data:  $data_base->htmls,
+            return $this->retorno_error(mensaje: 'Error al generar base',data:  $data_base,
                 header: $header,ws:$ws);
         }
 
@@ -765,7 +766,6 @@ class controlador_org_empresa extends empresas {
             return $this->retorno_error(mensaje: 'Error al generar inputs sucursal',
                 data:  $inputs_sucursal, header: $header,ws:$ws);
         }
-
 
         $org_tipo_sucursal_descripcion = $data_base->htmls->org_tipo_sucursal->input_descripcion(cols: 4,
             row_upd:  $data_base->data->data_sucursal->org_tipo_sucursal, value_vacio: false, disabled: true, place_holder:'Tipo');
@@ -800,7 +800,9 @@ class controlador_org_empresa extends empresas {
         $disabled = false;
         if($es_matriz){
             $disabled = true;
+            $this->muestra_btn_upd = false;
         }
+
 
         $params = new stdClass();
 
