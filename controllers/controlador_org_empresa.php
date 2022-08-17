@@ -153,7 +153,7 @@ class controlador_org_empresa extends empresas {
             return $this->retorno_error(mensaje: 'Error al obtener siguiente view', data: $siguiente_view,
                 header:  $header, ws: $ws);
         }
-        
+
 
         if(isset($_POST['guarda'])){
             unset($_POST['guarda']);
