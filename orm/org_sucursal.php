@@ -23,8 +23,10 @@ class org_sucursal extends modelo{
         $tipo_campos['org_tipo_sucursal_id'] = 'id';
         $tipo_campos['org_empresa_id'] = 'id';
 
+        $no_duplicados[] = 'codigo';
+        $no_duplicados[] = 'codigo_bis';
 
-        parent::__construct(link: $link,tabla:  $tabla, campos_obligatorios: $campos_obligatorios,
+        parent::__construct(link: $link,tabla:  $tabla, no_duplicados: $no_duplicados, campos_obligatorios: $campos_obligatorios,
             columnas: $columnas, tipo_campos: $tipo_campos);
     }
     public function alta_bd(): array|stdClass
