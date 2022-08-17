@@ -43,7 +43,7 @@ class org_empresa_html extends org_html {
         return $controler->inputs;
     }
 
-    public function btn_next_action(string $label, string $value): array|string
+    private function btn_next_action(string $label, string $value): array|string
     {
 
         $btn = $this->directivas->btn_action_next_div(label: $label, value: $value);
@@ -53,6 +53,29 @@ class org_empresa_html extends org_html {
 
         return $btn;
 
+    }
+
+    public function btns_views(): array
+    {
+        $btns = array();
+        $btn_modifica = $this->btn_next_action(label: 'Guarda', value: 'modifica');
+
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar boton',data:  $btn_modifica);
+
+        }
+        $btns['guarda'] = $btn_modifica;
+
+        $btn_siguiente_ubicacion = $this->btn_next_action(label: 'Siguiente', value: 'ubicacion');
+
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar boton',data:  $btn_siguiente_ubicacion);
+
+        }
+
+        $btns['siguiente_ubicacion'] = $btn_siguiente_ubicacion;
+
+        return $btns;
     }
 
     public function em_email_sat(int $cols, stdClass $row_upd, bool $value_vacio): array|string

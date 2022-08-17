@@ -100,26 +100,13 @@ class controlador_org_empresa extends empresas {
         }
 
 
-        $btn_modifica = (new org_empresa_html(html: $this->html_base))->btn_next_action(label: 'Guarda',
-            value: 'modifica');
+        $btns = (new org_empresa_html(html: $this->html_base))->btns_views();
 
         if(errores::$error){
-            $error = $this->errores->error(mensaje: 'Error al generar boton',data:  $btn_modifica);
-            print_r($error);
-            die('Error');
-        }
-        $this->btns['guarda'] = $btn_modifica;
-
-        $btn_siguiente = (new org_empresa_html(html: $this->html_base))->btn_next_action(label: 'Siguiente',
-            value: 'ubicacion');
-
-        if(errores::$error){
-            $error = $this->errores->error(mensaje: 'Error al generar boton',data:  $btn_siguiente);
-            print_r($error);
-            die('Error');
+            return $this->retorno_error(mensaje: 'Error al generar botones',data:  $btns, header: $header,ws:$ws);
         }
 
-        $this->btns['siguiente'] = $btn_siguiente;
+        $this->btns = $btns;
 
 
         return $r_alta;
