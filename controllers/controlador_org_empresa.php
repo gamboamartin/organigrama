@@ -83,6 +83,16 @@ class controlador_org_empresa extends empresas {
 
         $this->seccion_titulo = 'EMPRESAS';
 
+        $btns = (new org_empresa_html(html: $this->html_base))->btns_views();
+
+        if(errores::$error){
+            $error = $this->errores->error(mensaje: 'Error al generar botones',data:  $btns);
+            print_r($error);
+            exit;
+        }
+
+        $this->btns = $btns;
+
     }
 
     public function alta(bool $header, bool $ws = false): array|string
@@ -99,14 +109,6 @@ class controlador_org_empresa extends empresas {
             die('Error');
         }
 
-
-        $btns = (new org_empresa_html(html: $this->html_base))->btns_views();
-
-        if(errores::$error){
-            return $this->retorno_error(mensaje: 'Error al generar botones',data:  $btns, header: $header,ws:$ws);
-        }
-
-        $this->btns = $btns;
 
 
         return $r_alta;
