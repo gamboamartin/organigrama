@@ -43,6 +43,18 @@ class org_empresa_html extends org_html {
         return $controler->inputs;
     }
 
+    public function btn_next_action(string $label, string $value): array|string
+    {
+
+        $btn = $this->directivas->btn_action_next(label: $label, value: $value);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar btn', data: $btn);
+        }
+
+        return $btn;
+
+    }
+
     public function em_email_sat(int $cols, stdClass $row_upd, bool $value_vacio): array|string
     {
         if($cols<=0){
@@ -80,8 +92,6 @@ class org_empresa_html extends org_html {
 
         return $emails;
     }
-
-
 
     public function fec_fecha_ultimo_cambio_sat(int $cols, stdClass $row_upd, bool $value_vacio): array|string
     {
