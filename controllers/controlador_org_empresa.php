@@ -93,6 +93,15 @@ class controlador_org_empresa extends empresas {
 
         $this->btns = $btns;
 
+        $this->keys_row_lista[0]= new stdClass();
+        $this->keys_row_lista[0]->campo = 'org_empresa_id';
+        $this->keys_row_lista[1]= new stdClass();
+        $this->keys_row_lista[1]->campo = 'org_empresa_rfc';
+        $this->keys_row_lista[2]= new stdClass();
+        $this->keys_row_lista[2]->campo = 'org_empresa_razon_social';
+        $this->keys_row_lista[3]= new stdClass();
+        $this->keys_row_lista[3]->campo = 'org_empresa_nombre_comercial';
+
     }
 
     public function alta(bool $header, bool $ws = false): array|string
