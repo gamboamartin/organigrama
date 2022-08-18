@@ -734,6 +734,11 @@ class controlador_org_empresa extends empresas {
         return $org_tipo_sucursal_descripcion;
     }
 
+    /**
+     * Maqueta los elementos de una lista para empresas
+     * @param array $registros Registros de empresa
+     * @return array
+     */
     private function maqueta_registros_lista(array $registros): array
     {
         foreach ($registros as $indice=> $row){
