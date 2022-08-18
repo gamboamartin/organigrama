@@ -83,7 +83,7 @@ class controlador_org_empresa extends empresas {
 
         $this->seccion_titulo = 'EMPRESAS';
 
-        $btns = (new org_empresa_html(html: $this->html_base))->btns_views();
+        $btns = (new org_empresa_html(html: $this->html_base))->btns_views(org_empresa_id: $this->registro_id);
 
         if(errores::$error){
             $error = $this->errores->error(mensaje: 'Error al generar botones',data:  $btns);
@@ -93,24 +93,15 @@ class controlador_org_empresa extends empresas {
 
         $this->btns = $btns;
 
-        $this->keys_row_lista[0]= new stdClass();
-        $this->keys_row_lista[0]->campo = 'org_empresa_id';
-        $this->keys_row_lista[1]= new stdClass();
-        $this->keys_row_lista[1]->campo = 'org_empresa_rfc';
-        $this->keys_row_lista[2]= new stdClass();
-        $this->keys_row_lista[2]->campo = 'org_empresa_razon_social';
-        $this->keys_row_lista[3]= new stdClass();
-        $this->keys_row_lista[3]->campo = 'org_empresa_nombre_comercial';
-        $this->keys_row_lista[4]= new stdClass();
-        $this->keys_row_lista[4]->campo = 'org_empresa_codigo';
-        $this->keys_row_lista[5]= new stdClass();
-        $this->keys_row_lista[5]->campo = 'org_empresa_codigo_bis';
-        $this->keys_row_lista[6]= new stdClass();
-        $this->keys_row_lista[6]->campo = 'org_empresa_descripcion';
-        $this->keys_row_lista[7]= new stdClass();
-        $this->keys_row_lista[7]->campo = 'org_empresa_descripcion_select';
-        $this->keys_row_lista[8]= new stdClass();
-        $this->keys_row_lista[8]->campo = 'org_empresa_alias';
+
+        $keys_row_lista = $this->keys_rows_lista();
+        if(errores::$error){
+            $error = $this->errores->error(mensaje: 'Error al generar keys de lista',data:  $keys_row_lista);
+            print_r($error);
+            exit;
+        }
+        $this->keys_row_lista = $keys_row_lista;
+
 
     }
 
@@ -498,6 +489,35 @@ class controlador_org_empresa extends empresas {
         }
         return $params;
     }
+
+    private function key_row_lista_init(string $campo, array $keys_row_lista): array
+    {
+        $data = new stdClass();
+        $data->campo = $campo;
+        $keys_row_lista[]= $data;
+        return $keys_row_lista;
+    }
+
+    private function keys_rows_lista(): array
+    {
+
+        $keys_row_lista = array();
+
+        $keys = array('org_empresa_id','org_empresa_rfc','org_empresa_razon_social','org_empresa_nombre_comercial',
+            'org_empresa_codigo','org_empresa_codigo_bis','org_empresa_descripcion','org_empresa_descripcion_select',
+            'org_empresa_alias');
+
+        foreach ($keys as $campo){
+            $keys_row_lista = $this->key_row_lista_init(campo: $campo, keys_row_lista: $keys_row_lista);
+            if(errores::$error){
+                return $this->errores->error(mensaje: 'Error al inicializar key',data: $keys_row_lista);
+            }
+        }
+
+        return $keys_row_lista;
+    }
+
+
 
     /**
      * @return object - org_tipo_sucursal_html org_sorg_sucursal

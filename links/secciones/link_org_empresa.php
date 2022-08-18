@@ -54,6 +54,12 @@ class link_org_empresa extends links_menu {
     }
 
 
+    /**
+     * Genera un link de sucursal modifica
+     * @param int $org_empresa_id Empresa
+     * @param int $org_sucursal_id sucursal ligada a empresa
+     * @return string
+     */
     public function link_org_sucursal_modifica_bd(int $org_empresa_id, int $org_sucursal_id): string
     {
         $link = $this->link_con_id(accion:'modifica_sucursal_bd', registro_id: $org_empresa_id,seccion:  'org_empresa');
