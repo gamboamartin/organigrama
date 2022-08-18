@@ -101,6 +101,16 @@ class controlador_org_empresa extends empresas {
         $this->keys_row_lista[2]->campo = 'org_empresa_razon_social';
         $this->keys_row_lista[3]= new stdClass();
         $this->keys_row_lista[3]->campo = 'org_empresa_nombre_comercial';
+        $this->keys_row_lista[4]= new stdClass();
+        $this->keys_row_lista[4]->campo = 'org_empresa_codigo';
+        $this->keys_row_lista[5]= new stdClass();
+        $this->keys_row_lista[5]->campo = 'org_empresa_codigo_bis';
+        $this->keys_row_lista[6]= new stdClass();
+        $this->keys_row_lista[6]->campo = 'org_empresa_descripcion';
+        $this->keys_row_lista[7]= new stdClass();
+        $this->keys_row_lista[7]->campo = 'org_empresa_descripcion_select';
+        $this->keys_row_lista[8]= new stdClass();
+        $this->keys_row_lista[8]->campo = 'org_empresa_alias';
 
     }
 
