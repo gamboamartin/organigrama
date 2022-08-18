@@ -45,8 +45,8 @@ class org_empresa_html extends org_html {
 
     /**
      * Genera un boton de tipo submit
-     * @param string $label
-     * @param string $value
+     * @param string $label Etiqueta a mostrar
+     * @param string $value Valor de siguiente accion
      * @return array|string
      */
     private function btn_next_action(string $label, string $value): array|string
