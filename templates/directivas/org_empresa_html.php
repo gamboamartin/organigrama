@@ -43,6 +43,12 @@ class org_empresa_html extends org_html {
         return $controler->inputs;
     }
 
+    /**
+     * Genera un boton de tipo submit
+     * @param string $label
+     * @param string $value
+     * @return array|string
+     */
     private function btn_next_action(string $label, string $value): array|string
     {
 
