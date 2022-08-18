@@ -55,7 +55,7 @@ class org_empresa_html extends org_html {
 
     }
 
-    public function btns_views(): array
+    public function btns_views(int $org_empresa_id = -1): array
     {
         $btns = array();
         $btn_modifica = $this->btn_next_action(label: 'Guarda', value: 'modifica');
@@ -64,7 +64,7 @@ class org_empresa_html extends org_html {
             return $this->error->error(mensaje: 'Error al generar boton',data:  $btn_modifica);
 
         }
-        $btns['guarda'] = $btn_modifica;
+        $btns['sub_guarda'] = $btn_modifica;
 
         $btn_siguiente_ubicacion = $this->btn_next_action(label: 'Siguiente', value: 'ubicacion');
 
@@ -73,7 +73,20 @@ class org_empresa_html extends org_html {
 
         }
 
-        $btns['siguiente_ubicacion'] = $btn_siguiente_ubicacion;
+        $btns['sub_siguiente_ubicacion'] = $btn_siguiente_ubicacion;
+
+
+        $link_sucursales = $this->html_base->button_href(accion: 'sucursales',etiqueta:  'Sucursales',
+            registro_id: $org_empresa_id, seccion: 'org_empresa',style:  'info');
+
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar boton',data:  $link_sucursales);
+
+        }
+
+        $btns['link_sucursales'] = $link_sucursales;
+
+
 
         return $btns;
     }

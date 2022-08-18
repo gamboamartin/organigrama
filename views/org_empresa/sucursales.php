@@ -73,7 +73,8 @@
                             <th>Elimina</th>
 
                             <tbody>
-                            <?php foreach ($controlador->sucursales->registros as $sucursal){ ?>
+                            <?php foreach ($controlador->sucursales->registros as $sucursal){
+                                ?>
                             <tr>
                                 <td><?php echo $sucursal['org_sucursal_id']; ?></td>
                                 <td><?php echo $sucursal['org_sucursal_codigo']; ?></td>
