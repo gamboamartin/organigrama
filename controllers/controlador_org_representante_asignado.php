@@ -11,6 +11,7 @@ namespace gamboamartin\organigrama\controllers;
 use gamboamartin\errores\errores;
 use gamboamartin\system\links_menu;
 use gamboamartin\system\system;
+use gamboamartin\template\html;
 use html\org_empresa_html;
 use html\org_representante_asignado_html;
 use html\org_representante_legal_html;
@@ -20,9 +21,9 @@ use stdClass;
 
 class controlador_org_representante_asignado extends system {
 
-    public function __construct(PDO $link, stdClass $paths_conf = new stdClass()){
+    public function __construct(PDO $link, html $html = new \gamboamartin\template_1\html(), stdClass $paths_conf = new stdClass()){
         $modelo = new org_representante_asignado(link: $link);
-        $html = new org_representante_asignado_html();
+        $html = new org_representante_asignado_html($html);
         $obj_link = new links_menu($this->registro_id);
         parent::__construct(html:$html, link: $link,modelo:  $modelo, obj_link: $obj_link, paths_conf: $paths_conf);
 
@@ -38,7 +39,7 @@ class controlador_org_representante_asignado extends system {
         }
 
         $this->inputs->select = new stdClass();
-        $select = (new org_representante_legal_html())->select_org_representante_legal_id(cols:12,con_registros:true,id_selected:-1,link: $this->link);
+        $select = (new org_representante_legal_html(html: $this->html_base))->select_org_representante_legal_id(cols:12,con_registros:true,id_selected:-1,link: $this->link);
         if(errores::$error){
             $error = $this->errores->error(mensaje: 'Error al generar select',data:  $select);
             print_r($error);
@@ -48,7 +49,7 @@ class controlador_org_representante_asignado extends system {
 
         $this->inputs->select->org_representante_legal_id = $select;
 
-        $select = (new org_empresa_html())->select_org_empresa_id(cols:12,con_registros:true,id_selected:-1,link: $this->link);
+        $select = (new org_empresa_html(html: $this->html_base))->select_org_empresa_id(cols:12,con_registros:true,id_selected:-1,link: $this->link);
         if(errores::$error){
             $error = $this->errores->error(mensaje: 'Error al generar select',data:  $select);
             print_r($error);
@@ -58,8 +59,8 @@ class controlador_org_representante_asignado extends system {
 
         $this->inputs->select->org_empresa_id = $select;
 
-        $in_fecha_inicio = (new org_representante_asignado_html())->input(cols: 6,row_upd:  new stdClass(),value_vacio:  true, campo: "Fecha Inicio");
-        $in_fecha_fin = (new org_representante_asignado_html())->input(cols: 6,row_upd:  new stdClass(),value_vacio:  true, campo: "Fecha Fin");
+        $in_fecha_inicio = (new org_representante_asignado_html(html: $this->html_base))->input(cols: 6,row_upd:  new stdClass(),value_vacio:  true, campo: "Fecha Inicio");
+        $in_fecha_fin = (new org_representante_asignado_html(html: $this->html_base))->input(cols: 6,row_upd:  new stdClass(),value_vacio:  true, campo: "Fecha Fin");
 
         if(errores::$error){
             $error = $this->errores->error(mensaje: 'Error al generar el input',data:  $in_fecha_inicio);
