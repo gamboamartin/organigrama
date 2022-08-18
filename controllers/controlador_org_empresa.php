@@ -996,10 +996,22 @@ class controlador_org_empresa extends empresas {
                 header: $header,ws:$ws);
         }
 
+        if($header){
 
-
-
-        $this->header_out(result: $r_modifica_bd, header: $header,ws:  $ws);
+            $retorno = (new actions())->retorno_alta_bd(registro_id:$this->registro_id,seccion: $this->tabla,
+                siguiente_view: $siguiente_view);
+            if(errores::$error){
+                return $this->retorno_error(mensaje: 'Error al dar de alta registro', data: $r_modifica_bd,
+                    header:  true, ws: $ws);
+            }
+            header('Location:'.$retorno);
+            exit;
+        }
+        if($ws){
+            header('Content-Type: application/json');
+            echo json_encode($r_modifica_bd, JSON_THROW_ON_ERROR);
+            exit;
+        }
         return $r_modifica_bd;
 
     }
