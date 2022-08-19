@@ -494,6 +494,12 @@ class controlador_org_empresa extends empresas {
     {
         $data = new stdClass();
         $data->campo = $campo;
+
+        $campo = str_replace('org_empresa_', '', $campo);
+        $campo = str_replace('_', ' ', $campo);
+        $campo = ucfirst(strtolower($campo));
+
+        $data->name_lista = $campo;
         $keys_row_lista[]= $data;
         return $keys_row_lista;
     }

@@ -2,6 +2,7 @@
 <?php use config\views; ?>
 <?php echo $controlador->inputs->id; ?>
 <?php echo $controlador->inputs->codigo; ?>
+<?php echo $controlador->inputs->select->org_tipo_sucursal_id; ?>
 <?php echo $controlador->inputs->serie; ?>
 
 
@@ -31,7 +32,6 @@
 
 <div class="control-group btn-alta col-12">
     <div class="controls">
-        <?php include 'templates/botons/cat_sat_regimen_fiscal_alta.php';?>
         <?php include 'templates/botons/dp_pais_alta.php';?>
         <?php include 'templates/botons/dp_estado_alta.php';?>
         <?php include 'templates/botons/dp_municipio_alta.php';?>
