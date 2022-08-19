@@ -25,6 +25,7 @@ class org_sucursal_html extends org_html {
         }
 
         $controler->inputs->select->org_empresa_id = $inputs->selects->org_empresa_id;
+        $controler->inputs->select->org_tipo_sucursal_id = $inputs->selects->org_tipo_sucursal_id;
         $controler->inputs->serie = $inputs->texts->serie;
 
 
@@ -254,6 +255,16 @@ class org_sucursal_html extends org_html {
 
         $selects->org_empresa_id = $select;
 
+        $org_tipo_sucursal_html = new org_tipo_sucursal_html(html:$this->html_base);
+
+        $select = $org_tipo_sucursal_html->select_org_tipo_sucursal_id(cols: 4, con_registros:true,
+            id_selected:-1,link: $link);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar select',data:  $select);
+        }
+
+        $selects->org_tipo_sucursal_id = $select;
+
         return $selects;
     }
 
@@ -276,6 +287,16 @@ class org_sucursal_html extends org_html {
         }
 
         $selects->org_empresa_id = $select;
+
+        $org_tipo_sucursal_html = new org_tipo_sucursal_html(html:$this->html_base);
+
+        $select = $org_tipo_sucursal_html->select_org_tipo_sucursal_id(cols: 4, con_registros:true,
+            id_selected:$row_upd->org_tipo_sucursal_id,link: $link);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar select',data:  $select);
+        }
+
+        $selects->org_tipo_sucursal_id = $select;
 
         return $selects;
     }
