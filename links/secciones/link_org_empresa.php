@@ -59,6 +59,7 @@ class link_org_empresa extends links_menu {
      * @param int $org_empresa_id Empresa
      * @param int $org_sucursal_id sucursal ligada a empresa
      * @return string
+     * @version 0.265.35
      */
     public function link_org_sucursal_modifica_bd(int $org_empresa_id, int $org_sucursal_id): string
     {
