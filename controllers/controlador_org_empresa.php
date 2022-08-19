@@ -998,9 +998,9 @@ class controlador_org_empresa extends empresas {
         }
 
         if($header){
-
+            $params = array('org_sucursal_id'=>$this->org_sucursal_id);
             $retorno = (new actions())->retorno_alta_bd(registro_id:$this->registro_id,seccion: $this->tabla,
-                siguiente_view: $siguiente_view);
+                siguiente_view: $siguiente_view, params:$params );
             if(errores::$error){
                 return $this->retorno_error(mensaje: 'Error al dar de alta registro', data: $r_modifica_bd,
                     header:  true, ws: $ws);
