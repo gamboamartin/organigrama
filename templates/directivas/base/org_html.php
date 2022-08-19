@@ -92,6 +92,7 @@ class org_html extends html_controler {
      * Genera un conjunto de selects para views por default direcciones
      * @param PDO $link conexion a la base de datos
      * @return array|stdClass
+     * @version 0.264.35
      */
     protected function selects_alta(PDO $link): array|stdClass
     {
