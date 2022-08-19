@@ -2,6 +2,7 @@
 <?php use config\views; ?>
 <?php echo $controlador->inputs->id; ?>
 <?php echo $controlador->inputs->codigo; ?>
+<?php echo $controlador->inputs->select->org_tipo_sucursal_id; ?>
 <?php echo $controlador->inputs->serie; ?>
 
 
