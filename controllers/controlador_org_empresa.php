@@ -742,17 +742,7 @@ class controlador_org_empresa extends empresas {
         return $r_lista;
     }
 
-    private function org_tipo_sucursal_descripcion(stdClass $org_tipo_sucursal, org_tipo_sucursal_html $html): array|string
-    {
-        $org_tipo_sucursal_descripcion = $html->input_descripcion(cols: 4, row_upd:  $org_tipo_sucursal,
-            value_vacio: false, disabled: true, place_holder:'Tipo');
-        if(errores::$error){
-            return $this->errores->error(mensaje: 'Error al obtener descripcion',data:  $org_tipo_sucursal_descripcion);
-        }
 
-        $this->inputs->org_sucursal_tipo_sucursal_descricpion = $org_tipo_sucursal_descripcion;
-        return $org_tipo_sucursal_descripcion;
-    }
 
     /**
      * Maqueta los elementos de una lista para empresas
@@ -782,7 +772,6 @@ class controlador_org_empresa extends empresas {
 
         return $base->template;
     }
-
 
 
     /**
@@ -866,6 +855,12 @@ class controlador_org_empresa extends empresas {
     public function modifica_sucursal(bool $header, bool $ws = false): array|stdClass
     {
 
+        $keys = array('org_sucursal_id');
+        $valida = $this->validacion->valida_existencia_keys(keys: $keys, registro: $_GET);
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al validar GET',data:  $valida,
+                header: $header,ws:$ws);
+        }
 
         $data_base = $this->base_data_sucursal(org_sucursal_id: $_GET['org_sucursal_id']);
         if(errores::$error){
@@ -1069,6 +1064,18 @@ class controlador_org_empresa extends empresas {
         }
         return $r_modifica_bd;
 
+    }
+
+    private function org_tipo_sucursal_descripcion(stdClass $org_tipo_sucursal, org_tipo_sucursal_html $html): array|string
+    {
+        $org_tipo_sucursal_descripcion = $html->input_descripcion(cols: 4, row_upd:  $org_tipo_sucursal,
+            value_vacio: false, disabled: true, place_holder:'Tipo');
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al obtener descripcion',data:  $org_tipo_sucursal_descripcion);
+        }
+
+        $this->inputs->org_sucursal_tipo_sucursal_descricpion = $org_tipo_sucursal_descripcion;
+        return $org_tipo_sucursal_descripcion;
     }
 
     private function param_key_disabled(bool $disabled, string $key_disabled, stdClass $params): stdClass
