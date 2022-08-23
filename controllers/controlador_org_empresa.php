@@ -101,7 +101,7 @@ class controlador_org_empresa extends empresas {
             exit;
         }
         $this->keys_row_lista = $keys_row_lista;
-
+        $this->total_items_sections = 7;
 
     }
 
