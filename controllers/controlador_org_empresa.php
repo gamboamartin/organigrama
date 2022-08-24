@@ -103,6 +103,20 @@ class controlador_org_empresa extends empresas {
         $this->keys_row_lista = $keys_row_lista;
         $this->total_items_sections = 7;
 
+        $this->actions_number['alta'] = 1;
+        $this->actions_number['cif'] = 3;
+        $this->actions_number['contacto'] = 4;
+        $this->actions_number['identidad'] = 5;
+        $this->actions_number['modifica'] = 1;
+        $this->actions_number['sucursales'] = 6;
+        $this->actions_number['ubicacion'] = 2;
+
+        if(isset($this->actions_number[$this->accion])){
+            $this->number_active = $this->actions_number[$this->accion];
+        }
+
+
+
     }
 
     public function alta(bool $header, bool $ws = false): array|string
@@ -118,8 +132,6 @@ class controlador_org_empresa extends empresas {
             print_r($error);
             die('Error');
         }
-
-        $this->number_active = 1;
 
         return $r_alta;
     }
@@ -358,7 +370,6 @@ class controlador_org_empresa extends empresas {
                 header: $header,ws:$ws);
         }
 
-        $this->number_active = 3;
         return $base;
 
     }
@@ -377,7 +388,7 @@ class controlador_org_empresa extends empresas {
             return $this->retorno_error(mensaje: 'Error al maquetar datos',data:  $base,
                 header: $header,ws:$ws);
         }
-        $this->number_active = 4;
+
         return $base;
 
     }
@@ -524,8 +535,6 @@ class controlador_org_empresa extends empresas {
         return $keys_row_lista;
     }
 
-
-
     /**
      * @return object - org_tipo_sucursal_html org_sorg_sucursal
      * @return object - org_tipo_sucursal_html org_sorg_sucursal
@@ -558,7 +567,7 @@ class controlador_org_empresa extends empresas {
             return $this->retorno_error(mensaje: 'Error al maquetar datos',data:  $base,
                 header: $header,ws:$ws);
         }
-        $this->number_active = 5;
+
         return $base;
 
     }
@@ -776,7 +785,7 @@ class controlador_org_empresa extends empresas {
             return $this->retorno_error(mensaje: 'Error al maquetar datos',data:  $base,
                 header: $header,ws:$ws);
         }
-        $this->number_active = 1;
+
         return $base->template;
     }
 
@@ -1202,7 +1211,7 @@ class controlador_org_empresa extends empresas {
         }
 
         $this->sucursales = $sucursales;
-        $this->number_active = 6;
+
         return $base;
 
     }
@@ -1222,7 +1231,7 @@ class controlador_org_empresa extends empresas {
             return $this->retorno_error(mensaje: 'Error al maquetar datos',data:  $base,
                 header: $header,ws:$ws);
         }
-        $this->number_active = 2;
+
         return $base;
 
     }
