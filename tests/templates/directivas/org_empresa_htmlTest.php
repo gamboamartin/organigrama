@@ -22,6 +22,31 @@ class org_empresa_htmlTest extends test {
 
     /**
      */
+    public function test_btn_next_action(): void
+    {
+        errores::$error = false;
+
+        $_GET['seccion'] = 'cat_sat_tipo_persona';
+        $_GET['accion'] = 'lista';
+        $_SESSION['grupo_id'] = 1;
+        $_GET['session_id'] = '1';
+        $html_ = new html();
+        $html = new org_empresa_html($html_);
+        $html = new liberator($html);
+
+        $label = 'a';
+        $value = 'b';
+
+        $resultado = $html->btn_next_action($label, $value);
+        $this->assertIsString($resultado);
+        $this->assertNotTrue(errores::$error);
+        $this->assertEquals("<div class='col-md-6'><button type='submit' class='btn btn-info btn-guarda col-md-12' name='btn_action_next' value='b'>a</button></div>", $resultado);
+
+        errores::$error = false;
+    }
+
+    /**
+     */
     public function test_input_codigo(): void
     {
         errores::$error = false;

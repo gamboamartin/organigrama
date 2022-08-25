@@ -47,11 +47,19 @@ class org_empresa_html extends org_html {
      * Genera un boton de tipo submit
      * @param string $label Etiqueta a mostrar
      * @param string $value Valor de siguiente accion
+     * @param string $style Stilo del boton
+     * @param string $type Tipo submit button
      * @return array|string
+     * @version 0.269.35
      */
-    private function btn_next_action(string $label, string $value): array|string
+    private function btn_next_action(string $label, string $value, string $style = 'info',
+                                    string $type = 'submit'): array|string
     {
 
+        $valida = $this->directivas->valida_btn_next(label: $label,style:  $style,type:  $type,value:  $value);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al validar datos', data: $valida);
+        }
         $btn = $this->directivas->btn_action_next_div(label: $label, value: $value);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar btn', data: $btn);
@@ -61,6 +69,10 @@ class org_empresa_html extends org_html {
 
     }
 
+    /**
+     * @param int $org_empresa_id
+     * @return array
+     */
     public function btns_views(int $org_empresa_id = -1): array
     {
         $btns = array();

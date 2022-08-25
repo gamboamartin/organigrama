@@ -502,13 +502,17 @@ class controlador_org_empresa extends empresas {
         return $params;
     }
 
+    /**
+     * @param string $campo
+     * @param array $keys_row_lista
+     * @return array
+     */
     private function key_row_lista_init(string $campo, array $keys_row_lista): array
     {
         $data = new stdClass();
         $data->campo = $campo;
 
-        $campo = str_replace('org_empresa_', '', $campo);
-        $campo = str_replace('_', ' ', $campo);
+        $campo = str_replace(array('org_empresa_', '_'), array('', ' '), $campo);
         $campo = ucfirst(strtolower($campo));
 
         $data->name_lista = $campo;
@@ -516,6 +520,9 @@ class controlador_org_empresa extends empresas {
         return $keys_row_lista;
     }
 
+    /**
+     * @return array
+     */
     private function keys_rows_lista(): array
     {
 
