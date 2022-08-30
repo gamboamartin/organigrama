@@ -53,6 +53,18 @@ class link_org_empresa extends links_menu {
         return $link;
     }
 
+    public function link_im_registro_patronal_alta_bd(int $org_empresa_id): string
+    {
+
+        $link = $this->link_con_id(accion:'alta_registro_patronal_bd', registro_id: $org_empresa_id,
+            seccion:  'org_empresa');
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar link', data: $link);
+        }
+
+        return $link;
+    }
+
 
     /**
      * Genera un link de sucursal modifica

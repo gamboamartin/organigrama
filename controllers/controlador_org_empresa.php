@@ -38,6 +38,7 @@ use stdClass;
 
 class controlador_org_empresa extends empresas {
     public string $link_org_sucursal_alta_bd = '';
+    public string $link_im_registro_patronal_alta_bd = '';
     public string $link_org_sucursal_modifica_bd = '';
     public string $razon_social = '';
     public string $rfc = '';
@@ -72,6 +73,15 @@ class controlador_org_empresa extends empresas {
             exit;
         }
         $this->link_org_sucursal_alta_bd = $link_org_sucursal_alta_bd;
+        
+        $link_im_registro_patronal_alta_bd = $obj_link->link_im_registro_patronal_alta_bd(org_empresa_id: $this->registro_id);
+        if(errores::$error){
+            $error = $this->errores->error(mensaje: 'Error al generar link sucursal alta',
+                data:  $link_im_registro_patronal_alta_bd);
+            print_r($error);
+            exit;
+        }
+        $this->link_im_registro_patronal_alta_bd = $link_im_registro_patronal_alta_bd;
 
         $link_org_sucursal_modifica_bd = $obj_link->link_org_sucursal_modifica_bd(org_empresa_id: $this->registro_id,
             org_sucursal_id: $this->org_sucursal_id);
