@@ -13,7 +13,7 @@
 
                         <?php echo $controlador->inputs->select->org_empresa_id; ?>
                         <?php echo $controlador->inputs->select->org_sucursal_id; ?>
-                        <?php echo $controlador->inputs->select->fc_cfd_id; ?>
+                        <?php echo $controlador->inputs->select->fc_csd_id; ?>
                         <?php echo $controlador->inputs->codigo; ?>
                         <?php echo $controlador->inputs->codigo_bis; ?>
                         <?php echo $controlador->inputs->select->im_clase_riesgo_id; ?>

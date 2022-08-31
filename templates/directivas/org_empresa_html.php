@@ -53,7 +53,7 @@ class org_empresa_html extends org_html {
 
         $controler->inputs->select->im_clase_riesgo_id = $inputs->selects->im_clase_riesgo_id;
         $controler->inputs->select->org_sucursal_id = $inputs->selects->org_sucursal_id;
-        $controler->inputs->select->fc_cfd_id = $inputs->selects->fc_cfd_id;
+        $controler->inputs->select->fc_csd_id = $inputs->selects->fc_csd_id;
         $controler->inputs->exterior = $inputs->texts->exterior;
         $controler->inputs->interior = $inputs->texts->interior;
 
@@ -691,14 +691,14 @@ class org_empresa_html extends org_html {
         }
 
         $selects->org_sucursal_id = $select;
-        $select = (new fc_cfd_html(html: $this->html_base))->select_fc_cfd_id(
+        $select = (new fc_csd_html(html: $this->html_base))->select_fc_csd_id(
             cols: 6, con_registros:false, id_selected: -1,link: $link);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $select);
 
         }
 
-        $selects->fc_cfd_id = $select;
+        $selects->fc_csd_id = $select;
 
         return $selects;
     }

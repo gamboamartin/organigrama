@@ -13,14 +13,14 @@ use PDO;
 use stdClass;
 
 
-class controlador_fc_cfd extends \gamboamartin\facturacion\controllers\controlador_fc_cfd {
+class controlador_fc_csd extends \gamboamartin\facturacion\controllers\controlador_fc_csd {
 
     public function __construct(PDO $link, stdClass $paths_conf = new stdClass()){
 
 
         parent::__construct(link: $link, paths_conf: $paths_conf);
 
-        $this->titulo_lista = 'CFD';
+        $this->titulo_lista = 'CSD';
 
     }
 
