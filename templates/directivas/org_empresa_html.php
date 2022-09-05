@@ -43,6 +43,23 @@ class org_empresa_html extends org_html {
         return $controler->inputs;
     }
 
+    protected function asigna_inputs_registro_patronal(system $controler, stdClass $inputs): array|stdClass
+    {
+        $inputs_direcciones_postales = (new inputs_html())->base_direcciones_asignacion(controler:$controler,
+            inputs: $inputs);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al asignar direcciones',data:  $inputs_direcciones_postales);
+        }
+
+        $controler->inputs->select->im_clase_riesgo_id = $inputs->selects->im_clase_riesgo_id;
+        $controler->inputs->select->org_sucursal_id = $inputs->selects->org_sucursal_id;
+        $controler->inputs->select->fc_csd_id = $inputs->selects->fc_csd_id;
+        $controler->inputs->exterior = $inputs->texts->exterior;
+        $controler->inputs->interior = $inputs->texts->interior;
+
+        return $controler->inputs;
+    }
+
     /**
      * Genera un boton de tipo submit
      * @param string $label Etiqueta a mostrar
@@ -224,6 +241,22 @@ class org_empresa_html extends org_html {
         return $inputs_asignados;
     }
 
+    private function genera_inputs_registros_patronales(controlador_org_empresa $controler,PDO $link,
+                                            stdClass $params = new stdClass()): array|stdClass
+    {
+        $inputs = $this->init_registros_patronales(link: $link, row_upd: $controler->row_upd, params: $params);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar inputs',data:  $inputs);
+
+        }
+        $inputs_asignados = $this->asigna_inputs_registro_patronal(controler:$controler, inputs: $inputs);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al asignar inputs',data:  $inputs_asignados);
+        }
+
+        return $inputs_asignados;
+    }
+
     private function init_alta(PDO $link): array|stdClass
     {
         $selects = $this->selects_alta(link: $link);
@@ -301,6 +334,25 @@ class org_empresa_html extends org_html {
         $alta_inputs->fechas = $fechas;
         $alta_inputs->emails = $emails;
         $alta_inputs->telefonos = $telefonos;
+        return $alta_inputs;
+    }
+
+    private function init_registros_patronales(PDO $link, stdClass $row_upd, stdClass $params = new stdClass()): array|stdClass
+    {
+        $selects = $this->selects_registros_patronales(link: $link, row_upd: $row_upd);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar selects',data:  $selects);
+        }
+
+        $texts = $this->texts_alta(row_upd: $row_upd, value_vacio: false, params: $params);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar texts',data:  $texts);
+        }
+
+        $alta_inputs = new stdClass();
+
+        $alta_inputs->selects = $selects;
+        $alta_inputs->texts = $texts;
         return $alta_inputs;
     }
 
@@ -491,6 +543,21 @@ class org_empresa_html extends org_html {
         return $inputs;
     }
 
+    public function inputs_registros_patronales(controlador_org_empresa $controlador_org_empresa,
+                                       stdClass $params = new stdClass()): array|stdClass
+    {
+        $init = (new limpieza())->init_modifica_org_empresa(controler: $controlador_org_empresa);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al inicializa datos',data:  $init);
+        }
+
+        $inputs = $this->genera_inputs_registros_patronales(controler: $controlador_org_empresa,
+            link: $controlador_org_empresa->link, params: $params);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar inputs',data:  $inputs);
+        }
+        return $inputs;
+    }
     /**
      * Genera un select de tipo empresa
      * @param int $cols numero de columnas en css
@@ -590,6 +657,48 @@ class org_empresa_html extends org_html {
         }
 
         $selects->org_tipo_empresa_id = $select;
+
+        return $selects;
+    }
+
+    private function selects_registros_patronales(PDO $link, stdClass $row_upd): array|stdClass
+    {
+        /**
+         * @Kevin Acuña
+         * REFACTORIZAR FUNCION
+         * Centralizar una funcion que genere un select para evitar la duplicidad de codigo
+         */
+        $selects = new stdClass();
+
+        $select = (new im_clase_riesgo_html(html:$this->html_base))->select_im_clase_riesgo_id(
+            cols: 4, con_registros:true, id_selected: -1,link: $link);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar select',data:  $select);
+        }
+        $selects->im_clase_riesgo_id = $select;
+
+        $selects = (new selects())->direcciones(html: $this->html_base,link:  $link,row:  $row_upd,selects:  $selects);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar selects de domicilios',data:  $selects);
+
+        }
+        
+        $select = (new org_sucursal_html(html: $this->html_base))->select_org_sucursal_id(
+            cols: 6, con_registros:false, id_selected: -1,link: $link,label: 'Sucursal');
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar select',data:  $select);
+
+        }
+
+        $selects->org_sucursal_id = $select;
+        $select = (new fc_csd_html(html: $this->html_base))->select_fc_csd_id(
+            cols: 6, con_registros:false, id_selected: -1,link: $link);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar select',data:  $select);
+
+        }
+
+        $selects->fc_csd_id = $select;
 
         return $selects;
     }
