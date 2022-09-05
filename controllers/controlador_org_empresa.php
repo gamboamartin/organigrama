@@ -105,16 +105,22 @@ class controlador_org_empresa extends empresas {
 
         $this->actions_number['alta']['item'] = 1;
         $this->actions_number['alta']['etiqueta'] = 'Nueva Empresa';
+
         $this->actions_number['cif']['item'] = 3;
         $this->actions_number['cif']['etiqueta'] = 'CIF';
+
         $this->actions_number['contacto']['item'] = 4;
         $this->actions_number['contacto']['etiqueta'] = 'Contacto';
+
         $this->actions_number['identidad']['item'] = 5;
         $this->actions_number['identidad']['etiqueta'] = 'Identidad';
+
         $this->actions_number['modifica']['item'] = 1;
         $this->actions_number['modifica']['etiqueta'] = 'Generales';
+
         $this->actions_number['sucursales']['item'] = 6;
         $this->actions_number['sucursales']['etiqueta'] = 'Sucursales';
+
         $this->actions_number['ubicacion']['item'] = 2;
         $this->actions_number['ubicacion']['etiqueta'] = 'Ubicacion';
 
