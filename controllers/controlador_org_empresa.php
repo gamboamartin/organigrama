@@ -11,6 +11,7 @@ namespace gamboamartin\organigrama\controllers;
 
 use gamboamartin\errores\errores;
 use gamboamartin\organigrama\controllers\base\empresas;
+use gamboamartin\organigrama\links\secciones\link_org_empresa;
 use gamboamartin\system\actions;
 use gamboamartin\system\init;
 
@@ -25,7 +26,7 @@ use html\org_sucursal_html;
 use html\org_tipo_sucursal_html;
 use html\selects;
 use JsonException;
-use links\secciones\link_org_empresa;
+
 
 use models\dp_calle_pertenece;
 
@@ -53,7 +54,7 @@ class controlador_org_empresa extends empresas {
         $modelo = new org_empresa(link: $link);
 
         $html_ = new org_empresa_html(html: $html);
-        $obj_link = new link_org_empresa($this->registro_id);
+        $obj_link = new link_org_empresa(registro_id: $this->registro_id);
 
         parent::__construct(html:$html_, link: $link,modelo:  $modelo, obj_link: $obj_link, paths_conf: $paths_conf);
 
@@ -74,7 +75,8 @@ class controlador_org_empresa extends empresas {
         }
         $this->link_org_sucursal_alta_bd = $link_org_sucursal_alta_bd;
         
-        $link_im_registro_patronal_alta_bd = $obj_link->link_im_registro_patronal_alta_bd(org_empresa_id: $this->registro_id);
+        $link_im_registro_patronal_alta_bd = $obj_link->link_im_registro_patronal_alta_bd(
+            org_empresa_id: $this->registro_id);
         if(errores::$error){
             $error = $this->errores->error(mensaje: 'Error al generar link sucursal alta',
                 data:  $link_im_registro_patronal_alta_bd);

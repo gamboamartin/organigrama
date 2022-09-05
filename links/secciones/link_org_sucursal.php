@@ -1,5 +1,5 @@
 <?php
-namespace links\secciones;
+namespace gamboamartin\organigrama\links\secciones;
 use gamboamartin\errores\errores;
 use gamboamartin\system\links_menu;
 use stdClass;

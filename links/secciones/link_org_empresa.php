@@ -1,6 +1,5 @@
 <?php
-namespace links\secciones;
-use config\generales;
+namespace gamboamartin\organigrama\links\secciones;
 use gamboamartin\errores\errores;
 use gamboamartin\system\links_menu;
 use stdClass;
@@ -53,6 +52,12 @@ class link_org_empresa extends links_menu {
         return $link;
     }
 
+    /**
+     * Genera un link de registro patronal
+     * @param int $org_empresa_id Empresa seleccionada
+     * @return string
+     * @version 0.272.35
+     */
     public function link_im_registro_patronal_alta_bd(int $org_empresa_id): string
     {
 
