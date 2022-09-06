@@ -117,6 +117,9 @@ class controlador_org_empresa extends empresas {
         $this->keys_row_lista = $keys_row_lista;
         $this->total_items_sections = 7;
 
+        $this->actions_number['lista']['item'] = 1;
+        $this->actions_number['lista']['etiqueta'] = 'Nueva Empresa';
+
         $this->actions_number['alta']['item'] = 1;
         $this->actions_number['alta']['etiqueta'] = 'Nueva Empresa';
 
