@@ -61,6 +61,7 @@
         "gamboa.martin/js_base": "dev-master",
         "gamboa.martin/facturacion": "dev-main",
         "gamboa.martin/documento": "dev-master",
+        "gamboa.martin/xml_cfdi_4": "dev-master",
         "gamboa.martin/comercial": "dev-master",
         "gamboa.martin/im_registro_patronal": "dev-main"
     },

@@ -10,9 +10,9 @@ namespace gamboamartin\organigrama\controllers;
 
 use gamboamartin\errores\errores;
 use gamboamartin\organigrama\controllers\base\empresas;
+use gamboamartin\organigrama\links\secciones\link_org_sucursal;
 use gamboamartin\template\html;
 use html\org_sucursal_html;
-use links\secciones\link_org_sucursal;
 use models\org_sucursal;
 use PDO;
 use stdClass;
