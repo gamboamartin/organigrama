@@ -3,6 +3,7 @@ namespace html;
 
 use gamboamartin\errores\errores;
 use gamboamartin\system\html_controler;
+use gamboamartin\template\directivas;
 use models\org_tipo_empresa;
 use PDO;
 
@@ -16,10 +17,17 @@ class org_tipo_empresa_html extends html_controler {
      * @param int $id_selected identificador del select
      * @param PDO $link conexion a la base de datos
      * @return array|string
+     * @version 0.277.36
      *
      */
     public function select_org_tipo_empresa_id(int $cols,bool $con_registros,int $id_selected, PDO $link): array|string
     {
+
+        $valida = (new directivas(html: $this->html_base))->valida_cols(cols:$cols);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al validar cols', data: $valida);
+        }
+
         $modelo = new org_tipo_empresa($link);
 
         $select = $this->select_catalogo(cols:$cols,con_registros:$con_registros,id_selected:$id_selected,
