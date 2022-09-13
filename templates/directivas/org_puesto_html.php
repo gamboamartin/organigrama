@@ -21,9 +21,9 @@ class org_puesto_html extends html_controler {
         return $controler->inputs;
     }
 
-    public function genera_inputs_alta(controlador_org_puesto $controler,PDO $link): array|stdClass
+    public function genera_inputs_alta(controlador_org_puesto $controler, array $keys_selects,PDO $link): array|stdClass
     {
-        $inputs = $this->init_alta(link: $link);
+        $inputs = $this->init_alta(keys_selects: $keys_selects, link: $link);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar inputs',data:  $inputs);
 
@@ -51,9 +51,9 @@ class org_puesto_html extends html_controler {
         return $inputs_asignados;
     }
 
-    private function init_alta(PDO $link): array|stdClass
+    private function init_alta(array $keys_selects,PDO $link): array|stdClass
     {
-        $selects = $this->selects_alta(link: $link);
+        $selects = $this->selects_alta(keys_selects:$keys_selects, link: $link);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar selects',data:  $selects);
         }
@@ -86,27 +86,6 @@ class org_puesto_html extends html_controler {
         return $inputs;
     }
 
-    private function selects_alta(PDO $link): array|stdClass
-    {
-        $selects = new stdClass();
-
-        $select = (new org_tipo_puesto_html(html: $this->html_base))->select_org_tipo_puesto_id(cols: 12, con_registros:true,
-            id_selected:-1,link: $link);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al generar select',data:  $select);
-        }
-        $selects->org_tipo_puesto_id  = $select;
-
-        $select = (new org_empresa_html(html: $this->html_base))->select_org_empresa_id(
-            cols: 12, con_registros:true, id_selected:-1,link: $link);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al generar select',data:  $select);
-
-        }
-        $selects->org_empresa_id = $select;
-
-        return $selects;
-    }
 
     public function select_org_puesto_id(int $cols, bool $con_registros, int|NULL $id_selected,
                                          PDO $link, bool $disabled = false, bool $required = false): array|string
