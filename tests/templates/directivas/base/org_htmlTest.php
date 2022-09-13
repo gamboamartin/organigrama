@@ -35,7 +35,7 @@ class org_htmlTest extends test {
         $html = new org_html($html_);
         $html = new liberator($html);
 
-        $resultado = $html->selects_alta($this->link);
+        $resultado = $html->selects_alta(array(), $this->link);
 
         $this->assertIsObject($resultado);
         $this->assertNotTrue(errores::$error);

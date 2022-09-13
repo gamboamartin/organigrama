@@ -90,11 +90,12 @@ class org_html extends html_controler {
 
     /**
      * Genera un conjunto de selects para views por default direcciones
+     * @param array $keys_selects
      * @param PDO $link conexion a la base de datos
      * @return array|stdClass
      * @version 0.264.35
      */
-    protected function selects_alta(PDO $link): array|stdClass
+    protected function selects_alta(array $keys_selects, PDO $link): array|stdClass
     {
         $selects = new stdClass();
 
@@ -105,6 +106,15 @@ class org_html extends html_controler {
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar selects de domicilios',data:  $selects);
 
+        }
+
+        $selects_extra = parent::selects_alta(keys_selects: $keys_selects, link: $link);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar selects',data:  $selects_extra);
+        }
+
+        foreach ($selects_extra as $attr=>$select){
+            $selects->$attr = $select;
         }
 
 

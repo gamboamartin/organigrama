@@ -595,9 +595,9 @@ class org_empresa_html extends org_html {
         return $select;
     }
 
-    protected function selects_alta(PDO $link): array|stdClass
+    protected function selects_alta(array $keys_selects, PDO $link): array|stdClass
     {
-        $selects = parent::selects_alta(link: $link);
+        $selects = parent::selects_alta(keys_selects: $keys_selects, link: $link);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar selects',data:  $selects);
 
@@ -799,7 +799,7 @@ class org_empresa_html extends org_html {
         return $telefonos;
     }
 
-    private function texts_alta(stdClass $row_upd, bool $value_vacio, stdClass $params = new stdClass()): array|stdClass
+    protected function texts_alta(stdClass $row_upd, bool $value_vacio, stdClass $params = new stdClass()): array|stdClass
     {
 
         $texts = new stdClass();
