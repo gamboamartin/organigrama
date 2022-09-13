@@ -5,6 +5,7 @@ use gamboamartin\errores\errores;
 use gamboamartin\organigrama\controllers\controlador_org_puesto;
 use gamboamartin\system\html_controler;
 use gamboamartin\template\directivas;
+use gamboamartin\validacion\validacion;
 use models\org_puesto;
 
 use PDO;
@@ -12,8 +13,31 @@ use stdClass;
 
 class org_puesto_html extends html_controler {
 
+    /**
+     * Asigna los valores de un conjunto de inputs para se mostrados en front
+     * @param controlador_org_puesto $controler Controlador en ejecucion
+     * @param stdClass $inputs Inputs precargados
+     * @return array|stdClass
+     * @version 0.280.36
+     */
     private function asigna_inputs(controlador_org_puesto $controler, stdClass $inputs): array|stdClass
     {
+        $keys = array('selects');
+        $valida = (new validacion())->valida_existencia_keys(keys: $keys, registro: $inputs);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al validar inputs',data:  $valida);
+        }
+
+        $keys = array('org_empresa_id','org_tipo_puesto_id');
+        $valida = (new validacion())->valida_existencia_keys(keys: $keys, registro: $inputs->selects);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al validar inputs',data:  $valida);
+        }
+
+        if(is_array($controler->inputs)){
+            $controler->inputs = new stdClass();
+        }
+
         $controler->inputs->select = new stdClass();
         $controler->inputs->select->org_empresa_id = $inputs->selects->org_empresa_id;
         $controler->inputs->select->org_tipo_puesto_id = $inputs->selects->org_tipo_puesto_id;
