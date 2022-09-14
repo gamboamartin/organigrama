@@ -75,17 +75,7 @@ class org_puesto_html extends html_controler {
         return $inputs_asignados;
     }
 
-    private function init_alta(array $keys_selects,PDO $link): array|stdClass
-    {
-        $selects = $this->selects_alta(keys_selects:$keys_selects, link: $link);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al generar selects',data:  $selects);
-        }
 
-        $alta_inputs = new stdClass();
-        $alta_inputs->selects = $selects;
-        return $alta_inputs;
-    }
 
     private function init_modifica(PDO $link, stdClass $row_upd): array|stdClass
     {
