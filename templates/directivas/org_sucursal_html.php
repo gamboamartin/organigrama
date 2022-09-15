@@ -38,7 +38,7 @@ class org_sucursal_html extends org_html {
     public function genera_inputs_alta(controlador_org_sucursal $controler,PDO $link, int $org_empresa_id,
                                        bool $org_empresa_id_disabled) : array|stdClass
     {
-        $inputs = $this->init_alta(link: $link, org_empresa_id: $org_empresa_id,
+        $inputs = $this->init_alta_base(link: $link, org_empresa_id: $org_empresa_id,
             org_empresa_id_disabled: $org_empresa_id_disabled);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar inputs',data:  $inputs);
@@ -70,10 +70,10 @@ class org_sucursal_html extends org_html {
 
 
 
-    private function init_alta(PDO $link, int $org_empresa_id, bool $org_empresa_id_disabled = false): array|stdClass
+    private function init_alta_base(PDO $link, int $org_empresa_id, bool $org_empresa_id_disabled = false): array|stdClass
     {
         $row_upd = new stdClass();
-        $selects = $this->selects_alta( link: $link, org_empresa_id: $org_empresa_id,
+        $selects = $this->selects_alta_base( link: $link, org_empresa_id: $org_empresa_id,
             org_empresa_id_disabled: $org_empresa_id_disabled);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar selects',data:  $selects);
@@ -85,7 +85,7 @@ class org_sucursal_html extends org_html {
             return $this->error->error(mensaje: 'Error al generar inputs fecha',data:  $fechas);
         }
 
-        $texts = $this->texts_alta(row_upd: $row_upd,value_vacio: true);
+        $texts = $this->texts_alta_base(row_upd: $row_upd,value_vacio: true);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar texts',data:  $texts);
         }
@@ -113,7 +113,7 @@ class org_sucursal_html extends org_html {
             return $this->error->error(mensaje: 'Error al generar selects',data:  $selects);
         }
 
-        $texts = $this->texts_alta(row_upd: $row_upd, value_vacio: false);
+        $texts = $this->texts_alta_base(row_upd: $row_upd, value_vacio: false);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar texts',data:  $texts);
         }
@@ -238,9 +238,9 @@ class org_sucursal_html extends org_html {
      * @param bool $org_empresa_id_disabled
      * @return array|stdClass
      */
-    protected function selects_alta(PDO $link, int $org_empresa_id = -1, bool $org_empresa_id_disabled = false): array|stdClass
+    protected function selects_alta_base(PDO $link, int $org_empresa_id = -1, bool $org_empresa_id_disabled = false): array|stdClass
     {
-        $selects = parent::selects_alta(link: $link);
+        $selects = parent::selects_alta(array(),link: $link);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar selects',data:  $selects);
 
@@ -427,7 +427,7 @@ class org_sucursal_html extends org_html {
         return $telefonos;
     }
 
-    private function texts_alta(stdClass $row_upd, bool $value_vacio): array|stdClass
+    private function texts_alta_base(stdClass $row_upd, bool $value_vacio): array|stdClass
     {
 
         $texts = new stdClass();
