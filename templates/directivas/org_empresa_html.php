@@ -210,9 +210,9 @@ class org_empresa_html extends org_html {
         return $fechas;
     }
 
-    public function genera_inputs_alta(controlador_org_empresa $controler,PDO $link): array|stdClass
+    public function genera_inputs_alta(controlador_org_empresa $controler,array $keys_selects,PDO $link): array|stdClass
     {
-        $inputs = $this->init_alta(link: $link);
+        $inputs = $this->init_alta(keys_selects: $keys_selects,link: $link);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar inputs',data:  $inputs);
 
