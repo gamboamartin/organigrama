@@ -123,8 +123,14 @@ class controlador_org_empresa extends empresas {
         $this->actions_number['alta']['item'] = 1;
         $this->actions_number['alta']['etiqueta'] = 'Nueva Empresa';
 
+        $this->actions_number['alta_bd']['item'] = 1;
+        $this->actions_number['alta_bd']['etiqueta'] = 'Nueva Empresa';
+
         $this->actions_number['cif']['item'] = 3;
         $this->actions_number['cif']['etiqueta'] = 'CIF';
+
+        $this->actions_number['modifica_cif']['item'] = 3;
+        $this->actions_number['modifica_cif']['etiqueta'] = 'CIF';
 
         $this->actions_number['contacto']['item'] = 4;
         $this->actions_number['contacto']['etiqueta'] = 'Contacto';
@@ -132,14 +138,26 @@ class controlador_org_empresa extends empresas {
         $this->actions_number['identidad']['item'] = 5;
         $this->actions_number['identidad']['etiqueta'] = 'Identidad';
 
+        $this->actions_number['modifica_identidad']['item'] = 5;
+        $this->actions_number['modifica_identidad']['etiqueta'] = 'Identidad';
+
         $this->actions_number['modifica']['item'] = 1;
         $this->actions_number['modifica']['etiqueta'] = 'Generales';
+
+        $this->actions_number['modifica_contacto']['item'] = 1;
+        $this->actions_number['modifica_contacto']['etiqueta'] = 'Generales';
 
         $this->actions_number['sucursales']['item'] = 6;
         $this->actions_number['sucursales']['etiqueta'] = 'Sucursales';
 
+        $this->actions_number['alta_sucursal_bd']['item'] = 6;
+        $this->actions_number['alta_sucursal_bd']['etiqueta'] = 'Sucursales';
+
         $this->actions_number['ubicacion']['item'] = 2;
         $this->actions_number['ubicacion']['etiqueta'] = 'Ubicacion';
+
+        $this->actions_number['modifica_ubicacion']['item'] = 2;
+        $this->actions_number['modifica_ubicacion']['etiqueta'] = 'Ubicacion';
 
         if(isset($this->actions_number[$this->accion])){
             $this->number_active = $this->actions_number[$this->accion]['item'];
