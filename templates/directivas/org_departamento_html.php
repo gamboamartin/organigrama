@@ -16,7 +16,7 @@ use stdClass;
 class org_departamento_html extends html_controler {
 
 
-    private function asigna_inputs(controlador_org_puesto $controler, stdClass $inputs): array|stdClass
+    private function asigna_inputs(controlador_org_departamento $controler, stdClass $inputs): array|stdClass
     {
         $keys = array('selects');
         $valida = (new validacion())->valida_existencia_keys(keys: $keys, registro: $inputs);
@@ -41,7 +41,7 @@ class org_departamento_html extends html_controler {
         return $controler->inputs;
     }
 
-    public function genera_inputs_alta(controlador_org_puesto $controler, array $keys_selects,PDO $link): array|stdClass
+    public function genera_inputs_alta(controlador_org_departamento $controler, array $keys_selects,PDO $link): array|stdClass
     {
         $inputs = $this->init_alta(keys_selects: $keys_selects, link: $link);
         if(errores::$error){
@@ -56,7 +56,7 @@ class org_departamento_html extends html_controler {
         return $inputs_asignados;
     }
 
-    private function genera_inputs_modifica(controlador_org_puesto $controler,PDO $link): array|stdClass
+    private function genera_inputs_modifica(controlador_org_departamento $controler,PDO $link): array|stdClass
     {
         $inputs = $this->init_modifica(link: $link, row_upd: $controler->row_upd);
         if(errores::$error){
