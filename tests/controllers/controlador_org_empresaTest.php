@@ -10,6 +10,7 @@ use links\secciones\link_org_empresa;
 use models\org_empresa;
 use models\org_sucursal;
 use stdClass;
+use tests\base_test;
 
 
 class controlador_org_empresaTest extends test {
@@ -20,9 +21,9 @@ class controlador_org_empresaTest extends test {
         parent::__construct($name, $data, $dataName);
         $this->errores = new errores();
         $this->paths_conf = new stdClass();
-        $this->paths_conf->generales = '/var/www/html/cat_sat/config/generales.php';
-        $this->paths_conf->database = '/var/www/html/cat_sat/config/database.php';
-        $this->paths_conf->views = '/var/www/html/cat_sat/config/views.php';
+        $this->paths_conf->generales = '/var/www/html/organigrama/config/generales.php';
+        $this->paths_conf->database = '/var/www/html/organigrama/config/database.php';
+        $this->paths_conf->views = '/var/www/html/organigrama/config/views.php';
 
 
     }
@@ -91,42 +92,34 @@ class controlador_org_empresaTest extends test {
         $_SESSION['usuario_id'] = '2';
         $ctl = new controlador_org_empresa(link: $this->link, paths_conf: $this->paths_conf);
 
-        $registro= array();
-        $registro['razon_social'] = 'a';
-        $registro['rfc'] = 'a';
-        $registro['descripcion'] = 'a';
-        $registro['codigo'] = 'a';
-        $registro['nombre_comercial'] = 'a';
-        $registro['fecha_inicio_operaciones'] = 'a';
-        $registro['fecha_ultimo_cambio_sat'] = 'a';
-        $registro['email_sat'] = 'a';
-        $registro['dp_calle_pertenece_id'] = 1;
-        $registro['org_tipo_empresa_id'] = 1;
 
-        $r_elimina_sucursales = (new org_sucursal($this->link))->elimina_todo();
+
+        $del = (new base_test())->del_org_sucursal($this->link);
         if(errores::$error){
-            $error = (new errores())->error('Error al eliminar empresa', $r_elimina_sucursales);
+            $error = (new errores())->error('Error al eliminar', $del);
             print_r($error);
             exit;
         }
 
-        $r_elimina_empresas = (new org_empresa($this->link))->elimina_todo();
+        $del = (new base_test())->del_org_empresa($this->link);
         if(errores::$error){
-            $error = (new errores())->error('Error al eliminar empresa', $r_elimina_empresas);
+            $error = (new errores())->error('Error al eliminar', $del);
             print_r($error);
             exit;
         }
 
-        $r_alta_org_empresa = (new org_empresa($this->link))->alta_registro($registro);
+        $alta = (new base_test())->alta_org_empresa($this->link);
         if(errores::$error){
-            $error = (new errores())->error('Error al insertar empresa', $r_alta_org_empresa);
+            $error = (new errores())->error('Error al insertar', $alta);
             print_r($error);
             exit;
         }
 
 
-        $_GET['registro_id'] = $r_alta_org_empresa->registro_id;
-        $ctl->registro_id = $r_alta_org_empresa->registro_id;
+
+
+        $_GET['registro_id'] = $alta->registro_id;
+        $ctl->registro_id = $alta->registro_id;
 
         $resultado = $ctl->ubicacion(false);
 
