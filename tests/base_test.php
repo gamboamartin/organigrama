@@ -48,6 +48,17 @@ class base_test{
         return $del;
     }
 
+    public function del_org_departamento(PDO $link): array
+    {
+
+
+        $del = $this->del($link, 'models\\org_departamento');
+        if(errores::$error){
+            return (new errores())->error('Error al eliminar', $del);
+        }
+        return $del;
+    }
+
     public function del_org_empresa(PDO $link): array
     {
 
@@ -57,6 +68,11 @@ class base_test{
         }
 
         $del = $this->del_org_puesto($link);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al eliminar ', data: $del);
+        }
+
+        $del = $this->del_org_departamento($link);
         if(errores::$error){
             return (new errores())->error(mensaje: 'Error al eliminar ', data: $del);
         }
