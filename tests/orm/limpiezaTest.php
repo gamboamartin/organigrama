@@ -38,7 +38,8 @@ class limpiezaTest extends test {
         $registro['razon_social'] = 'a';
         $registro['rfc'] = 'b';
 
-        $resultado = $lim->init_data_base_org_empresa($registro);
+        $resultado = $lim->init_data_base_org_empresa($this->link, $registro);
+
 
 
         $this->assertIsArray($resultado);
@@ -88,7 +89,7 @@ class limpiezaTest extends test {
         $registro = array();
         $registro['razon_social'] = 'a';
         $registro['rfc'] = 'b';
-        $resultado = $lim->init_org_empresa_alta_bd($registro);
+        $resultado = $lim->init_org_empresa_alta_bd($this->link, $registro);
         $this->assertIsArray($resultado);
         $this->assertNotTrue(errores::$error);
         $this->assertEquals('a',$resultado['razon_social']);

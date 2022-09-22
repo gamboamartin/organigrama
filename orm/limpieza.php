@@ -91,14 +91,15 @@ class limpieza{
 
     /**
      * Inicializa la descripcion y el codigo de una empresa en alta bd
+     * @param PDO $link
      * @param array $registro Registro en ejecucion
+     * @return array
      * @version 0.56.14
      * @verfuncion 0.1.0
      * @author mgamboa
      * @fecha 2022-07-26 09:58
-     * @return array
      */
-    private function init_data_base_org_empresa(array $registro): array
+    private function init_data_base_org_empresa(PDO $link, array $registro): array
     {
         if(!isset($registro['descripcion'])){
             $registro['descripcion'] = $registro['razon_social'];
@@ -112,6 +113,16 @@ class limpieza{
         if(!isset($this->registro['alias'])){
             $registro['alias'] = $registro['descripcion'];
         }
+
+        if(!isset($this->registro['dp_calle_pertenece_id']) || (int)$this->registro['dp_calle_pertenece_id'] === -1){
+            $dp_calle_pertenece_id = (new dp_calle_pertenece(link: $link))->id_predeterminado();
+            if(errores::$error){
+                return $this->error->error(mensaje: 'Error al obtener dp_calle_pertenece_default',data:  $dp_calle_pertenece_id);
+            }
+            $registro['dp_calle_pertenece_id'] = $dp_calle_pertenece_id;
+
+        }
+
         return $registro;
     }
 
@@ -199,6 +210,7 @@ class limpieza{
 
     /**
      * Inicializa los elemento de un registro previo al alta bd
+     * @param PDO $link
      * @param array $registro Registro inicializar para el alta
      * @return array
      * @version 0.135.27
@@ -206,7 +218,7 @@ class limpieza{
      * @fecha 2022-08-08 12:36
      * @author mgamboa
      */
-    public function init_org_empresa_alta_bd(array $registro): array
+    public function init_org_empresa_alta_bd(PDO $link, array $registro): array
     {
         $keys = array('razon_social','rfc');
         $valida = $this->validacion->valida_existencia_keys(keys: $keys, registro: $registro);
@@ -214,11 +226,10 @@ class limpieza{
             return $this->error->error(mensaje: 'Error al validar registro', data: $valida);
         }
 
-        $registro = $this->init_data_base_org_empresa(registro:$registro);
+        $registro = $this->init_data_base_org_empresa(link: $link,registro:$registro);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al inicializar registro', data: $registro);
         }
-
 
         $registro = $this->limpia_foraneas_org_empresa(registro:$registro);
         if(errores::$error){

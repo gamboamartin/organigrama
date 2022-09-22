@@ -13,7 +13,8 @@ class org_empresa extends modelo{
         $columnas = array($tabla=>false,'cat_sat_regimen_fiscal'=>$tabla,'dp_calle_pertenece'=>$tabla,
             'dp_colonia_postal'=>'dp_calle_pertenece','dp_cp'=>'dp_colonia_postal','dp_municipio'=>'dp_cp',
             'dp_estado'=>'dp_municipio','dp_pais'=>'dp_estado','org_tipo_empresa'=>$tabla);
-        $campos_obligatorios = array('codigo','nombre_comercial','rfc','razon_social','org_tipo_empresa_id');
+        $campos_obligatorios = array('codigo','nombre_comercial','rfc','razon_social','org_tipo_empresa_id',
+            'dp_calle_pertenece_id');
 
         $no_duplicados = array('descripcion','codigo','descripcion_select','alias','codigo_bis','rfc','razon_social');
 
@@ -33,7 +34,7 @@ class org_empresa extends modelo{
             return $this->error->error(mensaje: 'Error al validar registro', data: $valida);
         }
 
-        $registro = (new limpieza())->init_org_empresa_alta_bd(registro:$this->registro);
+        $registro = (new limpieza())->init_org_empresa_alta_bd(link: $this->link, registro:$this->registro);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al inicializar registro', data: $registro);
         }
@@ -70,7 +71,6 @@ class org_empresa extends modelo{
      * @param int $org_empresa_id
      * @param array $registro
      * @return array|stdClass
-     * @throws JsonException
      */
     private function inserta_sucursal(int $org_empresa_id, array $registro): array|stdClass
     {
