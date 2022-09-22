@@ -38,14 +38,14 @@ class controlador_org_puesto extends system {
         }
 
         $keys_selects = array();
-        $keys_selects['org_tipo_puesto'] = new stdClass();
-        $keys_selects['org_tipo_puesto']->label = 'Tipo de puesto';
+        $keys_selects['org_tipo_puesto_id'] = new stdClass();
+        $keys_selects['org_tipo_puesto_id']->label = 'Tipo Puesto';
 
-        $keys_selects['org_empresa'] = new stdClass();
-        $keys_selects['org_empresa']->label = 'Empresa';
+        $keys_selects['org_departamento_id'] = new stdClass();
+        $keys_selects['org_departamento_id']->label = 'Departamento';
 
         $inputs = (new org_puesto_html(html: $this->html_base))->genera_inputs_alta(
-            controler: $this, keys_selects: $keys_selects, link: $this->link);
+            controler: $this, modelo: $this->modelo, link: $this->link,keys_selects: $keys_selects);
         if(errores::$error){
             $error = $this->errores->error(mensaje: 'Error al generar inputs',data:  $inputs);
             print_r($error);

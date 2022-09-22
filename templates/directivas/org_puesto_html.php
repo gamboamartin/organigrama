@@ -1,12 +1,14 @@
 <?php
 namespace html;
 
+use base\orm\modelo;
 use gamboamartin\errores\errores;
 use gamboamartin\organigrama\controllers\controlador_org_puesto;
+use gamboamartin\organigrama\models\org_puesto;
 use gamboamartin\system\html_controler;
 use gamboamartin\template\directivas;
 use gamboamartin\validacion\validacion;
-use models\org_puesto;
+
 
 use PDO;
 use stdClass;
@@ -28,7 +30,7 @@ class org_puesto_html extends html_controler {
             return $this->error->error(mensaje: 'Error al validar inputs',data:  $valida);
         }
 
-        $keys = array('org_empresa_id','org_tipo_puesto_id');
+        $keys = array('org_tipo_puesto_id','org_departamento_id');
         $valida = (new validacion())->valida_existencia_keys(keys: $keys, registro: $inputs->selects);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al validar inputs',data:  $valida);
@@ -39,15 +41,15 @@ class org_puesto_html extends html_controler {
         }
 
         $controler->inputs->select = new stdClass();
-        $controler->inputs->select->org_empresa_id = $inputs->selects->org_empresa_id;
         $controler->inputs->select->org_tipo_puesto_id = $inputs->selects->org_tipo_puesto_id;
+        $controler->inputs->select->org_departamento_id = $inputs->selects->org_departamento_id;
 
         return $controler->inputs;
     }
 
-    public function genera_inputs_alta(controlador_org_puesto $controler, array $keys_selects,PDO $link): array|stdClass
+    public function genera_inputs_alta(controlador_org_puesto $controler, modelo $modelo, PDO $link, array $keys_selects = array()): array|stdClass
     {
-        $inputs = $this->init_alta(keys_selects: $keys_selects, link: $link);
+        $inputs = $this->init_alta2(modelo: $modelo, link: $link,keys_selects:$keys_selects );
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar inputs',data:  $inputs);
 
@@ -59,6 +61,7 @@ class org_puesto_html extends html_controler {
 
         return $inputs_asignados;
     }
+
 
     private function genera_inputs_modifica(controlador_org_puesto $controler,PDO $link): array|stdClass
     {
