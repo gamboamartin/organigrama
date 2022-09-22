@@ -4,6 +4,7 @@ use base\controller\controler;
 use config\generales;
 use gamboamartin\errores\errores;
 use gamboamartin\validacion\validacion;
+use models\cat_sat_regimen_fiscal;
 use models\dp_calle_pertenece;
 use PDO;
 use stdClass;
@@ -117,9 +118,21 @@ class limpieza{
         if(!isset($this->registro['dp_calle_pertenece_id']) || (int)$this->registro['dp_calle_pertenece_id'] === -1){
             $dp_calle_pertenece_id = (new dp_calle_pertenece(link: $link))->id_predeterminado();
             if(errores::$error){
-                return $this->error->error(mensaje: 'Error al obtener dp_calle_pertenece_default',data:  $dp_calle_pertenece_id);
+                return $this->error->error(
+                    mensaje: 'Error al obtener dp_calle_pertenece_default',data:  $dp_calle_pertenece_id);
             }
             $registro['dp_calle_pertenece_id'] = $dp_calle_pertenece_id;
+
+        }
+
+        if(!isset($this->registro['cat_sat_regimen_fiscal_id']) ||
+            (int)$this->registro['cat_sat_regimen_fiscal_id'] === -1){
+            $cat_sat_regimen_fiscal_id = (new cat_sat_regimen_fiscal(link: $link))->id_predeterminado();
+            if(errores::$error){
+                return $this->error->error(
+                    mensaje: 'Error al obtener cat_sat_regimen_fiscal_default',data:  $cat_sat_regimen_fiscal_id);
+            }
+            $registro['cat_sat_regimen_fiscal_id'] = $cat_sat_regimen_fiscal_id;
 
         }
 

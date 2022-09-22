@@ -14,7 +14,7 @@ class org_empresa extends modelo{
             'dp_colonia_postal'=>'dp_calle_pertenece','dp_cp'=>'dp_colonia_postal','dp_municipio'=>'dp_cp',
             'dp_estado'=>'dp_municipio','dp_pais'=>'dp_estado','org_tipo_empresa'=>$tabla);
         $campos_obligatorios = array('codigo','nombre_comercial','rfc','razon_social','org_tipo_empresa_id',
-            'dp_calle_pertenece_id');
+            'dp_calle_pertenece_id','cat_sat_regimen_fiscal_id');
 
         $no_duplicados = array('descripcion','codigo','descripcion_select','alias','codigo_bis','rfc','razon_social');
 
