@@ -19,6 +19,8 @@ class org_puesto extends modelo{
             columnas: $columnas,campos_view: $campos_view);
 
         $this->NAMESPACE = __NAMESPACE__;
+
+
     }
 
     public function alta_bd(): array|stdClass
@@ -41,6 +43,29 @@ class org_puesto extends modelo{
         }
         return $r_alta_bd;
     }
+
+    private function get_puesto_default_id(): array|stdClass|int
+    {
+        $filtro['org_puesto.predeterminado'] = 'activo';
+        $puesto_predeterminado = $this->filtro_and(columnas: array('org_puesto_id'), filtro: $filtro);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al obtener el puesto predeterminado',data:  $puesto_predeterminado);
+        }
+
+        if($puesto_predeterminado->n_registros == 0){
+            return $this->error->error(mensaje: 'Error no existe un puesto predeterminado',
+                data:  $puesto_predeterminado);
+        }
+
+        if($puesto_predeterminado->n_registros > 1){
+            return $this->error->error(mensaje: 'Error solo puede existir un puesto predeterminado',
+                data:  $puesto_predeterminado);
+        }
+
+        return $puesto_predeterminado->registros[0]['org_puesto_id'];
+    }
+
+
 
 
 }
