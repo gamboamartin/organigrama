@@ -1,13 +1,9 @@
 <?php
-namespace models\base;
+namespace models;
 use base\controller\controler;
 use config\generales;
 use gamboamartin\errores\errores;
 use gamboamartin\validacion\validacion;
-use models\dp_calle_pertenece;
-use models\org_empresa;
-use models\org_sucursal;
-use models\org_tipo_sucursal;
 use PDO;
 use stdClass;
 
