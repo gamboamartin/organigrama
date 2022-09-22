@@ -19,12 +19,10 @@ class controlador_adm_session extends \gamboamartin\controllers\controlador_adm_
     public string $mensaje_html = '';
 
     /**
-     * Funcion de controlador donde se ejecutaran siempre que haya un acceso denegado
-     * @version 1.0.0
-     * @param bool $header Si header es true cualquier error se mostrara en el html y cortara la ejecucion del sistema
-     *              En false retornara un array si hay error y un string con formato html
-     * @param bool $ws Si ws es true retornara el resultado en formato de json
-     * @return array vacio siempre
+     * Genera un denegado por permiso
+     * @param bool $header si header retorna en http
+     * @param bool $ws retorna en json
+     * @return array
      */
     public function denegado(bool $header, bool $ws = false): array
     {
