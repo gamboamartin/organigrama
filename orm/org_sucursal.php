@@ -4,6 +4,7 @@ use base\orm\modelo;
 use config\generales;
 use gamboamartin\errores\errores;
 
+use models\dp_calle_pertenece;
 use PDO;
 use stdClass;
 
@@ -47,6 +48,15 @@ class org_sucursal extends modelo{
         $valida = $this->validacion->valida_ids(keys:$keys,registro:  $this->registro);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al validar registro', data: $valida);
+        }
+
+        if(!isset($this->registro['dp_calle_pertenece_id']) || (int)$this->registro['dp_calle_pertenece_id'] === -1){
+            $dp_calle_pertenece_id = (new dp_calle_pertenece(link: $this->link))->id_predeterminado();
+            if(errores::$error){
+                return $this->error->error(mensaje: 'Error al obtener dp_calle_pertenece_default',data:  $dp_calle_pertenece_id);
+            }
+            $this->registro['dp_calle_pertenece_id'] = $dp_calle_pertenece_id;
+
         }
 
 
