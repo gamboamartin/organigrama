@@ -44,7 +44,7 @@ class org_puesto extends modelo{
         return $r_alta_bd;
     }
 
-    private function get_puesto_default_id(): array|stdClass|int
+    public function get_puesto_default_id(): array|stdClass|int
     {
         $filtro['org_puesto.predeterminado'] = 'activo';
         $puesto_predeterminado = $this->filtro_and(columnas: array('org_puesto_id'), filtro: $filtro);
