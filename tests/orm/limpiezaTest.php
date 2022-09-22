@@ -4,8 +4,8 @@ namespace tests\orm;
 use gamboamartin\errores\errores;
 use gamboamartin\test\liberator;
 use gamboamartin\test\test;
+use gamboamartin\organigrama\models\limpieza;
 use JsonException;
-use models\limpieza;
 use stdClass;
 
 

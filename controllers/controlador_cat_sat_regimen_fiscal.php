@@ -7,12 +7,8 @@
  *
  */
 namespace gamboamartin\organigrama\controllers;
-
-
-use gamboamartin\template_1\html;
-use models\cat_sat_regimen_fiscal;
 use PDO;
-use stdClass;
+
 
 class controlador_cat_sat_regimen_fiscal extends \controllers\controlador_cat_sat_regimen_fiscal {
 

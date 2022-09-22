@@ -1,14 +1,9 @@
 <?php
 namespace tests;
 use base\orm\modelo_base;
-use gamboamartin\empleado\models\em_cuenta_bancaria;
-use gamboamartin\empleado\models\em_empleado;
 use gamboamartin\errores\errores;
-use models\cat_sat_tipo_nomina;
-
-use models\org_empresa;
+use gamboamartin\organigrama\models\org_empresa;
 use PDO;
-use stdClass;
 
 
 class base_test{
@@ -52,7 +47,7 @@ class base_test{
     {
 
 
-        $del = $this->del($link, 'models\\org_departamento');
+        $del = $this->del($link, 'gamboamartin\\organigrama\\models\\org_departamento');
         if(errores::$error){
             return (new errores())->error('Error al eliminar', $del);
         }
@@ -77,7 +72,7 @@ class base_test{
             return (new errores())->error(mensaje: 'Error al eliminar ', data: $del);
         }
 
-        $del = $this->del($link, 'models\\org_empresa');
+        $del = $this->del($link, 'gamboamartin\\organigrama\\models\\org_empresa');
         if(errores::$error){
             return (new errores())->error('Error al eliminar', $del);
         }
@@ -88,7 +83,7 @@ class base_test{
     {
 
 
-        $del = $this->del($link, 'models\\org_porcentaje_act_economica');
+        $del = $this->del($link, 'gamboamartin\\organigrama\\models\\org_porcentaje_act_economica');
         if(errores::$error){
             return (new errores())->error('Error al eliminar', $del);
         }
@@ -99,7 +94,7 @@ class base_test{
     {
 
 
-        $del = $this->del($link, 'models\\org_puesto');
+        $del = $this->del($link, 'gamboamartin\\organigrama\\models\\org_puesto');
         if(errores::$error){
             return (new errores())->error('Error al eliminar', $del);
         }
@@ -110,7 +105,7 @@ class base_test{
     {
 
 
-        $del = $this->del($link, 'models\\org_sucursal');
+        $del = $this->del($link, 'gamboamartin\\organigrama\\models\\org_sucursal');
         if(errores::$error){
             return (new errores())->error('Error al eliminar', $del);
         }

@@ -9,13 +9,11 @@
 namespace gamboamartin\organigrama\controllers;
 
 use gamboamartin\errores\errores;
+use gamboamartin\organigrama\models\org_porcentaje_act_economica;
 use gamboamartin\system\links_menu;
 use gamboamartin\system\system;
 use gamboamartin\template\html;
-use html\cat_sat_actividad_economica_html;
-use html\org_empresa_html;
 use html\org_porcentaje_act_economica_html;
-use models\org_porcentaje_act_economica;
 use PDO;
 use stdClass;
 

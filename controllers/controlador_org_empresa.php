@@ -12,6 +12,8 @@ namespace gamboamartin\organigrama\controllers;
 use gamboamartin\errores\errores;
 use gamboamartin\organigrama\controllers\base\empresas;
 use gamboamartin\organigrama\links\secciones\link_org_empresa;
+use gamboamartin\organigrama\models\org_empresa;
+use gamboamartin\organigrama\models\org_sucursal;
 use gamboamartin\system\actions;
 use gamboamartin\system\init;
 
@@ -31,8 +33,6 @@ use JsonException;
 use models\dp_calle_pertenece;
 
 use models\im_registro_patronal;
-use models\org_empresa;
-use models\org_sucursal;
 
 use PDO;
 use stdClass;

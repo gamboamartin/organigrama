@@ -1,11 +1,11 @@
 <?php
-namespace models;
+namespace gamboamartin\organigrama\models;
 use base\orm\modelo;
 use PDO;
 
 class org_tipo_actividad extends modelo{
     public function __construct(PDO $link){
-        $tabla = __CLASS__;
+        $tabla = 'org_tipo_actividad';
         $columnas = array($tabla=>false);
         $campos_obligatorios = array();
 

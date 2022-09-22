@@ -1,5 +1,5 @@
 <?php
-namespace models;
+namespace gamboamartin\organigrama\models;
 use base\orm\modelo;
 use config\generales;
 use gamboamartin\errores\errores;
@@ -9,7 +9,7 @@ use stdClass;
 
 class org_sucursal extends modelo{
     public function __construct(PDO $link){
-        $tabla = __CLASS__;
+        $tabla = 'org_sucursal';
         $columnas = array($tabla=>false, 'org_empresa'=>$tabla, 'dp_calle_pertenece'=>$tabla,
             'dp_calle' => 'dp_calle_pertenece', 'dp_colonia_postal'=>'dp_calle_pertenece',
             'dp_colonia'=>'dp_colonia_postal', 'dp_cp'=>'dp_colonia_postal', 'dp_municipio'=>'dp_cp',

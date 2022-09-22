@@ -9,13 +9,13 @@
 namespace gamboamartin\organigrama\controllers;
 
 use gamboamartin\errores\errores;
+use gamboamartin\organigrama\models\org_representante_asignado;
 use gamboamartin\system\links_menu;
 use gamboamartin\system\system;
 use gamboamartin\template\html;
 use html\org_empresa_html;
 use html\org_representante_asignado_html;
 use html\org_representante_legal_html;
-use models\org_representante_asignado;
 use PDO;
 use stdClass;
 

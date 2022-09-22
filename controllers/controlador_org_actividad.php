@@ -9,12 +9,12 @@
 namespace gamboamartin\organigrama\controllers;
 
 use gamboamartin\errores\errores;
+use gamboamartin\organigrama\models\org_actividad;
 use gamboamartin\system\links_menu;
 use gamboamartin\system\system;
 use gamboamartin\template\html;
 use html\org_actividad_html;
 use html\org_tipo_actividad_html;
-use models\org_actividad;
 use PDO;
 use stdClass;
 

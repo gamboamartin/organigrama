@@ -1,12 +1,12 @@
 <?php
-namespace models;
+namespace gamboamartin\organigrama\models;
 use base\orm\modelo;
 
 use PDO;
 
 class org_departamento extends modelo{
     public function __construct(PDO $link){
-        $tabla = __CLASS__;
+        $tabla = 'org_departamento';
         $columnas = array($tabla=>false, 'org_empresa'=>$tabla,'org_clasificacion_dep'=>$tabla);
 
         $campos_obligatorios = array();

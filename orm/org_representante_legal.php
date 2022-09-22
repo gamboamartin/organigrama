@@ -1,11 +1,11 @@
 <?php
-namespace models;
+namespace gamboamartin\organigrama\models;
 use base\orm\modelo;
 use PDO;
 
 class org_representante_legal extends modelo{
     public function __construct(PDO $link){
-        $tabla = __CLASS__;
+        $tabla = 'org_representante_legal';
         $columnas = array($tabla=>false);
         $campos_obligatorios = array();
 

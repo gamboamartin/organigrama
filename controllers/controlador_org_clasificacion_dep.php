@@ -8,11 +8,11 @@
  */
 namespace gamboamartin\organigrama\controllers;
 
+use gamboamartin\organigrama\models\org_clasificacion_dep;
 use gamboamartin\system\links_menu;
 use gamboamartin\system\system;
 use gamboamartin\template\html;
 use html\org_clasificacion_dep_html;
-use models\org_clasificacion_dep;
 use PDO;
 use stdClass;
 

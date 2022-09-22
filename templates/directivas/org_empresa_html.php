@@ -4,12 +4,10 @@ namespace html;
 
 use gamboamartin\errores\errores;
 use gamboamartin\organigrama\controllers\controlador_org_empresa;
-
-
+use gamboamartin\organigrama\models\limpieza;
+use gamboamartin\organigrama\models\org_empresa;
 use gamboamartin\system\system;
 use html\base\org_html;
-use models\base\limpieza;
-use models\org_empresa;
 use PDO;
 use stdClass;
 

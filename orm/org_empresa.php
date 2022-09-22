@@ -1,17 +1,15 @@
 <?php
-namespace models;
+namespace gamboamartin\organigrama\models;
 use base\orm\modelo;
-use config\generales;
 use gamboamartin\errores\errores;
 use gamboamartin\organigrama\controllers\controlador_org_empresa;
 use JsonException;
-use models\base\limpieza;
 use PDO;
 use stdClass;
 
 class org_empresa extends modelo{
     public function __construct(PDO $link){
-        $tabla = __CLASS__;
+        $tabla = 'org_empresa';
         $columnas = array($tabla=>false,'cat_sat_regimen_fiscal'=>$tabla,'dp_calle_pertenece'=>$tabla,
             'dp_colonia_postal'=>'dp_calle_pertenece','dp_cp'=>'dp_colonia_postal','dp_municipio'=>'dp_cp',
             'dp_estado'=>'dp_municipio','dp_pais'=>'dp_estado','org_tipo_empresa'=>$tabla);

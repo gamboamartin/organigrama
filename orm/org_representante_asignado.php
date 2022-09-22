@@ -1,5 +1,5 @@
 <?php
-namespace models;
+namespace gamboamartin\organigrama\models;
 use base\orm\modelo;
 use gamboamartin\errores\errores;
 use html\org_representante_asignado_html;
@@ -8,7 +8,7 @@ use stdClass;
 
 class org_representante_asignado extends modelo{
     public function __construct(PDO $link){
-        $tabla = __CLASS__;
+        $tabla = 'org_representante_asignado';
         $columnas = array($tabla=>false);
         $campos_obligatorios = array();
 
