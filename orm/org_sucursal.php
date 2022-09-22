@@ -4,7 +4,6 @@ use base\orm\modelo;
 use config\generales;
 use gamboamartin\errores\errores;
 
-use models\base\limpieza;
 use PDO;
 use stdClass;
 
