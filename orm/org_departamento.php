@@ -9,7 +9,7 @@ class org_departamento extends modelo{
         $tabla = 'org_departamento';
         $columnas = array($tabla=>false, 'org_empresa'=>$tabla,'org_clasificacion_dep'=>$tabla);
 
-        $campos_obligatorios = array();
+        $campos_obligatorios = array('org_clasificacion_dep_id');
         $no_duplicados = array();
         $tipo_campos = array();
 

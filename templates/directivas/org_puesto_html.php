@@ -147,6 +147,16 @@ class org_puesto_html extends html_controler {
 
         $selects->org_empresa_id = $select;
 
+        $select = (new org_departamento_html(html:$this->html_base))->select_org_departamento_id(
+            cols: 6, con_registros:true, id_selected:$row_upd->org_departamento_id,link: $link);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar select',data:  $select);
+        }
+
+        $selects->org_departamento_id = $select;
+
+
+
         return $selects;
     }
 
