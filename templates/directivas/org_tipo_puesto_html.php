@@ -2,8 +2,8 @@
 namespace html;
 
 use gamboamartin\errores\errores;
+use gamboamartin\organigrama\models\org_tipo_puesto;
 use gamboamartin\system\html_controler;
-use models\org_tipo_puesto;
 use PDO;
 
 

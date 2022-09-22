@@ -4,11 +4,10 @@ namespace html;
 use gamboamartin\errores\errores;
 use gamboamartin\organigrama\controllers\controlador_org_departamento;
 use gamboamartin\organigrama\controllers\controlador_org_puesto;
+use gamboamartin\organigrama\models\org_departamento;
 use gamboamartin\system\html_controler;
 use gamboamartin\template\directivas;
 use gamboamartin\validacion\validacion;
-use models\org_departamento;
-use models\org_puesto;
 
 use PDO;
 use stdClass;

@@ -78,8 +78,6 @@ class org_puesto_html extends html_controler {
         return $inputs_asignados;
     }
 
-
-
     private function init_modifica(PDO $link, stdClass $row_upd): array|stdClass
     {
 
@@ -102,7 +100,6 @@ class org_puesto_html extends html_controler {
         }
         return $inputs;
     }
-
 
     public function select_org_puesto_id(int $cols, bool $con_registros, int|NULL $id_selected,
                                          PDO $link, bool $disabled = false, bool $required = false): array|string
@@ -139,26 +136,15 @@ class org_puesto_html extends html_controler {
 
         $selects->org_tipo_puesto_id = $select;
 
-        $select = (new org_empresa_html(html:$this->html_base))->select_org_empresa_id(
-            cols: 6, con_registros:true, id_selected:$row_upd->org_empresa_id,link: $link);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al generar select',data:  $select);
-        }
-
-        $selects->org_empresa_id = $select;
-
         $select = (new org_departamento_html(html:$this->html_base))->select_org_departamento_id(
-            cols: 6, con_registros:true, id_selected:$row_upd->org_departamento_id,link: $link);
+            cols: 12, con_registros:true, id_selected:$row_upd->org_departamento_id,link: $link);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $select);
         }
 
         $selects->org_departamento_id = $select;
 
-
-
         return $selects;
     }
-
 
 }
