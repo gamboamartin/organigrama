@@ -2,12 +2,32 @@
 namespace tests;
 use base\orm\modelo_base;
 use gamboamartin\errores\errores;
+use gamboamartin\organigrama\models\org_departamento;
 use gamboamartin\organigrama\models\org_empresa;
+use gamboamartin\organigrama\models\org_puesto;
 use PDO;
 
 
 class base_test{
 
+
+    public function alta_org_departamento(PDO $link): array|\stdClass
+    {
+
+
+        $registro = array();
+        $registro['id'] = 1;
+        $registro['codigo'] = 1;
+        $registro['descripcion'] = 1;
+        $registro['org_clasificacion_dep_id'] = 1;
+
+
+        $alta = (new org_departamento($link))->alta_registro($registro);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al insertar', data: $alta);
+        }
+        return $alta;
+    }
 
 
     public function alta_org_empresa(PDO $link): array|\stdClass
@@ -23,6 +43,30 @@ class base_test{
 
 
         $alta = (new org_empresa($link))->alta_registro($registro);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al insertar', data: $alta);
+        }
+        return $alta;
+    }
+
+    public function alta_org_puesto(PDO $link, string $predeterminado = 'inactivo'): array|\stdClass
+    {
+
+        $alta = $this->alta_org_departamento($link);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al insertar ', data: $alta);
+        }
+
+        $registro = array();
+        $registro['id'] = 1;
+        $registro['codigo'] = 1;
+        $registro['descripcion'] = 1;
+        $registro['org_tipo_puesto_id'] = 1;
+        $registro['org_departamento_id'] = 1;
+        $registro['predeterminado'] = $predeterminado;
+
+
+        $alta = (new org_puesto($link))->alta_registro($registro);
         if(errores::$error){
             return (new errores())->error(mensaje: 'Error al insertar', data: $alta);
         }
@@ -46,6 +90,10 @@ class base_test{
     public function del_org_departamento(PDO $link): array
     {
 
+        $del = $this->del_org_puesto($link);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al eliminar ', data: $del);
+        }
 
         $del = $this->del($link, 'gamboamartin\\organigrama\\models\\org_departamento');
         if(errores::$error){

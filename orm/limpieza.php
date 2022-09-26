@@ -2,10 +2,10 @@
 namespace gamboamartin\organigrama\models;
 use base\controller\controler;
 use config\generales;
+use gamboamartin\cat_sat\models\cat_sat_regimen_fiscal;
+use gamboamartin\direccion_postal\models\dp_calle_pertenece;
 use gamboamartin\errores\errores;
 use gamboamartin\validacion\validacion;
-use models\cat_sat_regimen_fiscal;
-use models\dp_calle_pertenece;
 use PDO;
 use stdClass;
 

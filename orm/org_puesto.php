@@ -44,6 +44,11 @@ class org_puesto extends modelo{
         return $r_alta_bd;
     }
 
+    /**
+     * Obtiene el puesto default
+     * @return array|stdClass|int
+     * @version 0.300.39
+     */
     public function get_puesto_default_id(): array|stdClass|int
     {
         $id_predeterminado = $this->id_predeterminado();
