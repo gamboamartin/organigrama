@@ -2,9 +2,9 @@
 namespace gamboamartin\organigrama\models;
 use base\orm\modelo;
 use config\generales;
+use gamboamartin\direccion_postal\models\dp_calle_pertenece;
 use gamboamartin\errores\errores;
 
-use models\dp_calle_pertenece;
 use PDO;
 use stdClass;
 
