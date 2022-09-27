@@ -24,6 +24,9 @@ class org_empresa extends modelo{
 
         parent::__construct(link: $link,tabla:  $tabla, campos_obligatorios: $campos_obligatorios,
             columnas: $columnas,no_duplicados: $no_duplicados,tipo_campos: $tipo_campos);
+
+        $this->NAMESPACE = __NAMESPACE__;
+
     }
 
     public function alta_bd(): array|stdClass
