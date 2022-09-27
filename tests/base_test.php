@@ -160,6 +160,17 @@ class base_test{
         return $del;
     }
 
+    public function del_org_tipo_sucursal(PDO $link): array
+    {
+
+
+        $del = $this->del($link, 'gamboamartin\\organigrama\\models\\org_tipo_sucursal');
+        if(errores::$error){
+            return (new errores())->error('Error al eliminar', $del);
+        }
+        return $del;
+    }
+
 
 
 }
