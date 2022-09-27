@@ -1,5 +1,5 @@
 <?php
-namespace tests;
+namespace gamboamartin\organigrama\tests;
 use base\orm\modelo_base;
 use gamboamartin\errores\errores;
 use gamboamartin\organigrama\models\org_departamento;

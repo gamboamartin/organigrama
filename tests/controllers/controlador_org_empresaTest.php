@@ -1,16 +1,14 @@
 <?php
-namespace tests\links\secciones;
+namespace gamboamartin\organigrama\tests\controllers;
 
 use gamboamartin\errores\errores;
 use gamboamartin\organigrama\controllers\controlador_org_empresa;
+use gamboamartin\organigrama\tests\base_test;
 use gamboamartin\test\liberator;
 use gamboamartin\test\test;
 use JsonException;
-use links\secciones\link_org_empresa;
-use models\org_empresa;
-use models\org_sucursal;
+
 use stdClass;
-use tests\base_test;
 
 
 class controlador_org_empresaTest extends test {

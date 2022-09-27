@@ -1,12 +1,12 @@
 <?php
-namespace tests\orm;
+namespace gamboamartin\organigrama\tests\orm;
 
 use gamboamartin\errores\errores;
 use gamboamartin\organigrama\models\org_puesto;
-use gamboamartin\organigrama\models\org_sucursal;
+use gamboamartin\organigrama\tests\base_test;
 use gamboamartin\test\test;
 use stdClass;
-use tests\base_test;
+
 
 
 class org_puestoTest extends test {

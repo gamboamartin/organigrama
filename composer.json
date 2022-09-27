@@ -15,7 +15,7 @@
           "gamboamartin\\organigrama\\controllers\\": "controllers",
           "gamboamartin\\organigrama\\models\\": "orm",
           "config\\": "config/",
-          "tests\\": "tests/",
+          "gamboamartin\\organigrama\\tests\\": "tests",
           "gamboamartin\\organigrama\\links\\": "links/",
           "html\\": "templates/directivas/"
 
