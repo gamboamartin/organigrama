@@ -33,7 +33,7 @@ class org_sucursal extends modelo{
     {
 
 
-        $keys = array('org_empresa_id','codigo','codigo_bis');
+        $keys = array('org_empresa_id','codigo');
         $valida = $this->validacion->valida_existencia_keys(keys: $keys, registro: $this->registro);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al validar registro', data: $valida);
@@ -56,6 +56,10 @@ class org_sucursal extends modelo{
                 return $this->error->error(mensaje: 'Error al obtener dp_calle_pertenece_default',data:  $dp_calle_pertenece_id);
             }
             $this->registro['dp_calle_pertenece_id'] = $dp_calle_pertenece_id;
+
+        }
+        if(!isset($this->registro['codigo_bis']) || $this->registro['codigo_bis'] === ''){
+            $this->registro['codigo_bis'] = strtoupper($this->registro['codigo']);
 
         }
 
