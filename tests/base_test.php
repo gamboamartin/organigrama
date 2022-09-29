@@ -5,6 +5,7 @@ use gamboamartin\errores\errores;
 use gamboamartin\organigrama\models\org_departamento;
 use gamboamartin\organigrama\models\org_empresa;
 use gamboamartin\organigrama\models\org_puesto;
+use gamboamartin\organigrama\models\org_sucursal;
 use PDO;
 
 
@@ -67,6 +68,21 @@ class base_test{
 
 
         $alta = (new org_puesto($link))->alta_registro($registro);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al insertar', data: $alta);
+        }
+        return $alta;
+    }
+
+    public function alta_org_sucursal(PDO $link): array|\stdClass
+    {
+        $registro = array();
+        $registro['id'] = 1;
+        $registro['codigo'] = 1;
+        $registro['descripcion'] = 1;
+
+
+        $alta = (new org_sucursal($link))->alta_registro($registro);
         if(errores::$error){
             return (new errores())->error(mensaje: 'Error al insertar', data: $alta);
         }
