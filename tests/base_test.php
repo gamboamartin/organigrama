@@ -81,6 +81,11 @@ class base_test{
             return (new errores())->error(mensaje: 'Error al insertar ', data: $alta);
         }
 
+        $del = $this->del_org_sucursal($link);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al eliminar ', data: $del);
+        }
+
         $registro = array();
         $registro['id'] = 1;
         $registro['codigo'] = 1;
