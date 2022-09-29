@@ -136,6 +136,11 @@ class base_test{
             return (new errores())->error(mensaje: 'Error al eliminar ', data: $del);
         }
 
+        $del = $this->del_org_sucursal($link);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al eliminar ', data: $del);
+        }
+
         $del = $this->del($link, 'gamboamartin\\organigrama\\models\\org_empresa');
         if(errores::$error){
             return (new errores())->error('Error al eliminar', $del);
