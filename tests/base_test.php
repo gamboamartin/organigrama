@@ -80,6 +80,7 @@ class base_test{
         $registro['id'] = 1;
         $registro['codigo'] = 1;
         $registro['descripcion'] = 1;
+        $registro['org_empresa_id'] = 1;
 
 
         $alta = (new org_sucursal($link))->alta_registro($registro);
