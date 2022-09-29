@@ -76,6 +76,11 @@ class base_test{
 
     public function alta_org_sucursal(PDO $link): array|\stdClass
     {
+        $alta = $this->alta_org_empresa($link);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al insertar ', data: $alta);
+        }
+
         $registro = array();
         $registro['id'] = 1;
         $registro['codigo'] = 1;
