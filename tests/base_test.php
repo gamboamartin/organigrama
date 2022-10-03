@@ -2,6 +2,7 @@
 namespace gamboamartin\organigrama\tests;
 use base\orm\modelo_base;
 use gamboamartin\errores\errores;
+use gamboamartin\organigrama\models\org_clasificacion_dep;
 use gamboamartin\organigrama\models\org_departamento;
 use gamboamartin\organigrama\models\org_empresa;
 use gamboamartin\organigrama\models\org_puesto;
@@ -12,10 +13,30 @@ use PDO;
 
 class base_test{
 
+    public function alta_org_clasificacion_dep(PDO $link): array|\stdClass
+    {
+        $registro = array();
+        $registro['id'] = 1;
+        $registro['codigo'] = 1;
+        $registro['descripcion'] = 1;
+
+
+
+        $alta = (new org_clasificacion_dep($link))->alta_registro($registro);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al insertar', data: $alta);
+        }
+        return $alta;
+    }
+
 
     public function alta_org_departamento(PDO $link): array|\stdClass
     {
 
+        $alta = $this->alta_org_clasificacion_dep($link);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al insertar ', data: $alta);
+        }
 
         $registro = array();
         $registro['id'] = 1;
@@ -129,6 +150,20 @@ class base_test{
         $del = $model->elimina_todo();
         if(errores::$error){
             return (new errores())->error(mensaje: 'Error al eliminar '.$name_model, data: $del);
+        }
+        return $del;
+    }
+
+    public function del_org_clasificacion_dep(PDO $link): array
+    {
+
+        $del = $this->del_org_departamento($link);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al eliminar ', data: $del);
+        }
+        $del = $this->del($link, 'gamboamartin\\organigrama\\models\\org_clasificacion_dep');
+        if(errores::$error){
+            return (new errores())->error('Error al eliminar', $del);
         }
         return $del;
     }

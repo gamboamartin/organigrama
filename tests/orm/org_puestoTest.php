@@ -35,6 +35,14 @@ class org_puestoTest extends test {
         //$lim = new liberator($lim);
 
 
+        $del = (new base_test())->del_org_clasificacion_dep($this->link);
+        if(errores::$error){
+            $error = (new errores())->error('Error al eliminar', $del);
+            print_r($error);
+            exit;
+        }
+
+
         $del = (new base_test())->del_org_departamento($this->link);
         if(errores::$error){
             $error = (new errores())->error('Error al eliminar', $del);
