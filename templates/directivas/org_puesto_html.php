@@ -101,14 +101,25 @@ class org_puesto_html extends html_controler {
         return $inputs;
     }
 
-    public function select_org_puesto_id(int $cols, bool $con_registros, int|NULL $id_selected,
+    /**
+     * Genera un select de puesto
+     * @param int $cols columnas css
+     * @param bool $con_registros si con registros integra options
+     * @param int|null $id_selected Id seleccionado
+     * @param PDO $link Conexion a la base de datos
+     * @param bool $disabled si disabled integra attr disabled a input
+     * @param bool $required si required integra attr required a input
+     * @return array|string
+     * @version 0.311.41
+     */
+    public function select_org_puesto_id(int $cols, bool $con_registros, int|null $id_selected,
                                          PDO $link, bool $disabled = false, bool $required = false): array|string
     {
         $valida = (new directivas(html:$this->html_base))->valida_cols(cols:$cols);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al validar cols', data: $valida);
         }
-        
+
         if(is_null($id_selected)){
             $id_selected = -1;
         }
