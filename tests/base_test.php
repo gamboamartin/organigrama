@@ -60,7 +60,7 @@ class base_test{
         $registro['codigo'] = 1;
         $registro['descripcion'] = 1;
         $registro['razon_social'] = 1;
-        $registro['rfc'] = 1;
+        $registro['rfc'] = 'AAA010101ABC';
         $registro['nombre_comercial'] = 1;
         $registro['org_tipo_empresa_id'] = 1;
 

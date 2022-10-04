@@ -21,6 +21,7 @@ class org_empresa extends modelo{
         $tipo_campos['telefono_1'] = 'telefono_mx';
         $tipo_campos['telefono_2'] = 'telefono_mx';
         $tipo_campos['telefono_3'] = 'telefono_mx';
+        $tipo_campos['rfc'] = 'rfc';
 
         parent::__construct(link: $link,tabla:  $tabla, campos_obligatorios: $campos_obligatorios,
             columnas: $columnas,no_duplicados: $no_duplicados,tipo_campos: $tipo_campos);
