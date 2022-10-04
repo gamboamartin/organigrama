@@ -3,7 +3,6 @@ namespace gamboamartin\organigrama\models;
 use base\orm\modelo;
 use gamboamartin\errores\errores;
 use gamboamartin\organigrama\controllers\controlador_org_empresa;
-use JsonException;
 use PDO;
 use stdClass;
 
