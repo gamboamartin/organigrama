@@ -461,7 +461,7 @@ class org_empresa_html extends org_html {
             return $this->error->error(mensaje: 'Error cold debe ser menor o igual a  12', data: $cols);
         }
 
-        $html =$this->directivas->input_text_required(disable: false,name: 'pagina-web',place_holder: 'Pagina Web',row_upd: $row_upd,
+        $html =$this->directivas->input_text_required(disable: false,name: 'pagina_web',place_holder: 'Pagina Web',row_upd: $row_upd,
             value_vacio: $value_vacio);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input', data: $html);

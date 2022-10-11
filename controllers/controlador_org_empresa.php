@@ -905,6 +905,20 @@ class controlador_org_empresa extends empresas {
         return $base->template;
     }
 
+    public function modifica_identidad(bool $header, bool $ws = false): array|stdClass
+    {
+        $r_modifica_bd = $this->modelo->modifica_bd(registro: $_POST, id: $this->registro_id);
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al modificar identidad',data:  $r_modifica_bd,
+                header: $header,ws:$ws);
+        }
+
+        $_SESSION[$r_modifica_bd->salida][]['mensaje'] = $r_modifica_bd->mensaje.' del id '.$this->registro_id;
+        $this->header_out(result: $r_modifica_bd, header: $header,ws:  $ws);
+
+        return $r_modifica_bd;
+    }
+
 
     /**
      * SIN PROBAR
