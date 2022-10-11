@@ -3,9 +3,9 @@ namespace html;
 
 
 use gamboamartin\errores\errores;
+use gamboamartin\organigrama\models\org_tipo_sucursal;
 use gamboamartin\system\html_controler;
 use gamboamartin\template\directivas;
-use models\org_tipo_sucursal;
 use PDO;
 
 

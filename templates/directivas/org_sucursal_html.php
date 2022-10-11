@@ -4,12 +4,12 @@ namespace html;
 
 use gamboamartin\errores\errores;
 use gamboamartin\organigrama\controllers\controlador_org_sucursal;
+use gamboamartin\organigrama\models\org_sucursal;
 use gamboamartin\system\html_controler;
 use gamboamartin\system\system;
 use gamboamartin\template\directivas;
 use html\base\org_html;
 use models\base\limpieza;
-use models\org_sucursal;
 use PDO;
 use stdClass;
 
@@ -219,10 +219,6 @@ class org_sucursal_html extends org_html {
 
     public function inputs_org_sucursal(controlador_org_sucursal $controlador_org_sucursal): array|stdClass
     {
-        $init = (new limpieza())->init_modifica_org_sucursal(controler: $controlador_org_sucursal);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al inicializa datos',data:  $init);
-        }
 
         $inputs = $this->genera_inputs_modifica(controler: $controlador_org_sucursal, link: $controlador_org_sucursal->link);
         if(errores::$error){

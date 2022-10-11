@@ -9,6 +9,7 @@
 namespace gamboamartin\organigrama\controllers;
 
 
+use gamboamartin\direccion_postal\models\dp_calle_pertenece;
 use gamboamartin\errores\errores;
 use gamboamartin\organigrama\controllers\base\empresas;
 use gamboamartin\organigrama\links\secciones\link_org_empresa;
@@ -28,9 +29,6 @@ use html\org_sucursal_html;
 use html\org_tipo_sucursal_html;
 use html\selects;
 use JsonException;
-
-
-use models\dp_calle_pertenece;
 
 use models\im_registro_patronal;
 
