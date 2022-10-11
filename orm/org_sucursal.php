@@ -22,13 +22,20 @@ class org_sucursal extends modelo{
         $tipo_campos['telefono_3'] = 'telefono_mx';
         $tipo_campos['org_tipo_sucursal_id'] = 'id';
         $tipo_campos['org_empresa_id'] = 'id';
+        $tipo_campos['status'] = 'status';
 
         $no_duplicados[] = 'codigo';
         $no_duplicados[] = 'codigo_bis';
+        $no_duplicados[] = 'descripcion';
 
         parent::__construct(link: $link, tabla: $tabla, campos_obligatorios: $campos_obligatorios, columnas: $columnas,
             no_duplicados: $no_duplicados, tipo_campos: $tipo_campos);
     }
+
+    /**
+     * Inserta un registro en base de datos
+     * @return array|stdClass
+     */
     public function alta_bd(): array|stdClass
     {
 
@@ -37,6 +44,14 @@ class org_sucursal extends modelo{
         $valida = $this->validacion->valida_existencia_keys(keys: $keys, registro: $this->registro);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al validar registro', data: $valida);
+        }
+
+        if(!isset($_SESSION['usuario_id'])){
+            return $this->error->error(mensaje: 'Error SESSION no iniciada',data: array());
+        }
+
+        if($_SESSION['usuario_id'] <= 0){
+            return $this->error->error(mensaje: 'Error USUARIO INVALIDO',data: $_SESSION['usuario_id']);
         }
 
         $row = (new limpieza())->init_row_sucursal_alta(modelo: $this);

@@ -299,14 +299,15 @@ class org_sucursal_html extends org_html {
 
     /**
      * Genera un select para sucursal
-     * @param int $cols
-     * @param bool $con_registros
-     * @param int $id_selected
-     * @param PDO $link
-     * @param string $label
+     * @param int $cols No de columnas en css
+     * @param bool $con_registros Si con registros carga los options de base de datos
+     * @param int|null $id_selected Identificador seleccionado
+     * @param PDO $link Conexion a la base de datos
+     * @param string $label Etiqueta del input
      * @return array|string
+     * @version 0.320.41
      */
-    public function select_org_sucursal_id(int $cols, bool $con_registros, int $id_selected, PDO $link,
+    public function select_org_sucursal_id(int $cols, bool $con_registros, int|null $id_selected, PDO $link,
                                            string $label = 'Empresa'): array|string
     {
         $valida = (new directivas(html:$this->html_base))->valida_cols(cols:$cols);
