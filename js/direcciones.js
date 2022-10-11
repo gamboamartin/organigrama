@@ -121,31 +121,48 @@ let sl_dp_municipio_id = $("#dp_municipio_id");
 let sl_dp_cp_id = $("#dp_cp_id");
 let sl_dp_colonia_postal_id = $("#dp_colonia_postal_id");
 
-
-let dp_pais_id = sl_dp_pais_id.val();
-let dp_estado_id = -1;
-let dp_municipio_id = -1;
-let dp_cp_id = -1;
-let dp_colonia_postal_id = -1;
-
-
 sl_dp_pais_id.change(function(){
-    dp_asigna_estados(dp_pais_id);
+    let selected = $(this).val();
+    dp_asigna_estados(selected);
+
+    sl_dp_municipio_id.empty();
+    integra_new_option("#dp_municipio_id",'Seleccione un municipio','-1');
+    sl_dp_municipio_id.selectpicker('refresh');
+
+    sl_dp_cp_id.empty();
+    integra_new_option("#dp_cp_id",'Seleccione un cp','-1');
+    sl_dp_cp_id.selectpicker('refresh');
+
+    sl_dp_colonia_postal_id.empty();
+    integra_new_option("#dp_colonia_postal_id",'Seleccione un colonia','-1');
+    sl_dp_colonia_postal_id.selectpicker('refresh');
 });
 
 sl_dp_estado_id.change(function(){
-    dp_estado_id = sl_dp_estado_id.val();
-    dp_asigna_municipios(dp_estado_id);
+    let selected = $(this).val();
+    dp_asigna_municipios(selected);
+
+    sl_dp_cp_id.empty();
+    integra_new_option("#dp_cp_id",'Seleccione un cp','-1');
+    sl_dp_cp_id.selectpicker('refresh');
+
+    sl_dp_colonia_postal_id.empty();
+    integra_new_option("#dp_colonia_postal_id",'Seleccione un colonia','-1');
+    sl_dp_colonia_postal_id.selectpicker('refresh');
 });
 sl_dp_municipio_id.change(function(){
-    dp_municipio_id = sl_dp_municipio_id.val();
-    dp_asigna_cps(dp_municipio_id);
+    let selected = $(this).val();
+    dp_asigna_cps(selected);
+
+    sl_dp_colonia_postal_id.empty();
+    integra_new_option("#dp_colonia_postal_id",'Seleccione un colonia','-1');
+    sl_dp_colonia_postal_id.selectpicker('refresh');
 });
 sl_dp_cp_id.change(function(){
-    dp_cp_id = sl_dp_cp_id.val();
-    dp_asigna_colonias_postales(dp_cp_id);
+    let selected = $(this).val();
+    dp_asigna_colonias_postales(selected);
 });
 sl_dp_colonia_postal_id.change(function(){
-    dp_colonia_postal_id = sl_dp_colonia_postal_id.val();
-    dp_asigna_calles_pertenece(dp_colonia_postal_id);
+    let selected = $(this).val();
+    dp_asigna_calles_pertenece(selected);
 });
