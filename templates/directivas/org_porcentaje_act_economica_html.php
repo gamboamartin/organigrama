@@ -25,7 +25,7 @@ class org_porcentaje_act_economica_html extends html_controler {
 
     public function genera_inputs_alta(controlador_org_porcentaje_act_economica $controler,PDO $link): array|stdClass
     {
-        $inputs = $this->init_alta(link: $link);
+        $inputs = $this->init_alta(array(),link: $link);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar inputs',data:  $inputs);
 
@@ -38,9 +38,9 @@ class org_porcentaje_act_economica_html extends html_controler {
         return $inputs_asignados;
     }
 
-    private function init_alta(PDO $link): array|stdClass
+    public function init_alta(array $keys_selects, PDO $link): array|stdClass
     {
-        $selects = $this->selects_alta(link: $link);
+        $selects = $this->selects_alta(array(), $link);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar selects',data:  $selects);
         }
@@ -56,6 +56,7 @@ class org_porcentaje_act_economica_html extends html_controler {
         $alta_inputs->selects = $selects;
         return $alta_inputs;
     }
+
 
     public function input_porcentaje(int $cols, stdClass $row_upd, bool $value_vacio): array|string
     {
@@ -79,37 +80,39 @@ class org_porcentaje_act_economica_html extends html_controler {
         return $div;
     }
 
-    private function selects_alta(PDO $link): array|stdClass
-    {
-        $selects = new stdClass();
 
-        $cat_sat_actividad_economica_html = new cat_sat_actividad_economica_html(html:$this->html_base);
+   protected function selects_alta(array $keys_selects, PDO $link): array|stdClass
+   {
+       $selects = new stdClass();
 
-        $select = $cat_sat_actividad_economica_html->select_cat_sat_actividad_economica_id(cols: 12, con_registros:true,
-            id_selected:-1,link: $link);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al generar select',data:  $select);
-        }
-        $selects->cat_sat_actividad_economica_id = $select;
+       $cat_sat_actividad_economica_html = new cat_sat_actividad_economica_html(html:$this->html_base);
 
-        $org_empresa_html= new org_empresa_html(html:$this->html_base);
-        $select = $org_empresa_html->select_org_empresa_id(cols: 12, con_registros:true,
-            id_selected:-1,link: $link);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al generar select',data:  $select);
-        }
-        $selects->org_empresa_id = $select;
+       $select = $cat_sat_actividad_economica_html->select_cat_sat_actividad_economica_id(cols: 12, con_registros:true,
+           id_selected:-1,link: $link);
+       if(errores::$error){
+           return $this->error->error(mensaje: 'Error al generar select',data:  $select);
+       }
+       $selects->cat_sat_actividad_economica_id = $select;
 
-        return $selects;
-    }
+       $org_empresa_html= new org_empresa_html(html:$this->html_base);
+       $select = $org_empresa_html->select_org_empresa_id(cols: 12, con_registros:true,
+           id_selected:-1,link: $link);
+       if(errores::$error){
+           return $this->error->error(mensaje: 'Error al generar select',data:  $select);
+       }
+       $selects->org_empresa_id = $select;
 
-    private function texts_alta(stdClass $row_upd, bool $value_vacio): array|stdClass
+       return $selects;
+   }
+
+
+    protected function texts_alta(stdClass $row_upd, bool $value_vacio, stdClass $params = new stdClass()): array|stdClass
     {
         $texts = new stdClass();
 
         $in_porcentaje = $this->input_porcentaje(cols: 6,row_upd:  $row_upd,value_vacio:  $value_vacio);
         if(errores::$error){
-            return $this->error->error(mensaje: 'Error al generar input',data:  $in_codigo);
+            return $this->error->error(mensaje: 'Error al generar input',data:  $in_porcentaje);
         }
         $texts->porcentaje = $in_porcentaje;
 
