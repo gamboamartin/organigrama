@@ -37,6 +37,7 @@ use PDO;
 use stdClass;
 
 class controlador_org_empresa extends empresas {
+    public string $link_org_departamento_alta_bd = '';
     public string $link_org_sucursal_alta_bd = '';
     public string $link_im_registro_patronal_alta_bd = '';
     public string $link_org_sucursal_modifica_bd = '';
@@ -98,6 +99,15 @@ class controlador_org_empresa extends empresas {
             exit;
         }
         $this->link_org_sucursal_modifica_bd = $link_org_sucursal_modifica_bd;
+
+        $link_org_departamento_alta_bd = $obj_link->link_org_departamento_alta_bd(org_empresa_id: $this->registro_id);
+        if (errores::$error) {
+            $error = $this->errores->error(mensaje: 'Error al generar link departamentos alta',
+                data: $link_org_departamento_alta_bd);
+            print_r($error);
+            exit;
+        }
+        $this->link_org_departamento_alta_bd = $link_org_departamento_alta_bd;
 
         $this->seccion_titulo = 'EMPRESAS';
 
@@ -1425,11 +1435,19 @@ class controlador_org_empresa extends empresas {
         $this->controlador_org_departamento->asignar_propiedad(identificador: 'org_empresa_id',
             propiedades: ["id_selected" => $this->registro_id, "disabled" => true,
                 "filtro" => array('org_empresa.id' => $this->registro_id), 'label' =>' Empresa']);
+        if (errores::$error) {
+            return $this->retorno_error(mensaje: 'Error al asignar propiedad', data: $this, header: $header, ws: $ws);
+        }
 
         $this->controlador_org_departamento->asignar_propiedad(identificador:'org_clasificacion_dep_id',
             propiedades: ["label" => "Clasificacion Dep."]);
+        if (errores::$error) {
+            return $this->retorno_error(mensaje: 'Error al asignar propiedad', data: $this, header: $header, ws: $ws);
+        }
 
-
+        $this->controlador_org_departamento->keys_selects['descripcion'] = new stdClass();
+        $this->controlador_org_departamento->keys_selects['descripcion']->cols = 6;
+        $this->controlador_org_departamento->keys_selects['descripcion']->place_holder = 'Descripcion';
         $this->inputs = $this->controlador_org_departamento->genera_inputs(
             keys_selects:  $this->controlador_org_departamento->keys_selects);
         if (errores::$error) {
