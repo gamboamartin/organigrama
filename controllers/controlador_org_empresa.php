@@ -145,7 +145,7 @@ class controlador_org_empresa extends empresas {
             exit;
         }
         $this->keys_row_lista = $keys_row_lista;
-        $this->total_items_sections = 7;
+        $this->total_items_sections = 8;
 
         $this->actions_number['lista']['item'] = 1;
         $this->actions_number['lista']['etiqueta'] = 'Nueva Empresa';
@@ -183,10 +183,10 @@ class controlador_org_empresa extends empresas {
         $this->actions_number['alta_sucursal_bd']['item'] = 6;
         $this->actions_number['alta_sucursal_bd']['etiqueta'] = 'Sucursales';
 
-        $this->actions_number['departamentos']['item'] = 7;
+        $this->actions_number['departamentos']['item'] = 8;
         $this->actions_number['departamentos']['etiqueta'] = 'Departamentos';
 
-        $this->actions_number['alta_departamento_bd']['item'] = 7;
+        $this->actions_number['alta_departamento_bd']['item'] = 8;
         $this->actions_number['alta_departamento_bd']['etiqueta'] = 'Departamentos';
 
         $this->actions_number['ubicacion']['item'] = 2;
