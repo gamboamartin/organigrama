@@ -13,6 +13,7 @@ use gamboamartin\direccion_postal\models\dp_calle_pertenece;
 use gamboamartin\errores\errores;
 use gamboamartin\organigrama\controllers\base\empresas;
 use gamboamartin\organigrama\links\secciones\link_org_empresa;
+use gamboamartin\organigrama\models\org_departamento;
 use gamboamartin\organigrama\models\org_empresa;
 use gamboamartin\organigrama\models\org_sucursal;
 use gamboamartin\system\actions;
@@ -44,19 +45,21 @@ class controlador_org_empresa extends empresas {
     public int $org_empresa_id = -1;
     public int $org_sucursal_id = -1;
     public stdClass $sucursales ;
+    public stdClass $departamentos ;
     public stdClass $registros_patronales ;
     public bool $muestra_btn_upd = true;
 
     public function __construct(PDO $link, html $html = new \gamboamartin\template_1\html(),
-                                stdClass $paths_conf = new stdClass()){
+                                stdClass $paths_conf = new stdClass())
+    {
         $modelo = new org_empresa(link: $link);
 
         $html_ = new org_empresa_html(html: $html);
         $obj_link = new link_org_empresa(registro_id: $this->registro_id);
 
-        parent::__construct(html:$html_, link: $link,modelo:  $modelo, obj_link: $obj_link, paths_conf: $paths_conf);
+        parent::__construct(html: $html_, link: $link, modelo: $modelo, obj_link: $obj_link, paths_conf: $paths_conf);
 
-        if(isset($_GET['org_sucursal_id'])){
+        if (isset($_GET['org_sucursal_id'])) {
             $this->org_sucursal_id = $_GET['org_sucursal_id'];
         }
 
@@ -65,19 +68,19 @@ class controlador_org_empresa extends empresas {
         $this->titulo_lista = 'Empresas';
 
         $link_org_sucursal_alta_bd = $obj_link->link_org_sucursal_alta_bd(org_empresa_id: $this->registro_id);
-        if(errores::$error){
+        if (errores::$error) {
             $error = $this->errores->error(mensaje: 'Error al generar link sucursal alta',
-                data:  $link_org_sucursal_alta_bd);
+                data: $link_org_sucursal_alta_bd);
             print_r($error);
             exit;
         }
         $this->link_org_sucursal_alta_bd = $link_org_sucursal_alta_bd;
-        
+
         $link_im_registro_patronal_alta_bd = $obj_link->link_im_registro_patronal_alta_bd(
             org_empresa_id: $this->registro_id);
-        if(errores::$error){
+        if (errores::$error) {
             $error = $this->errores->error(mensaje: 'Error al generar link sucursal alta',
-                data:  $link_im_registro_patronal_alta_bd);
+                data: $link_im_registro_patronal_alta_bd);
             print_r($error);
             exit;
         }
@@ -85,9 +88,9 @@ class controlador_org_empresa extends empresas {
 
         $link_org_sucursal_modifica_bd = $obj_link->link_org_sucursal_modifica_bd(org_empresa_id: $this->registro_id,
             org_sucursal_id: $this->org_sucursal_id);
-        if(errores::$error){
+        if (errores::$error) {
             $error = $this->errores->error(mensaje: 'Error al generar link sucursal modifica',
-                data:  $link_org_sucursal_alta_bd);
+                data: $link_org_sucursal_alta_bd);
             print_r($error);
             exit;
         }
@@ -97,8 +100,8 @@ class controlador_org_empresa extends empresas {
 
         $btns = (new org_empresa_html(html: $this->html_base))->btns_views(org_empresa_id: $this->registro_id);
 
-        if(errores::$error){
-            $error = $this->errores->error(mensaje: 'Error al generar botones',data:  $btns);
+        if (errores::$error) {
+            $error = $this->errores->error(mensaje: 'Error al generar botones', data: $btns);
             print_r($error);
             exit;
         }
@@ -107,8 +110,8 @@ class controlador_org_empresa extends empresas {
 
 
         $keys_row_lista = $this->keys_rows_lista();
-        if(errores::$error){
-            $error = $this->errores->error(mensaje: 'Error al generar keys de lista',data:  $keys_row_lista);
+        if (errores::$error) {
+            $error = $this->errores->error(mensaje: 'Error al generar keys de lista', data: $keys_row_lista);
             print_r($error);
             exit;
         }
@@ -150,6 +153,12 @@ class controlador_org_empresa extends empresas {
 
         $this->actions_number['alta_sucursal_bd']['item'] = 6;
         $this->actions_number['alta_sucursal_bd']['etiqueta'] = 'Sucursales';
+
+        $this->actions_number['departamentos']['item'] = 7;
+        $this->actions_number['departamentos']['etiqueta'] = 'Departamentos';
+
+        $this->actions_number['alta_departamento_bd']['item'] = 7;
+        $this->actions_number['alta_departamento_bd']['etiqueta'] = 'Departamentos';
 
         $this->actions_number['ubicacion']['item'] = 2;
         $this->actions_number['ubicacion']['etiqueta'] = 'Ubicacion';
@@ -523,6 +532,39 @@ class controlador_org_empresa extends empresas {
         $data->data_dp = $data_dp;
 
         return $data;
+    }
+
+    private function data_departamento_btn(array $departamento): array
+    {
+
+        $params['org_departamento_id'] = $departamento['org_departamento_id'];
+
+        $btn_elimina = $this->html_base->button_href(accion:'elimina_bd',etiqueta:  'Elimina',
+            registro_id:  $departamento['org_departamento_id'], seccion: 'org_departamento',style:  'danger');
+
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al generar btn',data:  $btn_elimina);
+        }
+        $departamento['link_elimina'] = $btn_elimina;
+
+
+        $btn_modifica = $this->html_base->button_href(accion:'modifica_departamento',etiqueta:  'Modifica',
+            registro_id:  $departamento['org_empresa_id'], seccion: 'org_empresa',style:  'warning', params: $params);
+
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al generar btn',data:  $btn_elimina);
+        }
+        $departamento['link_modifica'] = $btn_modifica;
+
+        $btn_ve = $this->html_base->button_href(accion:'ve_departamento',etiqueta:  'Ver',
+            registro_id:  $departamento['org_empresa_id'], seccion: 'org_empresa',style:  'info', params: $params);
+
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al generar btn',data:  $btn_elimina);
+        }
+        $departamento['link_ve'] = $btn_ve;
+
+        return $departamento;
     }
 
     /**
@@ -1365,6 +1407,52 @@ class controlador_org_empresa extends empresas {
         }
 
         $this->sucursales = $sucursales;
+
+        return $base;
+
+    }
+
+    public function departamentos(bool $header, bool $ws = false): array|stdClass
+    {
+
+        $params = new stdClass();
+
+        $params->codigo = new stdClass();
+        $params->codigo->cols = 4;
+
+        $params->codigo_bis = new stdClass();
+        $params->codigo_bis->cols = 4;
+
+        $base = $this->base(params: $params);
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al maquetar datos',data:  $base,
+                header: $header,ws:$ws);
+        }
+
+        $select = $this->select_org_empresa_id();
+
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al generar select datos',data:  $select,
+                header: $header,ws:$ws);
+        }
+
+
+        $departamentos = (new org_departamento($this->link))->departamentos(org_empresa_id: $this->org_empresa_id);
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al obtener departamentos',data:  $departamentos, header: $header,ws:$ws);
+        }
+
+        foreach ($departamentos->registros as $indice=>$departamento){
+
+            $departamento = $this->data_departamento_btn(departamento:$departamento);
+            if(errores::$error){
+                return $this->retorno_error(mensaje: 'Error al asignar botones',data:  $departamento, header: $header,ws:$ws);
+            }
+            $departamentos->registros[$indice] = $departamento;
+
+        }
+
+        $this->departamentos = $departamentos;
 
         return $base;
 

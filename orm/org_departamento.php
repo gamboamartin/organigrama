@@ -2,7 +2,9 @@
 namespace gamboamartin\organigrama\models;
 use base\orm\modelo;
 
+use gamboamartin\errores\errores;
 use PDO;
+use stdClass;
 
 class org_departamento extends modelo{
     public function __construct(PDO $link){
@@ -17,4 +19,17 @@ class org_departamento extends modelo{
             no_duplicados: $no_duplicados, tipo_campos: $tipo_campos);
     }
 
+
+    public function departamentos(int $org_empresa_id): array|stdClass
+    {
+        if($org_empresa_id <=0){
+            return $this->error->error(mensaje: 'Error $org_empresa_id debe ser mayor a 0', data: $org_empresa_id);
+        }
+        $filtro['org_empresa.id'] = $org_empresa_id;
+        $r_org_departamento = $this->filtro_and(filtro: $filtro);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al obtener departamentos', data: $r_org_departamento);
+        }
+        return $r_org_departamento;
+    }
 }
