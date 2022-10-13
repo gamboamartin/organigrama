@@ -15,8 +15,12 @@ class org_departamento extends modelo{
         $no_duplicados = array();
         $tipo_campos = array();
 
+        $campos_view['org_empresa_id']['type'] = "selects";
+        $campos_view['org_empresa_id']['model'] = new org_empresa($link);
+        $campos_view['org_clasificacion_dep_id']['type'] = "selects";
+        $campos_view['org_clasificacion_dep_id']['model'] = new org_clasificacion_dep($link);
         parent::__construct(link: $link, tabla: $tabla, campos_obligatorios: $campos_obligatorios, columnas: $columnas,
-            no_duplicados: $no_duplicados, tipo_campos: $tipo_campos);
+            campos_view: $campos_view, no_duplicados: $no_duplicados, tipo_campos: $tipo_campos);
     }
 
 

@@ -17,6 +17,7 @@ use PDO;
 use stdClass;
 
 class controlador_org_departamento extends system {
+    public array $keys_selects = array();
 
     public function __construct(PDO $link, html $html = new \gamboamartin\template_1\html(),
                                 stdClass $paths_conf = new stdClass()){
@@ -29,5 +30,15 @@ class controlador_org_departamento extends system {
         $this->titulo_lista = 'Departamentos';
     }
 
+    public function asignar_propiedad(string $identificador, mixed $propiedades)
+    {
+        if (!array_key_exists($identificador,$this->keys_selects)){
+            $this->keys_selects[$identificador] = new stdClass();
+        }
+
+        foreach ($propiedades as $key => $value){
+            $this->keys_selects[$identificador]->$key = $value;
+        }
+    }
 
 }

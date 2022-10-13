@@ -11,8 +11,8 @@
                         <?php include (new views())->ruta_templates."head/subtitulo.php"; ?>
                         <?php include (new views())->ruta_templates."mensajes.php"; ?>
 
-                    <?php echo $controlador->inputs->select->org_empresa_id; ?>
-                    <?php echo $controlador->inputs->select->org_clasificacion_dep_id; ?>
+                    <?php echo $controlador->inputs->org_empresa_id; ?>
+                    <?php echo $controlador->inputs->org_clasificacion_dep_id; ?>
                     <?php echo $controlador->inputs->codigo; ?>
                     <?php echo $controlador->inputs->descripcion; ?>
                         <div class="control-group btn-alta">

@@ -48,6 +48,7 @@ class controlador_org_empresa extends empresas {
     public stdClass $departamentos ;
     public stdClass $registros_patronales ;
     public bool $muestra_btn_upd = true;
+    public controlador_org_departamento $controlador_org_departamento;
 
     public function __construct(PDO $link, html $html = new \gamboamartin\template_1\html(),
                                 stdClass $paths_conf = new stdClass())
@@ -66,6 +67,8 @@ class controlador_org_empresa extends empresas {
         $this->org_empresa_id = $this->registro_id;
 
         $this->titulo_lista = 'Empresas';
+
+        $this->controlador_org_departamento= new controlador_org_departamento($this->link);
 
         $link_org_sucursal_alta_bd = $obj_link->link_org_sucursal_alta_bd(org_empresa_id: $this->registro_id);
         if (errores::$error) {
@@ -1414,48 +1417,57 @@ class controlador_org_empresa extends empresas {
 
     public function departamentos(bool $header, bool $ws = false): array|stdClass
     {
+        $alta = $this->controlador_org_departamento->alta(header: false);
+        if (errores::$error) {
+            return $this->retorno_error(mensaje: 'Error al generar template', data: $alta, header: $header, ws: $ws);
+        }
 
-        $params = new stdClass();
+        $this->controlador_org_departamento->asignar_propiedad(identificador: 'org_empresa_id',
+            propiedades: ["id_selected" => $this->registro_id, "disabled" => true,
+                "filtro" => array('org_empresa.id' => $this->registro_id), 'label' =>' Empresa']);
 
-        $params->codigo = new stdClass();
-        $params->codigo->cols = 4;
+        $this->controlador_org_departamento->asignar_propiedad(identificador:'org_clasificacion_dep_id',
+            propiedades: ["label" => "Clasificacion Dep."]);
 
-        $params->codigo_bis = new stdClass();
-        $params->codigo_bis->cols = 4;
 
-        $base = $this->base(params: $params);
+        $this->inputs = $this->controlador_org_departamento->genera_inputs(
+            keys_selects:  $this->controlador_org_departamento->keys_selects);
+        if (errores::$error) {
+            $error = $this->errores->error(mensaje: 'Error al generar inputs', data: $this->inputs);
+            print_r($error);
+            die('Error');
+        }
+
+        $this->departamentos = $this->ver_departamentos(header: $header,ws: $ws);
         if(errores::$error){
-            return $this->retorno_error(mensaje: 'Error al maquetar datos',data:  $base,
+            return $this->retorno_error(mensaje: 'Error al obtener los anticipos',data:  $this->departamentos, header: $header,ws:$ws);
+        }
+
+        return $this->inputs;
+
+    }
+
+    public function ver_departamentos(bool $header, bool $ws = false): array|stdClass
+    {
+        $departamentos = (new org_departamento($this->link))->departamentos(org_empresa_id: $this->registro_id);
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al obtener departamentos',data:  $departamentos,
                 header: $header,ws:$ws);
         }
 
-        $select = $this->select_org_empresa_id();
+        foreach ($departamentos->registros as $indice => $departamento) {
 
-        if(errores::$error){
-            return $this->retorno_error(mensaje: 'Error al generar select datos',data:  $select,
-                header: $header,ws:$ws);
-        }
-
-
-        $departamentos = (new org_departamento($this->link))->departamentos(org_empresa_id: $this->org_empresa_id);
-        if(errores::$error){
-            return $this->retorno_error(mensaje: 'Error al obtener departamentos',data:  $departamentos, header: $header,ws:$ws);
-        }
-
-        foreach ($departamentos->registros as $indice=>$departamento){
-
-            $departamento = $this->data_departamento_btn(departamento:$departamento);
-            if(errores::$error){
-                return $this->retorno_error(mensaje: 'Error al asignar botones',data:  $departamento, header: $header,ws:$ws);
+            $departamento = $this->data_departamento_btn(departamento: $departamento);
+            if (errores::$error) {
+                return $this->retorno_error(mensaje: 'Error al asignar botones', data: $departamento, header: $header, ws: $ws);
             }
-            $departamentos->registros[$indice] = $departamento;
 
+            $departamentos->registros[$indice] = $departamento;
         }
 
         $this->departamentos = $departamentos;
 
-        return $base;
-
+        return $this->departamentos;
     }
 
     public function registros_patronales(bool $header, bool $ws = false): array|stdClass
