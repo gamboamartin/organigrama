@@ -87,10 +87,28 @@ class org_puesto_html extends html_controler {
             return $this->error->error(mensaje: 'Error al generar selects',data:  $selects);
         }
 
-        $alta_inputs = new stdClass();
-        $alta_inputs->selects = $selects;
+        $texts = $this->texts_modifica_base(row_upd: $row_upd);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar texts',data:  $texts);
+        }
+
+        $alta_inputs['inputs'] = $texts;
+        $alta_inputs['selects'] = $selects;
 
         return $alta_inputs;
+    }
+
+    private function texts_modifica_base(stdClass $row_upd): array|stdClass
+    {
+        $texts = new stdClass();
+
+        $in_descripcion = $this->input_descripcion(cols: 12,row_upd:  $row_upd,value_vacio: false);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar input',data:  $in_descripcion);
+        }
+        $texts->descripcion = $in_descripcion;
+
+        return $texts;
     }
 
     public function inputs_org_puesto(controlador_org_puesto $controlador_org_puesto): array|stdClass
