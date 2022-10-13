@@ -45,6 +45,7 @@ class controlador_org_empresa extends empresas {
     public string $rfc = '';
     public int $org_empresa_id = -1;
     public int $org_sucursal_id = -1;
+    public int $org_departamento_id = -1;
     public stdClass $sucursales ;
     public stdClass $departamentos ;
     public stdClass $registros_patronales ;
@@ -64,6 +65,10 @@ class controlador_org_empresa extends empresas {
         if (isset($_GET['org_sucursal_id'])) {
             $this->org_sucursal_id = $_GET['org_sucursal_id'];
         }
+        if (isset($_GET['org_departamento_id'])){
+            $this->org_departamento_id = $_GET['org_departamento_id'];
+        }
+
 
         $this->org_empresa_id = $this->registro_id;
 
@@ -569,14 +574,6 @@ class controlador_org_empresa extends empresas {
         }
         $departamento['link_modifica'] = $btn_modifica;
 
-        $btn_ve = $this->html_base->button_href(accion:'ve_departamento',etiqueta:  'Ver',
-            registro_id:  $departamento['org_empresa_id'], seccion: 'org_empresa',style:  'info', params: $params);
-
-        if(errores::$error){
-            return $this->errores->error(mensaje: 'Error al generar btn',data:  $btn_elimina);
-        }
-        $departamento['link_ve'] = $btn_ve;
-
         return $departamento;
     }
 
@@ -983,6 +980,68 @@ class controlador_org_empresa extends empresas {
 
         return $base->template;
     }
+
+    public function modifica_departamento(bool $header, bool $ws = false): array|stdClass
+    {
+        $this->controlador_org_departamento->registro_id = $this->org_departamento_id;
+
+        $modifica = $this->controlador_org_departamento->modifica(header: false);
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al generar template',data:  $modifica, header: $header,ws:$ws);
+        }
+        $this->controlador_org_departamento->keys_selects['descripcion'] = new stdClass();
+        $this->controlador_org_departamento->keys_selects['descripcion']->cols = 12;
+        $this->controlador_org_departamento->keys_selects['descripcion']->place_holder = 'Descripcion';
+        $this->inputs = $this->controlador_org_departamento->genera_inputs(
+            keys_selects:  $this->controlador_org_departamento->keys_selects);
+        if(errores::$error){
+            $error = $this->errores->error(mensaje: 'Error al generar inputs',data:  $this->inputs);
+            print_r($error);
+            die('Error');
+        }
+
+        return $this->inputs;
+    }
+
+    public function anticipo_modifica_bd(bool $header, bool $ws = false): array|stdClass
+    {
+        $this->link->beginTransaction();
+
+        $siguiente_view = (new actions())->init_alta_bd();
+        if (errores::$error) {
+            $this->link->rollBack();
+            return $this->retorno_error(mensaje: 'Error al obtener siguiente view', data: $siguiente_view,
+                header: $header, ws: $ws);
+        }
+
+        if (isset($_POST['btn_action_next'])) {
+            unset($_POST['btn_action_next']);
+        }
+
+        $registros = $_POST;
+
+        $r_modifica = (new em_anticipo($this->link))->modifica_bd(registro: $registros,
+            id: $this->em_anticipo_id);
+        if (errores::$error) {
+            return $this->retorno_error(mensaje: 'Error al modificar anticipo', data: $r_modifica, header: $header, ws: $ws);
+        }
+
+        $this->link->commit();
+
+        if ($header) {
+            $this->retorno_base(registro_id:$this->registro_id, result: $r_modifica,
+                siguiente_view: "anticipo", ws:  $ws);
+        }
+        if ($ws) {
+            header('Content-Type: application/json');
+            echo json_encode($r_modifica, JSON_THROW_ON_ERROR);
+            exit;
+        }
+        $r_modifica->siguiente_view = "anticipo";
+
+        return $r_modifica;
+    }
+
 
     public function modifica_identidad(bool $header, bool $ws = false): array|stdClass
     {

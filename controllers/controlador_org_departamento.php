@@ -8,6 +8,7 @@
  */
 namespace gamboamartin\organigrama\controllers;
 
+use gamboamartin\errores\errores;
 use gamboamartin\organigrama\models\org_departamento;
 use gamboamartin\system\links_menu;
 use gamboamartin\system\system;
@@ -28,6 +29,20 @@ class controlador_org_departamento extends system {
         parent::__construct(html:$html_, link: $link,modelo:  $modelo, obj_link: $obj_link, paths_conf: $paths_conf);
 
         $this->titulo_lista = 'Departamentos';
+
+        $this->asignar_propiedad(identificador:'org_empresa_id', propiedades: ["label" => "Empresa"]);
+        if (errores::$error) {
+            $error = $this->errores->error(mensaje: 'Error al asignar propiedad', data: $this);
+            print_r($error);
+            die('Error');
+        }
+
+        $this->asignar_propiedad(identificador:'org_clasificacion_dep_id', propiedades: ["label" => "Clasificacion Dep."]);
+        if (errores::$error) {
+            $error = $this->errores->error(mensaje: 'Error al asignar propiedad', data: $this);
+            print_r($error);
+            die('Error');
+        }
     }
 
     public function asignar_propiedad(string $identificador, mixed $propiedades)
@@ -39,6 +54,33 @@ class controlador_org_departamento extends system {
         foreach ($propiedades as $key => $value){
             $this->keys_selects[$identificador]->$key = $value;
         }
+    }
+
+    public function modifica(bool $header, bool $ws = false, string $breadcrumbs = '', bool $aplica_form = true, bool $muestra_btn = true): array|string
+    {
+        $r_modifica =  parent::modifica(header: false,aplica_form:  false);
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al generar template',data:  $r_modifica);
+        }
+
+        $this->asignar_propiedad(identificador:'org_empresa_id',
+            propiedades: ["id_selected"=> $this->row_upd->org_empresa_id, "disabled" => true,
+                "filtro" => array('org_empresa.id' => $this->row_upd->org_empresa_id)]);
+        if (errores::$error) {
+            $error = $this->errores->error(mensaje: 'Error al asignar propiedad', data: $this);
+            print_r($error);
+            die('Error');
+        }
+
+        $this->asignar_propiedad(identificador:'org_clasificacion_dep_id',
+            propiedades: ["id_selected"=>$this->row_upd->org_clasificacion_dep_id]);
+        if (errores::$error) {
+            $error = $this->errores->error(mensaje: 'Error al asignar propiedad', data: $this);
+            print_r($error);
+            die('Error');
+        }
+
+        return $r_modifica;
     }
 
 }

@@ -44,7 +44,6 @@
                             <th>Empresa</th>
                             <th>Clasificacion Departamento</th>
 
-                            <th>Ver</th>
                             <th>Modifica</th>
                             <th>Elimina</th>
 
@@ -59,7 +58,6 @@
                                 <td><?php echo $departamento['org_empresa_razon_social']; ?></td>
                                 <td><?php echo $departamento['org_clasificacion_dep_descripcion']; ?></td>
 
-                                <td><?php echo $departamento['link_ve']; ?></td>
                                 <td><?php echo $departamento['link_modifica']; ?></td>
                                 <td><?php echo $departamento['link_elimina']; ?></td>
 
