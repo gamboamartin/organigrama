@@ -100,6 +100,17 @@ class link_org_empresa extends links_menu {
         return $link;
     }
 
+    public function link_org_departamento_modifica_bd(int $org_empresa_id, int $org_departamento_id): string
+    {
+        $link = $this->link_con_id(accion:'modifica_departamento_bd', registro_id: $org_empresa_id,seccion:  'org_empresa');
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar link', data: $link);
+        }
+        $link .= '&org_departamento_id='.$org_departamento_id;
+
+        return $link;
+    }
+
     /**
      * @param int $registro_id
      * @return stdClass|array

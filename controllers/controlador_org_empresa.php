@@ -38,6 +38,7 @@ use stdClass;
 
 class controlador_org_empresa extends empresas {
     public string $link_org_departamento_alta_bd = '';
+    public string $link_org_departamento_modifica_bd = '';
     public string $link_org_sucursal_alta_bd = '';
     public string $link_im_registro_patronal_alta_bd = '';
     public string $link_org_sucursal_modifica_bd = '';
@@ -104,6 +105,16 @@ class controlador_org_empresa extends empresas {
             exit;
         }
         $this->link_org_sucursal_modifica_bd = $link_org_sucursal_modifica_bd;
+
+        $link_org_departamento_modifica_bd = $obj_link->link_org_departamento_modifica_bd(org_empresa_id: $this->registro_id,
+            org_departamento_id: $this->org_departamento_id);
+        if (errores::$error) {
+            $error = $this->errores->error(mensaje: 'Error al generar link departamento modifica',
+                data: $link_org_departamento_modifica_bd);
+            print_r($error);
+            exit;
+        }
+        $this->link_org_departamento_modifica_bd = $link_org_departamento_modifica_bd;
 
         $link_org_departamento_alta_bd = $obj_link->link_org_departamento_alta_bd(org_empresa_id: $this->registro_id);
         if (errores::$error) {
@@ -1003,7 +1014,7 @@ class controlador_org_empresa extends empresas {
         return $this->inputs;
     }
 
-    public function anticipo_modifica_bd(bool $header, bool $ws = false): array|stdClass
+    public function modifica_departamento_bd(bool $header, bool $ws = false): array|stdClass
     {
         $this->link->beginTransaction();
 
@@ -1020,8 +1031,8 @@ class controlador_org_empresa extends empresas {
 
         $registros = $_POST;
 
-        $r_modifica = (new em_anticipo($this->link))->modifica_bd(registro: $registros,
-            id: $this->em_anticipo_id);
+        $r_modifica = (new org_departamento($this->link))->modifica_bd(registro: $registros,
+            id: $this->org_departamento_id);
         if (errores::$error) {
             return $this->retorno_error(mensaje: 'Error al modificar anticipo', data: $r_modifica, header: $header, ws: $ws);
         }
@@ -1030,14 +1041,14 @@ class controlador_org_empresa extends empresas {
 
         if ($header) {
             $this->retorno_base(registro_id:$this->registro_id, result: $r_modifica,
-                siguiente_view: "anticipo", ws:  $ws);
+                siguiente_view: "departamentos", ws:  $ws);
         }
         if ($ws) {
             header('Content-Type: application/json');
             echo json_encode($r_modifica, JSON_THROW_ON_ERROR);
             exit;
         }
-        $r_modifica->siguiente_view = "anticipo";
+        $r_modifica->siguiente_view = "departamentos";
 
         return $r_modifica;
     }
