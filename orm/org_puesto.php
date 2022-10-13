@@ -13,7 +13,8 @@ class org_puesto extends modelo{
         $campos_obligatorios = array('org_tipo_puesto_id','org_departamento_id');
         $campos_view = array(
             'org_tipo_puesto_id' => array('type' => 'selects', 'model' => new org_tipo_puesto($link)),
-            'org_departamento_id' => array('type' => 'selects', 'model' => new org_departamento($link)));
+            'org_departamento_id' => array('type' => 'selects', 'model' => new org_departamento($link)),
+            'descripcion' => array('type' => 'inputs','cols' => 6));
 
         parent::__construct(link: $link,tabla:  $tabla, campos_obligatorios: $campos_obligatorios,
             columnas: $columnas,campos_view: $campos_view);

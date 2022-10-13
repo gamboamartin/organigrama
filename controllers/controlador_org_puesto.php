@@ -44,6 +44,10 @@ class controlador_org_puesto extends system {
         $keys_selects['org_departamento_id'] = new stdClass();
         $keys_selects['org_departamento_id']->label = 'Departamento';
 
+        $keys_selects['descripcion'] = new stdClass();
+        $keys_selects['descripcion']->cols = 6;
+        $keys_selects['descripcion']->place_holder = 'Descripcion';
+
         $inputs = (new org_puesto_html(html: $this->html_base))->genera_inputs_alta(
             controler: $this, modelo: $this->modelo, link: $this->link,keys_selects: $keys_selects);
         if(errores::$error){

@@ -40,6 +40,7 @@ class org_puesto_html extends html_controler {
             $controler->inputs = new stdClass();
         }
 
+        $controler->inputs->descripcion = $inputs['inputs']->descripcion;
         $controler->inputs->select = new stdClass();
         $controler->inputs->select->org_tipo_puesto_id = $inputs['selects']->org_tipo_puesto_id;
         $controler->inputs->select->org_departamento_id = $inputs['selects']->org_departamento_id;
