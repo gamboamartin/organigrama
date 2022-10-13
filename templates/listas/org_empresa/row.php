@@ -10,6 +10,7 @@
     <td><?php echo $row->org_empresa_alias; ?></td>
     <td><?php include 'templates/botons/org_empresa/link_empresa_registros_patronales.php';?></td>
     <td><?php include 'templates/botons/org_empresa/link_empresa_sucursales.php';?></td>
+    <td><?php include 'templates/botons/org_empresa/link_empresa_departamentos.php';?></td>
 
     <!-- End dynamic generated -->
 

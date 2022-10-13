@@ -313,6 +313,26 @@ class controlador_org_empresa extends empresas {
         return $registro;
     }
 
+    private function asigna_link_departamento_row(stdClass $row): array|stdClass
+    {
+        $keys = array('org_empresa_id');
+        $valida = $this->validacion->valida_ids(keys: $keys,registro:  $row);
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al validar row',data:  $valida);
+        }
+
+        $link_departamentos = $this->obj_link->link_con_id(accion:'departamentos',registro_id:  $row->org_empresa_id,
+            seccion:  $this->tabla);
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al genera link',data:  $link_departamentos);
+        }
+
+        $row->link_departamentos = $link_departamentos;
+        $row->link_departamentos_style = 'info';
+
+        return $row;
+    }
+    
     /**
      * Asigna los elementos de un link a un registro
      * @param stdClass $row registro en proceso
@@ -877,6 +897,12 @@ class controlador_org_empresa extends empresas {
     {
         foreach ($registros as $indice=> $row){
             $row = $this->asigna_link_sucursal_row(row: $row);
+            if(errores::$error){
+                return $this->errores->error(mensaje: 'Error al maquetar row',data:  $row);
+            }
+            $registros[$indice] = $row;
+
+            $row = $this->asigna_link_departamento_row(row: $row);
             if(errores::$error){
                 return $this->errores->error(mensaje: 'Error al maquetar row',data:  $row);
             }

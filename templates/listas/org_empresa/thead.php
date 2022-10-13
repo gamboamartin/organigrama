@@ -9,6 +9,7 @@
         <th data-breakpoints="xs sm md"  data-type="html">Alias</th>
         <th data-breakpoints="xs sm md"  data-type="html">Registros Patronales</th>
         <th data-breakpoints="xs sm md"  data-type="html">Sucursales</th>
+        <th data-breakpoints="xs sm md"  data-type="html">Departamentos</th>
 
         <th data-breakpoints="xs md" class="control"  data-type="html">Modifica</th>
         <th data-breakpoints="xs md" class="control"  data-type="html">Elimina</th>
