@@ -22,7 +22,7 @@ class org_puesto_html extends html_controler {
      * @return array|stdClass
      * @version 0.280.36
      */
-    private function asigna_inputs(controlador_org_puesto $controler, stdClass $inputs): array|stdClass
+    private function asigna_inputs(controlador_org_puesto $controler, array $inputs): array|stdClass
     {
         $keys = array('selects');
         $valida = (new validacion())->valida_existencia_keys(keys: $keys, registro: $inputs);
@@ -31,7 +31,7 @@ class org_puesto_html extends html_controler {
         }
 
         $keys = array('org_tipo_puesto_id','org_departamento_id');
-        $valida = (new validacion())->valida_existencia_keys(keys: $keys, registro: $inputs->selects);
+        $valida = (new validacion())->valida_existencia_keys(keys: $keys, registro: $inputs['selects']);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al validar inputs',data:  $valida);
         }
@@ -41,8 +41,8 @@ class org_puesto_html extends html_controler {
         }
 
         $controler->inputs->select = new stdClass();
-        $controler->inputs->select->org_tipo_puesto_id = $inputs->selects->org_tipo_puesto_id;
-        $controler->inputs->select->org_departamento_id = $inputs->selects->org_departamento_id;
+        $controler->inputs->select->org_tipo_puesto_id = $inputs['selects']->org_tipo_puesto_id;
+        $controler->inputs->select->org_departamento_id = $inputs['selects']->org_departamento_id;
 
         return $controler->inputs;
     }
