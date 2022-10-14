@@ -60,4 +60,17 @@ class org_departamento extends modelo{
         }
         return $r_org_departamento;
     }
+
+    public function departamentos_por_cls(int $org_clasificacion_dep_id): array|stdClass
+    {
+        if($org_clasificacion_dep_id <=0){
+            return $this->error->error(mensaje: 'Error $org_empresa_id debe ser mayor a 0', data: $org_clasificacion_dep_id);
+        }
+        $filtro['org_clasificacion_dep.id'] = $org_clasificacion_dep_id;
+        $r_org_departamento = $this->filtro_and(filtro: $filtro);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al obtener departamentos', data: $r_org_departamento);
+        }
+        return $r_org_departamento;
+    }
 }

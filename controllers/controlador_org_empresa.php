@@ -183,10 +183,10 @@ class controlador_org_empresa extends empresas {
         $this->actions_number['alta_sucursal_bd']['item'] = 6;
         $this->actions_number['alta_sucursal_bd']['etiqueta'] = 'Sucursales';
 
-        $this->actions_number['departamentos']['item'] = 8;
+        $this->actions_number['departamentos']['item'] = 7;
         $this->actions_number['departamentos']['etiqueta'] = 'Departamentos';
 
-        $this->actions_number['alta_departamento_bd']['item'] = 8;
+        $this->actions_number['alta_departamento_bd']['item'] = 7;
         $this->actions_number['alta_departamento_bd']['etiqueta'] = 'Departamentos';
 
         $this->actions_number['ubicacion']['item'] = 2;
