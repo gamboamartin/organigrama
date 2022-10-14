@@ -1000,6 +1000,8 @@ class controlador_org_empresa extends empresas {
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al generar template',data:  $modifica, header: $header,ws:$ws);
         }
+
+        $this->controlador_org_departamento->keys_selects['org_empresa_id']->disabled = true;
         $this->controlador_org_departamento->keys_selects['descripcion'] = new stdClass();
         $this->controlador_org_departamento->keys_selects['descripcion']->cols = 12;
         $this->controlador_org_departamento->keys_selects['descripcion']->place_holder = 'Descripcion';

@@ -56,7 +56,8 @@ class controlador_org_departamento extends system {
         }
     }
 
-    public function modifica(bool $header, bool $ws = false, string $breadcrumbs = '', bool $aplica_form = true, bool $muestra_btn = true): array|string
+    public function modifica(bool $header, bool $ws = false, string $breadcrumbs = '', bool $aplica_form = true,
+                             bool $muestra_btn = true): array|string
     {
         $r_modifica =  parent::modifica(header: false,aplica_form:  false);
         if(errores::$error){
@@ -64,7 +65,7 @@ class controlador_org_departamento extends system {
         }
 
         $this->asignar_propiedad(identificador:'org_empresa_id',
-            propiedades: ["id_selected"=> $this->row_upd->org_empresa_id, "disabled" => true,
+            propiedades: ["id_selected"=> $this->row_upd->org_empresa_id,
                 "filtro" => array('org_empresa.id' => $this->row_upd->org_empresa_id)]);
         if (errores::$error) {
             $error = $this->errores->error(mensaje: 'Error al asignar propiedad', data: $this);
