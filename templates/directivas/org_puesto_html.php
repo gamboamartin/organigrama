@@ -18,12 +18,15 @@ class org_puesto_html extends html_controler {
     /**
      * Asigna los valores de un conjunto de inputs para se mostrados en front
      * @param controlador_org_puesto $controler Controlador en ejecucion
-     * @param stdClass $inputs Inputs precargados
+     * @param array|stdClass $inputs Inputs precargados
      * @return array|stdClass
      * @version 0.280.36
      */
-    private function asigna_inputs(controlador_org_puesto $controler, array $inputs): array|stdClass
+    private function asigna_inputs(controlador_org_puesto $controler, array|stdClass $inputs): array|stdClass
     {
+        if(is_object($inputs)){
+            $inputs = (array)$inputs;
+        }
         $keys = array('selects');
         $valida = (new validacion())->valida_existencia_keys(keys: $keys, registro: $inputs);
         if(errores::$error){
@@ -36,9 +39,23 @@ class org_puesto_html extends html_controler {
             return $this->error->error(mensaje: 'Error al validar inputs',data:  $valida);
         }
 
+        $keys = array('inputs');
+        $valida = (new validacion())->valida_existencia_keys(keys: $keys, registro: $inputs);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al validar inputs',data:  $valida);
+        }
+
+        $keys = array('descripcion');
+        $valida = (new validacion())->valida_existencia_keys(keys: $keys, registro: $inputs['inputs']);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al validar inputs',data:  $valida);
+        }
+
         if(is_array($controler->inputs)){
             $controler->inputs = new stdClass();
         }
+
+
 
         $controler->inputs->descripcion = $inputs['inputs']->descripcion;
         $controler->inputs->select = new stdClass();

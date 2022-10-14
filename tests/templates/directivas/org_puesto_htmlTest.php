@@ -49,11 +49,15 @@ class org_puesto_htmlTest extends test {
         $inputs->selects->org_empresa_id = 'x';
         $inputs->selects->org_tipo_puesto_id = 'x';
         $inputs->selects->org_departamento_id = 'x';
+        $inputs->inputs = new stdClass();
+        $inputs->inputs->descripcion = 'a';
         $resultado = $html->asigna_inputs($controler, $inputs);
 
         $this->assertIsObject($resultado);
         $this->assertNotTrue(errores::$error);
         $this->assertStringContainsStringIgnoringCase("x", $resultado->select->org_departamento_id);
+        $this->assertEquals("x", $resultado->select->org_tipo_puesto_id);
+        $this->assertEquals("a", $resultado->descripcion);
 
         errores::$error = false;
     }
