@@ -38,7 +38,7 @@ class controlador_org_clasificacion_dep extends system {
         if (isset($_GET['org_departamento_id'])){
             $this->org_departamento_id = $_GET['org_departamento_id'];
         }
-
+        $this->total_items_sections = 2;
         $this->controlador_org_departamento= new controlador_org_departamento($this->link);
 
         $link_org_departamento_modifica_bd = $obj_link->link_con_id(accion:'modifica_departamento_bd',
