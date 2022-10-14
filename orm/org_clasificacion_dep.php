@@ -4,6 +4,7 @@ use base\orm\modelo;
 
 use gamboamartin\errores\errores;
 use PDO;
+use stdClass;
 
 class org_clasificacion_dep extends modelo{
     public function __construct(PDO $link){
@@ -18,7 +19,7 @@ class org_clasificacion_dep extends modelo{
             no_duplicados: $no_duplicados, tipo_campos: $tipo_campos);
     }
 
-    public function alta_bd(): array
+    public function alta_bd(): array|stdClass
     {
         if(!isset($this->registro['codigo_bis'])){
             $this->registro['codigo_bis'] = strtoupper($this->registro['codigo']);
