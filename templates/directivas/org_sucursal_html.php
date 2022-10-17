@@ -308,7 +308,8 @@ class org_sucursal_html extends org_html {
      * @version 0.320.41
      */
     public function select_org_sucursal_id(int $cols, bool $con_registros, int|null $id_selected, PDO $link,
-                                           string $label = 'Empresa'): array|string
+                                           $disabled = false, array  $filtro = array(),
+                                           string $label = 'Sucursal'): array|string
     {
         $valida = (new directivas(html:$this->html_base))->valida_cols(cols:$cols);
         if(errores::$error){
@@ -321,7 +322,7 @@ class org_sucursal_html extends org_html {
         }
 
         $select = $this->select_catalogo(cols:$cols,con_registros:$con_registros,id_selected:$id_selected,
-            modelo: $modelo,label: $label,required: true);
+            modelo: $modelo,disabled: $disabled,filtro: $filtro,label: $label,required: true);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select', data: $select);
         }

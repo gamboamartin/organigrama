@@ -11,6 +11,7 @@ namespace gamboamartin\organigrama\controllers;
 
 use gamboamartin\direccion_postal\models\dp_calle_pertenece;
 use gamboamartin\errores\errores;
+use gamboamartin\im_registro_patronal\controllers\controlador_im_registro_patronal;
 use gamboamartin\organigrama\controllers\base\empresas;
 use gamboamartin\organigrama\links\secciones\link_org_empresa;
 use gamboamartin\organigrama\models\org_departamento;
@@ -51,7 +52,9 @@ class controlador_org_empresa extends empresas {
     public stdClass $departamentos ;
     public stdClass $registros_patronales ;
     public bool $muestra_btn_upd = true;
+    public array $keys_selects = array();
     public controlador_org_departamento $controlador_org_departamento;
+    public controlador_im_registro_patronal $controlador_im_registro_patronal;
 
     public function __construct(PDO $link, html $html = new \gamboamartin\template_1\html(),
                                 stdClass $paths_conf = new stdClass())
@@ -75,7 +78,8 @@ class controlador_org_empresa extends empresas {
 
         $this->titulo_lista = 'Empresas';
 
-        $this->controlador_org_departamento= new controlador_org_departamento($this->link);
+        $this->controlador_org_departamento = new controlador_org_departamento($this->link);
+        $this->controlador_im_registro_patronal = new controlador_im_registro_patronal($this->link);
 
         $link_org_sucursal_alta_bd = $obj_link->link_org_sucursal_alta_bd(org_empresa_id: $this->registro_id);
         if (errores::$error) {
@@ -145,7 +149,7 @@ class controlador_org_empresa extends empresas {
             exit;
         }
         $this->keys_row_lista = $keys_row_lista;
-        $this->total_items_sections = 8;
+        $this->total_items_sections = 9;
 
         $this->actions_number['lista']['item'] = 1;
         $this->actions_number['lista']['etiqueta'] = 'Nueva Empresa';
@@ -188,6 +192,12 @@ class controlador_org_empresa extends empresas {
 
         $this->actions_number['alta_departamento_bd']['item'] = 7;
         $this->actions_number['alta_departamento_bd']['etiqueta'] = 'Departamentos';
+
+        $this->actions_number['registros_patronales']['item'] = 8;
+        $this->actions_number['registros_patronales']['etiqueta'] = 'Registros Patronales';
+
+        $this->actions_number['alta_registro_patronal_bd']['item'] = 8;
+        $this->actions_number['alta_registro_patronal_bd']['etiqueta'] = 'Registros Patronales';
 
         $this->actions_number['ubicacion']['item'] = 2;
         $this->actions_number['ubicacion']['etiqueta'] = 'Ubicacion';
@@ -416,6 +426,18 @@ class controlador_org_empresa extends empresas {
 
         return $row;
     }
+
+    public function asignar_propiedad(string $identificador, mixed $propiedades)
+    {
+        if (!array_key_exists($identificador,$this->keys_selects)){
+            $this->keys_selects[$identificador] = new stdClass();
+        }
+
+        foreach ($propiedades as $key => $value){
+            $this->keys_selects[$identificador]->$key = $value;
+        }
+    }
+
 
     private function base(stdClass $params = new stdClass()): array|stdClass
     {
@@ -646,14 +668,6 @@ class controlador_org_empresa extends empresas {
             return $this->errores->error(mensaje: 'Error al generar btn',data:  $btn_elimina);
         }
         $registro_patronal['link_modifica'] = $btn_modifica;
-
-        $btn_ve = $this->html_base->button_href(accion:'ve_registro_patronal',etiqueta:  'Ver',
-            registro_id:  $registro_patronal['org_empresa_id'], seccion: 'org_empresa',style:  'info', params: $params);
-
-        if(errores::$error){
-            return $this->errores->error(mensaje: 'Error al generar btn',data:  $btn_elimina);
-        }
-        $registro_patronal['link_ve'] = $btn_ve;
         
         return $registro_patronal;
     }
@@ -1442,6 +1456,19 @@ class controlador_org_empresa extends empresas {
         return $select;
     }
 
+    public function select_org_sucursal_id(int $org_empresa_id){
+        $filtro['org_empresa.id'] = $org_empresa_id;
+
+        $select = (new org_sucursal_html(html: $this->html_base))->select_org_sucursal_id(cols:6,con_registros: true,
+            id_selected: -1,link:  $this->link,filtro: $filtro);
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al generar select datos',data:  $select);
+        }
+        $this->inputs->select->org_sucursal_id = $select;
+
+        return $select;
+    }
+
     /**
      * Vista que integra la empresa y las sucursales asignadas a esa empresa
      * @param bool $header
@@ -1600,35 +1627,50 @@ class controlador_org_empresa extends empresas {
 
     public function registros_patronales(bool $header, bool $ws = false): array|stdClass
     {
-
-        $params = new stdClass();
-
-        $params->codigo = new stdClass();
-        $params->codigo->cols = 4;
-
-        $params->codigo_bis = new stdClass();
-        $params->codigo_bis->cols = 4;
-
-        $r_modifica =  parent::modifica(header: false,aplica_form:  false); // TODO: Change the autogenerated stub
-        if(errores::$error){
-            return $this->errores->error(mensaje: 'Error al generar template',data:  $r_modifica);
+        $alta = $this->controlador_im_registro_patronal->alta(header: false);
+        if (errores::$error) {
+            return $this->retorno_error(mensaje: 'Error al generar template', data: $alta, header: $header, ws: $ws);
         }
 
-        $inputs = (new org_empresa_html(html: $this->html_base))->inputs_registros_patronales(
-            controlador_org_empresa:$this, params: $params);
-        if(errores::$error){
-            return $this->errores->error(mensaje: 'Error al inicializar inputs',data:  $inputs);
+        $this->asignar_propiedad(identificador: 'org_empresa_id',
+            propiedades: ["id_selected" => $this->registro_id, "disabled" => true,
+                "filtro" => array('org_empresa.id' => $this->registro_id), 'label' =>' Empresa']);
+        if (errores::$error) {
+            return $this->retorno_error(mensaje: 'Error al asignar propiedad', data: $this, header: $header, ws: $ws);
         }
 
-        $registros_patronales = $this->registros_patronales_r(org_empresa_id: $this->org_empresa_id);
-        if(errores::$error){
-            return $this->retorno_error(mensaje: 'Error al obtener registros_patronales',data:  $registros_patronales, header: $header,ws:$ws);
+        $this->controlador_im_registro_patronal->asignar_propiedad(identificador: 'fc_csd_id',
+            propiedades: [ 'con_registros'=> false,'label' =>' CSD Sucursal']);
+        if (errores::$error) {
+            return $this->retorno_error(mensaje: 'Error al asignar propiedad', data: $this, header: $header, ws: $ws);
+        }
+
+        $this->controlador_im_registro_patronal->keys_selects['descripcion'] = new stdClass();
+        $this->controlador_im_registro_patronal->keys_selects['descripcion']->cols = 6;
+        $this->controlador_im_registro_patronal->keys_selects['descripcion']->place_holder = 'Descripcion';
+        $this->inputs = $this->controlador_im_registro_patronal->genera_inputs(
+            keys_selects:  $this->controlador_im_registro_patronal->keys_selects);
+        if (errores::$error) {
+            $error = $this->errores->error(mensaje: 'Error al generar inputs', data: $this->inputs);
+            print_r($error);
+            die('Error');
         }
 
         $select = $this->select_org_empresa_id();
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al generar select datos',data:  $select,
                 header: $header,ws:$ws);
+        }
+
+        $select = $this->select_org_sucursal_id(org_empresa_id: $this->registro_id);
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al generar select datos',data:  $select,
+                header: $header,ws:$ws);
+        }
+
+        $registros_patronales = $this->registros_patronales_r(org_empresa_id: $this->org_empresa_id);
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al obtener registros_patronales',data:  $registros_patronales, header: $header,ws:$ws);
         }
 
         foreach ($registros_patronales->registros as $indice=>$registro_patronal){
@@ -1642,7 +1684,7 @@ class controlador_org_empresa extends empresas {
 
         $this->registros_patronales = $registros_patronales;
 
-        return $inputs;
+        return $this->inputs;
     }
 
     public function registros_patronales_r(int $org_empresa_id){

@@ -52,8 +52,7 @@ class org_empresa_html extends org_html {
         $controler->inputs->select->im_clase_riesgo_id = $inputs->selects->im_clase_riesgo_id;
         $controler->inputs->select->org_sucursal_id = $inputs->selects->org_sucursal_id;
         $controler->inputs->select->fc_csd_id = $inputs->selects->fc_csd_id;
-        $controler->inputs->exterior = $inputs->texts->exterior;
-        $controler->inputs->interior = $inputs->texts->interior;
+        $controler->inputs->descripcion = $inputs->texts->descripcion;
 
         return $controler->inputs;
     }
@@ -669,7 +668,7 @@ class org_empresa_html extends org_html {
         $selects = new stdClass();
 
         $select = (new im_clase_riesgo_html(html:$this->html_base))->select_im_clase_riesgo_id(
-            cols: 4, con_registros:true, id_selected: -1,link: $link);
+            cols: 6, con_registros:true, id_selected: -1,link: $link);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $select);
         }
@@ -823,6 +822,16 @@ class org_empresa_html extends org_html {
             return $this->error->error(mensaje: 'Error al generar input',data:  $in_codigo);
         }
         $texts->codigo_bis = $in_codigo_bis;
+
+        $cols_descripcion = $params->descripcion->cols ?? 6;
+        $disabled_descripcion = $params->descripcion->disabled ?? false;
+
+        $in_descripcion = $this->input_descripcion(cols: $cols_descripcion,row_upd:  $row_upd,value_vacio:  $value_vacio,
+            disabled: $disabled_descripcion);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar input',data:  $in_descripcion);
+        }
+        $texts->descripcion = $in_descripcion;
 
         $in_exterior = $this->input_exterior(cols: 6,row_upd: $row_upd,value_vacio:  $value_vacio);
         if(errores::$error){

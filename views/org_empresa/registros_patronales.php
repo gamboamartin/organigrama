@@ -13,11 +13,9 @@
 
                         <?php echo $controlador->inputs->select->org_empresa_id; ?>
                         <?php echo $controlador->inputs->select->org_sucursal_id; ?>
-                        <?php echo $controlador->inputs->select->fc_csd_id; ?>
-                        <?php echo $controlador->inputs->codigo; ?>
-                        <?php echo $controlador->inputs->codigo_bis; ?>
-                        <?php echo $controlador->inputs->select->im_clase_riesgo_id; ?>
+                        <?php echo $controlador->inputs->fc_csd_id; ?>
                         <?php echo $controlador->inputs->descripcion; ?>
+                        <?php echo $controlador->inputs->select->im_clase_riesgo_id; ?>
 
                         <div class="control-group btn-alta">
                             <div class="controls">
@@ -44,7 +42,6 @@
                             <th>Id</th>
                             <th>Codigo</th>
                             <th>Descripcion</th>
-                            <th>Ver</th>
                             <th>Modifica</th>
                             <th>Elimina</th>
 
@@ -55,7 +52,6 @@
                                 <td><?php echo $registro_patronal['im_registro_patronal_id']; ?></td>
                                 <td><?php echo $registro_patronal['im_registro_patronal_codigo']; ?></td>
                                 <td><?php echo $registro_patronal['im_registro_patronal_descripcion']; ?></td>
-                                <td><?php echo $registro_patronal['link_ve']; ?></td>
                                 <td><?php echo $registro_patronal['link_modifica']; ?></td>
                                 <td><?php echo $registro_patronal['link_elimina']; ?></td>
 
