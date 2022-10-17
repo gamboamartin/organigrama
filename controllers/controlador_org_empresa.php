@@ -42,12 +42,14 @@ class controlador_org_empresa extends empresas {
     public string $link_org_departamento_modifica_bd = '';
     public string $link_org_sucursal_alta_bd = '';
     public string $link_im_registro_patronal_alta_bd = '';
+    public string $link_im_registro_patronal_modifica_bd = '';
     public string $link_org_sucursal_modifica_bd = '';
     public string $razon_social = '';
     public string $rfc = '';
     public int $org_empresa_id = -1;
     public int $org_sucursal_id = -1;
     public int $org_departamento_id = -1;
+    public int $im_registro_patronal_id = -1;
     public stdClass $sucursales ;
     public stdClass $departamentos ;
     public stdClass $registros_patronales ;
@@ -72,7 +74,9 @@ class controlador_org_empresa extends empresas {
         if (isset($_GET['org_departamento_id'])){
             $this->org_departamento_id = $_GET['org_departamento_id'];
         }
-
+        if (isset($_GET['im_registro_patronal_id'])){
+            $this->im_registro_patronal_id = $_GET['im_registro_patronal_id'];
+        }
 
         $this->org_empresa_id = $this->registro_id;
 
@@ -119,6 +123,16 @@ class controlador_org_empresa extends empresas {
             exit;
         }
         $this->link_org_departamento_modifica_bd = $link_org_departamento_modifica_bd;
+
+        $link_im_registro_patronal_modifica_bd = $obj_link->link_im_registro_patronal_modifica_bd(org_empresa_id: $this->registro_id,
+            im_registro_patronal_id: $this->im_registro_patronal_id);
+        if (errores::$error) {
+            $error = $this->errores->error(mensaje: 'Error al generar link departamento modifica',
+                data: $link_im_registro_patronal_modifica_bd);
+            print_r($error);
+            exit;
+        }
+        $this->link_im_registro_patronal_modifica_bd = $link_im_registro_patronal_modifica_bd;
 
         $link_org_departamento_alta_bd = $obj_link->link_org_departamento_alta_bd(org_empresa_id: $this->registro_id);
         if (errores::$error) {
@@ -1068,6 +1082,70 @@ class controlador_org_empresa extends empresas {
 
         return $r_modifica;
     }
+
+    public function modifica_registro_patronal(bool $header, bool $ws = false): array|stdClass
+    {
+        $this->controlador_im_registro_patronal->registro_id = $this->im_registro_patronal_id;
+
+        $modifica = $this->controlador_im_registro_patronal->modifica(header: false);
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al generar template',data:  $modifica, header: $header,ws:$ws);
+        }
+
+        $this->controlador_im_registro_patronal->keys_selects['descripcion'] = new stdClass();
+        $this->controlador_im_registro_patronal->keys_selects['descripcion']->cols = 6;
+        $this->controlador_im_registro_patronal->keys_selects['descripcion']->place_holder = 'Descripcion';
+        $this->inputs = $this->controlador_im_registro_patronal->genera_inputs(
+            keys_selects:  $this->controlador_im_registro_patronal->keys_selects);
+        if(errores::$error){
+            $error = $this->errores->error(mensaje: 'Error al generar inputs',data:  $this->inputs);
+            print_r($error);
+            die('Error');
+        }
+
+        return $this->inputs;
+    }
+
+    public function modifica_registro_patronal_bd(bool $header, bool $ws = false): array|stdClass
+    {
+        $this->link->beginTransaction();
+
+        $siguiente_view = (new actions())->init_alta_bd();
+        if (errores::$error) {
+            $this->link->rollBack();
+            return $this->retorno_error(mensaje: 'Error al obtener siguiente view', data: $siguiente_view,
+                header: $header, ws: $ws);
+        }
+
+        if (isset($_POST['btn_action_next'])) {
+            unset($_POST['btn_action_next']);
+        }
+
+        $registros = $_POST;
+
+        $r_modifica = (new im_registro_patronal($this->link))->modifica_bd(registro: $registros,
+            id: $this->im_registro_patronal_id);
+        if (errores::$error) {
+            return $this->retorno_error(mensaje: 'Error al modificar registro patronal', data: $r_modifica,
+                header: $header, ws: $ws);
+        }
+
+        $this->link->commit();
+
+        if ($header) {
+            $this->retorno_base(registro_id:$this->registro_id, result: $r_modifica,
+                siguiente_view: "registros_patronales", ws:  $ws);
+        }
+        if ($ws) {
+            header('Content-Type: application/json');
+            echo json_encode($r_modifica, JSON_THROW_ON_ERROR);
+            exit;
+        }
+        $r_modifica->siguiente_view = "registros_patronales";
+
+        return $r_modifica;
+    }
+
 
 
     public function modifica_identidad(bool $header, bool $ws = false): array|stdClass

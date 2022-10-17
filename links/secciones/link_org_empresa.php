@@ -110,6 +110,17 @@ class link_org_empresa extends links_menu {
 
         return $link;
     }
+    
+    public function link_im_registro_patronal_modifica_bd(int $org_empresa_id, int $im_registro_patronal_id): string
+    {
+        $link = $this->link_con_id(accion:'modifica_registro_patronal_bd', registro_id: $org_empresa_id,seccion:  'org_empresa');
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar link', data: $link);
+        }
+        $link .= '&im_registro_patronal_id='.$im_registro_patronal_id;
+
+        return $link;
+    }
 
     /**
      * @param int $registro_id
