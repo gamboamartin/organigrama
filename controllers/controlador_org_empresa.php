@@ -1687,6 +1687,46 @@ class controlador_org_empresa extends empresas {
         return $this->inputs;
     }
 
+    public function alta_registro_patronal_bd(bool $header, bool $ws = false){
+        $this->link->beginTransaction();
+
+        $siguiente_view = (new actions())->init_alta_bd();
+        if (errores::$error) {
+            $this->link->rollBack();
+            return $this->retorno_error(mensaje: 'Error al obtener siguiente view', data: $siguiente_view,
+                header: $header, ws: $ws);
+        }
+
+        if (isset($_POST['btn_action_next'])) {
+            unset($_POST['btn_action_next']);
+        }
+        if(isset($_POST['org_sucursal_id'])){
+            unset($_POST['org_sucursal_id']);
+        }
+
+        $alta = (new im_registro_patronal($this->link))->alta_registro(registro: $_POST);
+        if (errores::$error) {
+            $this->link->rollBack();
+            return $this->retorno_error(mensaje: 'Error al dar de alta departamento', data: $alta,
+                header: $header, ws: $ws);
+        }
+
+        $this->link->commit();
+
+        if ($header) {
+            $this->retorno_base(registro_id:$this->registro_id, result: $alta,
+                siguiente_view: "registros_patronales", ws:  $ws);
+        }
+        if ($ws) {
+            header('Content-Type: application/json');
+            echo json_encode($alta, JSON_THROW_ON_ERROR);
+            exit;
+        }
+        $alta->siguiente_view = "registros_patronales";
+
+        return $alta;
+    }
+
     public function registros_patronales_r(int $org_empresa_id){
         if($org_empresa_id <=0){
             return $this->errores->error(mensaje: 'Error $org_empresa_id debe ser mayor a 0', data: $org_empresa_id);
