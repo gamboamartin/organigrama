@@ -59,10 +59,10 @@ class base_test{
     }
 
 
-    public function alta_org_empresa(PDO $link): array|\stdClass
+    public function alta_org_empresa(PDO $link, int $id = 1): array|\stdClass
     {
         $registro = array();
-        $registro['id'] = 1;
+        $registro['id'] = $id;
         $registro['codigo'] = 1;
         $registro['descripcion'] = 1;
         $registro['razon_social'] = 1;
@@ -110,23 +110,28 @@ class base_test{
         return $alta;
     }
 
-    public function alta_org_sucursal(PDO $link): array|\stdClass
+    public function alta_org_sucursal(PDO $link, int $org_empresa_id = 1): array|\stdClass
     {
-        $alta = $this->alta_org_empresa($link);
+        $existe = (new org_empresa($link))->existe_by_id(registro_id: $org_empresa_id);
         if(errores::$error){
-            return (new errores())->error(mensaje: 'Error al insertar ', data: $alta);
+            return (new errores())->error(mensaje: 'Error al verificar si existe ', data: $existe);
         }
-
-        $del = $this->del_org_sucursal($link);
-        if(errores::$error){
-            return (new errores())->error(mensaje: 'Error al eliminar ', data: $del);
+        if(!$existe) {
+            $alta = $this->alta_org_empresa(link: $link, id: $org_empresa_id);
+            if (errores::$error) {
+                return (new errores())->error(mensaje: 'Error al insertar ', data: $alta);
+            }
+            $del = $this->del_org_sucursal($link);
+            if (errores::$error) {
+                return (new errores())->error(mensaje: 'Error al eliminar ', data: $del);
+            }
         }
 
         $registro = array();
         $registro['id'] = 1;
         $registro['codigo'] = 1;
         $registro['descripcion'] = 1;
-        $registro['org_empresa_id'] = 1;
+        $registro['org_empresa_id'] = $org_empresa_id;
 
 
         $alta = (new org_sucursal($link))->alta_registro($registro);
