@@ -30,40 +30,6 @@
         </div>
     </div>
 
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-
-                <div class="widget widget-box box-container widget-mylistings">
-
-                    <div class="">
-                        <table class="table table-striped footable-sort" data-sorting="true">
-                            <th>Id</th>
-                            <th>Codigo</th>
-                            <th>Serie</th>
-                            <th>Sucursal</th>
-                            <th>Modifica</th>
-                            <th>Elimina</th>
-
-                            <tbody>
-                            <?php //foreach ($controlador->registros_patronales->registros as $registro_patronal){
-                                ?>
-                            <tr>
-
-                            </tr>
-                            <?php //} ?>
-                            </tbody>
-                        </table>
-                        <div class="box-body">
-                            * Total registros: <?php //echo $controlador->registros_patronales->n_registros; ?><br />
-                            * Fecha Hora: <?php //echo $controlador->fecha_hoy; ?>
-                        </div>
-                    </div>
-                </div> <!-- /. widget-table-->
-            </div><!-- /.center-content -->
-        </div>
-    </div>
-
 
 </main>
 
