@@ -132,5 +132,24 @@ class controlador_org_sucursal extends empresas {
         return $this->inputs;
     }
 
+    public function csd(bool $header, bool $ws = false): array|stdClass
+    {
+
+        $controlador_fc_csd = new controlador_fc_csd($this->link);
+
+        $alta = $controlador_fc_csd->alta(header: false);
+        if (errores::$error) {
+            return $this->retorno_error(mensaje: 'Error al generar template', data: $alta, header: $header, ws: $ws);
+        }
+        $this->inputs = $controlador_fc_csd->inputs;
+        if (errores::$error) {
+            $error = $this->errores->error(mensaje: 'Error al generar inputs', data: $this->inputs);
+            print_r($error);
+            die('Error');
+        }
+
+        return $this->inputs;
+    }
+
 
 }
