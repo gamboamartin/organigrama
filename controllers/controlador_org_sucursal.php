@@ -9,6 +9,7 @@
 namespace gamboamartin\organigrama\controllers;
 
 use gamboamartin\errores\errores;
+use gamboamartin\im_registro_patronal\controllers\controlador_im_registro_patronal;
 use gamboamartin\organigrama\controllers\base\empresas;
 use gamboamartin\organigrama\links\secciones\link_org_sucursal;
 use gamboamartin\organigrama\models\org_sucursal;
@@ -18,6 +19,8 @@ use PDO;
 use stdClass;
 
 class controlador_org_sucursal extends empresas {
+
+    public controlador_im_registro_patronal $controlador_im_registro_patronal;
     protected int $org_empresa_id = -1;
 
     public function __construct(PDO $link, html $html = new \gamboamartin\template_1\html(),
@@ -28,7 +31,31 @@ class controlador_org_sucursal extends empresas {
         $obj_link = new link_org_sucursal($this->registro_id);
         parent::__construct(html:$html_, link: $link,modelo:  $modelo, obj_link: $obj_link, paths_conf: $paths_conf);
 
+        $this->controlador_im_registro_patronal = new controlador_im_registro_patronal(
+            link: $this->link, paths_conf: $paths_conf);
+
+        $obj_link->genera_links(controler: $this);
+        if (errores::$error) {
+            $error = $this->errores->error(mensaje: 'Error al inicializar links', data: $obj_link);
+            print_r($error);
+            die('Error');
+        }
+
         $this->titulo_lista = 'Sucursales';
+
+        $columns["org_sucursal_id"]["titulo"] = "Id";
+        $columns["org_sucursal_codigo"]["titulo"] = "Cogido";
+        $columns["org_sucursal_descripcion"]["titulo"] = "Descripcion";
+        $columns["org_tipo_sucursal_descripcion"]["titulo"] = "Tipo Sucursal";
+        $columns["registro_patronal"]["titulo"] = "Registros Patronales";
+        $columns["registro_patronal"]["type"] = "button";
+
+        $this->datatable_init(columns: $columns);
+        if (errores::$error) {
+            $error = $this->errores->error(mensaje: 'Error al generar datatable', data: $this);
+            print_r($error);
+            exit;
+        }
 
     }
 
@@ -75,6 +102,34 @@ class controlador_org_sucursal extends empresas {
         }
 
         return $salida;
+    }
+
+    public function registro_patronal(bool $header, bool $ws = false): array|stdClass
+    {
+        $this->controlador_im_registro_patronal->modelo->campos_view['org_sucursal_id'] = array('type' => 'selects',
+            'model' => new org_sucursal($this->link));
+
+        $this->controlador_im_registro_patronal->asignar_propiedad(identificador: 'org_sucursal_id',
+            propiedades: ["id_selected" => $this->registro_id, "disabled" => true, "cols" => 12, "label" => "Sucursal",
+                "filtro" => array('org_sucursal.id' => $this->registro_id)]);
+
+        $this->controlador_im_registro_patronal->asignar_propiedad(identificador: 'descripcion',
+            propiedades: ['place_holder' => "Descripcion",'cols'=> 12]);
+
+        $alta = $this->controlador_im_registro_patronal->alta(header: false);
+        if (errores::$error) {
+            return $this->retorno_error(mensaje: 'Error al generar template', data: $alta, header: $header, ws: $ws);
+        }
+
+        $this->inputs = $this->controlador_im_registro_patronal->genera_inputs(
+            keys_selects:  $this->controlador_im_registro_patronal->keys_selects);
+        if (errores::$error) {
+            $error = $this->errores->error(mensaje: 'Error al generar inputs', data: $this->inputs);
+            print_r($error);
+            die('Error');
+        }
+
+        return $this->inputs;
     }
 
 
