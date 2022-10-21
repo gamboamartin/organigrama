@@ -6,7 +6,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="widget  widget-box box-container form-main widget-form-cart" id="form">
-                    <form method="post" action="<?php echo $controlador->link_im_registro_patronal_alta_bd; ?>" class="form-additional">
+                    <form method="post" action="<?php echo $controlador->link_im_registro_patronal_modifica_bd; ?>&im_registro_patronal_id=<?php echo $controlador->im_registro_patronal_id; ?>" class="form-additional">
                         <?php include (new views())->ruta_templates."head/title.php"; ?>
                         <?php include (new views())->ruta_templates."head/subtitulo.php"; ?>
                         <?php include (new views())->ruta_templates."mensajes.php"; ?>
@@ -18,7 +18,7 @@
 
                         <div class="control-group btn-alta">
                             <div class="controls">
-                                <button type="submit" class="btn btn-success" value="registros_patronales" name="btn_action_next">Alta</button><br>
+                                <button type="submit" class="btn btn-success" value="registros_patronales" name="btn_action_next">Modifica</button><br>
                             </div>
                         </div>
 
