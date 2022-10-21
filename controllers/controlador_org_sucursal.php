@@ -123,14 +123,14 @@ class controlador_org_sucursal extends empresas {
         $this->controlador_im_registro_patronal->asignar_propiedad(identificador: 'descripcion',
             propiedades: ['place_holder' => "Descripcion",'cols'=> 12]);
 
-        $columns2["im_registro_patronal_id"]["titulo"] = "Id";
-        $columns2["im_registro_patronal_codigo"]["titulo"] = "Codigo";
-        $columns2["im_registro_patronal_descripcion"]["titulo"] = "Descripcion";
+        $columns["im_registro_patronal_id"]["titulo"] = "Id";
+        $columns["im_registro_patronal_codigo"]["titulo"] = "Codigo";
+        $columns["im_registro_patronal_descripcion"]["titulo"] = "Descripcion";
 
-
-        $this->datatable_init(columns: $columns2,identificador: "#im_registro_patronal");
+        $colums_rs =$this->datatable_init(columns: $columns,identificador: "#im_registro_patronal",
+            data: array("org_sucursal.id" => $this->registro_id));
         if (errores::$error) {
-            $error = $this->errores->error(mensaje: 'Error al inicializar links', data: $columns2);
+            $error = $this->errores->error(mensaje: 'Error al inicializar links', data: $colums_rs);
             print_r($error);
             die('Error');
         }
