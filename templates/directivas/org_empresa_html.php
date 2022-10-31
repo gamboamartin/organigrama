@@ -132,7 +132,7 @@ class org_empresa_html extends org_html {
             return $this->error->error(mensaje: 'Error cold debe ser menor o igual a  12', data: $cols);
         }
 
-        $html =$this->directivas->email_required(disable: false,name: 'email_sat',
+        $html =$this->directivas->email_required(disabled: false,name: 'email_sat',
             place_holder: 'Email SAT',row_upd: $row_upd, value_vacio: $value_vacio);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input', data: $html);
@@ -171,7 +171,7 @@ class org_empresa_html extends org_html {
             return $this->error->error(mensaje: 'Error cold debe ser menor o igual a  12', data: $cols);
         }
 
-        $html =$this->directivas->fecha_required(disable: false,name: 'fecha_ultimo_cambio_sat',
+        $html =$this->directivas->fecha_required(disabled: false,name: 'fecha_ultimo_cambio_sat',
             place_holder: 'Ultimo Cambio SAT',row_upd: $row_upd, value_vacio: $value_vacio);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input', data: $html);
@@ -364,7 +364,7 @@ class org_empresa_html extends org_html {
             return $this->error->error(mensaje: 'Error cold debe ser menor o igual a  12', data: $cols);
         }
 
-        $html =$this->directivas->input_text_required(disable: false,name: 'exterior',place_holder: 'Num Ext',row_upd: $row_upd,
+        $html =$this->directivas->input_text_required(disabled: false,name: 'exterior',place_holder: 'Num Ext',row_upd: $row_upd,
             value_vacio: $value_vacio);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input', data: $html);
@@ -388,7 +388,7 @@ class org_empresa_html extends org_html {
             return $this->error->error(mensaje: 'Error cold debe ser menor o igual a  12', data: $cols);
         }
 
-        $html =$this->directivas->input_text(disable: false,name: 'interior',place_holder: 'Num Int', required: false,
+        $html =$this->directivas->input_text(disabled: false,name: 'interior',place_holder: 'Num Int', required: false,
             row_upd: $row_upd, value_vacio: $value_vacio);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input', data: $html);
@@ -412,7 +412,7 @@ class org_empresa_html extends org_html {
             return $this->error->error(mensaje: 'Error cold debe ser menor o igual a  12', data: $cols);
         }
 
-        $html =$this->directivas->input_text_required(disable: false,name: 'logo',place_holder: 'Logo',row_upd: $row_upd,
+        $html =$this->directivas->input_text_required(disabled: false,name: 'logo',place_holder: 'Logo',row_upd: $row_upd,
             value_vacio: $value_vacio);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input', data: $html);
@@ -436,7 +436,7 @@ class org_empresa_html extends org_html {
             return $this->error->error(mensaje: 'Error cold debe ser menor o igual a  12', data: $cols);
         }
 
-        $html =$this->directivas->input_text_required(disable: false,name: 'nombre_comercial',
+        $html =$this->directivas->input_text_required(disabled: false,name: 'nombre_comercial',
             place_holder: 'Nombre Comercial',row_upd: $row_upd, value_vacio: $value_vacio);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input', data: $html);
@@ -460,7 +460,7 @@ class org_empresa_html extends org_html {
             return $this->error->error(mensaje: 'Error cold debe ser menor o igual a  12', data: $cols);
         }
 
-        $html =$this->directivas->input_text_required(disable: false,name: 'pagina_web',place_holder: 'Pagina Web',row_upd: $row_upd,
+        $html =$this->directivas->input_text_required(disabled: false,name: 'pagina_web',place_holder: 'Pagina Web',row_upd: $row_upd,
             value_vacio: $value_vacio);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input', data: $html);
@@ -484,7 +484,7 @@ class org_empresa_html extends org_html {
             return $this->error->error(mensaje: 'Error cold debe ser menor o igual a  12', data: $cols);
         }
 
-        $html =$this->directivas->input_text_required(disable: $disabled,name: 'razon_social',
+        $html =$this->directivas->input_text_required(disabled: $disabled,name: 'razon_social',
             place_holder: 'Razon Social',row_upd: $row_upd,
             value_vacio: $value_vacio);
         if(errores::$error){
@@ -509,7 +509,7 @@ class org_empresa_html extends org_html {
             return $this->error->error(mensaje: 'Error cold debe ser menor o igual a  12', data: $cols);
         }
 
-        $html =$this->directivas->input_text_required(disable: false,name: 'rfc',place_holder: 'RFC',row_upd: $row_upd,
+        $html =$this->directivas->input_text_required(disabled: false,name: 'rfc',place_holder: 'RFC',row_upd: $row_upd,
             value_vacio: $value_vacio);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input', data: $html);
@@ -709,7 +709,7 @@ class org_empresa_html extends org_html {
             return $this->error->error(mensaje: 'Error cold debe ser menor o igual a  12', data: $cols);
         }
 
-        $html =$this->directivas->input_text_required(disable: false,name: 'telefono_1',
+        $html =$this->directivas->input_text_required(disabled: false,name: 'telefono_1',
             place_holder: 'Telefono 1',row_upd: $row_upd, value_vacio: $value_vacio);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input', data: $html);
@@ -732,7 +732,7 @@ class org_empresa_html extends org_html {
             return $this->error->error(mensaje: 'Error cold debe ser menor o igual a  12', data: $cols);
         }
 
-        $html =$this->directivas->input_text(disable: false,name: 'telefono_2',
+        $html =$this->directivas->input_text(disabled: false,name: 'telefono_2',
             place_holder: 'Telefono 2',required: false,row_upd: $row_upd, value_vacio: $value_vacio);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input', data: $html);
@@ -755,7 +755,7 @@ class org_empresa_html extends org_html {
             return $this->error->error(mensaje: 'Error cold debe ser menor o igual a  12', data: $cols);
         }
 
-        $html =$this->directivas->input_text(disable: false,name: 'telefono_3',
+        $html =$this->directivas->input_text(disabled: false,name: 'telefono_3',
             place_holder: 'Telefono 3',required: false,row_upd: $row_upd, value_vacio: $value_vacio);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input', data: $html);
