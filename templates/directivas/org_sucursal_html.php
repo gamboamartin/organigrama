@@ -5,11 +5,9 @@ namespace html;
 use gamboamartin\errores\errores;
 use gamboamartin\organigrama\controllers\controlador_org_sucursal;
 use gamboamartin\organigrama\models\org_sucursal;
-use gamboamartin\system\html_controler;
 use gamboamartin\system\system;
 use gamboamartin\template\directivas;
 use html\base\org_html;
-use models\base\limpieza;
 use PDO;
 use stdClass;
 
@@ -135,6 +133,7 @@ class org_sucursal_html extends org_html {
         $alta_inputs->selects = $selects;
         $alta_inputs->fechas = $fechas;
         $alta_inputs->telefonos = $telefonos;
+
         return $alta_inputs;
     }
 
@@ -152,7 +151,7 @@ class org_sucursal_html extends org_html {
             return $this->error->error(mensaje: 'Error cold debe ser menor o igual a  12', data: $cols);
         }
 
-        $html =$this->directivas->input_text_required(disable: $disabled,name: 'exterior',place_holder: 'Num Ext',row_upd: $row_upd,
+        $html =$this->directivas->input_text_required(disabled: $disabled,name: 'exterior',place_holder: 'Num Ext',row_upd: $row_upd,
             value_vacio: $value_vacio);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input', data: $html);
@@ -178,7 +177,7 @@ class org_sucursal_html extends org_html {
             return $this->error->error(mensaje: 'Error cold debe ser menor o igual a  12', data: $cols);
         }
 
-        $html =$this->directivas->input_text(disable: $disabled,name: 'interior',place_holder: 'Num Int', required: false,
+        $html =$this->directivas->input_text(disabled: $disabled,name: 'interior',place_holder: 'Num Int', required: false,
             row_upd: $row_upd, value_vacio: $value_vacio);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input', data: $html);
@@ -203,7 +202,7 @@ class org_sucursal_html extends org_html {
             return $this->error->error(mensaje: 'Error cold debe ser menor o igual a  12', data: $cols);
         }
 
-        $html =$this->directivas->input_text_required(disable: $disabled,name: 'serie',place_holder: $place_holder,
+        $html =$this->directivas->input_text_required(disabled: $disabled,name: 'serie',place_holder: $place_holder,
             row_upd: $row_upd, value_vacio: $value_vacio);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input', data: $html);
@@ -228,7 +227,7 @@ class org_sucursal_html extends org_html {
     }
 
     /**
-     * Gemera los inputs de un alta para sucursal
+     * Genera los inputs de un alta para sucursal
      * @param PDO $link
      * @param int $org_empresa_id
      * @param bool $org_empresa_id_disabled
@@ -338,7 +337,7 @@ class org_sucursal_html extends org_html {
             return $this->error->error(mensaje: 'Error cold debe ser menor o igual a  12', data: $cols);
         }
 
-        $html =$this->directivas->input_text_required(disable: $disabled,name: 'telefono_1',
+        $html =$this->directivas->input_text_required(disabled: $disabled,name: 'telefono_1',
             place_holder: 'Telefono 1',row_upd: $row_upd, value_vacio: $value_vacio);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input', data: $html);
@@ -361,7 +360,7 @@ class org_sucursal_html extends org_html {
             return $this->error->error(mensaje: 'Error cold debe ser menor o igual a  12', data: $cols);
         }
 
-        $html =$this->directivas->input_text(disable: $disabled,name: 'telefono_2',
+        $html =$this->directivas->input_text(disabled: $disabled,name: 'telefono_2',
             place_holder: 'Telefono 2',required: false,row_upd: $row_upd, value_vacio: $value_vacio);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input', data: $html);
@@ -384,7 +383,7 @@ class org_sucursal_html extends org_html {
             return $this->error->error(mensaje: 'Error cold debe ser menor o igual a  12', data: $cols);
         }
 
-        $html =$this->directivas->input_text(disable: $disabled,name: 'telefono_3',
+        $html =$this->directivas->input_text(disabled: $disabled,name: 'telefono_3',
             place_holder: 'Telefono 3',required: false,row_upd: $row_upd, value_vacio: $value_vacio);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input', data: $html);

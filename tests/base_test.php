@@ -284,6 +284,7 @@ class base_test{
 
     public function del_org_sucursal(PDO $link): array
     {
+
         $del = $this->del_fc_csd($link);
         if(errores::$error){
             return (new errores())->error(mensaje: 'Error al eliminar ', data: $del);

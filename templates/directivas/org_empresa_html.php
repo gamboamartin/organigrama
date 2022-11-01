@@ -329,8 +329,10 @@ class org_empresa_html extends org_html {
         $alta_inputs->texts = $texts;
         $alta_inputs->selects = $selects;
         $alta_inputs->fechas = $fechas;
-        $alta_inputs->emails = $emails;
         $alta_inputs->telefonos = $telefonos;
+
+        $alta_inputs->emails = $emails;
+
         return $alta_inputs;
     }
 
