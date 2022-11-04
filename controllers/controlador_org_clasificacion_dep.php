@@ -20,112 +20,78 @@ use PDO;
 use stdClass;
 
 class controlador_org_clasificacion_dep extends system {
+
+    public array $keys_selects = array();
+    public controlador_org_departamento $controlador_org_departamento;
+
     public stdClass $departamentos ;
     public int $org_departamento_id = -1;
-    public controlador_org_departamento $controlador_org_departamento;
+
     public string $link_org_departamento_alta_bd = '';
     public string $link_org_departamento_modifica_bd = '';
+
+
     public function __construct(PDO $link, html $html = new \gamboamartin\template_1\html(),
                                 stdClass $paths_conf = new stdClass()){
-
         $modelo = new org_clasificacion_dep(link: $link);
-        $html_ = new org_clasificacion_dep_html($html);
-        $obj_link = new links_menu($this->registro_id);
+        $html_ = new org_clasificacion_dep_html(html: $html);
+        $obj_link = new links_menu(link: $link, registro_id:  $this->registro_id);
+
         parent::__construct(html:$html_, link: $link,modelo:  $modelo, obj_link: $obj_link, paths_conf: $paths_conf);
 
         $this->titulo_lista = 'Clasificacion de departamentos';
 
-        if (isset($_GET['org_departamento_id'])){
-            $this->org_departamento_id = $_GET['org_departamento_id'];
-        }
-        $this->total_items_sections = 2;
-        $this->controlador_org_departamento= new controlador_org_departamento($this->link);
+        $this->controlador_org_departamento= new controlador_org_departamento(link:$this->link, paths_conf: $paths_conf);
 
-        $link_org_departamento_modifica_bd = $obj_link->link_con_id(accion:'modifica_departamento_bd',
-            registro_id: $this->registro_id,seccion:  'org_clasificacion_dep');
+        $propiedades = $this->inicializa_priedades();
         if(errores::$error){
-            $error = $this->errores->error(mensaje: 'Error al generar link', data: $link_org_departamento_modifica_bd);
+            $error = $this->errores->error(mensaje: 'Error al inicializar propiedades',data:  $propiedades);
             print_r($error);
             die('Error');
         }
-        $link_org_departamento_modifica_bd .= '&org_departamento_id='.$this->registro_id;
-
-        $this->link_org_departamento_modifica_bd = $link_org_departamento_modifica_bd;
-
-        $link_org_departamento_alta_bd = $obj_link->link_con_id(accion:'alta_departamento_bd',
-            registro_id: $this->registro_id,seccion:  'org_clasificacion_dep');
-        if (errores::$error) {
-            $error = $this->errores->error(mensaje: 'Error al generar link', data: $link_org_departamento_alta_bd);
-            print_r($error);
-            die('Error');
-        }
-        $this->link_org_departamento_alta_bd = $link_org_departamento_alta_bd;
-
     }
 
-    public function alta_departamento_bd(bool $header, bool $ws = false): array|stdClass
+    public function asignar_propiedad(string $identificador, mixed $propiedades)
     {
-        $this->link->beginTransaction();
-
-        $siguiente_view = (new actions())->init_alta_bd();
-        if (errores::$error) {
-            $this->link->rollBack();
-            return $this->retorno_error(mensaje: 'Error al obtener siguiente view', data: $siguiente_view,
-                header: $header, ws: $ws);
+        if (!array_key_exists($identificador,$this->keys_selects)){
+            $this->keys_selects[$identificador] = new stdClass();
         }
 
-        if (isset($_POST['btn_action_next'])) {
-            unset($_POST['btn_action_next']);
+        foreach ($propiedades as $key => $value){
+            $this->keys_selects[$identificador]->$key = $value;
         }
-        $_POST['org_clasificacion_dep_id'] = $this->registro_id;
-
-        $alta = (new org_departamento($this->link))->alta_registro(registro: $_POST);
-        if (errores::$error) {
-            $this->link->rollBack();
-            return $this->retorno_error(mensaje: 'Error al dar de alta departamento', data: $alta,
-                header: $header, ws: $ws);
-        }
-
-        $this->link->commit();
-
-        if ($header) {
-            $this->retorno_base(registro_id:$this->registro_id, result: $alta,
-                siguiente_view: "departamentos", ws:  $ws);
-        }
-        if ($ws) {
-            header('Content-Type: application/json');
-            echo json_encode($alta, JSON_THROW_ON_ERROR);
-            exit;
-        }
-        $alta->siguiente_view = "departamentos";
-
-        return $alta;
     }
 
-    private function data_departamento_btn(array $departamento): array
+    private function base(): array|stdClass
     {
-
-        $params['org_departamento_id'] = $departamento['org_departamento_id'];
-
-        $btn_elimina = $this->html_base->button_href(accion:'elimina_bd',etiqueta:  'Elimina',
-            registro_id:  $departamento['org_departamento_id'], seccion: 'org_departamento',style:  'danger');
-
+        $r_modifica =  parent::modifica(header: false,aplica_form:  false);
         if(errores::$error){
-            return $this->errores->error(mensaje: 'Error al generar btn',data:  $btn_elimina);
+            return $this->errores->error(mensaje: 'Error al generar template',data:  $r_modifica);
         }
-        $departamento['link_elimina'] = $btn_elimina;
 
-
-        $btn_modifica = $this->html_base->button_href(accion:'modifica_departamento',etiqueta:  'Modifica',
-            registro_id:  $departamento['org_clasificacion_dep_id'], seccion: 'org_clasificacion_dep',style:  'warning',
-            params: $params);
-
+        $inputs = $this->genera_inputs(keys_selects:  $this->keys_selects);
         if(errores::$error){
-            return $this->errores->error(mensaje: 'Error al generar btn',data:  $btn_elimina);
+            return $this->errores->error(mensaje: 'Error al inicializar inputs',data:  $inputs);
         }
-        $departamento['link_modifica'] = $btn_modifica;
 
-        return $departamento;
+        $data = new stdClass();
+        $data->template = $r_modifica;
+        $data->inputs = $inputs;
+
+        return $data;
+    }
+
+    private function inicializa_priedades(): array
+    {
+        $identificador = "codigo";
+        $propiedades = array("place_holder" => "Codigo");
+        $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
+
+        $identificador = "codigo_bis";
+        $propiedades = array("place_holder" => "Codigo BIS");
+        $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
+
+        return $this->keys_selects;
     }
 
     public function departamentos(bool $header, bool $ws = false): array|stdClass
@@ -167,89 +133,15 @@ class controlador_org_clasificacion_dep extends system {
         return $this->inputs;
     }
 
-    public function modifica_departamento(bool $header, bool $ws = false): array|stdClass
+    public function modifica(bool $header, bool $ws = false, string $breadcrumbs = '', bool $aplica_form = true,
+                             bool $muestra_btn = true): array|string
     {
-        $this->controlador_org_departamento->registro_id = $this->org_departamento_id;
-
-        $modifica = $this->controlador_org_departamento->modifica(header: false);
+        $base = $this->base();
         if(errores::$error){
-            return $this->retorno_error(mensaje: 'Error al generar template',data:  $modifica, header: $header,ws:$ws);
-        }
-
-        $this->controlador_org_departamento->keys_selects['org_clasificacion_dep_id']->disabled = true;
-        $this->controlador_org_departamento->keys_selects['descripcion'] = new stdClass();
-        $this->controlador_org_departamento->keys_selects['descripcion']->cols = 12;
-        $this->controlador_org_departamento->keys_selects['descripcion']->place_holder = 'Descripcion';
-        $this->inputs = $this->controlador_org_departamento->genera_inputs(
-            keys_selects:  $this->controlador_org_departamento->keys_selects);
-        if(errores::$error){
-            $error = $this->errores->error(mensaje: 'Error al generar inputs',data:  $this->inputs);
-            print_r($error);
-            die('Error');
-        }
-
-        return $this->inputs;
-    }
-
-    public function modifica_departamento_bd(bool $header, bool $ws = false): array|stdClass
-    {
-        $this->link->beginTransaction();
-
-        $siguiente_view = (new actions())->init_alta_bd();
-        if (errores::$error) {
-            $this->link->rollBack();
-            return $this->retorno_error(mensaje: 'Error al obtener siguiente view', data: $siguiente_view,
-                header: $header, ws: $ws);
-        }
-
-        if (isset($_POST['btn_action_next'])) {
-            unset($_POST['btn_action_next']);
-        }
-
-        $registros = $_POST;
-
-        $r_modifica = (new org_departamento($this->link))->modifica_bd(registro: $registros,
-            id: $this->org_departamento_id);
-        if (errores::$error) {
-            return $this->retorno_error(mensaje: 'Error al modificar anticipo', data: $r_modifica, header: $header, ws: $ws);
-        }
-
-        $this->link->commit();
-
-        if ($header) {
-            $this->retorno_base(registro_id:$this->registro_id, result: $r_modifica,
-                siguiente_view: "departamentos", ws:  $ws);
-        }
-        if ($ws) {
-            header('Content-Type: application/json');
-            echo json_encode($r_modifica, JSON_THROW_ON_ERROR);
-            exit;
-        }
-        $r_modifica->siguiente_view = "departamentos";
-
-        return $r_modifica;
-    }
-
-    public function ver_departamentos(bool $header, bool $ws = false): array|stdClass
-    {
-        $departamentos = (new org_departamento($this->link))->departamentos_por_cls(org_clasificacion_dep_id: $this->registro_id);
-        if(errores::$error){
-            return $this->retorno_error(mensaje: 'Error al obtener departamentos',data:  $departamentos,
+            return $this->retorno_error(mensaje: 'Error al maquetar datos',data:  $base,
                 header: $header,ws:$ws);
         }
 
-        foreach ($departamentos->registros as $indice => $departamento) {
-
-            $departamento = $this->data_departamento_btn(departamento: $departamento);
-            if (errores::$error) {
-                return $this->retorno_error(mensaje: 'Error al asignar botones', data: $departamento, header: $header, ws: $ws);
-            }
-
-            $departamentos->registros[$indice] = $departamento;
-        }
-
-        $this->departamentos = $departamentos;
-
-        return $this->departamentos;
+        return $base->template;
     }
 }
