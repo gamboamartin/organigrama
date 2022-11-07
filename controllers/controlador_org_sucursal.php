@@ -271,27 +271,27 @@ class controlador_org_sucursal extends empresas {
         $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
 
         $identificador = "dp_estado_id";
-        $propiedades = array("label" => "Estado");
+        $propiedades = array("label" => "Estado","con_registros"=> false);
         $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
 
         $identificador = "dp_municipio_id";
-        $propiedades = array("label" => "Municipio");
+        $propiedades = array("label" => "Municipio","con_registros"=> false);
         $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
 
         $identificador = "dp_cp_id";
-        $propiedades = array("label" => "CP");
+        $propiedades = array("label" => "CP","con_registros"=> false);
         $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
 
         $identificador = "dp_colonia_postal_id";
-        $propiedades = array("label" => "Colonia Postal");
+        $propiedades = array("label" => "Colonia Postal","con_registros"=> false);
         $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
 
         $identificador = "dp_calle_pertenece_id";
-        $propiedades = array("label" => "Calle");
+        $propiedades = array("label" => "Calle","con_registros"=> false);
         $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
 
         $identificador = "id";
-        $propiedades = array("place_holder" => "Id");
+        $propiedades = array("place_holder" => "Id","disabled" => true);
         $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
 
         $identificador = "codigo";

@@ -21,6 +21,8 @@ sl_org_empresa_id.change(function(){
     if(dp_pais_id_pa !== ''){
         dp_pais_id = dp_pais_id_pa;
     }
+    $("#dp_pais_id").val(dp_pais_id_pa).selectpicker('refresh');
+
 
     let dp_estado_id_pa = selected.data('dp_estado_id');
     if(dp_estado_id_pa !== ''){
