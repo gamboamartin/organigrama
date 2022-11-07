@@ -87,7 +87,7 @@ class controlador_org_empresa extends empresas {
         $this->controlador_im_registro_patronal = new controlador_im_registro_patronal(
             link: $this->link, paths_conf: $paths_conf);
 
-        $link_org_sucursal_alta_bd = $obj_link->link_org_sucursal_alta_bd(org_empresa_id: $this->registro_id);
+        $link_org_sucursal_alta_bd = $obj_link->link_org_sucursal_alta_bd(link: $link,org_empresa_id: $this->registro_id);
         if (errores::$error) {
             $error = $this->errores->error(mensaje: 'Error al generar link sucursal alta',
                 data: $link_org_sucursal_alta_bd);
@@ -96,7 +96,7 @@ class controlador_org_empresa extends empresas {
         }
         $this->link_org_sucursal_alta_bd = $link_org_sucursal_alta_bd;
 
-        $link_im_registro_patronal_alta_bd = $obj_link->link_im_registro_patronal_alta_bd(
+        $link_im_registro_patronal_alta_bd = $obj_link->link_im_registro_patronal_alta_bd(link: $link,
             org_empresa_id: $this->registro_id);
         if (errores::$error) {
             $error = $this->errores->error(mensaje: 'Error al generar link sucursal alta',
@@ -106,7 +106,7 @@ class controlador_org_empresa extends empresas {
         }
         $this->link_im_registro_patronal_alta_bd = $link_im_registro_patronal_alta_bd;
 
-        $link_org_sucursal_modifica_bd = $obj_link->link_org_sucursal_modifica_bd(org_empresa_id: $this->registro_id,
+        $link_org_sucursal_modifica_bd = $obj_link->link_org_sucursal_modifica_bd(link: $link,org_empresa_id: $this->registro_id,
             org_sucursal_id: $this->org_sucursal_id);
         if (errores::$error) {
             $error = $this->errores->error(mensaje: 'Error al generar link sucursal modifica',
@@ -116,7 +116,7 @@ class controlador_org_empresa extends empresas {
         }
         $this->link_org_sucursal_modifica_bd = $link_org_sucursal_modifica_bd;
 
-        $link_org_departamento_modifica_bd = $obj_link->link_org_departamento_modifica_bd(org_empresa_id: $this->registro_id,
+        $link_org_departamento_modifica_bd = $obj_link->link_org_departamento_modifica_bd(link: $link,org_empresa_id: $this->registro_id,
             org_departamento_id: $this->org_departamento_id);
         if (errores::$error) {
             $error = $this->errores->error(mensaje: 'Error al generar link departamento modifica',
@@ -126,7 +126,7 @@ class controlador_org_empresa extends empresas {
         }
         $this->link_org_departamento_modifica_bd = $link_org_departamento_modifica_bd;
 
-        $link_im_registro_patronal_modifica_bd = $obj_link->link_im_registro_patronal_modifica_bd(org_empresa_id: $this->registro_id,
+        $link_im_registro_patronal_modifica_bd = $obj_link->link_im_registro_patronal_modifica_bd(link: $link,org_empresa_id: $this->registro_id,
             im_registro_patronal_id: $this->im_registro_patronal_id);
         if (errores::$error) {
             $error = $this->errores->error(mensaje: 'Error al generar link departamento modifica',
@@ -136,7 +136,7 @@ class controlador_org_empresa extends empresas {
         }
         $this->link_im_registro_patronal_modifica_bd = $link_im_registro_patronal_modifica_bd;
 
-        $link_org_departamento_alta_bd = $obj_link->link_org_departamento_alta_bd(org_empresa_id: $this->registro_id);
+        $link_org_departamento_alta_bd = $obj_link->link_org_departamento_alta_bd(link: $link,org_empresa_id: $this->registro_id);
         if (errores::$error) {
             $error = $this->errores->error(mensaje: 'Error al generar link departamentos alta',
                 data: $link_org_departamento_alta_bd);

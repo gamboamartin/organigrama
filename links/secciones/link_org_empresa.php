@@ -42,10 +42,10 @@ class link_org_empresa extends links_menu {
      * @version 0.251.34
      *
      */
-    public function link_org_sucursal_alta_bd(int $org_empresa_id): string
+    public function link_org_sucursal_alta_bd(PDO $link, int $org_empresa_id): string
     {
 
-        $link = $this->link_con_id(accion:'alta_sucursal_bd', registro_id: $org_empresa_id,seccion:  'org_empresa');
+        $link = $this->link_con_id(accion:'alta_sucursal_bd', link: $link,registro_id: $org_empresa_id,seccion:  'org_empresa');
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar link', data: $link);
         }
@@ -53,10 +53,10 @@ class link_org_empresa extends links_menu {
         return $link;
     }
 
-    public function link_org_departamento_alta_bd(int $org_empresa_id): string
+    public function link_org_departamento_alta_bd(PDO $link, int $org_empresa_id): string
     {
 
-        $link = $this->link_con_id(accion:'alta_departamento_bd', registro_id: $org_empresa_id,seccion:  'org_empresa');
+        $link = $this->link_con_id(accion:'alta_departamento_bd',link: $link, registro_id: $org_empresa_id,seccion:  'org_empresa');
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar link', data: $link);
         }
@@ -70,10 +70,10 @@ class link_org_empresa extends links_menu {
      * @return string
      * @version 0.272.35
      */
-    public function link_im_registro_patronal_alta_bd(int $org_empresa_id): string
+    public function link_im_registro_patronal_alta_bd(PDO $link, int $org_empresa_id): string
     {
 
-        $link = $this->link_con_id(accion:'alta_registro_patronal_bd', registro_id: $org_empresa_id,
+        $link = $this->link_con_id(accion:'alta_registro_patronal_bd', link: $link, registro_id: $org_empresa_id,
             seccion:  'org_empresa');
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar link', data: $link);
@@ -90,9 +90,9 @@ class link_org_empresa extends links_menu {
      * @return string
      * @version 0.265.35
      */
-    public function link_org_sucursal_modifica_bd(int $org_empresa_id, int $org_sucursal_id): string
+    public function link_org_sucursal_modifica_bd(PDO $link, int $org_empresa_id, int $org_sucursal_id): string
     {
-        $link = $this->link_con_id(accion:'modifica_sucursal_bd', registro_id: $org_empresa_id,seccion:  'org_empresa');
+        $link = $this->link_con_id(accion:'modifica_sucursal_bd',link: $link, registro_id: $org_empresa_id,seccion:  'org_empresa');
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar link', data: $link);
         }
@@ -101,9 +101,9 @@ class link_org_empresa extends links_menu {
         return $link;
     }
 
-    public function link_org_departamento_modifica_bd(int $org_empresa_id, int $org_departamento_id): string
+    public function link_org_departamento_modifica_bd(PDO $link, int $org_empresa_id, int $org_departamento_id): string
     {
-        $link = $this->link_con_id(accion:'modifica_departamento_bd', registro_id: $org_empresa_id,seccion:  'org_empresa');
+        $link = $this->link_con_id(accion:'modifica_departamento_bd', link: $link,registro_id: $org_empresa_id,seccion:  'org_empresa');
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar link', data: $link);
         }
@@ -112,9 +112,9 @@ class link_org_empresa extends links_menu {
         return $link;
     }
     
-    public function link_im_registro_patronal_modifica_bd(int $org_empresa_id, int $im_registro_patronal_id): string
+    public function link_im_registro_patronal_modifica_bd(PDO $link, int $org_empresa_id, int $im_registro_patronal_id): string
     {
-        $link = $this->link_con_id(accion:'modifica_registro_patronal_bd', registro_id: $org_empresa_id,seccion:  'org_empresa');
+        $link = $this->link_con_id(accion:'modifica_registro_patronal_bd', link: $link, registro_id: $org_empresa_id,seccion:  'org_empresa');
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar link', data: $link);
         }
