@@ -2,9 +2,23 @@
 namespace gamboamartin\organigrama\models;
 use base\orm\modelo;
 use config\generales;
+use gamboamartin\cat_sat\models\cat_sat_forma_pago;
+use gamboamartin\cat_sat\models\cat_sat_metodo_pago;
+use gamboamartin\cat_sat\models\cat_sat_moneda;
+use gamboamartin\cat_sat\models\cat_sat_regimen_fiscal;
+use gamboamartin\cat_sat\models\cat_sat_tipo_de_comprobante;
+use gamboamartin\cat_sat\models\cat_sat_uso_cfdi;
+use gamboamartin\comercial\models\com_sucursal;
+use gamboamartin\comercial\models\com_tipo_cambio;
 use gamboamartin\direccion_postal\models\dp_calle_pertenece;
+use gamboamartin\direccion_postal\models\dp_colonia_postal;
+use gamboamartin\direccion_postal\models\dp_cp;
+use gamboamartin\direccion_postal\models\dp_estado;
+use gamboamartin\direccion_postal\models\dp_municipio;
+use gamboamartin\direccion_postal\models\dp_pais;
 use gamboamartin\errores\errores;
 
+use gamboamartin\facturacion\models\fc_csd;
 use PDO;
 use stdClass;
 
@@ -28,8 +42,26 @@ class org_sucursal extends modelo{
         $no_duplicados[] = 'codigo_bis';
         $no_duplicados[] = 'descripcion';
 
+        $campos_view['dp_pais_id'] = array('type' => 'selects', 'model' => new dp_pais($link));
+        $campos_view['dp_estado_id'] = array('type' => 'selects', 'model' => new dp_estado($link));
+        $campos_view['dp_municipio_id'] = array('type' => 'selects', 'model' => new dp_municipio($link));
+        $campos_view['dp_cp_id'] = array('type' => 'selects', 'model' => new dp_cp($link));
+        $campos_view['dp_colonia_postal_id'] = array('type' => 'selects', 'model' => new dp_colonia_postal($link));
+        $campos_view['dp_calle_pertenece_id'] = array('type' => 'selects', 'model' => new dp_calle_pertenece($link));
+        $campos_view['org_empresa_id'] = array('type' => 'selects', 'model' => new org_empresa($link));
+        $campos_view['org_tipo_sucursal_id'] = array('type' => 'selects', 'model' => new org_tipo_sucursal($link));
+        $campos_view['id'] = array('type' => 'inputs');
+        $campos_view['codigo'] = array('type' => 'inputs');
+        $campos_view['serie'] = array('type' => 'inputs');
+        $campos_view['exterior'] = array('type' => 'inputs');
+        $campos_view['interior'] = array('type' => 'inputs');
+        $campos_view['telefono_1'] = array('type' => 'inputs');
+        $campos_view['telefono_2'] = array('type' => 'inputs');
+        $campos_view['telefono_3'] = array('type' => 'inputs');
+        $campos_view['fecha_inicio_operaciones'] = array('type' => 'dates');
+
         parent::__construct(link: $link, tabla: $tabla, campos_obligatorios: $campos_obligatorios, columnas: $columnas,
-            no_duplicados: $no_duplicados, tipo_campos: $tipo_campos);
+            campos_view: $campos_view, no_duplicados: $no_duplicados, tipo_campos: $tipo_campos);
 
         $this->NAMESPACE = __NAMESPACE__;
     }
