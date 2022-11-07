@@ -64,7 +64,7 @@ class controlador_org_empresa extends empresas {
         $modelo = new org_empresa(link: $link);
 
         $html_ = new org_empresa_html(html: $html);
-        $obj_link = new link_org_empresa(registro_id: $this->registro_id);
+        $obj_link = new link_org_empresa(link:$link, registro_id: $this->registro_id);
 
         parent::__construct(html: $html_, link: $link, modelo: $modelo, obj_link: $obj_link, paths_conf: $paths_conf);
 
