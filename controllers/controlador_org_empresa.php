@@ -64,10 +64,21 @@ class controlador_org_empresa extends empresas {
     {
         $modelo = new org_empresa(link: $link);
         $html_ = new org_empresa_html(html: $html);
-        $obj_link = new links_menu(link: $link, registro_id:  $this->registro_id);
         $obj_link = new link_org_empresa(link:$link, registro_id: $this->registro_id);
 
-        parent::__construct(html: $html_, link: $link, modelo: $modelo, obj_link: $obj_link, paths_conf: $paths_conf);
+        $columns["org_empresa_id"]["titulo"] = "Id";
+        $columns["org_empresa_rfc"]["titulo"] = "RFC";
+        $columns["org_empresa_razon_social"]["titulo"] = "Razón Social";
+        $columns["org_empresa_nombre_comercial"]["titulo"] = "Nombre Comercial";
+
+        $filtro = array("org_empresa.id","org_empresa.rfc","org_empresa.razon_social","org_empresa.nombre_comercial");
+
+        $datatables = new stdClass();
+        $datatables->columns = $columns;
+        $datatables->filtro = $filtro;
+
+        parent::__construct(html:$html_, link: $link,modelo:  $modelo, obj_link: $obj_link, datatables: $datatables,
+            paths_conf: $paths_conf);
 
         if (isset($_GET['org_sucursal_id'])) {
             $this->org_sucursal_id = $_GET['org_sucursal_id'];
