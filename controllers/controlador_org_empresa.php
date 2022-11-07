@@ -20,6 +20,7 @@ use gamboamartin\organigrama\models\org_empresa;
 use gamboamartin\organigrama\models\org_sucursal;
 use gamboamartin\system\actions;
 
+use gamboamartin\system\links_menu;
 use gamboamartin\template\html;
 use html\dp_calle_html;
 use html\dp_colonia_html;
@@ -62,8 +63,8 @@ class controlador_org_empresa extends empresas {
                                 stdClass $paths_conf = new stdClass())
     {
         $modelo = new org_empresa(link: $link);
-
         $html_ = new org_empresa_html(html: $html);
+        $obj_link = new links_menu(link: $link, registro_id:  $this->registro_id);
         $obj_link = new link_org_empresa(link:$link, registro_id: $this->registro_id);
 
         parent::__construct(html: $html_, link: $link, modelo: $modelo, obj_link: $obj_link, paths_conf: $paths_conf);
@@ -268,8 +269,8 @@ class controlador_org_empresa extends empresas {
         $this->link->commit();
 
         if($header){
-            $retorno = (new actions())->retorno_alta_bd(registro_id:$r_alta_bd->registro_id,seccion: $this->tabla,
-                siguiente_view: $r_alta_bd->siguiente_view);
+            $retorno = (new actions())->retorno_alta_bd(link: $this->link,registro_id:$r_alta_bd->registro_id,
+                seccion: $this->tabla, siguiente_view: $r_alta_bd->siguiente_view);
             if(errores::$error){
                 return $this->retorno_error(mensaje: 'Error al dar de alta registro', data: $r_alta_bd, header:  true,
                     ws: $ws);
@@ -326,7 +327,7 @@ class controlador_org_empresa extends empresas {
 
         if($header){
 
-            $retorno = (new actions())->retorno_alta_bd(registro_id:$this->registro_id,seccion: $this->tabla,
+            $retorno = (new actions())->retorno_alta_bd(link: $this->link,registro_id:$this->registro_id,seccion: $this->tabla,
                 siguiente_view: $siguiente_view);
             if(errores::$error){
                 return $this->retorno_error(mensaje: 'Error al dar de alta registro', data: $r_alta_sucursal_bd,
@@ -384,8 +385,8 @@ class controlador_org_empresa extends empresas {
             return $this->errores->error(mensaje: 'Error al validar row',data:  $valida);
         }
 
-        $link_departamentos = $this->obj_link->link_con_id(accion:'departamentos',registro_id:  $row->org_empresa_id,
-            seccion:  $this->tabla);
+        $link_departamentos = $this->obj_link->link_con_id(accion:'departamentos',link: $this->link,
+            registro_id:  $row->org_empresa_id, seccion:  $this->tabla);
         if(errores::$error){
             return $this->errores->error(mensaje: 'Error al genera link',data:  $link_departamentos);
         }
@@ -410,8 +411,8 @@ class controlador_org_empresa extends empresas {
             return $this->errores->error(mensaje: 'Error al validar row',data:  $valida);
         }
 
-        $link_sucursales = $this->obj_link->link_con_id(accion:'sucursales',registro_id:  $row->org_empresa_id,
-            seccion:  $this->tabla);
+        $link_sucursales = $this->obj_link->link_con_id(accion:'sucursales', link: $this->link,
+            registro_id:  $row->org_empresa_id, seccion:  $this->tabla);
         if(errores::$error){
             return $this->errores->error(mensaje: 'Error al genera link',data:  $link_sucursales);
         }
@@ -430,8 +431,8 @@ class controlador_org_empresa extends empresas {
             return $this->errores->error(mensaje: 'Error al validar row',data:  $valida);
         }
 
-        $link_registros_patronales = $this->obj_link->link_con_id(accion:'registros_patronales',
-            registro_id:  $row->org_empresa_id, seccion:  $this->tabla);
+        $link_registros_patronales = $this->obj_link->link_con_id(accion: 'registros_patronales', link: $this->link,
+            registro_id: $row->org_empresa_id, seccion: $this->tabla);
         if(errores::$error){
             return $this->errores->error(mensaje: 'Error al genera link',data:  $link_registros_patronales);
         }
