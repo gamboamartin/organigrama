@@ -39,9 +39,13 @@ class org_sucursal_htmlTest extends test {
         $link= $this->link;
 
         $resultado = $html->select_org_sucursal_id($cols, $con_registros, $id_selected, $link);
+
         $this->assertIsString($resultado);
         $this->assertNotTrue(errores::$error);
-        $this->assertStringContainsStringIgnoringCase("><label class='control-label' for='org_sucursal_id'>Empresa</label><div class='controls'><se", $resultado);
+        $this->assertStringContainsStringIgnoringCase("<div class='control-group col-sm-1'><label class='control-label' for='org_sucu", $resultado);
+        $this->assertStringContainsStringIgnoringCase("g_sucursal_id'>Sucursal</label><div class='controls'><select class=", $resultado);
+        $this->assertStringContainsStringIgnoringCase("s'><select class='form-control selectpicker color-secondary  org_sucursal_", $resultado);
+        $this->assertStringContainsStringIgnoringCase("ucursal_id' data-live-search='true' id='org_sucursal_id' name='org_sucu", $resultado);
 
         errores::$error = false;
     }

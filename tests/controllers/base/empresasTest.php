@@ -39,6 +39,8 @@ class empresasTest extends test {
         $_SESSION['grupo_id'] = 1;
         $_GET['session_id'] = '1';
         $_SESSION['usuario_id'] = '2';
+
+
         $ctl = new controlador_org_empresa(link: $this->link, paths_conf: $this->paths_conf);
         $ctl = new liberator($ctl);
         $resultado = $ctl->limpia_post_dp();

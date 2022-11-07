@@ -76,7 +76,6 @@ class controlador_org_empresaTest extends test {
     }
 
     /**
-     * @throws JsonException
      */
     public function test_ubicacion(): void
     {
@@ -89,7 +88,6 @@ class controlador_org_empresaTest extends test {
         $_GET['session_id'] = '1';
         $_SESSION['usuario_id'] = '2';
         $ctl = new controlador_org_empresa(link: $this->link, paths_conf: $this->paths_conf);
-
 
 
         $del = (new base_test())->del_org_sucursal($this->link);

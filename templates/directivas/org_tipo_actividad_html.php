@@ -2,13 +2,15 @@
 namespace html;
 
 use gamboamartin\errores\errores;
+use gamboamartin\organigrama\models\org_tipo_actividad;
 use gamboamartin\system\html_controler;
-use models\org_tipo_actividad;
 use PDO;
 use stdClass;
 
 
 class org_tipo_actividad_html extends html_controler {
+
+
     public function input_tiempo(int $cols, stdClass $row_upd, bool $value_vacio): array|string
     {
 
@@ -19,7 +21,7 @@ class org_tipo_actividad_html extends html_controler {
             return $this->error->error(mensaje: 'Error cold debe ser menor o igual a  12', data: $cols);
         }
 
-        $html =$this->directivas->input_text_required(disable: false,name: 'tiempo',place_holder: 'Tiempo de ejecución',
+        $html =$this->directivas->input_text_required(disabled: false,name: 'tiempo',place_holder: 'Tiempo de ejecución',
             row_upd: $row_upd, value_vacio: $value_vacio);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input', data: $html);
