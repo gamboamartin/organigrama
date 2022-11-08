@@ -1204,6 +1204,26 @@ class controlador_org_empresa extends empresas {
         return $r_modifica_bd;
     }
 
+    public function modifica_contacto(bool $header, bool $ws): array|stdClass
+    {
+
+        $keys_contacto[] = 'telefono_1';
+        $keys_contacto[] = 'telefono_2';
+        $keys_contacto[] = 'telefono_3';
+
+        $r_modifica_bd = $this->upd_base(keys_generales: $keys_contacto);
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al modificar contacto',data:  $r_modifica_bd,
+                header: $header,ws:$ws);
+        }
+
+        $_SESSION[$r_modifica_bd->salida][]['mensaje'] = $r_modifica_bd->mensaje.' del id '.$this->registro_id;
+        $this->header_out(result: $r_modifica_bd, header: $header,ws:  $ws);
+
+        return $r_modifica_bd;
+
+    }
+
     /**
      * @throws JsonException
      */
