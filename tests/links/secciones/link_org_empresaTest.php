@@ -27,14 +27,15 @@ class link_org_empresaTest extends test {
 
         $_GET['seccion'] = 'cat_sat_tipo_persona';
         $_GET['accion'] = 'lista';
-        $_SESSION['grupo_id'] = 1;
+        $_SESSION['grupo_id'] = 2;
+        $_SESSION['usuario_id'] = 2;
         $_GET['session_id'] = '1';
-        $link = new link_org_empresa(-1);
+        $link = new link_org_empresa($this->link,-1);
         //$link = new liberator($link);
 
         $org_empresa_id = -1;
 
-        $resultado = $link->link_im_registro_patronal_alta_bd($org_empresa_id);
+        $resultado = $link->link_im_registro_patronal_alta_bd($this->link, $org_empresa_id);
         $this->assertIsString($resultado);
         $this->assertNotTrue(errores::$error);
         $this->assertEquals('./index.php?seccion=org_empresa&accion=alta_registro_patronal_bd&registro_id=-1&session_id=1', $resultado);
@@ -49,13 +50,14 @@ class link_org_empresaTest extends test {
 
         $_GET['seccion'] = 'cat_sat_tipo_persona';
         $_GET['accion'] = 'lista';
-        $_SESSION['grupo_id'] = 1;
+        $_SESSION['grupo_id'] = 2;
+        $_SESSION['usuario_id'] = 2;
         $_GET['session_id'] = '1';
-        $link = new link_org_empresa(-1);
+        $link = new link_org_empresa($this->link,-1);
         //$link = new liberator($link);
 
         $org_empresa_id = -1;
-        $resultado = $link->link_org_sucursal_alta_bd($org_empresa_id);
+        $resultado = $link->link_org_sucursal_alta_bd($this->link, $org_empresa_id);
         $this->assertIsString($resultado);
         $this->assertNotTrue(errores::$error);
         $this->assertEquals('./index.php?seccion=org_empresa&accion=alta_sucursal_bd&registro_id=-1&session_id=1', $resultado);
@@ -71,14 +73,15 @@ class link_org_empresaTest extends test {
 
         $_GET['seccion'] = 'cat_sat_tipo_persona';
         $_GET['accion'] = 'lista';
-        $_SESSION['grupo_id'] = 1;
+        $_SESSION['grupo_id'] = 2;
+        $_SESSION['usuario_id'] = 2;
         $_GET['session_id'] = '1';
-        $link = new link_org_empresa(-1);
+        $link = new link_org_empresa($this->link,-1);
         //$link = new liberator($link);
 
         $org_empresa_id = -1;
         $org_sucursal_id = -1;
-        $resultado = $link->link_org_sucursal_modifica_bd($org_empresa_id, $org_sucursal_id);
+        $resultado = $link->link_org_sucursal_modifica_bd($this->link, $org_empresa_id, $org_sucursal_id);
         $this->assertIsString($resultado);
         $this->assertNotTrue(errores::$error);
         $this->assertEquals('./index.php?seccion=org_empresa&accion=modifica_sucursal_bd&registro_id=-1&session_id=1&org_sucursal_id=-1', $resultado);
@@ -94,9 +97,10 @@ class link_org_empresaTest extends test {
 
         $_GET['seccion'] = 'cat_sat_tipo_persona';
         $_GET['accion'] = 'lista';
-        $_SESSION['grupo_id'] = 1;
+        $_SESSION['grupo_id'] = 2;
+        $_SESSION['usuario_id'] = 2;
         $_GET['session_id'] = '1';
-        $link = new link_org_empresa(-1);
+        $link = new link_org_empresa($this->link, -1);
         $link = new liberator($link);
 
         $resultado = $link->org_empresa_alta();
@@ -119,9 +123,10 @@ class link_org_empresaTest extends test {
 
         $_GET['seccion'] = 'cat_sat_tipo_persona';
         $_GET['accion'] = 'lista';
-        $_SESSION['grupo_id'] = 1;
+        $_SESSION['grupo_id'] = 2;
+        $_SESSION['usuario_id'] = 2;
         $_GET['session_id'] = '1';
-        $link = new link_org_empresa(-1);
+        $link = new link_org_empresa($this->link, -1);
         $link = new liberator($link);
 
         $resultado = $link->org_empresa_ubicacion(-1);
