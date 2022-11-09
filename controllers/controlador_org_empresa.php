@@ -39,6 +39,13 @@ use PDO;
 use stdClass;
 
 class controlador_org_empresa extends empresas {
+
+    public string $link_dp_pais_alta = '';
+    public string $link_dp_estado_alta = '';
+    public string $link_dp_municipio_alta = '';
+    public string $link_dp_cp_alta = '';
+    public string $link_dp_colonia_postal_alta = '';
+    public string $link_dp_calle_pertenece_alta = '';
     public string $link_org_departamento_alta_bd = '';
     public string $link_org_departamento_modifica_bd = '';
     public string $link_org_sucursal_alta_bd = '';
@@ -237,7 +244,12 @@ class controlador_org_empresa extends empresas {
             $this->number_active = $this->actions_number[$this->accion]['item'];
         }
 
-
+        $links = $this->inicializa_links();
+        if(errores::$error){
+            $error = $this->errores->error(mensaje: 'Error al inicializar links',data:  $links);
+            print_r($error);
+            die('Error');
+        }
 
     }
 
@@ -725,6 +737,56 @@ class controlador_org_empresa extends empresas {
             }
         }
         return $params;
+    }
+
+
+
+
+
+    private function inicializa_links(): array|string
+    {
+        $this->obj_link->genera_links($this);
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al generar links para sucursal',data:  $this->obj_link);
+        }
+
+        $link = $this->obj_link->get_link('dp_pais',"alta");
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al obtener link dp_pais_alta',data:  $link);
+        }
+        $this->link_dp_pais_alta = $link;
+
+        $link = $this->obj_link->get_link('dp_estado',"alta");
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al obtener link dp_estado_alta',data:  $link);
+        }
+        $this->link_dp_estado_alta = $link;
+
+        $link = $this->obj_link->get_link('dp_municipio',"alta");
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al obtener link dp_municipio_alta',data:  $link);
+        }
+        $this->link_dp_municipio_alta = $link;
+
+        $link = $this->obj_link->get_link('dp_cp',"alta");
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al obtener link dp_cp_alta',data:  $link);
+        }
+        $this->link_dp_cp_alta = $link;
+
+        $link = $this->obj_link->get_link('dp_colonia_postal',"alta");
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al obtener link dp_colonia_postal_alta',data:  $link);
+        }
+        $this->link_dp_colonia_postal_alta = $link;
+
+        $link = $this->obj_link->get_link('dp_calle_pertenece',"alta");
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al obtener link dp_calle_pertenece_alta',data:  $link);
+        }
+        $this->link_dp_calle_pertenece_alta = $link;
+
+        return $link;
     }
 
     /**
