@@ -129,15 +129,14 @@ class controlador_org_departamento extends system {
         return $this->keys_selects;
     }
 
-    public function modifica(bool $header, bool $ws = false, string $breadcrumbs = '', bool $aplica_form = true,
-                             bool $muestra_btn = true): array|string
-    {
-        $base = $this->base();
-        if(errores::$error){
-            return $this->retorno_error(mensaje: 'Error al maquetar datos',data:  $base,
-                header: $header,ws:$ws);
-        }
+   public function modifica(bool $header, bool $ws = false): array|stdClass
+   {
+       $base = $this->base();
+       if(errores::$error){
+           return $this->retorno_error(mensaje: 'Error al maquetar datos',data:  $base,
+               header: $header,ws:$ws);
+       }
 
-        return $base->template;
-    }
+       return $base->template;
+   }
 }
