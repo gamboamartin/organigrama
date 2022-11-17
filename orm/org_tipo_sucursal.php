@@ -22,7 +22,7 @@ class org_tipo_sucursal extends modelo{
 
     public function alta_bd(): array|stdClass
     {
-        $this->registro = $this->campos_base(data:$this->registro);
+        $this->registro = $this->campos_base(data:$this->registro , modelo: $this);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al inicializar campo base',data: $this->registro);
         }
@@ -34,7 +34,7 @@ class org_tipo_sucursal extends modelo{
         return $r_alta_bd;
     }
 
-    private function campos_base(array $data): array
+    protected function campos_base(array $data, modelo $modelo, int $id = -1): array
     {
         if(!isset($data['codigo_bis'])){
             $data['codigo_bis'] =  $data['codigo'];
@@ -54,7 +54,7 @@ class org_tipo_sucursal extends modelo{
 
     public function modifica_bd(array $registro, int $id, bool $reactiva = false): array|stdClass
     {
-        $registro = $this->campos_base(data:$registro);
+        $registro = $this->campos_base(data:$registro, modelo: $this);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al inicializar campo base',data: $registro);
         }
