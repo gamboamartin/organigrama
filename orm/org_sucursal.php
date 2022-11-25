@@ -203,6 +203,16 @@ class org_sucursal extends modelo{
 
     }
 
+    public function get_sucursal(int $org_sucursal_id): array|stdClass|int
+    {
+        $registro = $this->registro(registro_id: $org_sucursal_id);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al obtener sucursal',data:  $registro);
+        }
+
+        return $registro;
+    }
+
     private function sucursal_matriz(int $org_empresa_id){
         $filtro = array();
         $filtro['org_empresa.id'] = $org_empresa_id;
