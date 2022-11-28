@@ -64,7 +64,7 @@
         "gamboa.martin/xml_cfdi_4": "dev-master",
         "gamboa.martin/comercial": "dev-master",
         "gamboa.martin/im_registro_patronal": "dev-main",
-        "gamboa.martin/nomina": "dev-master",
+        "gamboa.martin/nomina": "dev-main",
         "gamboa.martin/proceso": "dev-main"
     },
     "require-dev": {
