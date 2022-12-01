@@ -1,6 +1,7 @@
 <?php
 namespace html\base;
 
+use base\orm\modelo;
 use gamboamartin\errores\errores;
 use gamboamartin\system\html_controler;
 use gamboamartin\system\system;
@@ -67,7 +68,11 @@ class org_html extends html_controler {
         return $div;
     }
 
-    protected function fechas_alta(stdClass $row_upd = new stdClass(), stdClass $params = new stdClass()): array|stdClass
+
+
+    protected function fechas_alta(
+        modelo $modelo, stdClass $row_upd = new stdClass(), array $keys_selects = array(),
+        stdClass $params = new stdClass()): array|stdClass
     {
 
         $fechas = new stdClass();

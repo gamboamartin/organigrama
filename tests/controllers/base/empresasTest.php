@@ -42,8 +42,9 @@ class empresasTest extends test {
 
 
         $ctl = new controlador_org_empresa(link: $this->link, paths_conf: $this->paths_conf);
-        $ctl = new liberator($ctl);
+        //$ctl = new liberator($ctl);
         $resultado = $ctl->limpia_post_dp();
+
         $this->assertIsArray($resultado);
         $this->assertNotTrue(errores::$error);
         $this->assertEmpty($resultado);

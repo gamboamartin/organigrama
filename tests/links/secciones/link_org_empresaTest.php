@@ -38,7 +38,7 @@ class link_org_empresaTest extends test {
         $resultado = $link->link_im_registro_patronal_alta_bd($this->link, $org_empresa_id);
         $this->assertIsString($resultado);
         $this->assertNotTrue(errores::$error);
-        $this->assertEquals('./index.php?seccion=org_empresa&accion=alta_registro_patronal_bd&registro_id=-1&session_id=1', $resultado);
+        $this->assertEquals('', $resultado);
         errores::$error = false;
     }
 
@@ -60,7 +60,7 @@ class link_org_empresaTest extends test {
         $resultado = $link->link_org_sucursal_alta_bd($this->link, $org_empresa_id);
         $this->assertIsString($resultado);
         $this->assertNotTrue(errores::$error);
-        $this->assertEquals('./index.php?seccion=org_empresa&accion=alta_sucursal_bd&registro_id=-1&session_id=1', $resultado);
+        $this->assertEquals('', $resultado);
         errores::$error = false;
     }
 
@@ -84,7 +84,7 @@ class link_org_empresaTest extends test {
         $resultado = $link->link_org_sucursal_modifica_bd($this->link, $org_empresa_id, $org_sucursal_id);
         $this->assertIsString($resultado);
         $this->assertNotTrue(errores::$error);
-        $this->assertEquals('./index.php?seccion=org_empresa&accion=modifica_sucursal_bd&registro_id=-1&session_id=1&org_sucursal_id=-1', $resultado);
+        $this->assertEquals('&org_sucursal_id=-1', $resultado);
         errores::$error = false;
     }
 

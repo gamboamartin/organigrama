@@ -2,6 +2,8 @@
 namespace html;
 
 
+use base\orm\modelo;
+use base\orm\modelo_base;
 use gamboamartin\errores\errores;
 use gamboamartin\organigrama\controllers\controlador_org_empresa;
 use gamboamartin\organigrama\models\limpieza;
@@ -146,7 +148,16 @@ class org_empresa_html extends org_html {
         return $div;
     }
 
-    private function emails_alta(stdClass $row_upd = new stdClass()): array|stdClass
+    /**
+     *
+     *
+     * @param modelo $modelo
+     * @param stdClass $row_upd
+     * @param array $keys_selects
+     * @return array|stdClass
+     */
+
+    protected function emails_alta(modelo $modelo, stdClass $row_upd = new stdClass(), array $keys_selects = array()): array|stdClass
     {
 
         $emails = new stdClass();
@@ -185,10 +196,11 @@ class org_empresa_html extends org_html {
         return $div;
     }
 
-    protected function fechas_alta(stdClass $row_upd = new stdClass(), stdClass $params = new stdClass()): array|stdClass
+    protected function fechas_alta(modelo $modelo, stdClass $row_upd = new stdClass(), array $keys_selects = array(),
+                                   stdClass $params = new stdClass()): array|stdClass
     {
 
-        $fechas = parent::fechas_alta(row_upd: $row_upd,params: $params);
+        $fechas = parent::fechas_alta(modelo: $modelo, row_upd: $row_upd, keys_selects: $keys_selects, params: $params);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar fechas',data:  $fechas);
         }
@@ -209,7 +221,7 @@ class org_empresa_html extends org_html {
 
     public function genera_inputs_alta(controlador_org_empresa $controler,array $keys_selects,PDO $link): array|stdClass
     {
-        $inputs = $this->init_alta(keys_selects: $keys_selects,link: $link);
+        $inputs = $this->init_alta(keys_selects: $keys_selects,link: $link, modelo: $controler->modelo);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar inputs',data:  $inputs);
 
@@ -225,7 +237,8 @@ class org_empresa_html extends org_html {
     private function genera_inputs_modifica(controlador_org_empresa $controler,PDO $link,
                                             stdClass $params = new stdClass()): array|stdClass
     {
-        $inputs = $this->init_modifica(link: $link, row_upd: $controler->row_upd, params: $params);
+        $inputs = $this->init_modifica(link: $link, row_upd: $controler->row_upd, params: $params,
+            modelo: $controler->modelo);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar inputs',data:  $inputs);
 
@@ -254,8 +267,14 @@ class org_empresa_html extends org_html {
         return $inputs_asignados;
     }
 
-    protected function init_alta(array $keys_selects, PDO $link): array|stdClass
+
+    protected function init_alta(array $keys_selects, PDO $link, modelo|null $modelo = null): array|stdClass
     {
+
+        if(is_null($modelo)){
+            return $this->error->error(mensaje: 'Error modelo es nulo',data:  $modelo);
+        }
+
         $selects = $this->selects_alta(keys_selects: $keys_selects, link: $link);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar selects',data:  $selects);
@@ -266,26 +285,26 @@ class org_empresa_html extends org_html {
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar texts',data:  $texts);
         }
-        $fechas = $this->fechas_alta();
+        $fechas = $this->fechas_alta(modelo: $modelo,keys_selects: $keys_selects);
 
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar inputs fecha',data:  $fechas);
         }
 
-        $emails = $this->emails_alta();
+        $emails = $this->emails_alta(modelo: $modelo, keys_selects: $keys_selects);
 
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar inputs fecha',data:  $emails);
         }
 
-        $telefonos = $this->telefonos_alta();
+        $telefonos = $this->telefonos_alta(modelo: $modelo,keys_selects: $keys_selects);
 
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar inputs $telefonos',data:  $telefonos);
         }
 
         $alta_inputs = new stdClass();
-        
+
         $alta_inputs->texts = $texts;
         $alta_inputs->selects = $selects;
         $alta_inputs->fechas = $fechas;
@@ -294,8 +313,12 @@ class org_empresa_html extends org_html {
         return $alta_inputs;
     }
 
-    private function init_modifica(PDO $link, stdClass $row_upd, stdClass $params = new stdClass()): array|stdClass
+    private function init_modifica(PDO $link, stdClass $row_upd, stdClass $params = new stdClass(), modelo|null $modelo = null): array|stdClass
     {
+
+        if(is_null($modelo)){
+            return $this->error->error(mensaje: 'Error modelo es null',data:  $modelo);
+        }
 
         $selects = $this->selects_modifica(link: $link, row_upd: $row_upd);
         if(errores::$error){
@@ -306,19 +329,19 @@ class org_empresa_html extends org_html {
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar texts',data:  $texts);
         }
-        $fechas = $this->fechas_alta(row_upd: $row_upd, params: $params);
+        $fechas = $this->fechas_alta(modelo: $modelo, row_upd: $row_upd, params: $params);
 
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar inputs fecha',data:  $fechas);
         }
 
-        $emails = $this->emails_alta(row_upd: $row_upd);
+        $emails = $this->emails_alta(modelo: $modelo, row_upd: $row_upd);
 
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar inputs fecha',data:  $emails);
         }
 
-        $telefonos = $this->telefonos_alta(row_upd: $row_upd);
+        $telefonos = $this->telefonos_alta(modelo: $modelo, row_upd: $row_upd);
 
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar inputs $telefonos',data:  $telefonos);
@@ -771,7 +794,7 @@ class org_empresa_html extends org_html {
         return $div;
     }
 
-    private function telefonos_alta(stdClass $row_upd = new stdClass()): array|stdClass
+    protected function telefonos_alta(modelo $modelo, stdClass $row_upd = new stdClass(), array $keys_selects = array()): array|stdClass
     {
 
         $telefonos = new stdClass();

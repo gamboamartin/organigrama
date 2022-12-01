@@ -2,6 +2,7 @@
 namespace html;
 
 
+use base\orm\modelo;
 use gamboamartin\errores\errores;
 use gamboamartin\organigrama\controllers\controlador_org_sucursal;
 use gamboamartin\organigrama\models\org_sucursal;
@@ -397,7 +398,7 @@ class org_sucursal_html extends org_html {
         return $div;
     }
 
-    private function telefonos_alta(stdClass $row_upd = new stdClass()): array|stdClass
+    protected function telefonos_alta(modelo $modelo, stdClass $row_upd = new stdClass(), array $keys_selects = array()): array|stdClass
     {
 
         $telefonos = new stdClass();

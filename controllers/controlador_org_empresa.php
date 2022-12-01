@@ -264,9 +264,7 @@ class controlador_org_empresa extends empresas {
         $inputs = (new org_empresa_html(html: $this->html_base))->genera_inputs_alta(controler: $this,
             keys_selects:$keys_selects,link: $this->link);
         if(errores::$error){
-            $error = $this->errores->error(mensaje: 'Error al generar inputs',data:  $inputs);
-            print_r($error);
-            die('Error');
+            $error = $this->retorno_error(mensaje: 'Error al generar inputs',data:  $inputs,header: $header, ws: $ws);
         }
 
         return $r_alta;
