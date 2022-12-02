@@ -124,8 +124,35 @@ let asigna_colonias_postales = (dp_cp_id = '') => {
     });
 }
 
+/* Comentado por IA
 let asigna_calles = (dp_calle_pertenece_id = '') => {
     let url = get_url("dp_calle_pertenece","get_calle_pertenece", {dp_calle_pertenece_id: dp_calle_pertenece_id});
+
+    get_data(url, function (data) {
+        sl_dp_calle_pertenece.empty();
+        sl_dp_calle_pertenece_entre1.empty();
+        sl_dp_calle_pertenece_entre2.empty();
+
+        integra_new_option(sl_dp_calle_pertenece,'Seleccione una calle','-1');
+        integra_new_option(sl_dp_calle_pertenece_entre1,'Seleccione una calle','-1');
+        integra_new_option(sl_dp_calle_pertenece_entre2,'Seleccione una calle','-1');
+
+        $.each(data.registros, function( index, calle ) {
+            integra_new_option(sl_dp_calle_pertenece,calle.dp_calle_pertenece_descripcion_select,calle.dp_calle_pertenece_id);
+            integra_new_option(sl_dp_calle_pertenece_entre1,calle.dp_calle_pertenece_descripcion_select,calle.dp_calle_pertenece_id);
+            integra_new_option(sl_dp_calle_pertenece_entre2,calle.dp_calle_pertenece_descripcion_select,calle.dp_calle_pertenece_id);
+        });
+
+        sl_dp_calle_pertenece.selectpicker('refresh');
+        sl_dp_calle_pertenece_entre1.selectpicker('refresh');
+        sl_dp_calle_pertenece_entre2.selectpicker('refresh');
+    });
+}
+
+*/
+
+let asigna_calles = (dp_colonia_postal_id = '') => {
+    let url = get_url("dp_calle_pertenece","get_calle_pertenece", {dp_colonia_postal_id: dp_colonia_postal_id});
 
     get_data(url, function (data) {
         sl_dp_calle_pertenece.empty();
