@@ -304,7 +304,7 @@ class controlador_org_empresa extends empresas {
         }
 
         $this->link->commit();
-        
+
         if($header){
             $retorno = (new actions())->retorno_alta_bd(link: $this->link,registro_id:$id_retorno,
                 seccion: $seccion_retorno, siguiente_view: $r_alta_bd->siguiente_view);
