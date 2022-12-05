@@ -9,7 +9,7 @@ use stdClass;
 class org_departamento extends modelo{
     public function __construct(PDO $link){
         $tabla = 'org_departamento';
-        $columnas = array($tabla=>false, 'org_empresa'=>$tabla,'org_clasificacion_dep'=>$tabla);
+        $columnas = array($tabla=>false, 'org_empresa'=>$tabla,'org_clasificacion_dep'=>$tabla,'org_tipo_empresa'=>'org_empresa');
 
         $campos_obligatorios = array('org_clasificacion_dep_id');
         $no_duplicados = array();
