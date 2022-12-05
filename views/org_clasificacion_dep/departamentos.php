@@ -19,7 +19,7 @@
                         <?php echo $controlador->inputs->hidden_seccion_retorno; ?>
                         <?php echo $controlador->inputs->hidden_id_retorno; ?>
                         <div class="controls">
-                            <button type="submit" class="btn btn-success" value="secciones" name="btn_action_next">Alta</button><br>
+                            <button type="submit" class="btn btn-success" value="departamentos" name="btn_action_next">Alta</button><br>
                         </div>
                     </form>
                 </div>

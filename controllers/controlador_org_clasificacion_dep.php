@@ -47,6 +47,14 @@ class controlador_org_clasificacion_dep extends _ctl_parent_sin_codigo {
 
         $this->titulo_lista = 'Clasificacion de departamentos';
 
+        $link_org_departamento_alta_bd = $this->obj_link->link_alta_bd(link: $link, seccion: 'org_departamento');
+        if(errores::$error){
+            $error = $this->errores->error(mensaje: 'Error al obtener link',data:  $link_org_departamento_alta_bd);
+            print_r($error);
+            exit;
+        }
+        $this->link_org_departamento_alta_bd = $link_org_departamento_alta_bd;
+
     }
 
     public function departamentos(bool $header = true, bool $ws = false): array|stdClass|string
