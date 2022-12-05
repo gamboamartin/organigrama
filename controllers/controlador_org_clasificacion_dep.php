@@ -34,7 +34,7 @@ class controlador_org_clasificacion_dep extends _ctl_parent_sin_codigo {
         $datatables->columns = array();
         $datatables->columns['org_clasificacion_dep_id']['titulo'] = 'Id';
         $datatables->columns['org_clasificacion_dep_descripcion']['titulo'] = 'Clasificacion Depto';
-        //$datatables->columns['adm_menu_n_secciones']['titulo'] = 'Secciones';
+        $datatables->columns['org_clasificacion_dep_n_departamentos']['titulo'] = 'Departamentos';
 
         $datatables->filtro = array();
         $datatables->filtro[] = 'org_clasificacion_dep.id';
