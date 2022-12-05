@@ -27,6 +27,28 @@ class limpiezaTest extends test {
     /**
      * @throws JsonException
      */
+    public function test_asigna_si_existe(): void
+    {
+        errores::$error = false;
+
+        $lim = new limpieza();
+        $lim = new liberator($lim);
+
+        $key = 'a';
+        $row_destino = array();
+        $row_origen = array();
+
+        $row_origen['a'] = 's';
+        $resultado = $lim->asigna_si_existe($key, $row_destino, $row_origen);
+        $this->assertIsArray($resultado);
+        $this->assertNotTrue(errores::$error);
+        $this->assertEquals('s',$resultado['a']);
+        errores::$error = false;
+    }
+
+    /**
+     * @throws JsonException
+     */
     public function test_init_data_base_org_empresa(): void
     {
         errores::$error = false;

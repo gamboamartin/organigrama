@@ -17,8 +17,20 @@ class limpieza{
         $this->validacion = new validacion();
     }
 
+    /**
+     * Limpia el elemento basado en el origen y destino row
+     * @param string $key campo a integrar
+     * @param array $row_destino Registro de salida
+     * @param array $row_origen Registro de entrada
+     * @return array
+     * @version 0.360.48
+     */
     private function asigna_si_existe(string $key, array $row_destino, array $row_origen): array
     {
+        $key = trim($key);
+        if($key === ''){
+            return $this->error->error(mensaje: 'Error key esta vacio', data: $key);
+        }
         if(isset($row_origen[$key])){
             $row_destino[$key] = $row_origen[$key];
         }
