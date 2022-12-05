@@ -37,6 +37,7 @@ use models\im_registro_patronal;
 
 use PDO;
 use stdClass;
+use Throwable;
 
 class controlador_org_empresa extends empresas {
 
@@ -301,7 +302,15 @@ class controlador_org_empresa extends empresas {
         }
         if($ws){
             header('Content-Type: application/json');
-            echo json_encode($r_alta_bd, JSON_THROW_ON_ERROR);
+            try {
+                echo json_encode($r_alta_bd, JSON_THROW_ON_ERROR);
+            }
+            catch (Throwable $e){
+                $error = $this->errores->error(mensaje: 'Error al dar salida',data:  $e);
+                print_r($error);
+                exit;
+            }
+
             exit;
         }
 

@@ -2,6 +2,7 @@
 namespace tests\orm;
 
 use gamboamartin\errores\errores;
+use gamboamartin\organigrama\tests\base_test;
 use gamboamartin\test\liberator;
 use gamboamartin\test\test;
 use gamboamartin\organigrama\models\limpieza;
@@ -53,6 +54,8 @@ class limpiezaTest extends test {
     {
         errores::$error = false;
 
+        $_SESSION['usuario_id'] = 2;
+
         $lim = new limpieza();
         $lim = new liberator($lim);
 
@@ -60,8 +63,21 @@ class limpiezaTest extends test {
         $registro['razon_social'] = 'a';
         $registro['rfc'] = 'b';
 
-        $resultado = $lim->init_data_base_org_empresa($this->link, $registro);
+        $del = (new base_test())->del_dp_calle_pertenece(link: $this->link);
+        if(errores::$error){
+            $error = (new errores())->error('Error al eliminar', $del);
+            print_r($error);
+            exit;
+        }
 
+        $alta = (new base_test())->alta_dp_calle_pertenece(link: $this->link, predeterminado : 'activo');
+        if(errores::$error){
+            $error = (new errores())->error('Error al insertar', $alta);
+            print_r($error);
+            exit;
+        }
+
+        $resultado = $lim->init_data_base_org_empresa($this->link, $registro);
 
 
         $this->assertIsArray($resultado);

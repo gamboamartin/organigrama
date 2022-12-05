@@ -11,7 +11,8 @@ class org_empresa extends modelo{
         $tabla = 'org_empresa';
         $columnas = array($tabla=>false,'cat_sat_regimen_fiscal'=>$tabla,'dp_calle_pertenece'=>$tabla,
             'dp_colonia_postal'=>'dp_calle_pertenece','dp_cp'=>'dp_colonia_postal','dp_municipio'=>'dp_cp',
-            'dp_estado'=>'dp_municipio','dp_pais'=>'dp_estado','org_tipo_empresa'=>$tabla);
+            'dp_estado'=>'dp_municipio','dp_pais'=>'dp_estado','org_tipo_empresa'=>$tabla,
+            'dp_colonia'=>'dp_colonia_postal');
         $campos_obligatorios = array('codigo','nombre_comercial','rfc','razon_social','org_tipo_empresa_id',
             'dp_calle_pertenece_id','cat_sat_regimen_fiscal_id');
 
@@ -33,6 +34,27 @@ class org_empresa extends modelo{
 
     public function alta_bd(): array|stdClass
     {
+
+        if(!isset($this->registro['org_tipo_empresa_id'])){
+            $org_tipo_empresa_id = (new org_tipo_empresa(link: $this->link))->id_predeterminado();
+            if(errores::$error){
+                return $this->error->error(mensaje: 'Error al obtener org_tipo_empresa_id predeterminada', data: $org_tipo_empresa_id);
+            }
+            $this->registro['org_tipo_empresa_id'] = $org_tipo_empresa_id;
+        }
+
+        if(!isset($this->registro['codigo'])){
+            $org_tipo_empresa = (new org_tipo_empresa(link: $this->link))->registro(registro_id: $this->registro['org_tipo_empresa_id'], retorno_obj: true);
+            if(errores::$error){
+                return $this->error->error(mensaje: 'Error al obtener org_tipo_empresa', data: $org_tipo_empresa);
+            }
+
+            $codigo = $org_tipo_empresa->org_tipo_empresa_codigo;
+            $codigo .= ' '.$this->registro['rfc'];
+            $this->registro['codigo'] = $codigo;
+
+        }
+
         $keys = array('razon_social','rfc','codigo','nombre_comercial','org_tipo_empresa_id');
         $valida = $this->validacion->valida_existencia_keys(keys: $keys, registro: $this->registro);
         if(errores::$error){

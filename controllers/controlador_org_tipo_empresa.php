@@ -9,11 +9,13 @@
 namespace gamboamartin\organigrama\controllers;
 
 use gamboamartin\errores\errores;
+use gamboamartin\organigrama\models\org_empresa;
 use gamboamartin\organigrama\models\org_tipo_empresa;
 use gamboamartin\system\_ctl_parent_sin_codigo;
 use gamboamartin\system\links_menu;
 
 use gamboamartin\template\html;
+use html\org_empresa_html;
 use html\org_tipo_empresa_html;
 use PDO;
 use stdClass;
@@ -21,6 +23,7 @@ use stdClass;
 class controlador_org_tipo_empresa extends _ctl_parent_sin_codigo {
 
     public array $keys_selects = array();
+    public string $link_org_empresa_alta_bd = '';
 
     public function __construct(PDO $link, html $html = new \gamboamartin\template_1\html(),
                                 stdClass $paths_conf = new stdClass()){
@@ -44,7 +47,87 @@ class controlador_org_tipo_empresa extends _ctl_parent_sin_codigo {
 
         $this->titulo_lista = 'Tipo Empresa';
 
+        $link_org_empresa_alta_bd = $this->obj_link->link_alta_bd(link: $link, seccion: 'org_empresa');
+        if(errores::$error){
+            $error = $this->errores->error(mensaje: 'Error al obtener link',data:  $link_org_empresa_alta_bd);
+            print_r($error);
+            exit;
+        }
+        $this->link_org_empresa_alta_bd = $link_org_empresa_alta_bd;
 
+
+    }
+
+    public function empresas(bool $header = true, bool $ws = false): array|stdClass|string
+    {
+
+        $data_view = new stdClass();
+        $data_view->names = array('Id','Rfc', 'Razon Social','Regimen Fiscal','Edo','Mun','Col','CP','Calle','Ext','Int','Acciones');
+        $data_view->keys_data = array('org_empresa_id','org_empresa_rfc','org_empresa_razon_social','cat_sat_regimen_fiscal_codigo',
+            'dp_estado_descripcion','dp_municipio_descripcion','dp_colonia_descripcion','dp_cp_descripcion',
+            'org_empresa_exterior','org_empresa_interior');
+        $data_view->key_actions = 'acciones';
+        $data_view->namespace_model = 'gamboamartin\\organigrama\\models';
+        $data_view->name_model_children = 'org_empresa';
+
+
+        $contenido_table = $this->contenido_children(data_view: $data_view, next_accion: __FUNCTION__);
+        if(errores::$error){
+            return $this->retorno_error(
+                mensaje: 'Error al obtener tbody',data:  $contenido_table, header: $header,ws:  $ws);
+        }
+
+        return $contenido_table;
+
+
+
+    }
+
+    protected function inputs_children(stdClass $registro): array|stdClass{
+        $select_org_tipo_empresa_id = (new org_tipo_empresa_html(html: $this->html_base))->select_org_tipo_empresa_id(
+            cols:12,con_registros: true,id_selected:  $registro->org_tipo_empresa_id,link:  $this->link, disabled: true);
+
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al obtener select_org_tipo_empresa_id',data:  $select_org_tipo_empresa_id);
+        }
+
+        $org_empresa_rfc = (new org_empresa_html(html: $this->html_base))->input_rfc(cols: 12,row_upd: new stdClass() ,value_vacio:  false);
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al obtener org_empresa_rfc',data:  $org_empresa_rfc);
+        }
+
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al obtener select_org_tipo_empresa_id',data:  $select_org_tipo_empresa_id);
+        }
+
+        $org_empresa_razon_social = (new org_empresa_html(html: $this->html_base))->input_razon_social(
+            cols: 12,  row_upd: new stdClass(), value_vacio: false);
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al obtener org_empresa_razon_social',data:  $org_empresa_razon_social);
+        }
+
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al obtener select_org_tipo_empresa_id',data:  $select_org_tipo_empresa_id);
+        }
+
+        $org_empresa_nombre_comercial = (new org_empresa_html(html: $this->html_base))->input_nombre_comercial(
+            cols: 12,  row_upd: new stdClass(), value_vacio: false);
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al obtener org_empresa_nombre_comercial',data:  $org_empresa_nombre_comercial);
+        }
+
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al obtener select_org_tipo_empresa_id',data:  $select_org_tipo_empresa_id);
+        }
+
+        $this->inputs = new stdClass();
+        $this->inputs->select = new stdClass();
+        $this->inputs->select->org_tipo_empresa_id = $select_org_tipo_empresa_id;
+        $this->inputs->org_empresa_rfc = $org_empresa_rfc;
+        $this->inputs->org_empresa_razon_social = $org_empresa_razon_social;
+        $this->inputs->org_empresa_nombre_comercial = $org_empresa_nombre_comercial;
+
+        return $this->inputs;
     }
 
     protected function key_selects_txt(array $keys_selects): array

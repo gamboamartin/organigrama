@@ -5,6 +5,7 @@ use gamboamartin\errores\errores;
 use gamboamartin\organigrama\models\org_sucursal;
 use gamboamartin\test\test;
 use stdClass;
+use tests\base_test;
 
 
 class org_sucursalTest extends test {
@@ -58,11 +59,30 @@ class org_sucursalTest extends test {
 
         errores::$error = false;
 
+        $_SESSION['usuario_id'] =  2;
+
+        $del = (new \gamboamartin\organigrama\tests\base_test())->del_org_empresa($this->link);
+        if(errores::$error){
+            $error = (new errores())->error('Error al eliminar', $del);
+            print_r($error);
+            exit;
+        }
+
+        $alta = (new \gamboamartin\organigrama\tests\base_test())->alta_org_empresa(link: $this->link);
+        if(errores::$error){
+            $error = (new errores())->error('Error al insertar', $alta);
+            print_r($error);
+            exit;
+        }
+
+
+
         $_SESSION['usuario_id'] = 1;
         $modelo->registro['org_empresa_id'] = 1;
         $modelo->registro['codigo'] = 1;
 
         $resultado = $modelo->alta_bd();
+
         $this->assertIsArray($resultado);
         $this->assertTrue(errores::$error);
         $this->assertStringContainsStringIgnoringCase('Error al dar de alta empresa',$resultado['mensaje']);

@@ -186,6 +186,21 @@ class limpieza{
                 return $this->error->error(
                     mensaje: 'Error al obtener dp_calle_pertenece_default',data:  $dp_calle_pertenece_id);
             }
+
+            $dp_calle_pertenece = (new dp_calle_pertenece(link: $link))->registro(
+                registro_id: $dp_calle_pertenece_id, retorno_obj: true);
+            if(errores::$error){
+                return $this->error->error(mensaje: 'Error al obtener dp_calle_pertenece',data:  $dp_calle_pertenece);
+            }
+
+            $keys = array('dp_colonia_postal_id','dp_calle_id','dp_cp_id','dp_colonia_id','dp_municipio_id',
+                'dp_estado_id','dp_pais_id');
+            $valida = $this->validacion->valida_ids(keys: $keys, registro: $dp_calle_pertenece);
+            if(errores::$error){
+                return $this->error->error(
+                    mensaje: 'Error al obtener dp_calle_pertenece_default',data:  $valida);
+            }
+
             $registro['dp_calle_pertenece_id'] = $dp_calle_pertenece_id;
 
         }

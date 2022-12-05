@@ -112,8 +112,6 @@ class controlador_org_empresaTest extends test {
         }
 
 
-
-
         $_GET['registro_id'] = $alta->registro_id;
         $ctl->registro_id = $alta->registro_id;
 

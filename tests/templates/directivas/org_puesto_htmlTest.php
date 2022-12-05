@@ -76,12 +76,29 @@ class org_puesto_htmlTest extends test {
         $html = new org_puesto_html($html_);
         //$html = new liberator($html);
 
+        $_SESSION['usuario_id']  = 2;
         $cols = 1;
         $con_registros = true;
         $id_selected = 1;
         $link = $this->link;
 
+        $del = (new \gamboamartin\organigrama\tests\base_test())->del_org_puesto(link: $this->link);
+        if(errores::$error){
+            $error = (new errores())->error('Error al eliminar', $del);
+            print_r($error);
+            exit;
+        }
+
+        $alta = (new \gamboamartin\organigrama\tests\base_test())->alta_org_puesto(link: $this->link);
+        if(errores::$error){
+            $error = (new errores())->error('Error al insertar', $alta);
+            print_r($error);
+            exit;
+        }
+
         $resultado = $html->select_org_puesto_id($cols, $con_registros, $id_selected, $link);
+
+
         $this->assertIsString($resultado);
         $this->assertNotTrue(errores::$error);
         $this->assertStringContainsStringIgnoringCase("<option value='1' selected >11", $resultado);

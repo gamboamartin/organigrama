@@ -13,14 +13,23 @@ use PDO;
 
 class base_test{
 
+    public function alta_dp_calle_pertenece(PDO $link, int $id = 1, string $predeterminado = 'inactivo'): array|\stdClass
+    {
+
+        $alta = (new \gamboamartin\direccion_postal\tests\base_test())->alta_dp_calle_pertenece(link: $link, id: $id,
+            predeterminado: $predeterminado);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al insertar', data: $alta);
+        }
+        return $alta;
+    }
+
     public function alta_org_clasificacion_dep(PDO $link): array|\stdClass
     {
         $registro = array();
         $registro['id'] = 1;
         $registro['codigo'] = 1;
         $registro['descripcion'] = 1;
-
-
 
         $alta = (new org_clasificacion_dep($link))->alta_registro($registro);
         if(errores::$error){
@@ -59,7 +68,7 @@ class base_test{
     }
 
 
-    public function alta_org_empresa(PDO $link, int $id = 1): array|\stdClass
+    public function alta_org_empresa(PDO $link, int $dp_calle_pertenece_id = 1, int $id = 1): array|\stdClass
     {
         $registro = array();
         $registro['id'] = $id;
@@ -69,6 +78,7 @@ class base_test{
         $registro['rfc'] = 'AAA010101ABC';
         $registro['nombre_comercial'] = 1;
         $registro['org_tipo_empresa_id'] = 1;
+        $registro['dp_calle_pertenece_id'] = $dp_calle_pertenece_id;
 
 
         $alta = (new org_empresa($link))->alta_registro($registro);
@@ -170,6 +180,38 @@ class base_test{
         if(errores::$error){
             return (new errores())->error(mensaje: 'Error al eliminar '.$name_model, data: $del);
         }
+        return $del;
+    }
+
+    public function del_com_cliente(PDO $link): array
+    {
+
+        $del = (new \gamboamartin\comercial\test\base_test())->del_com_cliente($link);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al eliminar ', data: $del);
+        }
+
+        return $del;
+    }
+
+    public function del_dp_calle_pertenece(PDO $link): array
+    {
+
+        $del = (new base_test())->del_com_cliente($link);
+        if(errores::$error){
+            return (new errores())->error('Error al eliminar', $del);
+        }
+
+        $del = (new base_test())->del_org_empresa($link);
+        if(errores::$error){
+            return (new errores())->error('Error al eliminar', $del);
+        }
+
+        $del = (new \gamboamartin\direccion_postal\tests\base_test())->del_dp_calle_pertenece($link);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al eliminar ', data: $del);
+        }
+
         return $del;
     }
 

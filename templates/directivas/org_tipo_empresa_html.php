@@ -16,11 +16,12 @@ class org_tipo_empresa_html extends html_controler {
      * @param bool $con_registros si no con registros el select queda libre de options
      * @param int $id_selected identificador del select
      * @param PDO $link conexion a la base de datos
+     * @param bool $disabled Atributo disabled si true
      * @return array|string
      * @version 0.277.36
-     *
      */
-    public function select_org_tipo_empresa_id(int $cols,bool $con_registros,int $id_selected, PDO $link): array|string
+    public function select_org_tipo_empresa_id(int $cols,bool $con_registros,int $id_selected, PDO $link,
+                                               bool $disabled = false): array|string
     {
 
         $valida = (new directivas(html: $this->html_base))->valida_cols(cols:$cols);
@@ -30,8 +31,8 @@ class org_tipo_empresa_html extends html_controler {
 
         $modelo = new org_tipo_empresa($link);
 
-        $select = $this->select_catalogo(cols:$cols,con_registros:$con_registros,id_selected:$id_selected,
-            modelo: $modelo,label: 'Tipo empresa',required: true);
+        $select = $this->select_catalogo(cols: $cols, con_registros: $con_registros, id_selected: $id_selected,
+            modelo: $modelo, disabled: $disabled, label: 'Tipo empresa', required: true);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select', data: $select);
         }
