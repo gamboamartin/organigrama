@@ -10,14 +10,15 @@ namespace gamboamartin\organigrama\controllers;
 
 use gamboamartin\errores\errores;
 use gamboamartin\organigrama\models\org_tipo_sucursal;
+use gamboamartin\system\_ctl_parent_sin_codigo;
 use gamboamartin\system\links_menu;
-use gamboamartin\system\system;
+
 use gamboamartin\template\html;
 use html\org_tipo_sucursal_html;
 use PDO;
 use stdClass;
 
-class controlador_org_tipo_sucursal extends system {
+class controlador_org_tipo_sucursal extends _ctl_parent_sin_codigo {
 
     public array $keys_selects = array();
 
@@ -42,69 +43,25 @@ class controlador_org_tipo_sucursal extends system {
 
         $this->titulo_lista = 'Tipo Sucursal';
 
-        $propiedades = $this->inicializa_propiedades();
-        if(errores::$error){
-            $error = $this->errores->error(mensaje: 'Error al inicializar propiedades',data:  $propiedades);
-            print_r($error);
-            die('Error');
-        }
+
     }
 
-    public function alta(bool $header, bool $ws = false): array|string
+    protected function key_selects_txt(array $keys_selects): array
     {
-        $r_alta =  parent::alta(header: false);
+        $keys_selects = (new \base\controller\init())->key_select_txt(cols: 6,key: 'codigo', keys_selects:$keys_selects, place_holder: 'Cod');
         if(errores::$error){
-            return $this->retorno_error(mensaje: 'Error al generar template',data:  $r_alta, header: $header,ws:$ws);
+            return $this->errores->error(mensaje: 'Error al maquetar key_selects',data:  $keys_selects);
         }
 
-        $inputs = $this->genera_inputs(keys_selects:  $this->keys_selects);
+        $keys_selects = (new \base\controller\init())->key_select_txt(cols: 6,key: 'descripcion', keys_selects:$keys_selects, place_holder: 'Tipo Sucursal');
         if(errores::$error){
-            $error = $this->errores->error(mensaje: 'Error al generar inputs',data:  $inputs);
-            print_r($error);
-            die('Error');
+            return $this->errores->error(mensaje: 'Error al maquetar key_selects',data:  $keys_selects);
         }
 
-        return $r_alta;
+        return $keys_selects;
     }
 
-    public function asignar_propiedad(string $identificador, mixed $propiedades)
-    {
-        if (!array_key_exists($identificador,$this->keys_selects)){
-            $this->keys_selects[$identificador] = new stdClass();
-        }
 
-        foreach ($propiedades as $key => $value){
-            $this->keys_selects[$identificador]->$key = $value;
-        }
-    }
 
-    private function inicializa_propiedades(): array
-    {
-        $identificador = "codigo";
-        $propiedades = array("place_holder" => "Código", "cols" => 4);
-        $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
 
-        $identificador = "descripcion";
-        $propiedades = array("place_holder" => "Tipo Sucursal", "cols" => 8);
-        $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
-
-        return $this->keys_selects;
-    }
-
-    public function modifica(bool $header, bool $ws = false): array|stdClass
-    {
-        $r_modifica =  parent::modifica(header: false);
-        if(errores::$error){
-            return $this->retorno_error(mensaje: 'Error al generar template',data:  $r_modifica, header: $header,ws:$ws);
-        }
-
-        $inputs = $this->genera_inputs(keys_selects:  $this->keys_selects);
-        if(errores::$error){
-            $error = $this->errores->error(mensaje: 'Error al generar inputs',data:  $inputs);
-            print_r($error);
-            die('Error');
-        }
-
-        return $r_modifica;
-    }
 }
