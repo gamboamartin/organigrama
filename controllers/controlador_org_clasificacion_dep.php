@@ -48,15 +48,22 @@ class controlador_org_clasificacion_dep extends _ctl_parent_sin_codigo {
 
     }
 
-
+    /**
+     * Integra los keys para parametros de un select
+     * @param array $keys_selects Keys precargados
+     * @return array
+     * @version 0.369.48
+     */
     protected function key_selects_txt(array $keys_selects): array
     {
-        $keys_selects = (new \base\controller\init())->key_select_txt(cols: 6,key: 'codigo', keys_selects:$keys_selects, place_holder: 'Cod');
+        $keys_selects = (new \base\controller\init())->key_select_txt(
+            cols: 6,key: 'codigo', keys_selects:$keys_selects, place_holder: 'Cod');
         if(errores::$error){
             return $this->errores->error(mensaje: 'Error al maquetar key_selects',data:  $keys_selects);
         }
 
-        $keys_selects = (new \base\controller\init())->key_select_txt(cols: 12,key: 'descripcion', keys_selects:$keys_selects, place_holder: 'Clas Depto');
+        $keys_selects = (new \base\controller\init())->key_select_txt(
+            cols: 12,key: 'descripcion', keys_selects:$keys_selects, place_holder: 'Clas Depto');
         if(errores::$error){
             return $this->errores->error(mensaje: 'Error al maquetar key_selects',data:  $keys_selects);
         }
