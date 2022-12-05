@@ -64,7 +64,7 @@ class controlador_org_tipo_empresa extends _ctl_parent_sin_codigo {
         $data_view = new stdClass();
         $data_view->names = array('Id','Rfc', 'Razon Social','Regimen Fiscal','Edo','Mun','Col','CP','Calle','Ext','Int','Acciones');
         $data_view->keys_data = array('org_empresa_id','org_empresa_rfc','org_empresa_razon_social','cat_sat_regimen_fiscal_codigo',
-            'dp_estado_descripcion','dp_municipio_descripcion','dp_colonia_descripcion','dp_cp_descripcion',
+            'dp_estado_descripcion','dp_municipio_descripcion','dp_colonia_descripcion','dp_cp_descripcion','dp_calle_descripcion',
             'org_empresa_exterior','org_empresa_interior');
         $data_view->key_actions = 'acciones';
         $data_view->namespace_model = 'gamboamartin\\organigrama\\models';
