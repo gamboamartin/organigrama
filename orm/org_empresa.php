@@ -22,12 +22,10 @@ class org_empresa extends modelo{
         $tipo_campos['telefono_3'] = 'telefono_mx';
         $tipo_campos['rfc'] = 'rfc';
 
-        $columnas_extra = array();
-        $columnas_extra['adm_menu_n_secciones'] = /** @lang sql */
-            "(SELECT COUNT(*) FROM org_empresa WHERE org_empresa.org_tipo_empresa_id = org_tipo_empresa.id)";
+
 
         parent::__construct(link: $link, tabla: $tabla, campos_obligatorios: $campos_obligatorios,
-            columnas: $columnas, columnas_extra: $columnas_extra, no_duplicados: $no_duplicados, tipo_campos: $tipo_campos);
+            columnas: $columnas, no_duplicados: $no_duplicados, tipo_campos: $tipo_campos);
 
         $this->NAMESPACE = __NAMESPACE__;
 

@@ -31,6 +31,7 @@ class controlador_org_tipo_empresa extends _ctl_parent_sin_codigo {
         $columns["org_tipo_empresa_id"]["titulo"] = "Id";
         $columns["org_tipo_empresa_codigo"]["titulo"] = "Código";
         $columns["org_tipo_empresa_descripcion"]["titulo"] = "Tipo Empresa";
+        $columns["org_tipo_empresa_n_empresas"]["titulo"] = "N Empresas";
 
         $filtro = array("org_tipo_empresa.id","org_tipo_empresa.codigo","org_tipo_empresa.descripcion");
 
