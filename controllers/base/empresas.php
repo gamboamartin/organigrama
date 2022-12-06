@@ -1,18 +1,23 @@
 <?php
 namespace gamboamartin\organigrama\controllers\base;
+use base\orm\modelo;
 use gamboamartin\errores\errores;
+use gamboamartin\system\html_controler;
 use gamboamartin\system\init;
+use gamboamartin\system\links_menu;
 use gamboamartin\system\system;
+use PDO;
 use stdClass;
 
 class empresas extends system{
+
 
     /**
      * Limpia los datos postales previos a un modifica bd
      * @return array
      * @version 0.230.35
      */
-    PUBLIC function limpia_post_dp(): array
+    public function limpia_post_dp(): array
     {
         $keys = array('dp_pais_id','dp_estado_id','dp_municipio_id','dp_cp_id','dp_colonia_postal_id');
         $_POST = (new init())->limpia_rows(keys: $keys,row:  $_POST);

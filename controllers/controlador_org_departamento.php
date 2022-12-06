@@ -53,6 +53,8 @@ class controlador_org_departamento extends _ctl_parent_sin_codigo {
             print_r($error);
             die('Error');
         }
+
+        //$parent_ctl = parent::
     }
 
     public function alta(bool $header, bool $ws = false): array|string
@@ -83,15 +85,10 @@ class controlador_org_departamento extends _ctl_parent_sin_codigo {
     {
         $this->link->beginTransaction();
 
-
-        $seccion_retorno = $this->tabla;
-        if(isset($_POST['seccion_retorno'])){
-            $seccion_retorno = $_POST['seccion_retorno'];
-        }
-
-        $id_retorno = -1;
-        if(isset($_POST['id_retorno'])){
-            $id_retorno = $_POST['id_retorno'];
+        $retorno = (new _base())->data_retorno(tabla: $this->tabla);
+        if(errores::$error){
+            $this->link->rollBack();
+            return $this->retorno_error(mensaje: 'Error al obtener datos de retorno',data:  $retorno, header: $header,ws:$ws);
         }
 
 
@@ -100,39 +97,12 @@ class controlador_org_departamento extends _ctl_parent_sin_codigo {
             $this->link->rollBack();
             return $this->retorno_error(mensaje: 'Error al dar de alta empresa',data:  $r_alta_bd, header: $header,ws:$ws);
         }
-
-
-        if((int)$id_retorno === -1){
-            $id_retorno = $r_alta_bd->registro_id;
-        }
-
-        //print_r($r_alta_bd->siguiente_view); exit;
-
         $this->link->commit();
 
-        if($header){
-            $retorno = (new actions())->retorno_alta_bd(link: $this->link,registro_id:$id_retorno,
-                seccion: $seccion_retorno, siguiente_view: $r_alta_bd->siguiente_view);
-            if(errores::$error){
-                return $this->retorno_error(mensaje: 'Error al dar de alta registro', data: $r_alta_bd, header:  true,
-                    ws: $ws);
-            }
 
-            header('Location:'.$retorno);
-            exit;
-        }
-        if($ws){
-            header('Content-Type: application/json');
-            try {
-                echo json_encode($r_alta_bd, JSON_THROW_ON_ERROR);
-            }
-            catch (Throwable $e){
-                $error = $this->errores->error(mensaje: 'Error al dar salida',data:  $e);
-                print_r($error);
-                exit;
-            }
-
-            exit;
+        $header_exe = (new _base())->header(controler: $this, header: $header,result:  $r_alta_bd,retorno:  $retorno,ws:  $ws);
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al obtener retorno',data:  $header_exe, header: $header,ws:$ws);
         }
 
         return $r_alta_bd;
