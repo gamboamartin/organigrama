@@ -1,18 +1,15 @@
 <?php
-namespace tests\links\secciones;
+namespace tests\controllers;
 
 use gamboamartin\errores\errores;
-use gamboamartin\organigrama\controllers\controlador_org_empresa;
+use gamboamartin\organigrama\controllers\_base;
+use gamboamartin\organigrama\controllers\controlador_adm_session;
 use gamboamartin\test\liberator;
 use gamboamartin\test\test;
-use JsonException;
-use links\secciones\link_org_empresa;
-use models\org_empresa;
-use models\org_sucursal;
+
 use stdClass;
 
-
-class empresasTest extends test {
+class _baseTest extends test {
     public errores $errores;
     private stdClass $paths_conf;
     public function __construct(?string $name = null, array $data = [], $dataName = '')
@@ -29,7 +26,7 @@ class empresasTest extends test {
 
     /**
      */
-    public function test_limpia_post_dp(): void
+    public function test_seccion_retorno(): void
     {
         errores::$error = false;
 
@@ -39,42 +36,26 @@ class empresasTest extends test {
         $_SESSION['grupo_id'] = 1;
         $_GET['session_id'] = '1';
         $_SESSION['usuario_id'] = '2';
+        $base = new _base();
+        $base = new liberator($base);
 
-        unset($_POST['seccion_retorno']);
-
-
-        $ctl = new controlador_org_empresa(link: $this->link, paths_conf: $this->paths_conf);
-        //$ctl = new liberator($ctl);
-        $resultado = $ctl->limpia_post_dp();
-
-        $this->assertIsArray($resultado);
+        $tabla = 'a';
+        $resultado = $base->seccion_retorno($tabla);
+        $this->assertIsString($resultado);
         $this->assertNotTrue(errores::$error);
-        $this->assertEmpty($resultado);
+        $this->assertEquals('a',$resultado);
 
         errores::$error = false;
 
-        $_POST['X'] = 'X';
-
-
-        $resultado = $ctl->limpia_post_dp();
-        $this->assertIsArray($resultado);
+        $_POST['seccion_retorno'] = 'Z';
+        $tabla = 'a';
+        $resultado = $base->seccion_retorno($tabla);
+        $this->assertIsString($resultado);
         $this->assertNotTrue(errores::$error);
-        $this->assertNotEmpty($resultado);
-
-        errores::$error = false;
-
-        $_POST['dp_pais_id'] = 'X';
-
-
-        $resultado = $ctl->limpia_post_dp();
-        $this->assertIsArray($resultado);
-        $this->assertNotTrue(errores::$error);
-        $this->assertNotEmpty($resultado);
-
+        $this->assertEquals('Z',$resultado);
 
         errores::$error = false;
     }
-
 
 
 }

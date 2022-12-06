@@ -113,7 +113,18 @@ class _base {
         return $result;
     }
 
-    private function seccion_retorno(string $tabla){
+    /**
+     * Obtiene la seccion de retorno
+     * @param string $tabla Tabla o seccion en ejecucion
+     * @return string|array
+     * @version 0.374.48
+     */
+    private function seccion_retorno(string $tabla): string|array
+    {
+        $tabla = trim($tabla);
+        if($tabla === ''){
+            return $this->error->error(mensaje: 'Error tabla esta vacia',data:  $tabla);
+        }
         $seccion_retorno = $tabla;
         if(isset($_POST['seccion_retorno'])){
             $seccion_retorno = $_POST['seccion_retorno'];
