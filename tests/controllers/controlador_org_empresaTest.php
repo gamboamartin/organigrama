@@ -26,6 +26,38 @@ class controlador_org_empresaTest extends test {
 
     }
 
+    public function test_alta_sucursal_bd(): void
+    {
+        errores::$error = false;
+        (new base_test())->del_org_sucursal(link: $this->link);
+        (new base_test())->del_org_empresa(link: $this->link);
+
+        $_GET['seccion'] = 'org_empresa';
+        $_GET['accion'] = 'alta_sucursal_bd';
+
+        $_SESSION['grupo_id'] = 2;
+        $_GET['session_id'] = '1';
+        $_SESSION['usuario_id'] = '2';
+
+
+        $_POST = array();
+        $_POST['codigo'] = 2;
+
+        $alta_org_empresa = (new base_test())->alta_org_empresa(link: $this->link);
+
+        $ctl = new controlador_org_empresa(link: $this->link, paths_conf: $this->paths_conf);
+        $ctl->registro_id = 1;
+        $resultado = $ctl->alta_sucursal_bd(header: false, ws: false);
+        $this->assertIsObject($resultado);
+        $this->assertNotTrue(errores::$error);
+        $this->assertEquals('Registro insertado con éxito', $resultado->mensaje);
+        $this->assertNotTrue(errores::$error);
+        errores::$error = false;
+
+        (new base_test())->del_org_sucursal(link: $this->link);
+        (new base_test())->del_org_empresa(link: $this->link);
+    }
+
     /**
      */
     public function test_asigna_link_sucursal_row(): void
@@ -50,6 +82,323 @@ class controlador_org_empresaTest extends test {
         $this->assertEquals('info',$resultado->link_sucursales_style);
         errores::$error = false;
     }
+
+    public function test_cif(): void
+    {
+        errores::$error = false;
+        (new base_test())->del_org_empresa(link: $this->link);
+
+        $_GET['seccion'] = 'org_empresa';
+        $_GET['accion'] = 'cif';
+
+        $_SESSION['grupo_id'] = 2;
+        $_GET['session_id'] = '1';
+        $_SESSION['usuario_id'] = '2';
+
+        $alta_org_empresa = (new base_test())->alta_org_empresa(link: $this->link);
+
+        $ctl = new controlador_org_empresa(link: $this->link, paths_conf: $this->paths_conf);
+        $ctl->registro_id = 1;
+        $resultado = $ctl->cif(header: false, ws: false);
+        $this->assertIsObject($resultado);
+        $this->assertNotTrue(errores::$error);
+        errores::$error = false;
+        (new base_test())->del_org_empresa(link: $this->link);
+
+    }
+
+    public function test_contacto(): void
+    {
+        errores::$error = false;
+        (new base_test())->del_org_empresa(link: $this->link);
+
+        $_GET['seccion'] = 'org_empresa';
+        $_GET['accion'] = 'contacto';
+
+        $_SESSION['grupo_id'] = 2;
+        $_GET['session_id'] = '1';
+        $_SESSION['usuario_id'] = '2';
+
+        $alta_org_empresa = (new base_test())->alta_org_empresa(link: $this->link);
+
+        $ctl = new controlador_org_empresa(link: $this->link, paths_conf: $this->paths_conf);
+        $ctl->registro_id = 1;
+        $resultado = $ctl->contacto(header: false, ws: false);
+        $this->assertIsObject($resultado);
+        $this->assertNotTrue(errores::$error);
+        errores::$error = false;
+        (new base_test())->del_org_empresa(link: $this->link);
+
+    }
+
+    public function test_identidad(): void
+    {
+        errores::$error = false;
+        (new base_test())->del_org_empresa(link: $this->link);
+
+        $_GET['seccion'] = 'org_empresa';
+        $_GET['accion'] = 'identidad';
+
+        $_SESSION['grupo_id'] = 2;
+        $_GET['session_id'] = '1';
+        $_SESSION['usuario_id'] = '2';
+
+        $alta_org_empresa = (new base_test())->alta_org_empresa(link: $this->link);
+
+        $ctl = new controlador_org_empresa(link: $this->link, paths_conf: $this->paths_conf);
+        $ctl->registro_id = 1;
+        $resultado = $ctl->identidad(header: false, ws: false);
+        $this->assertIsObject($resultado);
+        $this->assertNotTrue(errores::$error);
+        errores::$error = false;
+        (new base_test())->del_org_empresa(link: $this->link);
+
+    }
+
+    /*
+    public function test_modifica_departamento(): void
+    {
+        errores::$error = false;
+        (new base_test())->del_org_departamento(link: $this->link);
+
+        $_GET['seccion'] = 'org_empresa';
+        $_GET['accion'] = 'modifica_departamento';
+
+        $_SESSION['grupo_id'] = 2;
+        $_GET['session_id'] = '1';
+        $_SESSION['usuario_id'] = '2';
+
+        $alta_org_departamento = (new base_test())->alta_org_departamento(link: $this->link, id: 1, org_clasificacion_dep_id: 1);
+
+        $ctl = new controlador_org_empresa(link: $this->link, paths_conf: $this->paths_conf);
+        $ctl->org_departamento_id = 1;
+        $resultado = $ctl->modifica_departamento(header: false, ws: false);
+        $this->assertIsObject($resultado);
+        $this->assertNotTrue(errores::$error);
+        errores::$error = false;
+        (new base_test())->del_org_departamento(link: $this->link);
+
+    }*/
+
+    public function test_modifica_departamento_bd(): void
+    {
+        errores::$error = false;
+        (new base_test())->del_org_empresa(link: $this->link);
+
+        $_GET['seccion'] = 'org_empresa';
+        $_GET['accion'] = 'modifica_departamento_bd';
+
+        $_SESSION['grupo_id'] = 2;
+        $_GET['session_id'] = '1';
+        $_SESSION['usuario_id'] = '2';
+
+        $_POST = array();
+        $_POST['org_empresa_id'] = 1;
+
+        (new base_test())->del_org_departamento(link: $this->link);
+
+        $alta_org_departamento = (new base_test())->alta_org_departamento(link: $this->link, id: 1, org_clasificacion_dep_id: 1);
+        $alta_org_empresa = (new base_test())->alta_org_empresa(link: $this->link);
+
+        $ctl = new controlador_org_empresa(link: $this->link, paths_conf: $this->paths_conf);
+        $ctl->org_departamento_id = 1;
+        $resultado = $ctl->modifica_departamento_bd(header: false, ws: false);
+        $this->assertIsObject($resultado);
+        $this->assertNotTrue(errores::$error);
+        $this->assertEquals('exito', $resultado->salida);
+        $this->assertNotTrue(errores::$error);
+        errores::$error = false;
+
+        (new base_test())->del_org_departamento(link: $this->link);
+        (new base_test())->del_org_empresa(link: $this->link);
+
+
+    }
+
+    public function test_modifica_identidad(): void
+    {
+        errores::$error = false;
+        (new base_test())->del_org_empresa(link: $this->link);
+
+        $_GET['seccion'] = 'org_empresa';
+        $_GET['accion'] = 'modifica_identidad';
+
+        $_SESSION['grupo_id'] = 2;
+        $_GET['session_id'] = '1';
+        $_SESSION['usuario_id'] = '2';
+
+        $alta_org_empresa = (new base_test())->alta_org_empresa(link: $this->link);
+
+        $_POST = array();
+        $_POST['codigo'] = 2;
+        $_POST['rfc'] = 'BBB020202DEF';
+
+
+
+        $ctl = new controlador_org_empresa(link: $this->link, paths_conf: $this->paths_conf);
+        $ctl->registro_id = 1;
+        $resultado = $ctl->modifica_identidad(header: false, ws: false);
+        $this->assertIsObject($resultado);
+        $this->assertNotTrue(errores::$error);
+        $this->assertEquals('exito', $resultado->salida);
+        $this->assertNotTrue(errores::$error);
+        errores::$error = false;
+        (new base_test())->del_org_empresa(link: $this->link);
+
+    }
+
+    public function test_modifica_cif(): void
+    {
+        errores::$error = false;
+        (new base_test())->del_org_empresa(link: $this->link);
+
+        $_GET['seccion'] = 'org_empresa';
+        $_GET['accion'] = 'modifica_cif';
+
+        $_SESSION['grupo_id'] = 2;
+        $_GET['session_id'] = '1';
+        $_SESSION['usuario_id'] = '2';
+
+        $alta_org_empresa = (new base_test())->alta_org_empresa(link: $this->link);
+
+        $_POST = array();
+        $_POST['email_sat'] = 'a@a.a';
+
+
+
+        $ctl = new controlador_org_empresa(link: $this->link, paths_conf: $this->paths_conf);
+        $ctl->registro_id = 1;
+        $resultado = $ctl->modifica_cif(header: false, ws: false);
+        $this->assertIsObject($resultado);
+        $this->assertNotTrue(errores::$error);
+        $this->assertEquals('exito',$resultado->salida);
+        $this->assertNotTrue(errores::$error);
+        errores::$error = false;
+        (new base_test())->del_org_empresa(link: $this->link);
+
+    }
+
+    public function test_modifica_contacto(): void
+    {
+        errores::$error = false;
+        (new base_test())->del_org_empresa(link: $this->link);
+
+        $_GET['seccion'] = 'org_empresa';
+        $_GET['accion'] = 'modifica_contacto';
+
+        $_SESSION['grupo_id'] = 2;
+        $_GET['session_id'] = '1';
+        $_SESSION['usuario_id'] = '2';
+
+        $alta_org_empresa = (new base_test())->alta_org_empresa(link: $this->link);
+
+        $_POST = array();
+        $_POST['telefono_1'] = '1234567890';
+
+
+
+        $ctl = new controlador_org_empresa(link: $this->link, paths_conf: $this->paths_conf);
+        $ctl->registro_id = 1;
+        $resultado = $ctl->modifica_contacto(header: false, ws: false);
+        $this->assertIsObject($resultado);
+        $this->assertNotTrue(errores::$error);
+        $this->assertEquals('exito',$resultado->salida);
+        $this->assertNotTrue(errores::$error);
+        errores::$error = false;
+        (new base_test())->del_org_empresa(link: $this->link);
+
+    }
+
+    public function test_modifica_generales(): void
+    {
+        errores::$error = false;
+        (new base_test())->del_org_empresa(link: $this->link);
+
+        $_GET['seccion'] = 'org_empresa';
+        $_GET['accion'] = 'modifica_generales';
+
+        $_SESSION['grupo_id'] = 2;
+        $_GET['session_id'] = '1';
+        $_SESSION['usuario_id'] = '2';
+
+        $alta_org_empresa = (new base_test())->alta_org_empresa(link: $this->link);
+
+        $_POST = array();
+        $_POST['rfc'] = 'BBB020202DEF';
+
+
+
+        $ctl = new controlador_org_empresa(link: $this->link, paths_conf: $this->paths_conf);
+        $ctl->registro_id = 1;
+        $resultado = $ctl->modifica_generales(header: false, ws: false);
+        $this->assertIsObject($resultado);
+        $this->assertNotTrue(errores::$error);
+        $this->assertEquals('exito',$resultado->salida);
+        $this->assertNotTrue(errores::$error);
+        errores::$error = false;
+        (new base_test())->del_org_empresa(link: $this->link);
+
+    }
+
+    /*
+    public function test_modifica_sucursal(): void
+    {
+        errores::$error = false;
+        (new base_test())->del_org_empresa(link: $this->link);
+
+        $_GET['seccion'] = 'org_empresa';
+        $_GET['accion'] = 'modifica_sucursal';
+
+        $_SESSION['grupo_id'] = 2;
+        $_GET['session_id'] = '1';
+        $_SESSION['usuario_id'] = '2';
+
+        $alta_org_empresa = (new base_test())->alta_org_empresa(link: $this->link);
+        $alta_org_sucursal = (new base_test())->alta_org_sucursal(link: $this->link);
+
+        $_GET = array();
+        $_GET['org_sucursal_id'] = 1;
+
+
+
+        $ctl = new controlador_org_empresa(link: $this->link, paths_conf: $this->paths_conf);
+        $ctl->registro_id = 1;
+        $resultado = $ctl->modifica_sucursal(header: false, ws: false);
+        $this->assertIsObject($resultado);
+        $this->assertNotTrue(errores::$error);
+        errores::$error = false;
+        (new base_test())->del_org_empresa(link: $this->link);
+
+    }*/
+
+    /*   public function test_modifica_registro_patronal(): void
+       {
+           errores::$error = false;
+           (new base_test())->del_im_registro_patronal(link: $this->link);
+
+           $_GET['seccion'] = 'org_empresa';
+           $_GET['accion'] = 'modifica_registro_patronal';
+
+           $_SESSION['grupo_id'] = 2;
+           $_GET['session_id'] = '1';
+           $_SESSION['usuario_id'] = '2';
+
+           $alta_im_registro_patronal = (new base_test())->alta_im_registro_patronal(link: $this->link);
+           var_dump($alta_im_registro_patronal);exit;
+
+           $ctl = new controlador_org_empresa(link: $this->link, paths_conf: $this->paths_conf);
+           $ctl->org_departamento_id = 1;
+           $resultado = $ctl->modifica_registro_patronal(header: false, ws: false);
+           var_dump($alta_im_registro_patronal);
+           var_dump($resultado);exit;
+           $this->assertIsObject($resultado);
+           $this->assertNotTrue(errores::$error);
+           errores::$error = false;
+           (new base_test())->del_im_registro_patronal(link: $this->link);
+
+       }*/
+
+
 
     /**
      */
