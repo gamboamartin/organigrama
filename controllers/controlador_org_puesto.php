@@ -60,7 +60,7 @@ class controlador_org_puesto extends system {
 
     public function modifica(bool $header, bool $ws = false): array|stdClass
     {
-        $r_modifica =  parent::modifica(header: false,aplica_form:  false);
+        $r_modifica =  parent::modifica(header: false, ws: false);
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al generar template',data:  $r_modifica, header: $header,ws:$ws);
         }

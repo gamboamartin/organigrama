@@ -67,7 +67,7 @@ class org_puesto_html extends html_controler {
 
     public function genera_inputs_alta(controlador_org_puesto $controler, modelo $modelo, PDO $link, array $keys_selects = array()): array|stdClass
     {
-        $inputs = $this->init_alta2(row_upd: $controler->row_upd,modelo: $controler->modelo,link: $link,keys_selects: $keys_selects);
+        $inputs = $this->init_alta2(row_upd: $controler->row_upd,modelo: $controler->modelo,keys_selects: $keys_selects);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar inputs',data:  $inputs);
 
