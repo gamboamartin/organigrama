@@ -181,6 +181,24 @@ class limpieza{
         }
 
         if(!isset($registro['dp_calle_pertenece_id']) || (int)$registro['dp_calle_pertenece_id'] === -1){
+
+            $existe = (new dp_calle_pertenece(link: $link))->existe_predeterminado();
+            if(errores::$error){
+                return $this->error->error(
+                    mensaje: 'Error al validar si existe predeterminado',data:  $existe);
+            }
+
+            if(!$existe){
+                $dp_calle_pertenece_pred['predeterminado'] = 'activo';
+                $dp_calle_pertenece_pred['codigo'] = 'PRED';
+                $r_dp_calle_pertenece_pred = (new dp_calle_pertenece(link: $link))->alta_registro(registro: $dp_calle_pertenece_pred);
+                if(errores::$error){
+                    return $this->error->error(
+                        mensaje: 'Error al insertar prederminado',data:  $r_dp_calle_pertenece_pred);
+                }
+            }
+
+
             $dp_calle_pertenece_id = (new dp_calle_pertenece(link: $link))->id_predeterminado();
             if(errores::$error){
                 return $this->error->error(
