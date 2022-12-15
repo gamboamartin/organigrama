@@ -138,6 +138,11 @@ class controlador_org_sucursal extends empresas {
         $this->keys_selects['dp_calle_pertenece_id']->con_registros = true;
         $this->keys_selects['dp_calle_pertenece_id']->filtro = array('dp_colonia_postal.id'=>$this->registro['dp_colonia_postal_id']);
 
+        $this->keys_selects['org_empresa_id']->id_selected = $this->registro['org_empresa_id'];
+        $this->keys_selects['org_empresa_id']->con_registros = true;
+        $this->keys_selects['org_empresa_id']->disabled = true;
+        $this->keys_selects['org_empresa_id']->filtro = array('org_empresa.id'=>$this->registro['org_empresa_id']);
+
         $inputs = $this->genera_inputs(keys_selects:  $this->keys_selects);
         if(errores::$error){
             return $this->errores->error(mensaje: 'Error al inicializar inputs',data:  $inputs);

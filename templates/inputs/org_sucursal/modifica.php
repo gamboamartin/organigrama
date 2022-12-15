@@ -1,5 +1,6 @@
 <?php /** @var gamboamartin\organigrama\controllers\controlador_org_sucursal $controlador  controlador en ejecucion */ ?>
 <?php use config\views; ?>
+<?php echo $controlador->inputs->org_empresa_id; ?>
 <?php echo $controlador->inputs->id; ?>
 <?php echo $controlador->inputs->codigo; ?>
 <?php echo $controlador->inputs->org_tipo_sucursal_id; ?>
