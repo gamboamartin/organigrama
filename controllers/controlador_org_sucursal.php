@@ -10,6 +10,7 @@ namespace gamboamartin\organigrama\controllers;
 
 use gamboamartin\empleado\models\em_empleado;
 use gamboamartin\errores\errores;
+use gamboamartin\facturacion\controllers\controlador_fc_csd;
 use gamboamartin\im_registro_patronal\controllers\controlador_im_registro_patronal;
 use gamboamartin\organigrama\controllers\base\empresas;
 use gamboamartin\organigrama\links\secciones\link_org_sucursal;
@@ -62,12 +63,12 @@ class controlador_org_sucursal extends empresas {
 
         $this->titulo_lista = 'Sucursales';
 
-        $links = $this->inicializa_links();
+        /*$links = $this->inicializa_links();
         if(errores::$error){
             $error = $this->errores->error(mensaje: 'Error al inicializar links',data:  $links);
             print_r($error);
             die('Error');
-        }
+        }*/
 
         $propiedades = $this->inicializa_propiedades();
         if(errores::$error){
@@ -196,6 +197,7 @@ class controlador_org_sucursal extends empresas {
         if(errores::$error){
             return $this->errores->error(mensaje: 'Error al generar links para sucursal',data:  $this->obj_link);
         }
+
 
         $link = $this->obj_link->get_link('dp_pais',"alta");
         if(errores::$error){

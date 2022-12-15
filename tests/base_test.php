@@ -183,24 +183,9 @@ class base_test{
         return $del;
     }
 
-    public function del_com_cliente(PDO $link): array
-    {
-
-        $del = (new \gamboamartin\comercial\test\base_test())->del_com_cliente($link);
-        if(errores::$error){
-            return (new errores())->error(mensaje: 'Error al eliminar ', data: $del);
-        }
-
-        return $del;
-    }
-
     public function del_dp_calle_pertenece(PDO $link): array
     {
-
-        $del = (new base_test())->del_com_cliente($link);
-        if(errores::$error){
-            return (new errores())->error('Error al eliminar', $del);
-        }
+        
 
         $del = (new base_test())->del_org_empresa($link);
         if(errores::$error){
@@ -215,33 +200,9 @@ class base_test{
         return $del;
     }
 
-    public function del_fc_csd(PDO $link): array
-    {
 
-        $del = (new base_test())->del_im_registro_patronal($link);
-        if(errores::$error){
-            $error = (new errores())->error('Error al eliminar', $del);
-            print_r($error);
-            exit;
-        }
-        $del = (new \gamboamartin\facturacion\tests\base_test())->del_fc_csd($link);
-        if(errores::$error){
-            return (new errores())->error(mensaje: 'Error al eliminar ', data: $del);
-        }
 
-        return $del;
-    }
 
-    public function del_im_registro_patronal(PDO $link): array
-    {
-
-        $del = (new \gamboamartin\im_registro_patronal\test\base_test())->del_im_registro_patronal($link);
-        if(errores::$error){
-            return (new errores())->error(mensaje: 'Error al eliminar ', data: $del);
-        }
-
-        return $del;
-    }
 
     public function del_org_clasificacion_dep(PDO $link): array
     {
@@ -327,10 +288,7 @@ class base_test{
     public function del_org_sucursal(PDO $link): array
     {
 
-        $del = $this->del_fc_csd($link);
-        if(errores::$error){
-            return (new errores())->error(mensaje: 'Error al eliminar ', data: $del);
-        }
+
 
         $del = $this->del($link, 'gamboamartin\\organigrama\\models\\org_sucursal');
         if(errores::$error){

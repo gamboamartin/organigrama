@@ -104,8 +104,9 @@ class controlador_org_empresa extends empresas {
 
         $this->controlador_org_departamento = new controlador_org_departamento(
             link: $this->link, paths_conf: $paths_conf);
-        $this->controlador_im_registro_patronal = new controlador_im_registro_patronal(
-            link: $this->link, paths_conf: $paths_conf);
+
+        /*$this->controlador_im_registro_patronal = new controlador_im_registro_patronal(
+            link: $this->link, paths_conf: $paths_conf);*/
 
         $link_org_sucursal_alta_bd = $obj_link->link_org_sucursal_alta_bd(link: $link,org_empresa_id: $this->registro_id);
         if (errores::$error) {

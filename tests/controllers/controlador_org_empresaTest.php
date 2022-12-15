@@ -44,6 +44,12 @@ class controlador_org_empresaTest extends test {
         $_POST['codigo'] = 2;
 
         $alta_org_empresa = (new base_test())->alta_org_empresa(link: $this->link);
+        if(errores::$error){
+            $error = (new errores())->error('Error al insertar', $alta_org_empresa);
+            print_r($error);
+            exit;
+        }
+
 
         $ctl = new controlador_org_empresa(link: $this->link, paths_conf: $this->paths_conf);
         $ctl->registro_id = 1;
