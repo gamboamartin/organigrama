@@ -14,6 +14,7 @@ use gamboamartin\system\_ctl_parent_sin_codigo;
 use gamboamartin\system\links_menu;
 
 use gamboamartin\template\html;
+use html\cat_sat_regimen_fiscal_html;
 use html\org_empresa_html;
 use html\org_tipo_empresa_html;
 use PDO;
@@ -90,6 +91,13 @@ class controlador_org_tipo_empresa extends _ctl_parent_sin_codigo {
             return $this->errores->error(mensaje: 'Error al obtener select_org_tipo_empresa_id',data:  $select_org_tipo_empresa_id);
         }
 
+        $select_cat_sat_regimen_fiscal_id = (new cat_sat_regimen_fiscal_html(html: $this->html_base))->select_cat_sat_regimen_fiscal_id(
+            cols:12,con_registros: true,id_selected: -1,link:  $this->link);
+
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al obtener select_org_tipo_empresa_id',data:  $select_org_tipo_empresa_id);
+        }
+
         $org_empresa_rfc = (new org_empresa_html(html: $this->html_base))->input_rfc(cols: 12,row_upd: new stdClass() ,value_vacio:  false);
         if(errores::$error){
             return $this->errores->error(mensaje: 'Error al obtener org_empresa_rfc',data:  $org_empresa_rfc);
@@ -121,6 +129,7 @@ class controlador_org_tipo_empresa extends _ctl_parent_sin_codigo {
 
         $this->inputs = new stdClass();
         $this->inputs->select = new stdClass();
+        $this->inputs->select->cat_sat_regimen_fiscal_id = $select_cat_sat_regimen_fiscal_id;
         $this->inputs->select->org_tipo_empresa_id = $select_org_tipo_empresa_id;
         $this->inputs->org_empresa_rfc = $org_empresa_rfc;
         $this->inputs->org_empresa_razon_social = $org_empresa_razon_social;
