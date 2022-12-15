@@ -185,7 +185,7 @@ class base_test{
 
     public function del_dp_calle_pertenece(PDO $link): array
     {
-        
+
 
         $del = (new base_test())->del_org_empresa($link);
         if(errores::$error){

@@ -27,8 +27,4 @@
 
 <?php include (new views())->ruta_templates.'botons/submit/alta_bd_otro.php';?>
 
-<div class="control-group btn-alta col-12">
-    <div class="controls">
-        <?php include 'templates/botons/org_empresa_alta.php';?>
-    </div>
-</div>
+
