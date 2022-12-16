@@ -54,6 +54,7 @@ class controlador_org_empresaTest extends test {
         $ctl = new controlador_org_empresa(link: $this->link, paths_conf: $this->paths_conf);
         $ctl->registro_id = 1;
         $resultado = $ctl->alta_sucursal_bd(header: false, ws: false);
+
         $this->assertIsObject($resultado);
         $this->assertNotTrue(errores::$error);
         $this->assertEquals('Registro insertado con éxito', $resultado->mensaje);
@@ -204,7 +205,17 @@ class controlador_org_empresaTest extends test {
         (new base_test())->del_org_departamento(link: $this->link);
 
         $alta_org_departamento = (new base_test())->alta_org_departamento(link: $this->link, id: 1, org_clasificacion_dep_id: 1);
+
+        if(errores::$error){
+            $error = (new errores())->error('Error al insertar', $alta_org_departamento);
+            print_r($error);
+        }
+
         $alta_org_empresa = (new base_test())->alta_org_empresa(link: $this->link);
+        if(errores::$error){
+            $error = (new errores())->error('Error al insertar', $alta_org_empresa);
+            print_r($error);
+        }
 
         $ctl = new controlador_org_empresa(link: $this->link, paths_conf: $this->paths_conf);
         $ctl->org_departamento_id = 1;

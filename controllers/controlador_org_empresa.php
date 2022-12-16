@@ -65,7 +65,6 @@ class controlador_org_empresa extends empresas {
     public bool $muestra_btn_upd = true;
     public array $keys_selects = array();
     public controlador_org_departamento $controlador_org_departamento;
-    public controlador_im_registro_patronal $controlador_im_registro_patronal;
 
     public function __construct(PDO $link, html $html = new \gamboamartin\template_1\html(),
                                 stdClass $paths_conf = new stdClass())

@@ -100,6 +100,13 @@ class org_sucursal extends modelo{
         }
 
         if(!isset($this->registro['dp_calle_pertenece_id']) || (int)$this->registro['dp_calle_pertenece_id'] === -1){
+
+            $inserta_predeterminado = (new dp_calle_pertenece(link: $this->link))->inserta_predeterminado();
+            if(errores::$error){
+                return $this->error->error(
+                    mensaje: 'Error al  inserta_predeterminado',data:  $inserta_predeterminado);
+            }
+
             $dp_calle_pertenece_id = (new dp_calle_pertenece(link: $this->link))->id_predeterminado();
             if(errores::$error){
                 return $this->error->error(mensaje: 'Error al obtener dp_calle_pertenece_default',data:  $dp_calle_pertenece_id);

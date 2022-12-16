@@ -225,6 +225,15 @@ class limpieza{
 
         if(!isset($registro['cat_sat_regimen_fiscal_id']) ||
             (int)$registro['cat_sat_regimen_fiscal_id'] === -1){
+
+
+            $inserta_predeterminado = (new cat_sat_regimen_fiscal(link: $link))->inserta_predeterminado();
+            if(errores::$error){
+                return $this->error->error(
+                    mensaje: 'Error al  inserta_predeterminado',data:  $inserta_predeterminado);
+            }
+
+
             $cat_sat_regimen_fiscal_id = (new cat_sat_regimen_fiscal(link: $link))->id_predeterminado();
             if(errores::$error){
                 return $this->error->error(

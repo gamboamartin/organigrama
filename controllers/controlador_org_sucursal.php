@@ -43,7 +43,7 @@ class controlador_org_sucursal extends empresas {
         $obj_link = new link_org_sucursal(link: $link, registro_id: $this->registro_id);
 
         $columns["org_sucursal_id"]["titulo"] = "Id";
-        $columns["org_sucursal_codigo"]["titulo"] = "Cogido";
+        $columns["org_sucursal_codigo"]["titulo"] = "Codigo";
         $columns["org_sucursal_descripcion"]["titulo"] = "Descripcion";
         $columns["org_tipo_sucursal_descripcion"]["titulo"] = "Tipo Sucursal";
 

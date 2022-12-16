@@ -7,6 +7,7 @@ use gamboamartin\organigrama\models\org_departamento;
 use gamboamartin\organigrama\models\org_empresa;
 use gamboamartin\organigrama\models\org_puesto;
 use gamboamartin\organigrama\models\org_sucursal;
+use gamboamartin\organigrama\models\org_tipo_puesto;
 use gamboamartin\organigrama\models\org_tipo_sucursal;
 use PDO;
 
@@ -88,7 +89,8 @@ class base_test{
         return $alta;
     }
 
-    public function alta_org_puesto(PDO $link, int $org_departamento_id = 1, string $predeterminado = 'inactivo'): array|\stdClass
+    public function alta_org_puesto(PDO $link, int $org_departamento_id = 1, int $org_tipo_puesto_id = 1,
+                                    string $predeterminado = 'inactivo'): array|\stdClass
     {
 
 
@@ -103,12 +105,23 @@ class base_test{
             }
         }
 
+        $existe = (new org_tipo_puesto($link))->existe_by_id(registro_id: $org_tipo_puesto_id);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al validar si existe ', data: $existe);
+        }
+        if(!$existe){
+            $alta = $this->alta_org_tipo_puesto(link: $link, id: $org_tipo_puesto_id);
+            if(errores::$error){
+                return (new errores())->error(mensaje: 'Error al insertar ', data: $alta);
+            }
+        }
+
 
         $registro = array();
         $registro['id'] = 1;
         $registro['codigo'] = 1;
         $registro['descripcion'] = 1;
-        $registro['org_tipo_puesto_id'] = 1;
+        $registro['org_tipo_puesto_id'] = $org_tipo_puesto_id;
         $registro['org_departamento_id'] = $org_departamento_id;
         $registro['predeterminado'] = $predeterminado;
 
@@ -151,6 +164,23 @@ class base_test{
         return $alta;
     }
 
+    public function alta_org_tipo_puesto(PDO $link, int $id = 1): array|\stdClass
+    {
+
+
+        $registro = array();
+        $registro['id'] = $id;
+        $registro['codigo'] = 1;
+        $registro['descripcion'] = 1;
+
+
+        $alta = (new org_tipo_puesto($link))->alta_registro($registro);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al insertar', data: $alta);
+        }
+        return $alta;
+    }
+
     public function alta_org_tipo_sucursal(PDO $link): array|\stdClass
     {
 
@@ -167,6 +197,8 @@ class base_test{
         }
         return $alta;
     }
+
+
 
 
 
