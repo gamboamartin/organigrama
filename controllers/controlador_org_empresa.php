@@ -1639,6 +1639,13 @@ class controlador_org_empresa extends empresas {
                 header: $header,ws:$ws);
         }
 
+        $serie = (new org_sucursal_html($this->html_base))->input_serie(cols: 6, row_upd: new stdClass(), value_vacio: false);
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al generar serie',data:  $serie,
+                header: $header,ws:$ws);
+        }
+        $this->inputs->serie = $serie;
+
         $select = $this->select_org_empresa_id();
 
         if(errores::$error){
