@@ -85,7 +85,7 @@ class controlador_org_empresaTest extends test {
         $this->assertIsObject($resultado);
         $this->assertNotTrue(errores::$error);
         $this->assertEquals(1,$resultado->org_empresa_id);
-        $this->assertEquals('./index.php?seccion=org_empresa&accion=sucursales&registro_id=1&session_id=1',$resultado->link_sucursales);
+        $this->assertEquals('./index.php?seccion=org_empresa&accion=sucursales&registro_id=1&adm_menu_id=-1&session_id=1',$resultado->link_sucursales);
         $this->assertEquals('info',$resultado->link_sucursales_style);
         errores::$error = false;
     }
