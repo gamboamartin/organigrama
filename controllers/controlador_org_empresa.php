@@ -57,6 +57,7 @@ class controlador_org_empresa extends empresas {
     public string $rfc = '';
     public int $org_empresa_id = -1;
     public int $org_sucursal_id = -1;
+    public int $org_tipo_sucursal_id = -1;
     public int $org_departamento_id = -1;
     public int $im_registro_patronal_id = -1;
     public stdClass $sucursales ;
@@ -942,8 +943,8 @@ class controlador_org_empresa extends empresas {
         }
 
         $sucursal_serie_disabled = $params->sucursal_serie->disabled ?? true;
-        $org_sucursal_serie = $html->input_serie(cols: 4,row_upd:  $org_sucursal, value_vacio: false,
-            disabled: $sucursal_serie_disabled);
+        $org_sucursal_serie = $html->input_serie(cols: 6, row_upd:  $org_sucursal,
+            value_vacio: false, disabled: $sucursal_serie_disabled);
         if(errores::$error){
             return $this->errores->error(mensaje: 'Error al obtener serie',data:  $org_sucursal_serie);
         }
@@ -952,21 +953,21 @@ class controlador_org_empresa extends empresas {
         $org_sucursal_telefono_1 = $html->telefono_1(cols: 4,row_upd:  $org_sucursal, value_vacio: false,
             disabled: $sucursal_telefono_1_disabled);
         if(errores::$error){
-            return $this->errores->error(mensaje: 'Error al obtener serie',data:  $org_sucursal_telefono_1);
+            return $this->errores->error(mensaje: 'Error al obtener telefono_1',data:  $org_sucursal_telefono_1);
         }
 
         $sucursal_telefono_2_disabled = $params->sucursal_telefono_2->disabled ?? true;
         $org_sucursal_telefono_2 = $html->telefono_2(cols: 4,row_upd:  $org_sucursal, value_vacio: false,
             disabled: $sucursal_telefono_2_disabled);
         if(errores::$error){
-            return $this->errores->error(mensaje: 'Error al obtener serie',data:  $org_sucursal_telefono_1);
+            return $this->errores->error(mensaje: 'Error al obtener telefono_2',data:  $org_sucursal_telefono_2);
         }
 
         $sucursal_telefono_3_disabled = $params->sucursal_telefono_3->disabled ?? true;
         $org_sucursal_telefono_3 = $html->telefono_3(cols: 4,row_upd:  $org_sucursal, value_vacio: false,
             disabled: $sucursal_telefono_3_disabled);
         if(errores::$error){
-            return $this->errores->error(mensaje: 'Error al obtener serie',data:  $org_sucursal_telefono_1);
+            return $this->errores->error(mensaje: 'Error al obtener telefono_3',data:  $org_sucursal_telefono_3);
         }
 
 
@@ -1597,6 +1598,18 @@ class controlador_org_empresa extends empresas {
         return $select;
     }
 
+    public function select_org_tipo_sucursal_id(): array|string
+    {
+        $select = (new org_tipo_sucursal_html(html: $this->html_base))->select_org_tipo_sucursal_id(cols:12,con_registros: true,
+            id_selected: $this->registro_id,link:  $this->link);
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al generar select datos',data:  $select);
+        }
+        $this->inputs->select->org_tipo_sucursal_id = $select;
+
+        return $select;
+    }
+
     /**
      * Vista que integra la empresa y las sucursales asignadas a esa empresa
      * @param bool $header
@@ -1609,13 +1622,16 @@ class controlador_org_empresa extends empresas {
         $params = new stdClass();
 
         $params->codigo = new stdClass();
-        $params->codigo->cols = 4;
+        $params->codigo->cols = 6;
 
         $params->codigo_bis = new stdClass();
-        $params->codigo_bis->cols = 4;
+        $params->codigo_bis->cols = 6;
 
         $params->fecha_inicio_operaciones = new stdClass();
-        $params->fecha_inicio_operaciones->cols = 4;
+        $params->fecha_inicio_operaciones->cols = 6;
+
+        $params->serie = new stdClass();
+        $params->serie->cols = 6;
 
         $base = $this->base(params: $params);
         if(errores::$error){
@@ -1625,6 +1641,12 @@ class controlador_org_empresa extends empresas {
 
         $select = $this->select_org_empresa_id();
 
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al generar select datos',data:  $select,
+                header: $header,ws:$ws);
+        }
+
+        $select = $this->select_org_tipo_sucursal_id();
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al generar select datos',data:  $select,
                 header: $header,ws:$ws);
