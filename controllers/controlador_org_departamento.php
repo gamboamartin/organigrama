@@ -71,7 +71,7 @@ class controlador_org_departamento extends _ctl_parent_sin_codigo {
         }
 
         $keys_selects['descripcion'] = new stdClass();
-        $keys_selects['descripcion']->cols = 6;
+        $keys_selects['descripcion']->cols = 12;
 
         $inputs = $this->inputs(keys_selects: $keys_selects);
         if(errores::$error){
@@ -168,7 +168,7 @@ class controlador_org_departamento extends _ctl_parent_sin_codigo {
         }
 
         $keys_selects['descripcion'] = new stdClass();
-        $keys_selects['descripcion']->cols = 6;
+        $keys_selects['descripcion']->cols = 12;
 
         $keys_selects['codigo'] = new stdClass();
         $keys_selects['codigo']->disabled = true;
