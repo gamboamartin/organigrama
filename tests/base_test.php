@@ -1,12 +1,14 @@
 <?php
 namespace gamboamartin\organigrama\tests;
 use base\orm\modelo_base;
+use gamboamartin\direccion_postal\models\dp_calle_pertenece;
 use gamboamartin\errores\errores;
 use gamboamartin\organigrama\models\org_clasificacion_dep;
 use gamboamartin\organigrama\models\org_departamento;
 use gamboamartin\organigrama\models\org_empresa;
 use gamboamartin\organigrama\models\org_puesto;
 use gamboamartin\organigrama\models\org_sucursal;
+use gamboamartin\organigrama\models\org_tipo_empresa;
 use gamboamartin\organigrama\models\org_tipo_puesto;
 use gamboamartin\organigrama\models\org_tipo_sucursal;
 use PDO;
@@ -69,8 +71,33 @@ class base_test{
     }
 
 
-    public function alta_org_empresa(PDO $link, int $dp_calle_pertenece_id = 1, int $id = 1): array|\stdClass
+    public function alta_org_empresa(PDO $link, int $dp_calle_pertenece_id = 1, int $id = 1,
+                                     int $org_tipo_empresa_id = 1): array|\stdClass
     {
+
+
+        $existe = (new dp_calle_pertenece($link))->existe_by_id(registro_id: $dp_calle_pertenece_id);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al validar si existe ', data: $existe);
+        }
+        if(!$existe){
+            $alta = $this->alta_dp_calle_pertenece(link: $link, id: $dp_calle_pertenece_id);
+            if(errores::$error){
+                return (new errores())->error(mensaje: 'Error al insertar ', data: $alta);
+            }
+        }
+
+        $existe = (new org_tipo_empresa($link))->existe_by_id(registro_id: $org_tipo_empresa_id);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al validar si existe ', data: $existe);
+        }
+        if(!$existe){
+            $alta = $this->alta_org_empresa(link: $link, id: $org_tipo_empresa_id);
+            if(errores::$error){
+                return (new errores())->error(mensaje: 'Error al insertar ', data: $alta);
+            }
+        }
+
         $registro = array();
         $registro['id'] = $id;
         $registro['codigo'] = 1;
@@ -78,7 +105,7 @@ class base_test{
         $registro['razon_social'] = 1;
         $registro['rfc'] = 'AAA010101ABC';
         $registro['nombre_comercial'] = 1;
-        $registro['org_tipo_empresa_id'] = 1;
+        $registro['org_tipo_empresa_id'] = $org_tipo_empresa_id;
         $registro['dp_calle_pertenece_id'] = $dp_calle_pertenece_id;
 
 
