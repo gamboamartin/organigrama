@@ -137,6 +137,20 @@ class org_sucursalTest extends test {
 
     }
 
+    public function test_es_matriz(): void
+    {
+        errores::$error = false;
+
+        $modelo = new org_sucursal(link: $this->link);
+        //$lim = new liberator($lim);
+
+        $org_sucursal_id = 1;
+        $resultado = $modelo->es_matriz($org_sucursal_id);
+        $this->assertNotTrue($resultado);
+        $this->assertNotTrue(errores::$error);
+        errores::$error = false;
+    }
+
         /**
      */
     public function test_sucursales(): void

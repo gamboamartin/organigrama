@@ -195,9 +195,13 @@ class org_sucursal extends modelo{
      * Verifica si una sucursal es matriz
      * @param int $org_sucursal_id Identificador de sucursal
      * @return bool|array
+     * @version 2.4.2
      */
     public function es_matriz(int $org_sucursal_id): bool|array
     {
+        if($org_sucursal_id <=0 ){
+            return $this->error->error(mensaje: 'Error al org_sucursal_id debe ser mayor a 0', data: $org_sucursal_id);
+        }
         $filtro = array();
         $filtro['org_sucursal.id'] = $org_sucursal_id;
         $filtro['org_tipo_sucursal.id'] = (new generales())->tipo_sucursal_matriz_id;
