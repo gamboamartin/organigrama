@@ -101,7 +101,7 @@ class org_puesto_htmlTest extends test {
 
         $this->assertIsString($resultado);
         $this->assertNotTrue(errores::$error);
-        $this->assertStringContainsStringIgnoringCase("<option value='1' selected >11", $resultado);
+        $this->assertStringContainsStringIgnoringCase("label class='control-label' for='org_puesto_id'>Puesto</label><div class=", $resultado);
         errores::$error = false;
     }
 
