@@ -174,7 +174,7 @@ class org_sucursal extends modelo{
         return $data;
     }
 
-    public function elimina_bd(int $id): array
+    public function elimina_bd(int $id): array|stdClass
     {
         $es_matriz = $this->es_matriz(org_sucursal_id: $id);
         if(errores::$error){
