@@ -230,7 +230,7 @@ class limpieza{
             $inserta_predeterminado = (new cat_sat_regimen_fiscal(link: $link))->inserta_predeterminado();
             if(errores::$error){
                 return $this->error->error(
-                    mensaje: 'Error al  inserta_predeterminado',data:  $inserta_predeterminado);
+                    mensaje: 'Error al  inserta_predeterminado cat_sat_regimen_fiscal',data:  $inserta_predeterminado);
             }
 
 
