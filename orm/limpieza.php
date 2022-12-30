@@ -38,6 +38,24 @@ class limpieza{
         return $row_destino;
     }
 
+    private function cat_sat_regimen_fiscal_pred(PDO $link, array $registro){
+        $inserta_predeterminado = (new cat_sat_regimen_fiscal(link: $link))->inserta_predeterminado();
+        if(errores::$error){
+            return $this->error->error(
+                mensaje: 'Error al  inserta_predeterminado cat_sat_regimen_fiscal',data:  $inserta_predeterminado);
+        }
+
+
+        $cat_sat_regimen_fiscal_id = (new cat_sat_regimen_fiscal(link: $link))->id_predeterminado();
+        if(errores::$error){
+            return $this->error->error(
+                mensaje: 'Error al obtener cat_sat_regimen_fiscal_default',data:  $cat_sat_regimen_fiscal_id);
+        }
+        $registro['cat_sat_regimen_fiscal_id'] = $cat_sat_regimen_fiscal_id;
+
+        return $registro;
+    }
+
     /**
      * Genera la descripcion de una sucursal
      * @param array $dp_calle_pertenece registro de tipo calle
@@ -70,6 +88,40 @@ class limpieza{
         $descripcion .= ' '.$registro['codigo'];
 
         return $descripcion;
+    }
+
+    private function dp_calle_pertenece_id_pred(PDO $link){
+        $inserta_predeterminado = (new dp_calle_pertenece(link: $link))->inserta_predeterminado();
+        if(errores::$error){
+            return $this->error->error(
+                mensaje: 'Error al  inserta_predeterminado dp_calle_pertenece',data:  $inserta_predeterminado);
+        }
+
+
+        $dp_calle_pertenece_id = (new dp_calle_pertenece(link: $link))->id_predeterminado();
+        if(errores::$error){
+            return $this->error->error(
+                mensaje: 'Error al obtener dp_calle_pertenece_default',data:  $dp_calle_pertenece_id);
+        }
+
+        return $dp_calle_pertenece_id;
+    }
+
+    private function dp_calle_pertenece_pred(PDO $link){
+        $dp_calle_pertenece_id = $this->dp_calle_pertenece_id_pred(link: $link);
+        if(errores::$error){
+            return $this->error->error(
+                mensaje: 'Error al obtener dp_calle_pertenece_default',data:  $dp_calle_pertenece_id);
+        }
+
+        $dp_calle_pertenece = (new dp_calle_pertenece(link: $link))->registro(
+            registro_id: $dp_calle_pertenece_id, retorno_obj: true);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al obtener dp_calle_pertenece',data:  $dp_calle_pertenece);
+        }
+
+        return $dp_calle_pertenece;
+
     }
 
     /**
@@ -111,136 +163,18 @@ class limpieza{
      * @verfuncion 0.1.0
      * @author mgamboa
      * @fecha 2022-07-26 09:58
-     * comentado por IA
      */
-    /*
-    private function init_data_base_org_empresa(PDO $link, array $registro): array
+    PUBLIC function init_data_base_org_empresa(PDO $link, array $registro): array
     {
-        if(!isset($registro['descripcion'])){
-            $registro['descripcion'] = $registro['razon_social'];
+
+        $registro = $this->row_base_alta(registro: $registro);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al asigna data base',data:  $registro);
         }
-        if(!isset($this->registro['codigo_bis'])){
-            $registro['codigo_bis'] = $registro['rfc'];
-        }
-        if(!isset($this->registro['descripcion_select'])){
-            $registro['descripcion_select'] = $registro['descripcion'];
-        }
-        if(!isset($this->registro['alias'])){
-            $registro['alias'] = $registro['descripcion'];
-        }
-
-        if(!isset($this->registro['dp_calle_pertenece_id']) || (int)$this->registro['dp_calle_pertenece_id'] === -1){
-            $dp_calle_pertenece_id = (new dp_calle_pertenece(link: $link))->id_predeterminado();
-            if(errores::$error){
-                return $this->error->error(
-                    mensaje: 'Error al obtener dp_calle_pertenece_default',data:  $dp_calle_pertenece_id);
-            }
-            $registro['dp_calle_pertenece_id'] = $dp_calle_pertenece_id;
-
-        }
-
-        if(!isset($this->registro['cat_sat_regimen_fiscal_id']) ||
-            (int)$this->registro['cat_sat_regimen_fiscal_id'] === -1){
-            $cat_sat_regimen_fiscal_id = (new cat_sat_regimen_fiscal(link: $link))->id_predeterminado();
-            if(errores::$error){
-                return $this->error->error(
-                    mensaje: 'Error al obtener cat_sat_regimen_fiscal_default',data:  $cat_sat_regimen_fiscal_id);
-            }
-            $registro['cat_sat_regimen_fiscal_id'] = $cat_sat_regimen_fiscal_id;
-
-        }
-
-        return $registro;
-    }
-    */
-
-
-    /**
-     * Inicializa la descripcion y el codigo de una empresa en alta bd
-     * @param PDO $link
-     * @param array $registro Registro en ejecucion
-     * @return array
-     * @version 0.56.14
-     * @verfuncion 0.1.0
-     * @author mgamboa
-     * @fecha 2022-07-26 09:58
-     */
-    private function init_data_base_org_empresa(PDO $link, array $registro): array
-    {
-        if(!isset($registro['descripcion'])){
-            $registro['descripcion'] = $registro['razon_social'];
-        }
-        if(!isset($registro['codigo_bis'])){
-            $registro['codigo_bis'] = $registro['rfc'];
-        }
-        if(!isset($registro['descripcion_select'])){
-            $registro['descripcion_select'] = $registro['descripcion'];
-        }
-        if(!isset($registro['alias'])){
-            $registro['alias'] = $registro['descripcion'];
-        }
-
-        if(!isset($registro['dp_calle_pertenece_id']) || (int)$registro['dp_calle_pertenece_id'] === -1){
-
-            $existe = (new dp_calle_pertenece(link: $link))->existe_predeterminado();
-            if(errores::$error){
-                return $this->error->error(
-                    mensaje: 'Error al validar si existe predeterminado',data:  $existe);
-            }
-
-            if(!$existe){
-                $dp_calle_pertenece_pred['predeterminado'] = 'activo';
-                $dp_calle_pertenece_pred['codigo'] = 'PRED';
-                $r_dp_calle_pertenece_pred = (new dp_calle_pertenece(link: $link))->alta_registro(registro: $dp_calle_pertenece_pred);
-                if(errores::$error){
-                    return $this->error->error(
-                        mensaje: 'Error al insertar prederminado',data:  $r_dp_calle_pertenece_pred);
-                }
-            }
-
-
-            $dp_calle_pertenece_id = (new dp_calle_pertenece(link: $link))->id_predeterminado();
-            if(errores::$error){
-                return $this->error->error(
-                    mensaje: 'Error al obtener dp_calle_pertenece_default',data:  $dp_calle_pertenece_id);
-            }
-
-            $dp_calle_pertenece = (new dp_calle_pertenece(link: $link))->registro(
-                registro_id: $dp_calle_pertenece_id, retorno_obj: true);
-            if(errores::$error){
-                return $this->error->error(mensaje: 'Error al obtener dp_calle_pertenece',data:  $dp_calle_pertenece);
-            }
-
-            $keys = array('dp_colonia_postal_id','dp_calle_id','dp_cp_id','dp_colonia_id','dp_municipio_id',
-                'dp_estado_id','dp_pais_id');
-            $valida = $this->validacion->valida_ids(keys: $keys, registro: $dp_calle_pertenece);
-            if(errores::$error){
-                return $this->error->error(
-                    mensaje: 'Error al obtener dp_calle_pertenece_default',data:  $valida);
-            }
-
-            $registro['dp_calle_pertenece_id'] = $dp_calle_pertenece_id;
-
-        }
-
-        if(!isset($registro['cat_sat_regimen_fiscal_id']) ||
-            (int)$registro['cat_sat_regimen_fiscal_id'] === -1){
-
-
-            $inserta_predeterminado = (new cat_sat_regimen_fiscal(link: $link))->inserta_predeterminado();
-            if(errores::$error){
-                return $this->error->error(
-                    mensaje: 'Error al  inserta_predeterminado cat_sat_regimen_fiscal',data:  $inserta_predeterminado);
-            }
-
-
-            $cat_sat_regimen_fiscal_id = (new cat_sat_regimen_fiscal(link: $link))->id_predeterminado();
-            if(errores::$error){
-                return $this->error->error(
-                    mensaje: 'Error al obtener cat_sat_regimen_fiscal_default',data:  $cat_sat_regimen_fiscal_id);
-            }
-            $registro['cat_sat_regimen_fiscal_id'] = $cat_sat_regimen_fiscal_id;
-
+        $registro = $this->predeterminados(link: $link,registro:  $registro);
+        if(errores::$error){
+            return $this->error->error(
+                mensaje: 'Error al asignar predeterminados',data:  $registro);
         }
 
         return $registro;
@@ -471,8 +405,6 @@ class limpieza{
         return $registro;
     }
 
-
-
     /**
      * Limpia la llaves foraneas de la empresa a dar de alta
      * @param array $registro Registro en ejecucion
@@ -552,6 +484,64 @@ class limpieza{
 
 
         return $org_sucursal_ins;
+    }
+
+    private function predeterminados(PDO $link, array $registro){
+        if(!isset($registro['dp_calle_pertenece_id']) || (int)$registro['dp_calle_pertenece_id'] === -1){
+
+            $registro = $this->row_dp_calle_pertenece_pred(link: $link, registro: $registro);
+            if(errores::$error){
+                return $this->error->error(mensaje: 'Error al obtener dp_calle_pertenece',data:  $registro);
+            }
+
+        }
+
+        if(!isset($registro['cat_sat_regimen_fiscal_id']) || (int)$registro['cat_sat_regimen_fiscal_id'] === -1){
+
+            $registro = $this->cat_sat_regimen_fiscal_pred(link:$link, registro: $registro);
+            if(errores::$error){
+                return $this->error->error(
+                    mensaje: 'Error al asignar cat_sat_regimen_fiscal_predeterminado',data:  $registro);
+            }
+
+        }
+        return $registro;
+    }
+
+    private function row_base_alta(array $registro): array
+    {
+        if(!isset($registro['descripcion'])){
+            $registro['descripcion'] = $registro['razon_social'];
+        }
+        if(!isset($registro['codigo_bis'])){
+            $registro['codigo_bis'] = $registro['rfc'];
+        }
+        if(!isset($registro['descripcion_select'])){
+            $registro['descripcion_select'] = $registro['descripcion'];
+        }
+        if(!isset($registro['alias'])){
+            $registro['alias'] = $registro['descripcion'];
+        }
+
+        return $registro;
+    }
+
+    private function row_dp_calle_pertenece_pred(PDO $link, array $registro){
+        $dp_calle_pertenece = $this->dp_calle_pertenece_pred(link: $link);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al obtener dp_calle_pertenece',data:  $dp_calle_pertenece);
+        }
+
+        $keys = array('dp_colonia_postal_id','dp_calle_id','dp_cp_id','dp_colonia_id','dp_municipio_id',
+            'dp_estado_id','dp_pais_id');
+        $valida = $this->validacion->valida_ids(keys: $keys, registro: $dp_calle_pertenece);
+        if(errores::$error){
+            return $this->error->error(
+                mensaje: 'Error al obtener dp_calle_pertenece_default',data:  $valida);
+        }
+
+        $registro['dp_calle_pertenece_id'] = $dp_calle_pertenece->dp_calle_pertenece_id;
+        return $registro;
     }
 
     private function row_tipo_sucursal_id(PDO $link, array $org_sucursal): array|int

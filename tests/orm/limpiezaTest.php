@@ -57,7 +57,7 @@ class limpiezaTest extends test {
         $_SESSION['usuario_id'] = 2;
 
         $lim = new limpieza();
-        $lim = new liberator($lim);
+        //$lim = new liberator($lim);
 
         $registro = array();
         $registro['razon_social'] = 'a';
@@ -78,7 +78,6 @@ class limpiezaTest extends test {
         }
 
         $resultado = $lim->init_data_base_org_empresa($this->link, $registro);
-
 
         $this->assertIsArray($resultado);
         $this->assertNotTrue(errores::$error);
