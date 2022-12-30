@@ -39,7 +39,8 @@ class limpieza{
     }
 
     private function cat_sat_regimen_fiscal_pred(PDO $link, array $registro){
-        $inserta_predeterminado = (new cat_sat_regimen_fiscal(link: $link))->inserta_predeterminado();
+        $inserta_predeterminado = (new cat_sat_regimen_fiscal(link: $link))->inserta_predeterminado(
+            codigo: 616, descripcion: 'Sin obligaciones fiscales');
         if(errores::$error){
             return $this->error->error(
                 mensaje: 'Error al  inserta_predeterminado cat_sat_regimen_fiscal',data:  $inserta_predeterminado);
