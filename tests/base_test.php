@@ -160,7 +160,7 @@ class base_test{
         return $alta;
     }
 
-    public function alta_org_sucursal(PDO $link, int $id = 1, int $org_empresa_id = 1): array|\stdClass
+    public function alta_org_sucursal(PDO $link, int $id = 1, int $org_empresa_id = 1, int $org_tipo_sucursal_id = 1): array|\stdClass
     {
         $existe = (new org_empresa($link))->existe_by_id(registro_id: $org_empresa_id);
         if(errores::$error){
@@ -182,7 +182,7 @@ class base_test{
         $registro['codigo'] = 1;
         $registro['descripcion'] = 1;
         $registro['org_empresa_id'] = $org_empresa_id;
-
+        $registro['org_tipo_sucursal_id'] = $org_tipo_sucursal_id;
 
         $alta = (new org_sucursal($link))->alta_registro($registro);
         if(errores::$error){
