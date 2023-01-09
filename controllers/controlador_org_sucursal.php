@@ -89,6 +89,7 @@ class controlador_org_sucursal extends empresas {
         $this->keys_selects['interior']->required = false;
         $this->keys_selects['telefono_2']->required = false;
         $this->keys_selects['telefono_3']->required = false;
+        $this->keys_selects['codigo']->cols = 12;
 
         $inputs = $this->genera_inputs(keys_selects:  $this->keys_selects);
         if(errores::$error){
@@ -322,11 +323,17 @@ class controlador_org_sucursal extends empresas {
 
     public function modifica(bool $header, bool $ws = false): array|stdClass
     {
+        $this->keys_selects['interior']->required = false;
+        $this->keys_selects['telefono_2']->required = false;
+        $this->keys_selects['telefono_3']->required = false;
+        $this->keys_selects['codigo']->disabled = true;
         $base = $this->base();
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al maquetar datos',data:  $base,
                 header: $header,ws:$ws);
         }
+
+
 
         return $base->template;
     }
