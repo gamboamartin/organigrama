@@ -92,7 +92,7 @@ class base_test{
             return (new errores())->error(mensaje: 'Error al validar si existe ', data: $existe);
         }
         if(!$existe){
-            $alta = $this->alta_org_empresa(link: $link, id: $org_tipo_empresa_id);
+            $alta = $this->alta_org_tipo_empresa(link: $link, id: $org_tipo_empresa_id);
             if(errores::$error){
                 return (new errores())->error(mensaje: 'Error al insertar ', data: $alta);
             }
@@ -185,6 +185,23 @@ class base_test{
         $registro['org_tipo_sucursal_id'] = $org_tipo_sucursal_id;
 
         $alta = (new org_sucursal($link))->alta_registro($registro);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al insertar', data: $alta);
+        }
+        return $alta;
+    }
+
+    public function alta_org_tipo_empresa(PDO $link, int $id = 1): array|\stdClass
+    {
+
+
+        $registro = array();
+        $registro['id'] = $id;
+        $registro['codigo'] = 1;
+        $registro['descripcion'] = 1;
+
+
+        $alta = (new org_tipo_empresa($link))->alta_registro($registro);
         if(errores::$error){
             return (new errores())->error(mensaje: 'Error al insertar', data: $alta);
         }

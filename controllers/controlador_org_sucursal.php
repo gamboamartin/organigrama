@@ -86,6 +86,10 @@ class controlador_org_sucursal extends empresas {
 
         $this->row_upd->fecha_inicio_operaciones = date('Y-m-d');
 
+        $this->keys_selects['interior']->required = false;
+        $this->keys_selects['telefono_2']->required = false;
+        $this->keys_selects['telefono_3']->required = false;
+
         $inputs = $this->genera_inputs(keys_selects:  $this->keys_selects);
         if(errores::$error){
             $error = $this->errores->error(mensaje: 'Error al generar inputs',data:  $inputs);
