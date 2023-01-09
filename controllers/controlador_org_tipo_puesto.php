@@ -45,7 +45,7 @@ class controlador_org_tipo_puesto extends _ctl_parent_sin_codigo {
         parent::__construct(html:$html, link: $link,modelo:  $modelo, obj_link: $obj_link, datatables: $datatables,
             paths_conf: $paths_conf);
 
-        $this->titulo_lista = 'Tipo Empresa';
+        $this->titulo_lista = 'Tipo Puesto';
 
         $link_org_puesto_alta_bd = $this->obj_link->link_alta_bd(link: $link, seccion: 'org_puesto');
         if(errores::$error){
