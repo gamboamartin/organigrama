@@ -12,7 +12,6 @@ use gamboamartin\errores\errores;
 use gamboamartin\organigrama\controllers\base\empresas;
 use gamboamartin\organigrama\links\secciones\link_org_sucursal;
 use gamboamartin\organigrama\models\org_sucursal;
-use gamboamartin\system\actions;
 use gamboamartin\template\html;
 use html\org_sucursal_html;
 use PDO;
@@ -56,12 +55,6 @@ class controlador_org_sucursal extends empresas {
 
         $this->titulo_lista = 'Sucursales';
 
-        /*$links = $this->inicializa_links();
-        if(errores::$error){
-            $error = $this->errores->error(mensaje: 'Error al inicializar links',data:  $links);
-            print_r($error);
-            die('Error');
-        }*/
 
         $propiedades = $this->inicializa_propiedades();
         if(errores::$error){
