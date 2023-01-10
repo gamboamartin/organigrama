@@ -58,7 +58,7 @@ class controlador_org_tipo_empresa extends _ctl_parent_sin_codigo {
 
     }
 
-    public function empresas(bool $header = true, bool $ws = false): array|stdClass|string
+    public function empresas(bool $header = true, bool $ws = false, array $not_actions = array()): array|stdClass|string
     {
 
         $data_view = new stdClass();
@@ -71,7 +71,8 @@ class controlador_org_tipo_empresa extends _ctl_parent_sin_codigo {
         $data_view->name_model_children = 'org_empresa';
 
 
-        $contenido_table = $this->contenido_children(data_view: $data_view, next_accion: __FUNCTION__);
+        $contenido_table = $this->contenido_children(data_view: $data_view, next_accion: __FUNCTION__,
+            not_actions: $not_actions);
         if(errores::$error){
             return $this->retorno_error(
                 mensaje: 'Error al obtener tbody',data:  $contenido_table, header: $header,ws:  $ws);
