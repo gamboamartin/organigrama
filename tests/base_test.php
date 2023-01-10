@@ -101,10 +101,10 @@ class base_test{
         $registro = array();
         $registro['id'] = $id;
         $registro['codigo'] = 1;
-        $registro['descripcion'] = 1;
-        $registro['razon_social'] = 1;
-        $registro['rfc'] = 'AAA010101ABC';
-        $registro['nombre_comercial'] = 1;
+        $registro['descripcion'] = 'ESCUELA KEMPER URGATE';
+        $registro['razon_social'] = 'ESCUELA KEMPER URGATE';
+        $registro['rfc'] = 'EKU9003173C9';
+        $registro['nombre_comercial'] = 'ESCUELA KEMPER URGATE';
         $registro['org_tipo_empresa_id'] = $org_tipo_empresa_id;
         $registro['dp_calle_pertenece_id'] = $dp_calle_pertenece_id;
 
