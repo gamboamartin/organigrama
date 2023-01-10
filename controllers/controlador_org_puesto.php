@@ -34,12 +34,14 @@ class controlador_org_puesto extends _ctl_parent_sin_codigo {
         $datatables = new stdClass();
         $datatables->columns = array();
         $datatables->columns['org_puesto_id']['titulo'] = 'Id';
-        $datatables->columns['org_puesto_descripcion']['titulo'] = 'Tipo Puesto';
+        $datatables->columns['org_puesto_descripcion']['titulo'] = 'Puesto';
+        $datatables->columns['org_tipo_puesto_descripcion']['titulo'] = 'Tipo Puesto';
 
 
         $datatables->filtro = array();
         $datatables->filtro[] = 'org_puesto.id';
         $datatables->filtro[] = 'org_puesto.descripcion';
+        $datatables->filtro[] = 'org_tipo_puesto.descripcion';
 
         parent::__construct(html:$html, link: $link,modelo:  $modelo, obj_link: $obj_link, datatables: $datatables,
             paths_conf: $paths_conf);
@@ -147,7 +149,7 @@ class controlador_org_puesto extends _ctl_parent_sin_codigo {
         $keys_selects['codigo'] = new stdClass();
         $keys_selects['codigo']->disabled = true;
 
-        $base = $this->base_upd(keys_selects: $keys_selects, not_actions: array(__FUNCTION__), params: array(),params_ajustados: array());
+        $base = $this->base_upd(keys_selects: $keys_selects, params: array(),params_ajustados: array());
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al integrar base',data:  $base, header: $header,ws:  $ws);
         }
