@@ -45,8 +45,6 @@ class controlador_org_tipo_actividad extends _ctl_parent_sin_codigo {
         $this->titulo_lista = 'Tipo Actividad';
 
 
-
-
     }
 
 
