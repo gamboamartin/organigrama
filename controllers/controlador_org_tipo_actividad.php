@@ -34,7 +34,6 @@ class controlador_org_tipo_actividad extends _ctl_parent_sin_codigo {
         $datatables->columns = array();
         $datatables->columns['org_tipo_actividad_id']['titulo'] = 'Id';
         $datatables->columns['org_tipo_actividad_descripcion']['titulo'] = 'Tipo Actividad';
-        $datatables->columns['org_tipo_actividad_n_actividades']['titulo'] = 'N Actividades';
 
         $datatables->filtro = array();
         $datatables->filtro[] = 'org_tipo_actividad.id';
