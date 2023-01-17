@@ -9,13 +9,12 @@
 namespace gamboamartin\organigrama\controllers;
 
 use gamboamartin\errores\errores;
+use gamboamartin\organigrama\html\org_dependencia_html;
+use gamboamartin\organigrama\html\org_puesto_html;
 use gamboamartin\organigrama\models\org_dependencia;
 use gamboamartin\system\links_menu;
 use gamboamartin\system\system;
 use gamboamartin\template\html;
-use html\org_dependencia_html;
-
-use html\org_puesto_html;
 
 use PDO;
 use stdClass;

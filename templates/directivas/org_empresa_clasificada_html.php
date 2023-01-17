@@ -1,10 +1,7 @@
 <?php
-namespace html;
+namespace gamboamartin\organigrama\html;
 
-use gamboamartin\errores\errores;
 use gamboamartin\system\html_controler;
-use models\dp_calle_pertenece;
-use models\org_tipo_actividad;
 use PDO;
 use stdClass;
 

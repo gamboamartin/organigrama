@@ -1,14 +1,15 @@
 <?php
-namespace html;
+namespace gamboamartin\organigrama\html;
 
 
 use base\orm\modelo;
 use gamboamartin\errores\errores;
 use gamboamartin\organigrama\controllers\controlador_org_sucursal;
+use gamboamartin\organigrama\html\base\org_html;
 use gamboamartin\organigrama\models\org_sucursal;
 use gamboamartin\system\system;
 use gamboamartin\template\directivas;
-use html\base\org_html;
+use html\selects;
 use PDO;
 use stdClass;
 
@@ -37,8 +38,8 @@ class org_sucursal_html extends org_html {
     public function genera_inputs_alta(controlador_org_sucursal $controler,PDO $link, int $org_empresa_id,
                                        bool $org_empresa_id_disabled) : array|stdClass
     {
-        $inputs = $this->init_alta_base(link: $link, org_empresa_id: $org_empresa_id,
-            org_empresa_id_disabled: $org_empresa_id_disabled);
+        $inputs = $this->init_alta_base(link: $link, modelo: $controler->modelo,
+            org_empresa_id: $org_empresa_id, org_empresa_id_disabled: $org_empresa_id_disabled);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar inputs',data:  $inputs);
 
@@ -54,7 +55,7 @@ class org_sucursal_html extends org_html {
 
     private function genera_inputs_modifica(controlador_org_sucursal $controler,PDO $link): array|stdClass
     {
-        $inputs = $this->init_modifica(link: $link, row_upd: $controler->row_upd);
+        $inputs = $this->init_modifica(link: $link, modelo: $controler->modelo,row_upd:  $controler->row_upd);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar inputs',data:  $inputs);
 
@@ -69,7 +70,7 @@ class org_sucursal_html extends org_html {
 
 
 
-    private function init_alta_base(PDO $link, int $org_empresa_id, bool $org_empresa_id_disabled = false): array|stdClass
+    private function init_alta_base(PDO $link, modelo $modelo, int $org_empresa_id, bool $org_empresa_id_disabled = false): array|stdClass
     {
         $row_upd = new stdClass();
         $selects = $this->selects_alta_base( link: $link, org_empresa_id: $org_empresa_id,
@@ -78,7 +79,7 @@ class org_sucursal_html extends org_html {
             return $this->error->error(mensaje: 'Error al generar selects',data:  $selects);
         }
 
-        $fechas = $this->fechas_alta();
+        $fechas = $this->fechas_alta(modelo: $modelo);
 
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar inputs fecha',data:  $fechas);
@@ -89,7 +90,7 @@ class org_sucursal_html extends org_html {
             return $this->error->error(mensaje: 'Error al generar texts',data:  $texts);
         }
 
-        $telefonos = $this->telefonos_alta();
+        $telefonos = $this->telefonos_alta(modelo: $modelo);
 
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar inputs $telefonos',data:  $telefonos);
@@ -103,7 +104,7 @@ class org_sucursal_html extends org_html {
         return $alta_inputs;
     }
 
-    private function init_modifica(PDO $link, stdClass $row_upd): array|stdClass
+    private function init_modifica(PDO $link, modelo $modelo, stdClass $row_upd): array|stdClass
     {
 
 
@@ -116,13 +117,13 @@ class org_sucursal_html extends org_html {
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar texts',data:  $texts);
         }
-        $fechas = $this->fechas_alta(row_upd: $row_upd);
+        $fechas = $this->fechas_alta(modelo: $modelo);
 
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar inputs fecha',data:  $fechas);
         }
 
-        $telefonos = $this->telefonos_alta(row_upd: $row_upd);
+        $telefonos = $this->telefonos_alta(modelo: $modelo);
 
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar inputs $telefonos',data:  $telefonos);

@@ -1,9 +1,8 @@
 <?php
-namespace html;
+namespace gamboamartin\organigrama\html;
 
 use gamboamartin\errores\errores;
 use gamboamartin\organigrama\controllers\controlador_org_clasificacion_dep;
-use gamboamartin\organigrama\controllers\controlador_org_puesto;
 use gamboamartin\organigrama\models\org_departamento;
 use gamboamartin\system\html_controler;
 use gamboamartin\template\directivas;
@@ -16,7 +15,7 @@ use stdClass;
 class org_clasificacion_dep_html extends html_controler {
 
 
-    private function asigna_inputs(controlador_org_puesto $controler, stdClass $inputs): array|stdClass
+    private function asigna_inputs(controlador_org_clasificacion_dep $controler, stdClass $inputs): array|stdClass
     {
 
 

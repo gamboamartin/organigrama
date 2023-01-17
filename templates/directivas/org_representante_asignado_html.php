@@ -1,5 +1,5 @@
 <?php
-namespace html;
+namespace gamboamartin\organigrama\html;
 
 use gamboamartin\errores\errores;
 use gamboamartin\system\html_controler;
@@ -19,7 +19,7 @@ class org_representante_asignado_html extends html_controler {
             return $this->error->error(mensaje: 'Error cold debe ser menor o igual a  12', data: $cols);
         }
 
-        $html =$this->directivas->fecha_required(disable: false,name: $campo,place_holder: $campo,
+        $html =$this->directivas->fecha_required(disabled: false,name: $campo,place_holder: $campo,
             row_upd: $row_upd, value_vacio: $value_vacio);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input', data: $html);

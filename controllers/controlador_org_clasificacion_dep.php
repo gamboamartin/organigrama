@@ -9,13 +9,13 @@
 namespace gamboamartin\organigrama\controllers;
 
 use gamboamartin\errores\errores;
+use gamboamartin\organigrama\html\org_clasificacion_dep_html;
+use gamboamartin\organigrama\html\org_departamento_html;
+use gamboamartin\organigrama\html\org_empresa_html;
 use gamboamartin\organigrama\models\org_clasificacion_dep;
 use gamboamartin\system\_ctl_parent_sin_codigo;
 use gamboamartin\system\links_menu;
 use gamboamartin\template\html;
-use html\org_clasificacion_dep_html;
-use html\org_departamento_html;
-use html\org_empresa_html;
 use PDO;
 use stdClass;
 
@@ -68,7 +68,8 @@ class controlador_org_clasificacion_dep extends _ctl_parent_sin_codigo {
         $data_view->namespace_model = 'gamboamartin\\organigrama\\models';
         $data_view->name_model_children = 'org_departamento';
 
-        $contenido_table = $this->contenido_children(data_view: $data_view, next_accion: __FUNCTION__);
+        $contenido_table = $this->contenido_children(data_view: $data_view, next_accion: __FUNCTION__,
+            not_actions: $this->not_actions);
         if(errores::$error){
             return $this->retorno_error(
                 mensaje: 'Error al obtener tbody',data:  $contenido_table, header: $header,ws:  $ws);

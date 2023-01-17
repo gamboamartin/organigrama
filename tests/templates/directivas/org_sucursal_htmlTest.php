@@ -2,11 +2,11 @@
 namespace tests\links\secciones;
 
 use gamboamartin\errores\errores;
+use gamboamartin\organigrama\html\org_sucursal_html;
 use gamboamartin\template_1\html;
-use gamboamartin\test\liberator;
+
 use gamboamartin\test\test;
 
-use html\org_sucursal_html;
 use stdClass;
 
 

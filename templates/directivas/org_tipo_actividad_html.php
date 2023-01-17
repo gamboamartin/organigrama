@@ -1,5 +1,5 @@
 <?php
-namespace html;
+namespace gamboamartin\organigrama\html;
 
 use gamboamartin\errores\errores;
 use gamboamartin\organigrama\models\org_tipo_actividad;

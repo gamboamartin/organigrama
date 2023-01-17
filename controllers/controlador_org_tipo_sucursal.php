@@ -9,12 +9,13 @@
 namespace gamboamartin\organigrama\controllers;
 
 use gamboamartin\errores\errores;
+use gamboamartin\organigrama\html\org_tipo_sucursal_html;
 use gamboamartin\organigrama\models\org_tipo_sucursal;
 use gamboamartin\system\_ctl_parent_sin_codigo;
 use gamboamartin\system\links_menu;
 
 use gamboamartin\template\html;
-use html\org_tipo_sucursal_html;
+
 use PDO;
 use stdClass;
 

@@ -1,9 +1,8 @@
 <?php
-namespace html;
+namespace gamboamartin\organigrama\html;
 
 use gamboamartin\errores\errores;
 use gamboamartin\organigrama\controllers\controlador_org_departamento;
-use gamboamartin\organigrama\controllers\controlador_org_puesto;
 use gamboamartin\organigrama\models\org_departamento;
 use gamboamartin\system\html_controler;
 use gamboamartin\template\directivas;

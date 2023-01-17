@@ -1,9 +1,9 @@
 <?php
-namespace html;
+namespace gamboamartin\organigrama\html;
 
 use gamboamartin\errores\errores;
+use gamboamartin\organigrama\models\org_representante_legal;
 use gamboamartin\system\html_controler;
-use models\org_representante_legal;
 use PDO;
 use stdClass;
 
@@ -30,7 +30,7 @@ class org_representante_legal_html extends html_controler {
             return $this->error->error(mensaje: 'Error cold debe ser menor o igual a  12', data: $cols);
         }
 
-        $html =$this->directivas->input_text_required(disable: false,name: $campo,place_holder: $campo,
+        $html =$this->directivas->input_text_required(disabled: false,name: $campo,place_holder: $campo,
             row_upd: $row_upd, value_vacio: $value_vacio);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input', data: $html);

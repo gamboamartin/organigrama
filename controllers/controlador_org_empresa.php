@@ -12,8 +12,10 @@ namespace gamboamartin\organigrama\controllers;
 use gamboamartin\direccion_postal\models\dp_calle_pertenece;
 use gamboamartin\direccion_postal\src\init;
 use gamboamartin\errores\errores;
-use gamboamartin\im_registro_patronal\controllers\controlador_im_registro_patronal;
 use gamboamartin\organigrama\controllers\base\empresas;
+use gamboamartin\organigrama\html\org_empresa_html;
+use gamboamartin\organigrama\html\org_sucursal_html;
+use gamboamartin\organigrama\html\org_tipo_sucursal_html;
 use gamboamartin\organigrama\links\secciones\link_org_empresa;
 use gamboamartin\organigrama\models\org_departamento;
 use gamboamartin\organigrama\models\org_empresa;
@@ -27,17 +29,12 @@ use html\dp_colonia_html;
 use html\dp_cp_html;
 use html\dp_estado_html;
 use html\dp_municipio_html;
-use html\org_empresa_html;
-use html\org_sucursal_html;
-use html\org_tipo_sucursal_html;
 use html\selects;
 use JsonException;
 
-use models\im_registro_patronal;
 
 use PDO;
 use stdClass;
-use Throwable;
 
 class controlador_org_empresa extends empresas {
 
@@ -1114,68 +1111,9 @@ class controlador_org_empresa extends empresas {
         return $r_modifica;
     }
 
-    public function modifica_registro_patronal(bool $header, bool $ws = false): array|stdClass
-    {
-        $this->controlador_im_registro_patronal->registro_id = $this->im_registro_patronal_id;
 
-        $modifica = $this->controlador_im_registro_patronal->modifica(header: false);
-        if(errores::$error){
-            return $this->retorno_error(mensaje: 'Error al generar template',data:  $modifica, header: $header,ws:$ws);
-        }
 
-        $this->controlador_im_registro_patronal->keys_selects['descripcion'] = new stdClass();
-        $this->controlador_im_registro_patronal->keys_selects['descripcion']->cols = 6;
-        $this->controlador_im_registro_patronal->keys_selects['descripcion']->place_holder = 'Descripcion';
-        $this->inputs = $this->controlador_im_registro_patronal->genera_inputs(
-            keys_selects:  $this->controlador_im_registro_patronal->keys_selects);
-        if(errores::$error){
-            $error = $this->errores->error(mensaje: 'Error al generar inputs',data:  $this->inputs);
-            print_r($error);
-            die('Error');
-        }
 
-        return $this->inputs;
-    }
-
-    public function modifica_registro_patronal_bd(bool $header, bool $ws = false): array|stdClass
-    {
-        $this->link->beginTransaction();
-
-        $siguiente_view = (new actions())->init_alta_bd();
-        if (errores::$error) {
-            $this->link->rollBack();
-            return $this->retorno_error(mensaje: 'Error al obtener siguiente view', data: $siguiente_view,
-                header: $header, ws: $ws);
-        }
-
-        if (isset($_POST['btn_action_next'])) {
-            unset($_POST['btn_action_next']);
-        }
-
-        $registros = $_POST;
-
-        $r_modifica = (new im_registro_patronal($this->link))->modifica_bd(registro: $registros,
-            id: $this->im_registro_patronal_id);
-        if (errores::$error) {
-            return $this->retorno_error(mensaje: 'Error al modificar registro patronal', data: $r_modifica,
-                header: $header, ws: $ws);
-        }
-
-        $this->link->commit();
-
-        if ($header) {
-            $this->retorno_base(registro_id:$this->registro_id, result: $r_modifica,
-                siguiente_view: "registros_patronales", ws:  $ws);
-        }
-        if ($ws) {
-            header('Content-Type: application/json');
-            echo json_encode($r_modifica, JSON_THROW_ON_ERROR);
-            exit;
-        }
-        $r_modifica->siguiente_view = "registros_patronales";
-
-        return $r_modifica;
-    }
 
 
 
@@ -1782,120 +1720,7 @@ class controlador_org_empresa extends empresas {
         return $this->departamentos;
     }
 
-    public function registros_patronales(bool $header, bool $ws = false): array|stdClass
-    {
-        $alta = $this->controlador_im_registro_patronal->alta(header: false);
-        if (errores::$error) {
-            return $this->retorno_error(mensaje: 'Error al generar template', data: $alta, header: $header, ws: $ws);
-        }
 
-        $this->asignar_propiedad(identificador: 'org_empresa_id',
-            propiedades: ["id_selected" => $this->registro_id, "disabled" => true,
-                "filtro" => array('org_empresa.id' => $this->registro_id), 'label' =>' Empresa']);
-        if (errores::$error) {
-            return $this->retorno_error(mensaje: 'Error al asignar propiedad', data: $this, header: $header, ws: $ws);
-        }
-
-        $this->controlador_im_registro_patronal->asignar_propiedad(identificador: 'fc_csd_id',
-            propiedades: [ 'con_registros'=> false,'label' =>' CSD Sucursal']);
-        if (errores::$error) {
-            return $this->retorno_error(mensaje: 'Error al asignar propiedad', data: $this, header: $header, ws: $ws);
-        }
-
-        $this->controlador_im_registro_patronal->keys_selects['descripcion'] = new stdClass();
-        $this->controlador_im_registro_patronal->keys_selects['descripcion']->cols = 6;
-        $this->controlador_im_registro_patronal->keys_selects['descripcion']->place_holder = 'Descripcion';
-        $this->inputs = $this->controlador_im_registro_patronal->genera_inputs(
-            keys_selects:  $this->controlador_im_registro_patronal->keys_selects);
-        if (errores::$error) {
-            $error = $this->errores->error(mensaje: 'Error al generar inputs', data: $this->inputs);
-            print_r($error);
-            die('Error');
-        }
-
-        $select = $this->select_org_empresa_id();
-        if(errores::$error){
-            return $this->retorno_error(mensaje: 'Error al generar select datos',data:  $select,
-                header: $header,ws:$ws);
-        }
-
-        $select = $this->select_org_sucursal_id(org_empresa_id: $this->registro_id);
-        if(errores::$error){
-            return $this->retorno_error(mensaje: 'Error al generar select datos',data:  $select,
-                header: $header,ws:$ws);
-        }
-
-        $registros_patronales = $this->registros_patronales_r(org_empresa_id: $this->org_empresa_id);
-        if(errores::$error){
-            return $this->retorno_error(mensaje: 'Error al obtener registros_patronales',data:  $registros_patronales, header: $header,ws:$ws);
-        }
-
-        foreach ($registros_patronales->registros as $indice=>$registro_patronal){
-            $registro_patronal = $this->data_registros_patronales_btn(registro_patronal :$registro_patronal);
-            if(errores::$error){
-                return $this->retorno_error(mensaje: 'Error al asignar botones',data:  $registro_patronal,
-                    header: $header,ws:$ws);
-            }
-            $registros_patronales->registros[$indice] = $registro_patronal;
-        }
-
-        $this->registros_patronales = $registros_patronales;
-
-        return $this->inputs;
-    }
-
-    public function alta_registro_patronal_bd(bool $header, bool $ws = false){
-        $this->link->beginTransaction();
-
-        $siguiente_view = (new actions())->init_alta_bd();
-        if (errores::$error) {
-            $this->link->rollBack();
-            return $this->retorno_error(mensaje: 'Error al obtener siguiente view', data: $siguiente_view,
-                header: $header, ws: $ws);
-        }
-
-        if (isset($_POST['btn_action_next'])) {
-            unset($_POST['btn_action_next']);
-        }
-        if(isset($_POST['org_sucursal_id'])){
-            unset($_POST['org_sucursal_id']);
-        }
-
-        $alta = (new im_registro_patronal($this->link))->alta_registro(registro: $_POST);
-        if (errores::$error) {
-            $this->link->rollBack();
-            return $this->retorno_error(mensaje: 'Error al dar de alta departamento', data: $alta,
-                header: $header, ws: $ws);
-        }
-
-        $this->link->commit();
-
-        if ($header) {
-            $this->retorno_base(registro_id:$this->registro_id, result: $alta,
-                siguiente_view: "registros_patronales", ws:  $ws);
-        }
-        if ($ws) {
-            header('Content-Type: application/json');
-            echo json_encode($alta, JSON_THROW_ON_ERROR);
-            exit;
-        }
-        $alta->siguiente_view = "registros_patronales";
-
-        return $alta;
-    }
-
-    public function registros_patronales_r(int $org_empresa_id){
-        if($org_empresa_id <=0){
-            return $this->errores->error(mensaje: 'Error $org_empresa_id debe ser mayor a 0', data: $org_empresa_id);
-        }
-        $filtro['org_empresa.id'] = $org_empresa_id;
-        $r_im_registro_patronal = (new im_registro_patronal($this->link))->filtro_and(filtro: $filtro);
-        if(errores::$error){
-            return $this->errores->error(mensaje: 'Error al obtener sucursales', data: $r_im_registro_patronal);
-        }
-
-        return $r_im_registro_patronal;
-    }
 
     
     /**

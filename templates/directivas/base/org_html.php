@@ -1,5 +1,5 @@
 <?php
-namespace html\base;
+namespace gamboamartin\organigrama\html\base;
 
 use base\orm\modelo;
 use gamboamartin\errores\errores;

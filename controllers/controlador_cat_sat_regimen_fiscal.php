@@ -8,9 +8,9 @@
  */
 namespace gamboamartin\organigrama\controllers;
 use gamboamartin\errores\errores;
+use gamboamartin\organigrama\html\org_empresa_html;
+use gamboamartin\organigrama\html\org_tipo_empresa_html;
 use html\cat_sat_regimen_fiscal_html;
-use html\org_empresa_html;
-use html\org_tipo_empresa_html;
 use PDO;
 use stdClass;
 
@@ -48,7 +48,8 @@ class controlador_cat_sat_regimen_fiscal extends \gamboamartin\cat_sat\controlle
         $data_view->name_model_children = 'org_empresa';
 
 
-        $contenido_table = $this->contenido_children(data_view: $data_view, next_accion: __FUNCTION__);
+        $contenido_table = $this->contenido_children(data_view: $data_view, next_accion: __FUNCTION__,
+            not_actions: $this->not_actions);
         if(errores::$error){
             return $this->retorno_error(
                 mensaje: 'Error al obtener tbody',data:  $contenido_table, header: $header,ws:  $ws);

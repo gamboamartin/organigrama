@@ -3,14 +3,11 @@ namespace tests\links\secciones;
 
 use gamboamartin\errores\errores;
 use gamboamartin\organigrama\controllers\controlador_org_puesto;
+use gamboamartin\organigrama\html\org_puesto_html;
 use gamboamartin\template_1\html;
 use gamboamartin\test\liberator;
 use gamboamartin\test\test;
 
-use html\org_empresa_html;
-use html\org_puesto_html;
-use html\org_tipo_empresa_html;
-use JsonException;
 use stdClass;
 
 

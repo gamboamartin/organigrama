@@ -1,15 +1,17 @@
 <?php
-namespace html;
+namespace gamboamartin\organigrama\html;
 
 
 use base\orm\modelo;
-use base\orm\modelo_base;
 use gamboamartin\errores\errores;
 use gamboamartin\organigrama\controllers\controlador_org_empresa;
+use gamboamartin\organigrama\html\base\org_html;
 use gamboamartin\organigrama\models\limpieza;
 use gamboamartin\organigrama\models\org_empresa;
 use gamboamartin\system\system;
-use html\base\org_html;
+use html\cat_sat_regimen_fiscal_html;
+use html\inputs_html;
+use html\selects;
 use PDO;
 use stdClass;
 
@@ -251,21 +253,6 @@ class org_empresa_html extends org_html {
         return $inputs_asignados;
     }
 
-    private function genera_inputs_registros_patronales(controlador_org_empresa $controler,PDO $link,
-                                            stdClass $params = new stdClass()): array|stdClass
-    {
-        $inputs = $this->init_registros_patronales(link: $link, row_upd: $controler->row_upd, params: $params);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al generar inputs',data:  $inputs);
-
-        }
-        $inputs_asignados = $this->asigna_inputs_registro_patronal(controler:$controler, inputs: $inputs);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al asignar inputs',data:  $inputs_asignados);
-        }
-
-        return $inputs_asignados;
-    }
 
 
     protected function init_alta(array $keys_selects, PDO $link, modelo|null $modelo = null): array|stdClass
@@ -359,24 +346,7 @@ class org_empresa_html extends org_html {
         return $alta_inputs;
     }
 
-    private function init_registros_patronales(PDO $link, stdClass $row_upd, stdClass $params = new stdClass()): array|stdClass
-    {
-        $selects = $this->selects_registros_patronales(link: $link, row_upd: $row_upd);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al generar selects',data:  $selects);
-        }
 
-        $texts = $this->texts_alta(row_upd: $row_upd, value_vacio: false, params: $params);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al generar texts',data:  $texts);
-        }
-
-        $alta_inputs = new stdClass();
-
-        $alta_inputs->selects = $selects;
-        $alta_inputs->texts = $texts;
-        return $alta_inputs;
-    }
 
 
     public function input_exterior(int $cols, stdClass $row_upd, bool $value_vacio): array|string
@@ -565,21 +535,7 @@ class org_empresa_html extends org_html {
         return $inputs;
     }
 
-    public function inputs_registros_patronales(controlador_org_empresa $controlador_org_empresa,
-                                       stdClass $params = new stdClass()): array|stdClass
-    {
-        $init = (new limpieza())->init_modifica_org_empresa(controler: $controlador_org_empresa);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al inicializa datos',data:  $init);
-        }
 
-        $inputs = $this->genera_inputs_registros_patronales(controler: $controlador_org_empresa,
-            link: $controlador_org_empresa->link, params: $params);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al generar inputs',data:  $inputs);
-        }
-        return $inputs;
-    }
     /**
      * Genera un select de tipo empresa
      * @param int $cols numero de columnas en css
@@ -683,47 +639,7 @@ class org_empresa_html extends org_html {
         return $selects;
     }
 
-    private function selects_registros_patronales(PDO $link, stdClass $row_upd): array|stdClass
-    {
-        /**
-         * @Kevin Acuña
-         * REFACTORIZAR FUNCION
-         * Centralizar una funcion que genere un select para evitar la duplicidad de codigo
-         */
-        $selects = new stdClass();
 
-        $select = (new im_clase_riesgo_html(html:$this->html_base))->select_im_clase_riesgo_id(
-            cols: 6, con_registros:true, id_selected: -1,link: $link);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al generar select',data:  $select);
-        }
-        $selects->im_clase_riesgo_id = $select;
-
-        $selects = (new selects())->direcciones(html: $this->html_base,link:  $link,row:  $row_upd,selects:  $selects);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al generar selects de domicilios',data:  $selects);
-
-        }
-        
-        $select = (new org_sucursal_html(html: $this->html_base))->select_org_sucursal_id(
-            cols: 6, con_registros:false, id_selected: -1,link: $link,label: 'Sucursal');
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al generar select',data:  $select);
-
-        }
-
-        $selects->org_sucursal_id = $select;
-        $select = (new fc_csd_html(html: $this->html_base))->select_fc_csd_id(
-            cols: 6, con_registros:false, id_selected: -1,link: $link);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al generar select',data:  $select);
-
-        }
-
-        $selects->fc_csd_id = $select;
-
-        return $selects;
-    }
 
     public function telefono_1(int $cols, stdClass $row_upd, bool $value_vacio): array|string
     {

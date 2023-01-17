@@ -1,5 +1,5 @@
 <?php
-namespace html;
+namespace gamboamartin\organigrama\html;
 
 use gamboamartin\system\html_controler;
 

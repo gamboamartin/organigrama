@@ -9,12 +9,12 @@
 namespace gamboamartin\organigrama\controllers;
 
 use gamboamartin\errores\errores;
+use gamboamartin\organigrama\html\org_actividad_html;
+use gamboamartin\organigrama\html\org_tipo_actividad_html;
 use gamboamartin\organigrama\models\org_actividad;
 use gamboamartin\system\_ctl_parent_sin_codigo;
 use gamboamartin\system\links_menu;
 use gamboamartin\template\html;
-use html\org_actividad_html;
-use html\org_tipo_actividad_html;
 use PDO;
 use stdClass;
 
@@ -51,7 +51,7 @@ class controlador_org_actividad extends _ctl_parent_sin_codigo {
             return $this->retorno_error(mensaje: 'Error al maquetar alta',data:  $r_alta, header: $header,ws: $ws);
         }
 
-        $input_tiempo = (new org_actividad_html(html: $this->html_base))->input_numero_int(cols: 12,name: 'Tiempo',
+        $input_tiempo = (new org_actividad_html(html: $this->html_base))->input_numero_int(cols: 12,name: 'tiempo',
             row_upd: new stdClass(), value_vacio: true,place_holder: 'Tiempo',
             title: 'Tiempo en horas mensuales de la actividad promedio');
         if(errores::$error){
@@ -137,8 +137,6 @@ class controlador_org_actividad extends _ctl_parent_sin_codigo {
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al integrar base',data:  $base, header: $header,ws:  $ws);
         }
-
-       // print_r
 
         $input_tiempo = (new org_actividad_html(html: $this->html_base))->input_numero_int(cols: 12,name: 'tiempo',
             row_upd: $this->row_upd, value_vacio: false,place_holder: 'Tiempo',

@@ -2,13 +2,12 @@
 namespace tests\links\secciones;
 
 use gamboamartin\errores\errores;
+use gamboamartin\organigrama\html\base\org_html;
 use gamboamartin\template_1\html;
 use gamboamartin\test\liberator;
 use gamboamartin\test\test;
 
-use html\base\org_html;
-use html\org_empresa_html;
-use JsonException;
+
 use stdClass;
 
 

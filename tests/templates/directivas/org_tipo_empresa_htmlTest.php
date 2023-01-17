@@ -2,13 +2,11 @@
 namespace tests\links\secciones;
 
 use gamboamartin\errores\errores;
+use gamboamartin\organigrama\html\org_empresa_html;
 use gamboamartin\template_1\html;
-use gamboamartin\test\liberator;
+
 use gamboamartin\test\test;
 
-use html\org_empresa_html;
-use html\org_tipo_empresa_html;
-use JsonException;
 use stdClass;
 
 
@@ -32,7 +30,7 @@ class org_tipo_empresa_htmlTest extends test {
         $_SESSION['grupo_id'] = 1;
         $_GET['session_id'] = '1';
         $html_ = new html();
-        $html = new org_tipo_empresa_html($html_);
+        $html = new org_empresa_html($html_);
         //$html = new liberator($html);
 
         $cols = 1;
@@ -40,11 +38,11 @@ class org_tipo_empresa_htmlTest extends test {
         $id_selected = -1;
         $link = $this->link;
 
-        $resultado = $html->select_org_tipo_empresa_id($cols, $con_registros, $id_selected, $link);
+        $resultado = $html->select_org_empresa_id($cols, $con_registros, $id_selected, $link);
 
         $this->assertIsString($resultado);
         $this->assertNotTrue(errores::$error);
-        $this->assertStringContainsStringIgnoringCase("l' for='org_tipo_empresa_id'>Tipo empresa</label><div c", $resultado);
+        $this->assertStringContainsStringIgnoringCase("l' for='org_empresa_id'>Empresa</label><div c", $resultado);
 
         errores::$error = false;
     }

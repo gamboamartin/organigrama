@@ -1,10 +1,11 @@
 <?php
-namespace html;
+namespace gamboamartin\organigrama\html;
 
 use gamboamartin\errores\errores;
 use gamboamartin\organigrama\controllers\controlador_org_porcentaje_act_economica;
 use gamboamartin\system\html_controler;
-use models\base\limpieza;
+
+use html\cat_sat_actividad_economica_html;
 use PDO;
 use stdClass;
 
@@ -66,7 +67,7 @@ class org_porcentaje_act_economica_html extends html_controler {
             return $this->error->error(mensaje: 'Error al validar columnas', data: $valida);
         }
 
-        $html =$this->directivas->input_text_required(disable: false,name: 'porcentaje',place_holder: 'Porcentaje',
+        $html =$this->directivas->input_text_required(disabled: false,name: 'porcentaje',place_holder: 'Porcentaje',
             row_upd: $row_upd, value_vacio: $value_vacio);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input', data: $html);

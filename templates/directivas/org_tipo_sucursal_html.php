@@ -1,5 +1,5 @@
 <?php
-namespace html;
+namespace gamboamartin\organigrama\html;
 
 use gamboamartin\errores\errores;
 use gamboamartin\organigrama\models\org_tipo_sucursal;
@@ -9,15 +9,6 @@ use PDO;
 
 
 class org_tipo_sucursal_html extends html_controler {
-
-
-
-
-
-
-
-
-
 
 
     public function select_org_tipo_sucursal_id(int $cols,bool $con_registros,int $id_selected, PDO $link): array|string
