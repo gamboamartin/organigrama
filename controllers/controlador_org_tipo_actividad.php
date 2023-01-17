@@ -47,8 +47,6 @@ class controlador_org_tipo_actividad extends _ctl_parent_sin_codigo {
 
     }
 
-
-
     protected function key_selects_txt(array $keys_selects): array
     {
         $keys_selects = (new \base\controller\init())->key_select_txt(cols: 6,key: 'codigo', keys_selects:$keys_selects, place_holder: 'Cod');

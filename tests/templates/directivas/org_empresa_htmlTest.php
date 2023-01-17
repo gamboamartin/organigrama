@@ -66,7 +66,7 @@ class org_empresa_htmlTest extends test {
 
         $this->assertIsString($resultado);
         $this->assertNotTrue(errores::$error);
-        $this->assertEquals("<div class='control-group col-sm-1'><label class='control-label' for='codigo'>Código</label><div class='controls'><input type='text' name='codigo' value='' class='form-control'  required id='codigo' placeholder='Código' /></div></div>", $resultado);
+        $this->assertEquals("<div class='control-group col-sm-1'><label class='control-label' for='codigo'>Código</label><div class='controls'><input type='text' name='codigo' value='' class='form-control' required id='codigo' placeholder='Código' title='Código' /></div></div>", $resultado);
 
 
         errores::$error = false;

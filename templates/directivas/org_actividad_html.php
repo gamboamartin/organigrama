@@ -2,8 +2,8 @@
 namespace html;
 
 use gamboamartin\errores\errores;
+use gamboamartin\organigrama\models\org_actividad;
 use gamboamartin\system\html_controler;
-use models\org_actividad;
 use PDO;
 
 
@@ -20,5 +20,6 @@ class org_actividad_html extends html_controler {
         }
         return $select;
     }
+
 
 }
