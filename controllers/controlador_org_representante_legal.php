@@ -11,22 +11,40 @@ namespace gamboamartin\organigrama\controllers;
 use gamboamartin\errores\errores;
 use gamboamartin\organigrama\html\org_representante_legal_html;
 use gamboamartin\organigrama\models\org_representante_legal;
+use gamboamartin\system\_ctl_parent_sin_codigo;
 use gamboamartin\system\links_menu;
-use gamboamartin\system\system;
+
 use gamboamartin\template\html;
 use PDO;
 use stdClass;
 
-class controlador_org_representante_legal extends system {
+class controlador_org_representante_legal extends _ctl_parent_sin_codigo {
 
     public function __construct(PDO $link, html $html = new \gamboamartin\template_1\html(),
                                 stdClass $paths_conf = new stdClass()){
         $modelo = new org_representante_legal(link: $link);
         $html = new org_representante_legal_html($html);
         $obj_link = new links_menu(link: $link, registro_id:$this->registro_id);
-        parent::__construct(html:$html, link: $link,modelo:  $modelo, obj_link: $obj_link, paths_conf: $paths_conf);
 
-        $this->titulo_lista = 'Actividades';
+        $datatables = new stdClass();
+        $datatables->columns = array();
+        $datatables->columns['org_representante_legal_id']['titulo'] = 'Id';
+        $datatables->columns['org_representante_legal_rfc']['titulo'] = 'RFC';
+        $datatables->columns['org_representante_legal_nombre']['titulo'] = 'Nombre';
+        $datatables->columns['org_representante_legal_ap_paterno']['titulo'] = 'AP Paterno';
+        $datatables->columns['org_representante_legal_ap_materno']['titulo'] = 'AP Materno';
+
+        $datatables->filtro = array();
+        $datatables->filtro[] = 'org_representante_legal.id';
+        $datatables->filtro[] = 'org_representante_legal.rfc';
+        $datatables->filtro[] = 'org_representante_legal.nombre';
+        $datatables->filtro[] = 'org_representante_legal.ap_paterno';
+        $datatables->filtro[] = 'org_representante_legal.ap_materno';
+
+        parent::__construct(html: $html, link: $link, modelo: $modelo, obj_link: $obj_link, datatables: $datatables,
+            paths_conf: $paths_conf);
+
+        $this->titulo_lista = 'Representantes';
 
     }
 
@@ -39,21 +57,85 @@ class controlador_org_representante_legal extends system {
 
 
 
-        $in_nombre = (new org_representante_legal_html(html: $this->html_base))->input(cols: 6,row_upd:  new stdClass(),value_vacio:  true, campo: "Nombre");
-        $in_a_paterno = (new org_representante_legal_html(html: $this->html_base))->input(cols: 6,row_upd:  new stdClass(),value_vacio:  true, campo: "Apellido Paterno");
-        $in_a_materno = (new org_representante_legal_html(html: $this->html_base))->input(cols: 6,row_upd:  new stdClass(),value_vacio:  true, campo: "Apellido Materno");
-        $in_rfc = (new org_representante_legal_html(html: $this->html_base))->input(cols: 6,row_upd:  new stdClass(),value_vacio:  true, campo: "RFC");
+        $in_nombre = (new org_representante_legal_html(html: $this->html_base))->input(
+            campo: "nombre", cols: 6, place_holder: 'Nombre', row_upd: new stdClass(), value_vacio: true);
+
         if(errores::$error){
-            $error = $this->errores->error(mensaje: 'Error al generar el input',data:  $in_nombre);
-            print_r($error);
-            die('Error');
+            return $this->retorno_error(mensaje: 'Error al generar input',data:  $in_nombre, header: $header,ws:$ws);
         }
 
+
+        $in_a_paterno = (new org_representante_legal_html(html: $this->html_base))->input(
+            campo: "ap_paterno", cols: 6, place_holder: 'Apellido Paterno', row_upd: new stdClass(), value_vacio: true);
+
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al generar input',data:  $in_a_paterno, header: $header,ws:$ws);
+        }
+
+        $in_a_materno = (new org_representante_legal_html(html: $this->html_base))->input(
+            campo: "ap_materno", cols: 6, place_holder: 'Apellido Materno', row_upd: new stdClass(), value_vacio: true);
+
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al generar input',data:  $in_a_materno, header: $header,ws:$ws);
+        }
+
+        $in_rfc = (new org_representante_legal_html(html: $this->html_base))->input(
+            campo: "rfc", cols: 6, place_holder: 'RFC', row_upd: new stdClass(), value_vacio: true);
+
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al generar input',data:  $in_rfc, header: $header,ws:$ws);
+        }
+
+
         $this->inputs->nombre = $in_nombre;
-        $this->inputs->a_paterno = $in_a_paterno;
-        $this->inputs->a_materno = $in_a_materno;
+        $this->inputs->ap_paterno = $in_a_paterno;
+        $this->inputs->ap_materno = $in_a_materno;
         $this->inputs->rfc = $in_rfc;
 
         return $r_alta;
+    }
+
+    public function modifica(bool $header, bool $ws = false, array $keys_selects = array()): array|stdClass
+    {
+        $r_modifica = parent::modifica($header, $ws); // TODO: Change the autogenerated stub
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al generar template',data:  $r_modifica, header: $header,ws:$ws);
+        }
+
+        $in_nombre = (new org_representante_legal_html(html: $this->html_base))->input(
+            campo: "nombre", cols: 6, place_holder: 'Nombre', row_upd: $this->row_upd, value_vacio: false);
+
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al generar input',data:  $in_nombre, header: $header,ws:$ws);
+        }
+
+        $in_a_paterno = (new org_representante_legal_html(html: $this->html_base))->input(
+            campo: "ap_paterno", cols: 6, place_holder: 'Apellido Paterno', row_upd: $this->row_upd, value_vacio: false);
+
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al generar input',data:  $in_a_paterno, header: $header,ws:$ws);
+        }
+
+        $in_a_materno = (new org_representante_legal_html(html: $this->html_base))->input(
+            campo: "ap_materno", cols: 6, place_holder: 'Apellido Materno', row_upd: $this->row_upd, value_vacio: false);
+
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al generar input',data:  $in_a_materno, header: $header,ws:$ws);
+        }
+
+        $in_rfc = (new org_representante_legal_html(html: $this->html_base))->input(
+            campo: "rfc", cols: 6, place_holder: 'RFC', row_upd: $this->row_upd, value_vacio: false);
+
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al generar input',data:  $in_rfc, header: $header,ws:$ws);
+        }
+
+        $this->inputs->nombre = $in_nombre;
+        $this->inputs->ap_paterno = $in_a_paterno;
+        $this->inputs->ap_materno = $in_a_materno;
+        $this->inputs->rfc = $in_rfc;
+
+        return $r_modifica;
+
     }
 }

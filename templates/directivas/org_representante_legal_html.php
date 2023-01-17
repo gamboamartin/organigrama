@@ -20,7 +20,7 @@ class org_representante_legal_html extends html_controler {
         return $select;
     }
 
-    public function input(int $cols, stdClass $row_upd, bool $value_vacio, string $campo): array|string
+    public function input(string $campo, int $cols, string $place_holder, stdClass $row_upd, bool $value_vacio): array|string
     {
 
         if($cols<=0){
@@ -30,7 +30,7 @@ class org_representante_legal_html extends html_controler {
             return $this->error->error(mensaje: 'Error cold debe ser menor o igual a  12', data: $cols);
         }
 
-        $html =$this->directivas->input_text_required(disabled: false,name: $campo,place_holder: $campo,
+        $html =$this->directivas->input_text_required(disabled: false,name: $campo,place_holder: $place_holder,
             row_upd: $row_upd, value_vacio: $value_vacio);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input', data: $html);
