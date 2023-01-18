@@ -60,10 +60,15 @@ class _base {
         return $retorno;
     }
 
-    private function id_retorno_init(){
+    /**
+     * Integra el id de retorno despues de una ejecucion
+     * @return int
+     */
+    private function id_retorno_init(): int
+    {
         $id_retorno = -1;
         if(isset($_POST['id_retorno'])){
-            $id_retorno = $_POST['id_retorno'];
+            $id_retorno = (int)$_POST['id_retorno'];
         }
         return $id_retorno;
     }
