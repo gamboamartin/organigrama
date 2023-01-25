@@ -124,7 +124,9 @@ class link_org_empresa extends links_menu {
     }
 
     /**
-     * @param int $registro_id
+     * Integra los links de una empresa
+     * @param PDO $link Conexion a la base de datos
+     * @param int $registro_id Registro en proceso
      * @return stdClass|array
      */
     protected function links(PDO $link, int $registro_id): stdClass|array
@@ -139,6 +141,11 @@ class link_org_empresa extends links_menu {
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar link', data: $org_empresa_alta);
         }
+
+        if(!isset($this->links->org_empresa)) {
+            $this->links->org_empresa = new stdClass();
+        }
+
         $this->links->org_empresa->nueva_empresa = $org_empresa_alta;
 
         $org_empresa_ubicacion = $this->link_org_empresa_ubicacion(registro_id: $registro_id);

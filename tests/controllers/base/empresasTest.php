@@ -1,14 +1,15 @@
 <?php
 namespace tests\links\secciones;
 
+use gamboamartin\administrador\models\adm_namespace;
+use gamboamartin\administrador\models\adm_seccion;
 use gamboamartin\errores\errores;
 use gamboamartin\organigrama\controllers\controlador_org_empresa;
-use gamboamartin\test\liberator;
+
 use gamboamartin\test\test;
-use JsonException;
-use links\secciones\link_org_empresa;
-use models\org_empresa;
-use models\org_sucursal;
+
+
+
 use stdClass;
 
 
@@ -41,6 +42,34 @@ class empresasTest extends test {
         $_SESSION['usuario_id'] = '2';
 
         unset($_POST['seccion_retorno']);
+
+        $del = (new adm_namespace(link: $this->link))->elimina_todo();
+        if(errores::$error){
+            $error = (new errores())->error(mensaje: 'Error al eliminar namespace', data: $del);
+            print_r($error);
+            exit;
+        }
+
+        $adm_namespace['id'] = 1;
+        $adm_namespace['descripcion'] = 'gamboa.martin/acl';
+
+        $alta = (new adm_namespace(link: $this->link))->alta_registro($adm_namespace);
+        if(errores::$error){
+            $error = (new errores())->error(mensaje: 'Error al insertar namespace', data: $alta);
+            print_r($error);
+            exit;
+        }
+
+        $adm_seccion['id'] = 1;
+        $adm_seccion['descripcion'] = 'org_empresa';
+        $adm_seccion['adm_menu_id'] = '1';
+
+        $alta = (new adm_seccion(link: $this->link))->alta_registro($adm_seccion);
+        if(errores::$error){
+            $error = (new errores())->error(mensaje: 'Error al insertar seccion', data: $alta);
+            print_r($error);
+            exit;
+        }
 
 
         $ctl = new controlador_org_empresa(link: $this->link, paths_conf: $this->paths_conf);
