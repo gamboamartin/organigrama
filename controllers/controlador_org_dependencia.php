@@ -26,6 +26,17 @@ class controlador_org_dependencia extends system {
         $modelo = new org_dependencia(link: $link);
         $html = new org_dependencia_html($html);
         $obj_link = new links_menu(link: $link, registro_id:$this->registro_id);
+
+        $datatables = new stdClass();
+        $datatables->columns = array();
+        $datatables->columns['org_dependencia_id']['titulo'] = 'Id';
+        $datatables->columns['org_dependencia_descripcion']['titulo'] = 'Dependencia';
+        $datatables->columns['org_tipo_actividad_descripcion']['titulo'] = 'Tipo actividad';
+
+        $datatables->filtro = array();
+        $datatables->filtro[] = 'org_dependencia.id';
+        $datatables->filtro[] = 'org_dependencia.descripcion';
+        $datatables->filtro[] = 'org_tipo_actividad.descripcion';
         parent::__construct(html:$html, link: $link,modelo:  $modelo, obj_link: $obj_link, paths_conf: $paths_conf);
 
         $this->titulo_lista = 'Dependencias';
