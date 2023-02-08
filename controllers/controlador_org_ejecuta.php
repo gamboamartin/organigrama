@@ -26,7 +26,21 @@ class controlador_org_ejecuta extends system {
         $modelo = new org_ejecuta(link: $link);
         $html = new org_ejecuta_html($html);
         $obj_link = new links_menu(link: $link, registro_id:$this->registro_id);
-        parent::__construct(html:$html, link: $link,modelo:  $modelo, obj_link: $obj_link, paths_conf: $paths_conf);
+
+        $datatables = new stdClass();
+        $datatables->columns = array();
+        $datatables->columns['org_ejecuta_id']['titulo'] = 'Id';
+        $datatables->columns['org_ejecuta_descripcion']['titulo'] = 'Ejecuta';
+        $datatables->columns['org_actividad_descripcion']['titulo'] = 'Actividad';
+        $datatables->columns['org_puesto_descripcion']['titulo'] = 'Actividad';
+
+        $datatables->filtro = array();
+        $datatables->filtro[] = 'org_ejecuta.id';
+        $datatables->filtro[] = 'org_ejecuta.descripcion';
+        $datatables->filtro[] = 'org_actividad.descripcion';
+        $datatables->filtro[] = 'org_puesto.descripcion';
+        parent::__construct(html:$html, link: $link,modelo:  $modelo, obj_link: $obj_link, datatables: $datatables,
+            paths_conf: $paths_conf);
 
         $this->titulo_lista = 'Ejecuta';
 
