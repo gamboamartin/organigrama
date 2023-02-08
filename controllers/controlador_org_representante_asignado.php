@@ -25,7 +25,21 @@ class controlador_org_representante_asignado extends system {
         $modelo = new org_representante_asignado(link: $link);
         $html = new org_representante_asignado_html($html);
         $obj_link = new links_menu(link: $link, registro_id:$this->registro_id);
-        parent::__construct(html:$html, link: $link,modelo:  $modelo, obj_link: $obj_link, paths_conf: $paths_conf);
+
+        $datatables = new stdClass();
+        $datatables->columns = array();
+        $datatables->columns['org_representante_asignado_id']['titulo'] = 'Id';
+        $datatables->columns['org_representante_asignado_descripcion']['titulo'] = 'Representante Asignado';
+        $datatables->columns['org_representante_legal_descripcion']['titulo'] = 'Representante Legal';
+        $datatables->columns['org_empresa_descripcion']['titulo'] = 'Empresa';
+
+        $datatables->filtro = array();
+        $datatables->filtro[] = 'org_representante_asignado.id';
+        $datatables->filtro[] = 'org_representante_asignado.descripcion';
+        $datatables->filtro[] = 'org_representante_legal.descripcion';
+        $datatables->filtro[] = 'org_empresa.descripcion';
+        parent::__construct(html:$html, link: $link,modelo:  $modelo, obj_link: $obj_link, datatables: $datatables,
+            paths_conf: $paths_conf);
 
         $this->titulo_lista = 'Actividades';
 
