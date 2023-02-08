@@ -31,13 +31,16 @@ class controlador_org_dependencia extends system {
         $datatables->columns = array();
         $datatables->columns['org_dependencia_id']['titulo'] = 'Id';
         $datatables->columns['org_dependencia_descripcion']['titulo'] = 'Dependencia';
-        $datatables->columns['org_tipo_actividad_descripcion']['titulo'] = 'Tipo actividad';
+        $datatables->columns['org_puesto_empleado_descripcion']['titulo'] = 'Puesto Empleado';
+        $datatables->columns['org_puesto_jefe_descripcion']['titulo'] = 'Puesto Jefe';
 
         $datatables->filtro = array();
         $datatables->filtro[] = 'org_dependencia.id';
         $datatables->filtro[] = 'org_dependencia.descripcion';
-        $datatables->filtro[] = 'org_tipo_actividad.descripcion';
-        parent::__construct(html:$html, link: $link,modelo:  $modelo, obj_link: $obj_link, paths_conf: $paths_conf);
+        $datatables->filtro[] = 'org_puesto_empleado.descripcion';
+        $datatables->filtro[] = 'org_puesto_jefe.descripcion';
+        parent::__construct(html:$html, link: $link,modelo:  $modelo, obj_link: $obj_link, datatables: $datatables,
+            paths_conf: $paths_conf);
 
         $this->titulo_lista = 'Dependencias';
 
