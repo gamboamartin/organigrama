@@ -25,7 +25,19 @@ class controlador_org_porcentaje_act_economica extends system {
         $modelo = new org_porcentaje_act_economica(link: $link);
         $html = new org_porcentaje_act_economica_html(html: $html);
         $obj_link = new links_menu(link: $link, registro_id:$this->registro_id);
-        parent::__construct(html:$html, link: $link,modelo:  $modelo, obj_link: $obj_link, paths_conf: $paths_conf);
+
+        $datatables = new stdClass();
+        $datatables->columns = array();
+        $datatables->columns['org_porcentaje_act_economica_id']['titulo'] = 'Id';
+        $datatables->columns['org_porcentaje_act_economica_descripcion']['titulo'] = 'Actividad';
+        $datatables->columns['cat_sat_actividad_economica_descripcion']['titulo'] = 'Tipo actividad';
+
+        $datatables->filtro = array();
+        $datatables->filtro[] = 'org_porcentaje_act_economica.id';
+        $datatables->filtro[] = 'org_porcentaje_act_economica.descripcion';
+        $datatables->filtro[] = 'cat_sat_actividad_economica.descripcion';
+        parent::__construct(html:$html, link: $link,modelo:  $modelo, obj_link: $obj_link,datatables: $datatables,
+            paths_conf: $paths_conf);
 
         $this->titulo_lista = 'Porcentaje Actividad Economica';
 
