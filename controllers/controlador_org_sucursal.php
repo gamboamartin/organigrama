@@ -74,6 +74,8 @@ class controlador_org_sucursal extends empresas {
 
         $this->parents_verifica[] = new org_tipo_sucursal(link: $this->link);
         $this->parents_verifica[] = new dp_calle_pertenece(link: $this->link);
+
+        $this->verifica_parents_alta = true;
     }
     public function alta(bool $header, bool $ws = false): array|string
     {
