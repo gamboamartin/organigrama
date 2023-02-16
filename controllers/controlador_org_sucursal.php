@@ -8,11 +8,13 @@
  */
 namespace gamboamartin\organigrama\controllers;
 
+use gamboamartin\direccion_postal\models\dp_calle_pertenece;
 use gamboamartin\errores\errores;
 use gamboamartin\organigrama\controllers\base\empresas;
 use gamboamartin\organigrama\html\org_sucursal_html;
 use gamboamartin\organigrama\links\secciones\link_org_sucursal;
 use gamboamartin\organigrama\models\org_sucursal;
+use gamboamartin\organigrama\models\org_tipo_sucursal;
 use gamboamartin\template\html;
 use PDO;
 use stdClass;
@@ -69,6 +71,9 @@ class controlador_org_sucursal extends empresas {
             print_r($error);
             die('Error');
         }
+
+        $this->parents_verifica[] = new org_tipo_sucursal(link: $this->link);
+        $this->parents_verifica[] = new dp_calle_pertenece(link: $this->link);
     }
     public function alta(bool $header, bool $ws = false): array|string
     {

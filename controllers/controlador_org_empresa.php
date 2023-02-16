@@ -9,6 +9,7 @@
 namespace gamboamartin\organigrama\controllers;
 
 
+use gamboamartin\cat_sat\models\cat_sat_regimen_fiscal;
 use gamboamartin\direccion_postal\models\dp_calle_pertenece;
 use gamboamartin\direccion_postal\src\init;
 use gamboamartin\errores\errores;
@@ -20,6 +21,7 @@ use gamboamartin\organigrama\links\secciones\link_org_empresa;
 use gamboamartin\organigrama\models\org_departamento;
 use gamboamartin\organigrama\models\org_empresa;
 use gamboamartin\organigrama\models\org_sucursal;
+use gamboamartin\organigrama\models\org_tipo_empresa;
 use gamboamartin\system\actions;
 
 use gamboamartin\system\links_menu;
@@ -102,8 +104,6 @@ class controlador_org_empresa extends empresas {
         $this->controlador_org_departamento = new controlador_org_departamento(
             link: $this->link, paths_conf: $paths_conf);
 
-        /*$this->controlador_im_registro_patronal = new controlador_im_registro_patronal(
-            link: $this->link, paths_conf: $paths_conf);*/
 
         $link_org_sucursal_alta_bd = $obj_link->link_org_sucursal_alta_bd(link: $link,org_empresa_id: $this->registro_id);
         if (errores::$error) {
@@ -249,6 +249,10 @@ class controlador_org_empresa extends empresas {
             print_r($error);
             die('Error');
         }
+
+        $this->parents_verifica[] = new org_tipo_empresa(link: $this->link);
+        $this->parents_verifica[] = new dp_calle_pertenece(link: $this->link);
+        $this->parents_verifica[] = new cat_sat_regimen_fiscal(link: $this->link);
 
     }
 
