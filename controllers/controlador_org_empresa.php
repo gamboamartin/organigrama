@@ -63,7 +63,7 @@ class controlador_org_empresa extends empresas {
     public stdClass $departamentos ;
     public stdClass $registros_patronales ;
     public bool $muestra_btn_upd = true;
-    public array $keys_selects = array();
+    public array|stdClass $keys_selects = array();
     public controlador_org_departamento $controlador_org_departamento;
 
     public function __construct(PDO $link, html $html = new \gamboamartin\template_1\html(),

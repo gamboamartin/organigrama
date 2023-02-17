@@ -177,6 +177,17 @@ class base_test{
             }
         }
 
+        $existe = (new org_tipo_sucursal($link))->existe_by_id(registro_id: $org_tipo_sucursal_id);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al verificar si existe ', data: $existe);
+        }
+        if(!$existe) {
+            $alta = $this->alta_org_tipo_sucursal(link: $link, id: $org_tipo_sucursal_id);
+            if (errores::$error) {
+                return (new errores())->error(mensaje: 'Error al insertar ', data: $alta);
+            }
+        }
+
         $registro = array();
         $registro['id'] = $id;
         $registro['codigo'] = 1;
@@ -225,14 +236,14 @@ class base_test{
         return $alta;
     }
 
-    public function alta_org_tipo_sucursal(PDO $link): array|\stdClass
+    public function alta_org_tipo_sucursal(PDO $link, string $descripcion= 'MATRIZ', int $id = 1): array|\stdClass
     {
 
 
         $registro = array();
-        $registro['id'] = 1;
+        $registro['id'] = $id;
         $registro['codigo'] = 1;
-        $registro['descripcion'] = 1;
+        $registro['descripcion'] = $descripcion;
 
 
         $alta = (new org_tipo_sucursal($link))->alta_registro($registro);

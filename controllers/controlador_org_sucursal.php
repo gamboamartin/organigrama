@@ -21,7 +21,7 @@ use stdClass;
 
 class controlador_org_sucursal extends empresas {
 
-    public array $keys_selects = array();
+    public array|stdClass $keys_selects = array();
 
     public string $link_dp_pais_alta = '';
     public string $link_dp_estado_alta = '';

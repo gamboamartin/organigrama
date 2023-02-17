@@ -22,7 +22,7 @@ use stdClass;
 
 class controlador_org_tipo_empresa extends _ctl_parent_sin_codigo {
 
-    public array $keys_selects = array();
+    public array|stdClass $keys_selects = array();
     public string $link_org_empresa_alta_bd = '';
 
     public function __construct(PDO $link, html $html = new \gamboamartin\template_1\html(),
