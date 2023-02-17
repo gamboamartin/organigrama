@@ -33,7 +33,7 @@ class controlador_org_sucursal extends empresas {
     public string $link_im_registro_patronal_alta_bd = '';
     public string $link_im_registro_patronal_modifica_bd = '';
 
-    public int $im_registro_patronal_id = -1;
+    public int $em_registro_patronal_id = -1;
     protected int $org_empresa_id = -1;
 
     public function __construct(PDO $link, html $html = new \gamboamartin\template_1\html(),
@@ -302,10 +302,13 @@ class controlador_org_sucursal extends empresas {
         return $this->keys_selects;
     }
 
+    /**
+     * @return array
+     */
     private function inicializa_ids(): array
     {
-        if (isset($_GET['im_registro_patronal_id'])){
-            $this->im_registro_patronal_id = $_GET['im_registro_patronal_id'];
+        if (isset($_GET['em_registro_patronal_id'])){
+            $this->em_registro_patronal_id = $_GET['em_registro_patronal_id'];
         }
 
         return $_GET;
