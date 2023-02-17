@@ -72,8 +72,19 @@ class base_test{
 
 
     public function alta_org_empresa(PDO $link, int $dp_calle_pertenece_id = 1, int $id = 1,
-                                     int $org_tipo_empresa_id = 1): array|\stdClass
+                                     int $org_tipo_empresa_id = 1, int $org_tipo_sucursal_id = 1): array|\stdClass
     {
+
+        $existe = (new org_tipo_sucursal($link))->existe_by_id(registro_id: $org_tipo_sucursal_id);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al validar si existe ', data: $existe);
+        }
+        if(!$existe){
+            $alta = $this->alta_org_tipo_sucursal(link: $link, id: $org_tipo_sucursal_id);
+            if(errores::$error){
+                return (new errores())->error(mensaje: 'Error al insertar ', data: $alta);
+            }
+        }
 
 
         $existe = (new dp_calle_pertenece($link))->existe_by_id(registro_id: $dp_calle_pertenece_id);
@@ -239,13 +250,14 @@ class base_test{
         return $alta;
     }
 
-    public function alta_org_tipo_sucursal(PDO $link, string $descripcion= 'MATRIZ', int $id = 1): array|\stdClass
+    public function alta_org_tipo_sucursal(PDO $link, string $codigo = 'MAT', string $descripcion= 'MATRIZ',
+                                           int $id = 1): array|\stdClass
     {
 
 
         $registro = array();
         $registro['id'] = $id;
-        $registro['codigo'] = 1;
+        $registro['codigo'] = $codigo;
         $registro['descripcion'] = $descripcion;
 
 

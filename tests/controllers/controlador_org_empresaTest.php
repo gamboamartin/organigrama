@@ -43,6 +43,21 @@ class controlador_org_empresaTest extends test {
         $_POST = array();
         $_POST['codigo'] = 2;
 
+        $del = (new base_test())->del_org_tipo_sucursal(link: $this->link);
+        if(errores::$error){
+            $error = (new errores())->error('Error al del', $del);
+            print_r($error);
+            exit;
+        }
+
+        $alta_org_tipo_sucursal = (new base_test())->alta_org_tipo_sucursal(link: $this->link, codigo: 'SUC',
+            descripcion: 'SUC', id: 2);
+        if(errores::$error){
+            $error = (new errores())->error('Error al insertar', $alta_org_tipo_sucursal);
+            print_r($error);
+            exit;
+        }
+
         $alta_org_empresa = (new base_test())->alta_org_empresa(link: $this->link);
         if(errores::$error){
             $error = (new errores())->error('Error al insertar', $alta_org_empresa);
@@ -54,6 +69,7 @@ class controlador_org_empresaTest extends test {
         $ctl = new controlador_org_empresa(link: $this->link, paths_conf: $this->paths_conf);
         $ctl->registro_id = 1;
         $resultado = $ctl->alta_sucursal_bd(header: false, ws: false);
+
 
         $this->assertIsObject($resultado);
         $this->assertNotTrue(errores::$error);
