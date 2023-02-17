@@ -227,12 +227,20 @@ class controlador_org_sucursal extends empresas {
         return $link;
     }
 
+    /**
+     * Inicializa las propiedades de un input
+     * @return array
+     */
     private function inicializa_propiedades(): array
     {
+        /**
+         * REFACTORIZAR
+         */
         $identificador = "org_empresa_id";
         $propiedades = array("label" => "Empresa","cols" => 12, "extra_params_keys" =>
             array("org_empresa_fecha_inicio_operaciones","dp_pais_id","dp_estado_id","dp_municipio_id","dp_cp_id",
                 "dp_colonia_postal_id","dp_calle_pertenece_id"));
+
         $prop = $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
         if(errores::$error){
             return $this->errores->error(mensaje: 'Error al inicializa propiedad',data:  $prop);
