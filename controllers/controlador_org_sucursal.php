@@ -152,6 +152,66 @@ class controlador_org_sucursal extends empresas {
         return $data;
     }
 
+    private function datos_inputs(){
+        $datos = array();
+
+        $propiedades = array("label" => "Empresa","cols" => 12, "extra_params_keys" =>
+            array("org_empresa_fecha_inicio_operaciones","dp_pais_id","dp_estado_id","dp_municipio_id","dp_cp_id",
+                "dp_colonia_postal_id","dp_calle_pertenece_id"));
+
+        $datos['org_empresa_id'] = $propiedades;
+
+        $propiedades = array("label" => "Tipo Sucursal","cols" => 12);
+        $datos['org_tipo_sucursal_id'] = $propiedades;
+
+        $propiedades = array("label" => "Pais");
+        $datos['dp_pais_id'] = $propiedades;
+
+        $propiedades = array("label" => "Estado","con_registros"=> false);
+        $datos['dp_estado_id'] = $propiedades;
+
+        $propiedades = array("label" => "Municipio","con_registros"=> false);
+        $datos['dp_municipio_id'] = $propiedades;
+
+        $propiedades = array("label" => "CP","con_registros"=> false);
+        $datos['dp_cp_id'] = $propiedades;
+
+        $propiedades = array("label" => "Colonia Postal","con_registros"=> false);
+        $datos['dp_colonia_postal_id'] = $propiedades;
+
+        $propiedades = array("label" => "Calle","con_registros"=> false);
+        $datos['dp_calle_pertenece_id'] = $propiedades;
+
+        $propiedades = array("place_holder" => "Id","disabled" => true);
+        $datos['id'] = $propiedades;
+
+        $propiedades = array("place_holder" => "Codigo");
+        $datos['codigo'] = $propiedades;
+
+        $propiedades = array("place_holder" => "Serie");
+        $datos['serie'] = $propiedades;
+
+        $propiedades = array("place_holder" => "Exterior");
+        $datos['exterior'] = $propiedades;
+
+        $propiedades = array("place_holder" => "Interior");
+        $datos['interior'] = $propiedades;
+
+        $propiedades = array("place_holder" => "telefono 1","cols" => 4);
+        $datos['telefono_1'] = $propiedades;
+
+        $propiedades = array("place_holder" => "Telefono 2","cols" => 4);
+        $datos['telefono_2'] = $propiedades;
+
+        $propiedades = array("place_holder" => "Telefono 3","cols" => 4);
+        $datos['telefono_3'] = $propiedades;
+
+        $propiedades = array("place_holder" => "Fecha Inicio");
+        $datos['fecha_inicio_operaciones'] = $propiedades;
+
+        return $datos;
+    }
+
     public function get_sucursal(bool $header, bool $ws = true): array|stdClass
     {
         $keys['org_empresa'] = array('id','descripcion','codigo','codigo_bis');;
@@ -238,63 +298,11 @@ class controlador_org_sucursal extends empresas {
         /**
          * REFACTORIZAR
          */
-
-
-        $datos = array();
-
-        $propiedades = array("label" => "Empresa","cols" => 12, "extra_params_keys" =>
-            array("org_empresa_fecha_inicio_operaciones","dp_pais_id","dp_estado_id","dp_municipio_id","dp_cp_id",
-                "dp_colonia_postal_id","dp_calle_pertenece_id"));
-
-        $datos['org_empresa_id'] = $propiedades;
-
-        $propiedades = array("label" => "Tipo Sucursal","cols" => 12);
-        $datos['org_tipo_sucursal_id'] = $propiedades;
-
-        $propiedades = array("label" => "Pais");
-        $datos['dp_pais_id'] = $propiedades;
-
-        $propiedades = array("label" => "Estado","con_registros"=> false);
-        $datos['dp_estado_id'] = $propiedades;
-
-        $propiedades = array("label" => "Municipio","con_registros"=> false);
-        $datos['dp_municipio_id'] = $propiedades;
-
-        $propiedades = array("label" => "CP","con_registros"=> false);
-        $datos['dp_cp_id'] = $propiedades;
-
-        $propiedades = array("label" => "Colonia Postal","con_registros"=> false);
-        $datos['dp_colonia_postal_id'] = $propiedades;
-
-        $propiedades = array("label" => "Calle","con_registros"=> false);
-        $datos['dp_calle_pertenece_id'] = $propiedades;
-
-        $propiedades = array("place_holder" => "Id","disabled" => true);
-        $datos['id'] = $propiedades;
-
-        $propiedades = array("place_holder" => "Codigo");
-        $datos['codigo'] = $propiedades;
-
-        $propiedades = array("place_holder" => "Serie");
-        $datos['serie'] = $propiedades;
-
-        $propiedades = array("place_holder" => "Exterior");
-        $datos['exterior'] = $propiedades;
-
-        $propiedades = array("place_holder" => "Interior");
-        $datos['interior'] = $propiedades;
-
-        $propiedades = array("place_holder" => "telefono 1","cols" => 4);
-        $datos['telefono_1'] = $propiedades;
-
-        $propiedades = array("place_holder" => "Telefono 2","cols" => 4);
-        $datos['telefono_2'] = $propiedades;
-
-        $propiedades = array("place_holder" => "Telefono 3","cols" => 4);
-        $datos['telefono_3'] = $propiedades;
-
-        $propiedades = array("place_holder" => "Fecha Inicio");
-        $datos['fecha_inicio_operaciones'] = $propiedades;
+        
+        $datos = $this->datos_inputs();
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al inicializa propiedad',data:  $datos);
+        }
 
 
         foreach ($datos as $identificador=>$propiedades){
