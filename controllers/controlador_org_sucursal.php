@@ -295,23 +295,15 @@ class controlador_org_sucursal extends empresas {
      */
     private function inicializa_propiedades(): array
     {
-        /**
-         * REFACTORIZAR
-         */
-        
         $datos = $this->datos_inputs();
         if(errores::$error){
             return $this->errores->error(mensaje: 'Error al inicializa propiedad',data:  $datos);
         }
 
-
-        foreach ($datos as $identificador=>$propiedades){
-            $prop = $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
-            if(errores::$error){
-                return $this->errores->error(mensaje: 'Error al inicializa propiedad',data:  $prop);
-            }
+        $data = $this->integra_data(datos: $datos);
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al inicializa propiedades',data:  $data);
         }
-
 
         return $this->keys_selects;
     }
@@ -326,6 +318,19 @@ class controlador_org_sucursal extends empresas {
         }
 
         return $_GET;
+    }
+
+    private function integra_data(array $datos): array
+    {
+        $data = array();
+        foreach ($datos as $identificador=>$propiedades){
+            $prop = $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
+            if(errores::$error){
+                return $this->errores->error(mensaje: 'Error al inicializa propiedad',data:  $prop);
+            }
+            $data[] = $prop;
+        }
+        return $data;
     }
 
     public function modifica(bool $header, bool $ws = false): array|stdClass
