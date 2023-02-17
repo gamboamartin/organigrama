@@ -13,6 +13,7 @@ use gamboamartin\errores\errores;
 use gamboamartin\organigrama\controllers\base\empresas;
 use gamboamartin\organigrama\html\org_sucursal_html;
 use gamboamartin\organigrama\links\secciones\link_org_sucursal;
+use gamboamartin\organigrama\models\org_empresa;
 use gamboamartin\organigrama\models\org_sucursal;
 use gamboamartin\organigrama\models\org_tipo_sucursal;
 use gamboamartin\template\html;
@@ -74,6 +75,7 @@ class controlador_org_sucursal extends empresas {
 
         $this->parents_verifica[] = new org_tipo_sucursal(link: $this->link);
         $this->parents_verifica[] = new dp_calle_pertenece(link: $this->link);
+        $this->parents_verifica[] = new org_empresa(link: $this->link);
 
         $this->verifica_parents_alta = true;
     }
