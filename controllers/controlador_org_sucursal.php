@@ -238,127 +238,72 @@ class controlador_org_sucursal extends empresas {
         /**
          * REFACTORIZAR
          */
-        $identificador = "org_empresa_id";
+
+
+        $datos = array();
+
         $propiedades = array("label" => "Empresa","cols" => 12, "extra_params_keys" =>
             array("org_empresa_fecha_inicio_operaciones","dp_pais_id","dp_estado_id","dp_municipio_id","dp_cp_id",
                 "dp_colonia_postal_id","dp_calle_pertenece_id"));
 
-        $prop = $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
-        if(errores::$error){
-            return $this->errores->error(mensaje: 'Error al inicializa propiedad',data:  $prop);
-        }
+        $datos['org_empresa_id'] = $propiedades;
 
-        $identificador = "org_tipo_sucursal_id";
         $propiedades = array("label" => "Tipo Sucursal","cols" => 12);
-        $prop =$this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
-        if(errores::$error){
-            return $this->errores->error(mensaje: 'Error al inicializa propiedad',data:  $prop);
-        }
+        $datos['org_tipo_sucursal_id'] = $propiedades;
 
-        $identificador = "dp_pais_id";
         $propiedades = array("label" => "Pais");
-        $prop =$this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
-        if(errores::$error){
-            return $this->errores->error(mensaje: 'Error al inicializa propiedad',data:  $prop);
-        }
+        $datos['dp_pais_id'] = $propiedades;
 
-        $identificador = "dp_estado_id";
         $propiedades = array("label" => "Estado","con_registros"=> false);
-        $prop =$this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
-        if(errores::$error){
-            return $this->errores->error(mensaje: 'Error al inicializa propiedad',data:  $prop);
-        }
+        $datos['dp_estado_id'] = $propiedades;
 
-        $identificador = "dp_municipio_id";
         $propiedades = array("label" => "Municipio","con_registros"=> false);
-        $prop =$this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
-        if(errores::$error){
-            return $this->errores->error(mensaje: 'Error al inicializa propiedad',data:  $prop);
-        }
+        $datos['dp_municipio_id'] = $propiedades;
 
-        $identificador = "dp_cp_id";
         $propiedades = array("label" => "CP","con_registros"=> false);
-        $prop =$this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
-        if(errores::$error){
-            return $this->errores->error(mensaje: 'Error al inicializa propiedad',data:  $prop);
-        }
+        $datos['dp_cp_id'] = $propiedades;
 
-        $identificador = "dp_colonia_postal_id";
         $propiedades = array("label" => "Colonia Postal","con_registros"=> false);
-        $prop =$this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
-        if(errores::$error){
-            return $this->errores->error(mensaje: 'Error al inicializa propiedad',data:  $prop);
-        }
+        $datos['dp_colonia_postal_id'] = $propiedades;
 
-        $identificador = "dp_calle_pertenece_id";
         $propiedades = array("label" => "Calle","con_registros"=> false);
-        $prop =$this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
-        if(errores::$error){
-            return $this->errores->error(mensaje: 'Error al inicializa propiedad',data:  $prop);
-        }
+        $datos['dp_calle_pertenece_id'] = $propiedades;
 
-        $identificador = "id";
         $propiedades = array("place_holder" => "Id","disabled" => true);
-        $prop =$this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
-        if(errores::$error){
-            return $this->errores->error(mensaje: 'Error al inicializa propiedad',data:  $prop);
-        }
+        $datos['id'] = $propiedades;
 
-        $identificador = "codigo";
         $propiedades = array("place_holder" => "Codigo");
-        $prop =$this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
-        if(errores::$error){
-            return $this->errores->error(mensaje: 'Error al inicializa propiedad',data:  $prop);
-        }
+        $datos['codigo'] = $propiedades;
 
-        $identificador = "serie";
         $propiedades = array("place_holder" => "Serie");
-        $prop =$this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
-        if(errores::$error){
-            return $this->errores->error(mensaje: 'Error al inicializa propiedad',data:  $prop);
-        }
+        $datos['serie'] = $propiedades;
 
-        $identificador = "exterior";
         $propiedades = array("place_holder" => "Exterior");
-        $prop =$this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
-        if(errores::$error){
-            return $this->errores->error(mensaje: 'Error al inicializa propiedad',data:  $prop);
-        }
+        $datos['exterior'] = $propiedades;
 
-        $identificador = "interior";
         $propiedades = array("place_holder" => "Interior");
-        $prop =$this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
-        if(errores::$error){
-            return $this->errores->error(mensaje: 'Error al inicializa propiedad',data:  $prop);
-        }
+        $datos['interior'] = $propiedades;
 
-        $identificador = "telefono_1";
         $propiedades = array("place_holder" => "telefono 1","cols" => 4);
-        $prop =$this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
-        if(errores::$error){
-            return $this->errores->error(mensaje: 'Error al inicializa propiedad',data:  $prop);
-        }
+        $datos['telefono_1'] = $propiedades;
 
-        $identificador = "telefono_2";
         $propiedades = array("place_holder" => "Telefono 2","cols" => 4);
-        $prop =$this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
-        if(errores::$error){
-            return $this->errores->error(mensaje: 'Error al inicializa propiedad',data:  $prop);
-        }
+        $datos['telefono_2'] = $propiedades;
 
-        $identificador = "telefono_3";
         $propiedades = array("place_holder" => "Telefono 3","cols" => 4);
-        $prop =$this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
-        if(errores::$error){
-            return $this->errores->error(mensaje: 'Error al inicializa propiedad',data:  $prop);
+        $datos['telefono_3'] = $propiedades;
+
+        $propiedades = array("place_holder" => "Fecha Inicio");
+        $datos['fecha_inicio_operaciones'] = $propiedades;
+
+
+        foreach ($datos as $identificador=>$propiedades){
+            $prop = $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
+            if(errores::$error){
+                return $this->errores->error(mensaje: 'Error al inicializa propiedad',data:  $prop);
+            }
         }
 
-        $identificador = "fecha_inicio_operaciones";
-        $propiedades = array("place_holder" => "Fecha Inicio");
-        $prop = $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
-        if(errores::$error){
-            return $this->errores->error(mensaje: 'Error al inicializa propiedad',data:  $prop);
-        }
 
         return $this->keys_selects;
     }
