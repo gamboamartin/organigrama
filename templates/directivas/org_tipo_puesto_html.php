@@ -14,7 +14,7 @@ class org_tipo_puesto_html extends html_controler {
         $modelo = new org_tipo_puesto($link);
 
         $select = $this->select_catalogo(cols: $cols, con_registros: $con_registros, id_selected: $id_selected,
-            modelo: $modelo, disabled: $disabled, label: "Puesto", required: true);
+            modelo: $modelo, disabled: $disabled, label: "Tipo Puesto", required: true);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select', data: $select);
         }
