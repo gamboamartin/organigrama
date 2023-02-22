@@ -155,6 +155,7 @@ class controlador_org_sucursal extends empresas {
     /**
      * Genera las propiedades
      * @return array
+     * @version 5.19.7
      */
     private function datos_inputs(): array
     {

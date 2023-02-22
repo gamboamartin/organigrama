@@ -16,6 +16,17 @@ use PDO;
 
 class base_test{
 
+    public function alta_adm_seccion(PDO $link, string $descripcion = 'adm_seccion', int $id = 1): array|\stdClass
+    {
+
+        $alta = (new \gamboamartin\administrador\tests\base_test())->alta_adm_seccion(
+            link: $link, descripcion: $descripcion, id: $id);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al insertar', data: $alta);
+        }
+        return $alta;
+    }
+
     public function alta_dp_calle_pertenece(PDO $link, int $id = 1, string $predeterminado = 'inactivo'): array|\stdClass
     {
 
@@ -285,6 +296,16 @@ class base_test{
         return $del;
     }
 
+
+    public function del_adm_seccion(PDO $link): array
+    {
+
+        $del = (new \gamboamartin\administrador\tests\base_test())->del_adm_seccion(link: $link);
+        if(errores::$error){
+            return (new errores())->error('Error al eliminar', $del);
+        }
+        return $del;
+    }
     public function del_dp_calle_pertenece(PDO $link): array
     {
 

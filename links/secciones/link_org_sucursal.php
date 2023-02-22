@@ -32,6 +32,9 @@ class link_org_sucursal extends links_menu {
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar link', data: $org_sucursal_alta);
         }
+        if(!isset($this->links->org_sucursal)){
+            $this->links->org_sucursal = new stdClass();
+        }
         $this->links->org_sucursal->nueva_sucursal = $org_sucursal_alta;
 
         return $links;

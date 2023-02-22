@@ -4,6 +4,7 @@ namespace tests\links\secciones;
 use gamboamartin\errores\errores;
 use gamboamartin\organigrama\controllers\controlador_org_puesto;
 use gamboamartin\organigrama\html\org_puesto_html;
+use gamboamartin\organigrama\tests\base_test;
 use gamboamartin\template_1\html;
 use gamboamartin\test\liberator;
 use gamboamartin\test\test;
@@ -39,6 +40,20 @@ class org_puesto_htmlTest extends test {
         $html_ = new html();
         $html = new org_puesto_html($html_);
         $html = new liberator($html);
+
+        $del = (new base_test())->del_adm_seccion(link: $this->link);
+        if(errores::$error){
+            $error = (new errores())->error('Error al del', $del);
+            print_r($error);
+            exit;
+        }
+
+        $alta = (new base_test())->alta_adm_seccion(link: $this->link, descripcion: 'org_empresa');
+        if(errores::$error){
+            $error = (new errores())->error('Error al insertar', $alta);
+            print_r($error);
+            exit;
+        }
 
         $controler = new controlador_org_puesto(link: $this->link, paths_conf: $this->paths_conf);
         $inputs = new stdClass();
