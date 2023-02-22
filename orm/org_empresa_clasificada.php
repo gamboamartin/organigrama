@@ -11,5 +11,7 @@ class org_empresa_clasificada extends modelo{
 
         parent::__construct(link: $link,tabla:  $tabla, campos_obligatorios: $campos_obligatorios,
             columnas: $columnas);
+
+        $this->etiqueta = 'Empresa clasificada';
     }
 }

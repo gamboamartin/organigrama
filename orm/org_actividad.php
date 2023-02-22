@@ -13,5 +13,6 @@ class org_actividad extends _modelo_parent_sin_codigo{
             columnas: $columnas);
 
         $this->NAMESPACE = __NAMESPACE__;
+        $this->etiqueta = 'Actividad';
     }
 }

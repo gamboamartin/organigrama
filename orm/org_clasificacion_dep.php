@@ -25,6 +25,8 @@ class org_clasificacion_dep extends _modelo_parent_sin_codigo{
             campos_view: $campos_view, columnas_extra: $columnas_extra, no_duplicados: $no_duplicados,
             tipo_campos: $tipo_campos, childrens: $childrens);
         $this->NAMESPACE = __NAMESPACE__;
+
+        $this->etiqueta = 'Clasificacion de departamento';
     }
 
 }

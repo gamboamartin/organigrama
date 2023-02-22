@@ -30,6 +30,8 @@ class org_empresa extends modelo{
 
         $this->NAMESPACE = __NAMESPACE__;
 
+        $this->etiqueta = 'Empresa';
+
     }
 
     public function alta_bd(): array|stdClass

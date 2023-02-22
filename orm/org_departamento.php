@@ -22,6 +22,8 @@ class org_departamento extends _modelo_parent_sin_codigo{
             campos_view: $campos_view, no_duplicados: $no_duplicados, tipo_campos: $tipo_campos);
 
         $this->NAMESPACE = __NAMESPACE__;
+
+        $this->etiqueta = 'Departamento';
     }
 
 

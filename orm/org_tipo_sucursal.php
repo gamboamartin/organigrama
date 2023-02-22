@@ -19,6 +19,8 @@ class org_tipo_sucursal extends _modelo_parent_sin_codigo{
             columnas: $columnas, campos_view: $campos_view);
 
         $this->NAMESPACE = __NAMESPACE__;
+
+        $this->etiqueta = 'Tipo Sucursal';
     }
 
 }

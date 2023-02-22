@@ -11,5 +11,7 @@ class org_porcentaje_act_economica extends modelo{
 
         parent::__construct(link: $link,tabla:  $tabla, campos_obligatorios: $campos_obligatorios,
             columnas: $columnas);
+
+        $this->etiqueta = 'POrc actividad economica';
     }
 }

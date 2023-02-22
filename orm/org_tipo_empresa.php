@@ -22,6 +22,8 @@ class org_tipo_empresa extends _modelo_parent_sin_codigo{
             columnas: $columnas, campos_view: $campos_view, columnas_extra: $columnas_extra);
 
         $this->NAMESPACE = __NAMESPACE__;
+
+        $this->etiqueta = 'Tipo Empresa';
     }
 
 

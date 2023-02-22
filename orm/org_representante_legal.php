@@ -13,5 +13,7 @@ class org_representante_legal extends modelo{
             columnas: $columnas);
 
         $this->NAMESPACE = __NAMESPACE__;
+
+        $this->etiqueta = 'Representante legal';
     }
 }

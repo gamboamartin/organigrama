@@ -21,6 +21,8 @@ class org_puesto extends _modelo_parent_sin_codigo{
 
         $this->NAMESPACE = __NAMESPACE__;
 
+        $this->etiqueta = 'Puesto';
+
 
     }
 

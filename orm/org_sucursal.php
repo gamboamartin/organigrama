@@ -64,6 +64,8 @@ class org_sucursal extends modelo{
             campos_view: $campos_view, no_duplicados: $no_duplicados, tipo_campos: $tipo_campos);
 
         $this->NAMESPACE = __NAMESPACE__;
+
+        $this->etiqueta = 'Sucursal';
     }
 
     /**
