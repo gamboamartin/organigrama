@@ -152,7 +152,12 @@ class controlador_org_sucursal extends empresas {
         return $data;
     }
 
-    private function datos_inputs(){
+    /**
+     * Genera las propiedades
+     * @return array
+     */
+    private function datos_inputs(): array
+    {
         $datos = array();
 
         $propiedades = array("label" => "Empresa","cols" => 12, "extra_params_keys" =>
