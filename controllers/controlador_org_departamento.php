@@ -10,6 +10,8 @@ namespace gamboamartin\organigrama\controllers;
 
 use gamboamartin\errores\errores;
 use gamboamartin\organigrama\html\org_departamento_html;
+use gamboamartin\organigrama\html\org_puesto_html;
+use gamboamartin\organigrama\html\org_tipo_puesto_html;
 use gamboamartin\organigrama\models\org_departamento;
 use gamboamartin\system\_ctl_parent_sin_codigo;
 use gamboamartin\system\links_menu;
@@ -21,6 +23,7 @@ use Throwable;
 class controlador_org_departamento extends _ctl_parent_sin_codigo {
 
     public array|stdClass $keys_selects = array();
+    public string $link_org_puesto_alta_bd = '';
 
     public function __construct(PDO $link, html $html = new \gamboamartin\template_1\html(),
                                 stdClass $paths_conf = new stdClass()){
@@ -45,6 +48,14 @@ class controlador_org_departamento extends _ctl_parent_sin_codigo {
             paths_conf: $paths_conf);
 
         $this->titulo_lista = 'Departamentos';
+
+        $link_org_puesto_alta_bd = $this->obj_link->link_alta_bd(link: $link, seccion: 'org_puesto');
+        if(errores::$error){
+            $error = $this->errores->error(mensaje: 'Error al obtener link',data:  $link_org_puesto_alta_bd);
+            print_r($error);
+            exit;
+        }
+        $this->link_org_puesto_alta_bd = $link_org_puesto_alta_bd;
 
 
     }
@@ -129,6 +140,36 @@ class controlador_org_departamento extends _ctl_parent_sin_codigo {
         return $campos_view;
     }
 
+    protected function inputs_children(stdClass $registro): array|stdClass{
+        $select_org_departamento_id = (new org_departamento_html(html: $this->html_base))->select_org_departamento_id(
+            cols:12,con_registros: true,id_selected:  $registro->org_departamento_id,link:  $this->link, disabled: true);
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al obtener select_org_departamento_id',data:  $select_org_departamento_id);
+        }
+
+        $select_org_tipo_puesto_id = (new org_tipo_puesto_html(html: $this->html_base))->select_org_tipo_puesto_id(
+            cols:12,con_registros: true,id_selected:  -1,link:  $this->link);
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al obtener select_org_tipo_puesto_id',data:  $select_org_tipo_puesto_id);
+        }
+
+        $org_puesto_descripcion = (new org_puesto_html(html: $this->html_base))->input_descripcion(
+            cols:12,row_upd:  new stdClass(), value_vacio: true, place_holder: 'Puesto');
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al obtener org_departamento_descripcion',
+                data:  $org_puesto_descripcion);
+        }
+
+
+        $this->inputs = new stdClass();
+        $this->inputs->select = new stdClass();
+        $this->inputs->select->select_org_departamento_id = $select_org_departamento_id;
+        $this->inputs->select->select_org_tipo_puesto_id = $select_org_tipo_puesto_id;
+        $this->inputs->org_puesto_descripcion = $org_puesto_descripcion;
+
+        return $this->inputs;
+    }
+
     protected function key_selects_txt(array $keys_selects): array
     {
 
@@ -184,7 +225,28 @@ class controlador_org_departamento extends _ctl_parent_sin_codigo {
         return $r_modifica;
     }
 
+    public function puestos(bool $header = true, bool $ws = false): array|stdClass|string
+    {
 
+        $data_view = new stdClass();
+        $data_view->names = array('Id','Puesto','Tipo Puesto');
+        $data_view->keys_data = array('org_puesto_id','org_puesto_descripcion',
+            'org_tipo_puesto');
+        $data_view->key_actions = 'acciones';
+        $data_view->namespace_model = 'gamboamartin\\organigrama\\models';
+        $data_view->name_model_children = 'org_puesto';
+
+        $contenido_table = $this->contenido_children(data_view: $data_view, next_accion: __FUNCTION__,
+            not_actions: $this->not_actions);
+        if(errores::$error){
+            return $this->retorno_error(
+                mensaje: 'Error al obtener tbody',data:  $contenido_table, header: $header,ws:  $ws);
+        }
+
+
+        return $contenido_table;
+
+    }
 
 
 
