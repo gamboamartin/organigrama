@@ -314,6 +314,7 @@ class controlador_org_sucursal extends empresas {
     }
 
     /**
+     * Inicializa los elementos id externos
      * @return array
      */
     private function inicializa_ids(): array
