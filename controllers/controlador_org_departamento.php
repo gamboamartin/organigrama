@@ -144,7 +144,7 @@ class controlador_org_departamento extends _ctl_parent_sin_codigo {
     {
 
         $select_org_departamento_id = (new org_departamento_html(html: $this->html_base))->select_org_departamento_id(
-            cols:12,con_registros: true,id_selected:  $registro->org_departamento_id,link:  $this->link, disabled: true);
+            cols:12,con_registros: true,id_selected:  -1,link:  $this->link);
         if(errores::$error){
             return $this->errores->error(mensaje: 'Error al obtener select_org_departamento_id',data:  $select_org_departamento_id);
         }
