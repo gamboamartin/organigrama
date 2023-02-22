@@ -140,7 +140,9 @@ class controlador_org_departamento extends _ctl_parent_sin_codigo {
         return $campos_view;
     }
 
-    protected function inputs_children(stdClass $registro): array|stdClass{
+    protected function inputs_children(stdClass $registro): array|stdClass
+    {
+
         $select_org_departamento_id = (new org_departamento_html(html: $this->html_base))->select_org_departamento_id(
             cols:12,con_registros: true,id_selected:  $registro->org_departamento_id,link:  $this->link, disabled: true);
         if(errores::$error){
@@ -156,15 +158,15 @@ class controlador_org_departamento extends _ctl_parent_sin_codigo {
         $org_puesto_descripcion = (new org_puesto_html(html: $this->html_base))->input_descripcion(
             cols:12,row_upd:  new stdClass(), value_vacio: true, place_holder: 'Puesto');
         if(errores::$error){
-            return $this->errores->error(mensaje: 'Error al obtener org_departamento_descripcion',
+            return $this->errores->error(mensaje: 'Error al obtener org_puesto_descripcion',
                 data:  $org_puesto_descripcion);
         }
 
 
         $this->inputs = new stdClass();
         $this->inputs->select = new stdClass();
-        $this->inputs->select->select_org_departamento_id = $select_org_departamento_id;
-        $this->inputs->select->select_org_tipo_puesto_id = $select_org_tipo_puesto_id;
+        $this->inputs->select->org_departamento_id = $select_org_departamento_id;
+        $this->inputs->select->org_tipo_puesto_id = $select_org_tipo_puesto_id;
         $this->inputs->org_puesto_descripcion = $org_puesto_descripcion;
 
         return $this->inputs;
@@ -229,9 +231,9 @@ class controlador_org_departamento extends _ctl_parent_sin_codigo {
     {
 
         $data_view = new stdClass();
-        $data_view->names = array('Id','Puesto','Tipo Puesto');
+        $data_view->names = array('Id','Puesto','Tipo Puesto','Acciones');
         $data_view->keys_data = array('org_puesto_id','org_puesto_descripcion',
-            'org_tipo_puesto');
+            'org_tipo_puesto_id');
         $data_view->key_actions = 'acciones';
         $data_view->namespace_model = 'gamboamartin\\organigrama\\models';
         $data_view->name_model_children = 'org_puesto';
