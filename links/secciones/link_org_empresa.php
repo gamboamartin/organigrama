@@ -37,12 +37,12 @@ class link_org_empresa extends links_menu {
 
     /**
      * Genera un link con llama seccion org sucursal accion alta_sucursal_bd con el registro aplicado de emepresa
+     * @param PDO $link
      * @param int $org_empresa_id identificador de empresa
      * @return string
      * @version 0.251.34
-     *
      */
-    public function link_org_sucursal_alta_bd(PDO $link, int $org_empresa_id): string
+    final public function link_org_sucursal_alta_bd(PDO $link, int $org_empresa_id): string
     {
 
         $link = $this->link_con_id(accion:'alta_sucursal_bd', link: $link,registro_id: $org_empresa_id,seccion:  'org_empresa');
@@ -85,6 +85,7 @@ class link_org_empresa extends links_menu {
 
     /**
      * Genera un link de sucursal modifica
+     * @param PDO $link
      * @param int $org_empresa_id Empresa
      * @param int $org_sucursal_id sucursal ligada a empresa
      * @return string
@@ -101,6 +102,13 @@ class link_org_empresa extends links_menu {
         return $link;
     }
 
+    /**
+     * Genera un link de tipo empresa
+     * @param PDO $link
+     * @param int $org_empresa_id
+     * @param int $org_departamento_id
+     * @return string
+     */
     public function link_org_departamento_modifica_bd(PDO $link, int $org_empresa_id, int $org_departamento_id): string
     {
         $link = $this->link_con_id(accion:'modifica_departamento_bd', link: $link,registro_id: $org_empresa_id,seccion:  'org_empresa');

@@ -24,7 +24,7 @@ use gamboamartin\organigrama\models\org_sucursal;
 use gamboamartin\organigrama\models\org_tipo_empresa;
 use gamboamartin\system\actions;
 
-use gamboamartin\system\links_menu;
+
 use gamboamartin\template\html;
 use html\dp_calle_html;
 use html\dp_colonia_html;
@@ -114,15 +114,7 @@ class controlador_org_empresa extends empresas {
         }
         $this->link_org_sucursal_alta_bd = $link_org_sucursal_alta_bd;
 
-        $link_im_registro_patronal_alta_bd = $obj_link->link_im_registro_patronal_alta_bd(link: $link,
-            org_empresa_id: $this->registro_id);
-        if (errores::$error) {
-            $error = $this->errores->error(mensaje: 'Error al generar link sucursal alta',
-                data: $link_im_registro_patronal_alta_bd);
-            print_r($error);
-            exit;
-        }
-        $this->link_im_registro_patronal_alta_bd = $link_im_registro_patronal_alta_bd;
+
 
         $link_org_sucursal_modifica_bd = $obj_link->link_org_sucursal_modifica_bd(link: $link,org_empresa_id: $this->registro_id,
             org_sucursal_id: $this->org_sucursal_id);
