@@ -44,6 +44,8 @@ class controlador_org_tipo_sucursal extends _ctl_parent_sin_codigo {
 
         $this->titulo_lista = 'Tipo Sucursal';
 
+        $this->childrens_data['org_sucursal']['title'] = 'Sucursal';
+
 
     }
 

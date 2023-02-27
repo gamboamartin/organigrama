@@ -29,8 +29,25 @@ class controlador_org_empresaTest extends test {
     public function test_alta_sucursal_bd(): void
     {
         errores::$error = false;
-        (new base_test())->del_org_sucursal(link: $this->link);
-        (new base_test())->del_org_empresa(link: $this->link);
+        $del = (new base_test())->del_org_sucursal(link: $this->link);
+        if(errores::$error){
+            $error = (new errores())->error('Error al eliminar', $del);
+            print_r($error);
+            exit;
+        }
+        $del = (new base_test())->del_org_empresa(link: $this->link);
+        if(errores::$error){
+            $error = (new errores())->error('Error al eliminar', $del);
+            print_r($error);
+            exit;
+        }
+
+        $del = (new base_test())->del_cat_sat_regimen_fiscal(link: $this->link);
+        if(errores::$error){
+            $error = (new errores())->error('Error al eliminar', $del);
+            print_r($error);
+            exit;
+        }
 
         $_GET['seccion'] = 'org_empresa';
         $_GET['accion'] = 'alta_sucursal_bd';

@@ -306,6 +306,18 @@ class base_test{
         }
         return $del;
     }
+
+    public function del_cat_sat_regimen_fiscal(PDO $link): array
+    {
+
+
+        $del = (new \gamboamartin\cat_sat\tests\base_test())->del_cat_sat_regimen_fiscal($link);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al eliminar ', data: $del);
+        }
+
+        return $del;
+    }
     public function del_dp_calle_pertenece(PDO $link): array
     {
 
