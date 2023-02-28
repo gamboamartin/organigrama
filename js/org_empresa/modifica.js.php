@@ -29,7 +29,7 @@ let fecha_ultimo_cambio_sat = $("#fecha_ultimo_cambio_sat");
     $.each(data.registros, function (index, calle) {
 
     integra_new_option($('#dp_calle_pertenece_entre1_id'), calle.dp_calle_descripcion, calle.dp_calle_pertenece_id);
-    integra_new_option($('#dp_calle_pertenece_entre2_id'), calle.dp_calle_descripcion_select, calle.dp_calle_pertenece_id);
+    integra_new_option($('#dp_calle_pertenece_entre2_id'), calle.dp_calle_descripcion, calle.dp_calle_pertenece_id);
 });
 
     $('#dp_calle_pertenece_entre1_id').selectpicker('refresh');
