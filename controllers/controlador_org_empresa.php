@@ -1037,6 +1037,12 @@ class controlador_org_empresa extends empresas {
 
    public function modifica(bool $header, bool $ws = false): array|stdClass
    {
+       $urls_js = (new _init_dps())->init_js(controler: $this);
+
+       if(errores::$error){
+           return $this->retorno_error(mensaje: 'Error al generar url js',data:  $urls_js,header: $header,ws: $ws);
+       }
+
        $base = $this->base();
        if(errores::$error){
            return $this->retorno_error(mensaje: 'Error al maquetar datos',data:  $base,
