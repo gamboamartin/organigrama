@@ -452,6 +452,8 @@ class limpieza{
         $org_sucursal_ins['codigo'] = $org_empresa_['codigo'];
         $org_sucursal_ins['codigo_bis'] = $org_empresa_['codigo_bis'];
         $org_sucursal_ins['descripcion'] = $org_empresa_['descripcion'];
+        $org_sucursal_ins['descripcion_select'] = $org_empresa_['descripcion_select'];
+        $org_sucursal_ins['alias'] = $org_empresa_['alias'];
 
 
         $org_sucursal_ins = $this->asigna_si_existe('fecha_inicio_operaciones', $org_sucursal_ins, $org_empresa_);

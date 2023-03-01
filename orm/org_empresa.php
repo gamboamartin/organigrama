@@ -121,6 +121,9 @@ class org_empresa extends modelo{
 
     public function modifica_bd(array $registro, int $id, bool $reactiva = false): array|stdClass
     {
+        /**
+         * REFACTORIZAR
+         */
         $registro_previo = $this->registro(registro_id: $id, columnas_en_bruto: true, retorno_obj: true);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al obtener registro', data: $registro_previo);
