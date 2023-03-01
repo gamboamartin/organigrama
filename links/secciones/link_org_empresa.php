@@ -104,12 +104,12 @@ class link_org_empresa extends links_menu {
 
     /**
      * Genera un link de tipo empresa
-     * @param PDO $link
-     * @param int $org_empresa_id
-     * @param int $org_departamento_id
+     * @param PDO $link Conexion a base de datos
+     * @param int $org_empresa_id Empresa id
+     * @param int $org_departamento_id departamento id
      * @return string
      */
-    public function link_org_departamento_modifica_bd(PDO $link, int $org_empresa_id, int $org_departamento_id): string
+    final public function link_org_departamento_modifica_bd(PDO $link, int $org_empresa_id, int $org_departamento_id): string
     {
         $link = $this->link_con_id(accion:'modifica_departamento_bd', link: $link,registro_id: $org_empresa_id,seccion:  'org_empresa');
         if(errores::$error){
