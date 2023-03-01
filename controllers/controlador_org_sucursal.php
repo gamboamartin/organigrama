@@ -8,6 +8,7 @@
  */
 namespace gamboamartin\organigrama\controllers;
 
+use controllers\_init_dps;
 use gamboamartin\direccion_postal\models\dp_calle_pertenece;
 use gamboamartin\errores\errores;
 use gamboamartin\organigrama\controllers\base\empresas;
@@ -81,6 +82,13 @@ class controlador_org_sucursal extends empresas {
     }
     public function alta(bool $header, bool $ws = false): array|string
     {
+
+        $urls_js = (new _init_dps())->init_js(controler: $this);
+
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al generar url js',data:  $urls_js,header: $header,ws: $ws);
+        }
+
         $r_alta =  parent::alta(header: false);
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al generar template',data:  $r_alta, header: $header,ws:$ws);
