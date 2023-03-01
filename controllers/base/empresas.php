@@ -1,12 +1,8 @@
 <?php
 namespace gamboamartin\organigrama\controllers\base;
-use base\orm\modelo;
 use gamboamartin\errores\errores;
-use gamboamartin\system\html_controler;
 use gamboamartin\system\init;
-use gamboamartin\system\links_menu;
 use gamboamartin\system\system;
-use PDO;
 use stdClass;
 
 class empresas extends system{

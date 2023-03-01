@@ -122,6 +122,7 @@ class controlador_org_sucursal extends empresas {
 
         $this->keys_selects['org_tipo_sucursal_id']->id_selected = $this->registro['org_tipo_sucursal_id'];
         $this->keys_selects['dp_pais_id']->id_selected = $this->registro['dp_pais_id'];
+        $this->keys_selects['dp_pais_id']->key_descripcion_select = 'dp_pais_descripcion';
 
         $this->keys_selects['dp_estado_id']->id_selected = $this->registro['dp_estado_id'];
         $this->keys_selects['dp_estado_id']->con_registros = true;
@@ -178,7 +179,7 @@ class controlador_org_sucursal extends empresas {
         $propiedades = array("label" => "Tipo Sucursal","cols" => 12);
         $datos['org_tipo_sucursal_id'] = $propiedades;
 
-        $propiedades = array("label" => "Pais");
+        $propiedades = array("label" => "Pais",'key_descripcion_select'=>'dp_pais_descripcion');
         $datos['dp_pais_id'] = $propiedades;
 
         $propiedades = array("label" => "Estado","con_registros"=> false);
