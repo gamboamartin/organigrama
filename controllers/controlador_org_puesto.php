@@ -49,6 +49,9 @@ class controlador_org_puesto extends _ctl_parent_sin_codigo {
 
         $this->titulo_lista = 'Puestos';
 
+        $this->childrens_data['org_dependencia']['title'] = 'Dependencia';
+        $this->childrens_data['org_ejecuta']['title'] = 'Ejecuta';
+
 
 
     }

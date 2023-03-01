@@ -251,6 +251,11 @@ class controlador_org_empresa extends empresas {
 
         $this->verifica_parents_alta = true;
 
+        $this->childrens_data['org_departamento']['title'] = 'Departamento';
+        $this->childrens_data['org_porcentaje_act_economica']['title'] = 'Por Act Economica';
+        $this->childrens_data['org_representante_asignado']['title'] = 'Representante';
+        $this->childrens_data['org_sucursal']['title'] = 'Sucursal';
+
     }
 
     public function alta(bool $header, bool $ws = false): array|string

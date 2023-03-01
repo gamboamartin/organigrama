@@ -44,6 +44,7 @@ class controlador_org_dependencia extends system {
 
         $this->titulo_lista = 'Dependencias';
 
+
     }
 
     public function alta(bool $header, bool $ws = false): array|string
