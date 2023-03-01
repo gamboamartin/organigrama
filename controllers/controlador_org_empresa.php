@@ -1120,12 +1120,6 @@ class controlador_org_empresa extends empresas {
         return $r_modifica;
     }
 
-
-
-
-
-
-
     public function modifica_identidad(bool $header, bool $ws = false): array|stdClass
     {
         $r_modifica_bd = $this->modelo->modifica_bd(registro: $_POST, id: $this->registro_id);

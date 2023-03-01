@@ -19,7 +19,6 @@ class link_org_empresaTest extends test {
     }
 
     /**
-     * @throws JsonException
      */
     public function test_link_im_registro_patronal_alta_bd(): void
     {
@@ -39,6 +38,27 @@ class link_org_empresaTest extends test {
         $this->assertIsString($resultado);
         $this->assertNotTrue(errores::$error);
         $this->assertEquals('', $resultado);
+        errores::$error = false;
+    }
+
+    public function test_link_org_departamento_modifica_bd(): void
+    {
+        errores::$error = false;
+
+        $_GET['seccion'] = 'cat_sat_tipo_persona';
+        $_GET['accion'] = 'lista';
+        $_SESSION['grupo_id'] = 2;
+        $_SESSION['usuario_id'] = 2;
+        $_GET['session_id'] = '1';
+        $link = new link_org_empresa($this->link,-1);
+        //$link = new liberator($link);
+
+        $org_empresa_id = -1;
+        $org_departamento_id = -1;
+        $resultado = $link->link_org_departamento_modifica_bd($this->link, $org_empresa_id, $org_departamento_id);
+        $this->assertIsString($resultado);
+        $this->assertNotTrue(errores::$error);
+        $this->assertEquals('&org_departamento_id=-1', $resultado);
         errores::$error = false;
     }
 
