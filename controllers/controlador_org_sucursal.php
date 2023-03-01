@@ -336,6 +336,11 @@ class controlador_org_sucursal extends empresas {
         return $_GET;
     }
 
+    /**
+     * Integra los datos para inputs
+     * @param array $datos datos de inputs
+     * @return array
+     */
     private function integra_data(array $datos): array
     {
         $data = array();
