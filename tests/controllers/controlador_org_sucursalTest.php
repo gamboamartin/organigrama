@@ -60,6 +60,7 @@ class controlador_org_sucursalTest extends test {
         $this->assertIsArray($resultado);
         $this->assertNotTrue(errores::$error);
         $this->assertEquals('Empresa', $resultado['org_empresa_id']['label']);
+        $this->assertEquals('dp_pais_descripcion', $resultado['dp_pais_id']['key_descripcion_select']);
         $this->assertNotTrue(errores::$error);
         errores::$error = false;
 
