@@ -48,22 +48,28 @@ class controlador_org_tipo_actividad extends _ctl_parent_sin_codigo {
 
     }
 
+    /**
+     * Integra los params de selectores
+     * @param array $keys_selects Parametros de keys
+     * @return array
+     */
     protected function key_selects_txt(array $keys_selects): array
     {
-        $keys_selects = (new \base\controller\init())->key_select_txt(cols: 6,key: 'codigo', keys_selects:$keys_selects, place_holder: 'Cod');
+        $keys_selects = (new \base\controller\init())->key_select_txt(cols: 6,key: 'codigo',
+            keys_selects:$keys_selects, place_holder: 'Cod');
         if(errores::$error){
             return $this->errores->error(mensaje: 'Error al maquetar key_selects',data:  $keys_selects);
         }
 
-        $keys_selects = (new \base\controller\init())->key_select_txt(cols: 6,key: 'descripcion', keys_selects:$keys_selects, place_holder: 'Tipo Actividad');
+        $keys_selects = (new \base\controller\init())->key_select_txt(cols: 6,key: 'descripcion',
+            keys_selects:$keys_selects, place_holder: 'Tipo Actividad');
         if(errores::$error){
             return $this->errores->error(mensaje: 'Error al maquetar key_selects',data:  $keys_selects);
         }
+
+
 
         return $keys_selects;
     }
-
-
-
 
 }

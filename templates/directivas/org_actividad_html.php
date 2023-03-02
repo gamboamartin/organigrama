@@ -14,7 +14,8 @@ class org_actividad_html extends html_controler {
     {
         $modelo = new org_actividad($link);
 
-        $select = $this->select_catalogo(cols:$cols,con_registros:$con_registros,id_selected:$id_selected, modelo: $modelo);
+        $select = $this->select_catalogo(cols:$cols,con_registros:$con_registros,id_selected:$id_selected,
+            modelo: $modelo,label: 'Actividad');
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select', data: $select);
         }
