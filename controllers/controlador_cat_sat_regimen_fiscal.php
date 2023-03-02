@@ -33,6 +33,8 @@ class controlador_cat_sat_regimen_fiscal extends \gamboamartin\cat_sat\controlle
         }
         $this->link_org_empresa_alta_bd = $link_org_empresa_alta_bd;
 
+        $this->childrens_data['org_empresa']['title'] = 'Empresa';
+
     }
 
     public function empresas(bool $header = true, bool $ws = false): array|stdClass|string

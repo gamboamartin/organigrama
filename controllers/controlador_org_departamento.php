@@ -14,6 +14,7 @@ use gamboamartin\organigrama\html\org_puesto_html;
 use gamboamartin\organigrama\html\org_tipo_puesto_html;
 use gamboamartin\organigrama\models\org_clasificacion_dep;
 use gamboamartin\organigrama\models\org_departamento;
+use gamboamartin\organigrama\models\org_empresa;
 use gamboamartin\system\_ctl_parent_sin_codigo;
 use gamboamartin\system\links_menu;
 use gamboamartin\template\html;
@@ -61,6 +62,7 @@ class controlador_org_departamento extends _ctl_parent_sin_codigo {
         $this->childrens_data['org_puesto']['title'] = 'Puesto';
 
         $this->parents_verifica['org_clasificacion_dep'] = (new org_clasificacion_dep(link: $this->link));
+        $this->parents_verifica['org_empresa'] = (new org_empresa(link: $this->link));
 
         $this->verifica_parents_alta = true;
 

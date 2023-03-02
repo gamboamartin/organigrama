@@ -47,9 +47,11 @@ class controlador_org_ejecuta extends system {
         $this->titulo_lista = 'Ejecuta';
 
         $this->parents_verifica['org_puesto'] = (new org_puesto(link: $this->link));
-        $this->parents_verifica['aog_actividad'] = (new org_actividad(link: $this->link));
+        $this->parents_verifica['org_actividad'] = (new org_actividad(link: $this->link));
 
         $this->verifica_parents_alta = true;
+
+
 
     }
 

@@ -55,6 +55,8 @@ class controlador_org_tipo_empresa extends _ctl_parent_sin_codigo {
         }
         $this->link_org_empresa_alta_bd = $link_org_empresa_alta_bd;
 
+        $this->childrens_data['org_empresa']['title'] = 'Empresa';
+
 
     }
 

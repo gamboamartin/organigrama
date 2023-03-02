@@ -43,6 +43,7 @@ class controlador_org_tipo_actividad extends _ctl_parent_sin_codigo {
             paths_conf: $paths_conf);
 
         $this->titulo_lista = 'Tipo Actividad';
+        $this->childrens_data['org_actividad']['title'] = 'Actividad';
 
 
     }

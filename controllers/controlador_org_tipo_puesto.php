@@ -54,6 +54,8 @@ class controlador_org_tipo_puesto extends _ctl_parent_sin_codigo {
         }
         $this->link_org_puesto_alta_bd = $link_org_puesto_alta_bd;
 
+        $this->childrens_data['org_puesto']['title'] = 'Puesto';
+
 
     }
 
