@@ -12,6 +12,7 @@ use gamboamartin\errores\errores;
 use gamboamartin\organigrama\html\org_actividad_html;
 use gamboamartin\organigrama\html\org_tipo_actividad_html;
 use gamboamartin\organigrama\models\org_actividad;
+use gamboamartin\organigrama\models\org_tipo_actividad;
 use gamboamartin\system\_ctl_parent_sin_codigo;
 use gamboamartin\system\links_menu;
 use gamboamartin\template\html;
@@ -41,6 +42,12 @@ class controlador_org_actividad extends _ctl_parent_sin_codigo {
             paths_conf: $paths_conf);
 
         $this->titulo_lista = 'Actividades';
+
+        $this->childrens_data['org_ejecuta']['title'] = 'Ejecuta';
+
+        $this->parents_verifica['org_tipo_actividad'] = (new org_tipo_actividad(link: $this->link));
+
+        $this->verifica_parents_alta = true;
 
     }
 
