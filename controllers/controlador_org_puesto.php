@@ -10,7 +10,9 @@ namespace gamboamartin\organigrama\controllers;
 
 use gamboamartin\errores\errores;
 use gamboamartin\organigrama\html\org_puesto_html;
+use gamboamartin\organigrama\models\org_departamento;
 use gamboamartin\organigrama\models\org_puesto;
+use gamboamartin\organigrama\models\org_tipo_puesto;
 use gamboamartin\system\_ctl_parent_sin_codigo;
 use gamboamartin\system\links_menu;
 
@@ -52,12 +54,18 @@ class controlador_org_puesto extends _ctl_parent_sin_codigo {
         $this->childrens_data['org_dependencia']['title'] = 'Dependencia';
         $this->childrens_data['org_ejecuta']['title'] = 'Ejecuta';
 
+        $this->parents_verifica['org_departamento'] = (new org_departamento(link: $this->link));
+        $this->parents_verifica['org_tipo_puesto'] = (new org_tipo_puesto(link: $this->link));
+
+        $this->verifica_parents_alta = true;
+
 
 
     }
 
     public function alta(bool $header, bool $ws = false): array|string
     {
+
         $r_alta = $this->init_alta();
         if(errores::$error){
             return $this->retorno_error(
@@ -84,6 +92,9 @@ class controlador_org_puesto extends _ctl_parent_sin_codigo {
             return $this->retorno_error(
                 mensaje: 'Error al obtener inputs',data:  $inputs, header: $header,ws:  $ws);
         }
+
+
+
 
 
         return $r_alta;
