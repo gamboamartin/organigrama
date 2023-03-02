@@ -12,6 +12,7 @@ use gamboamartin\errores\errores;
 use gamboamartin\organigrama\html\org_dependencia_html;
 use gamboamartin\organigrama\html\org_puesto_html;
 use gamboamartin\organigrama\models\org_dependencia;
+use gamboamartin\organigrama\models\org_puesto;
 use gamboamartin\system\links_menu;
 use gamboamartin\system\system;
 use gamboamartin\template\html;
@@ -43,6 +44,12 @@ class controlador_org_dependencia extends system {
             paths_conf: $paths_conf);
 
         $this->titulo_lista = 'Dependencias';
+
+        $this->parents_verifica['org_puesto'] = (new org_puesto(link: $this->link));
+
+        $this->verifica_parents_alta = true;
+
+
 
 
     }

@@ -55,6 +55,10 @@ class controlador_org_clasificacion_dep extends _ctl_parent_sin_codigo {
         }
         $this->link_org_departamento_alta_bd = $link_org_departamento_alta_bd;
 
+        $this->childrens_data['org_departamento']['title'] = 'Departamento';
+
+        $this->verifica_parents_alta = true;
+
     }
 
     public function departamentos(bool $header = true, bool $ws = false): array|stdClass|string
