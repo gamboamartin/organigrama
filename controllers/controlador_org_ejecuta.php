@@ -12,6 +12,7 @@ use gamboamartin\errores\errores;
 use gamboamartin\organigrama\html\org_actividad_html;
 use gamboamartin\organigrama\html\org_ejecuta_html;
 use gamboamartin\organigrama\html\org_puesto_html;
+use gamboamartin\organigrama\models\org_actividad;
 use gamboamartin\organigrama\models\org_ejecuta;
 use gamboamartin\organigrama\models\org_puesto;
 use gamboamartin\system\links_menu;
@@ -46,6 +47,7 @@ class controlador_org_ejecuta extends system {
         $this->titulo_lista = 'Ejecuta';
 
         $this->parents_verifica['org_puesto'] = (new org_puesto(link: $this->link));
+        $this->parents_verifica['aog_actividad'] = (new org_actividad(link: $this->link));
 
         $this->verifica_parents_alta = true;
 
