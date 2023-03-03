@@ -368,6 +368,17 @@ class base_test{
         return $del;
     }
 
+    public function del_org_ejecuta(PDO $link): array
+    {
+
+
+        $del = $this->del($link, 'gamboamartin\\organigrama\\models\\org_ejecuta');
+        if(errores::$error){
+            return (new errores())->error('Error al eliminar', $del);
+        }
+        return $del;
+    }
+
     public function del_org_empresa(PDO $link): array
     {
 
@@ -412,6 +423,10 @@ class base_test{
     public function del_org_puesto(PDO $link): array
     {
 
+        $del = $this->del_org_ejecuta($link);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al eliminar ', data: $del);
+        }
 
         $del = $this->del($link, 'gamboamartin\\organigrama\\models\\org_puesto');
         if(errores::$error){

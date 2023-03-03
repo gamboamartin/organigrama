@@ -122,7 +122,13 @@ class link_org_empresa extends links_menu {
 
         return $link;
     }
-    
+
+    /**
+     * @param PDO $link
+     * @param int $org_empresa_id
+     * @param int $im_registro_patronal_id
+     * @return string
+     */
     public function link_im_registro_patronal_modifica_bd(PDO $link, int $org_empresa_id, int $im_registro_patronal_id): string
     {
         $link = $this->link_con_id(accion:'modifica_registro_patronal_bd', link: $link, registro_id: $org_empresa_id,seccion:  'org_empresa');
