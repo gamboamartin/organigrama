@@ -127,22 +127,27 @@ class controlador_org_sucursal extends empresas {
         $this->keys_selects['dp_estado_id']->id_selected = $this->registro['dp_estado_id'];
         $this->keys_selects['dp_estado_id']->con_registros = true;
         $this->keys_selects['dp_estado_id']->filtro = array('dp_pais.id'=>$this->registro['dp_pais_id']);
+        $this->keys_selects['dp_estado_id']->key_descripcion_select = 'dp_estado_descripcion';
 
         $this->keys_selects['dp_municipio_id']->id_selected = $this->registro['dp_municipio_id'];
         $this->keys_selects['dp_municipio_id']->con_registros = true;
         $this->keys_selects['dp_municipio_id']->filtro = array('dp_estado.id'=>$this->registro['dp_estado_id']);
+        $this->keys_selects['dp_municipio_id']->key_descripcion_select = 'dp_municipio_descripcion';
 
         $this->keys_selects['dp_cp_id']->id_selected = $this->registro['dp_cp_id'];
         $this->keys_selects['dp_cp_id']->con_registros = true;
         $this->keys_selects['dp_cp_id']->filtro = array('dp_municipio.id'=>$this->registro['dp_municipio_id']);
+        $this->keys_selects['dp_cp_id']->key_descripcion_select = 'dp_cp_descripcion';
 
         $this->keys_selects['dp_colonia_postal_id']->id_selected = $this->registro['dp_colonia_postal_id'];
         $this->keys_selects['dp_colonia_postal_id']->con_registros = true;
         $this->keys_selects['dp_colonia_postal_id']->filtro = array('dp_cp.id'=>$this->registro['dp_cp_id']);
+        $this->keys_selects['dp_colonia_postal_id']->key_descripcion_select = 'dp_colonia_descripcion';
 
         $this->keys_selects['dp_calle_pertenece_id']->id_selected = $this->registro['dp_calle_pertenece_id'];
         $this->keys_selects['dp_calle_pertenece_id']->con_registros = true;
         $this->keys_selects['dp_calle_pertenece_id']->filtro = array('dp_colonia_postal.id'=>$this->registro['dp_colonia_postal_id']);
+        $this->keys_selects['dp_calle_pertenece_id']->key_descripcion_select = 'dp_calle_descripcion';
 
         $this->keys_selects['org_empresa_id']->id_selected = $this->registro['org_empresa_id'];
         $this->keys_selects['org_empresa_id']->con_registros = true;
