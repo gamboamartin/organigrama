@@ -3,7 +3,7 @@ namespace gamboamartin\organigrama\html;
 
 use gamboamartin\errores\errores;
 use gamboamartin\organigrama\controllers\controlador_org_clasificacion_dep;
-use gamboamartin\organigrama\models\org_departamento;
+use gamboamartin\organigrama\models\org_clasificacion_dep;
 use gamboamartin\system\html_controler;
 use gamboamartin\template\directivas;
 
@@ -97,7 +97,7 @@ class org_clasificacion_dep_html extends html_controler {
             $id_selected = -1;
         }
 
-        $modelo = new org_departamento($link);
+        $modelo = new org_clasificacion_dep($link);
 
         $select = $this->select_catalogo(cols:$cols,con_registros:$con_registros,id_selected:$id_selected,
             modelo: $modelo, disabled: $disabled,label: "Clasificacion Dep",required: $required);
