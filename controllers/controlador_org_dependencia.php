@@ -62,7 +62,8 @@ class controlador_org_dependencia extends system {
         }
 
         $this->inputs->select = new stdClass();
-        $select = (new org_puesto_html(html: $this->html_base))->select_org_puesto_id(cols:12,con_registros:true,id_selected:-1,link: $this->link);
+        $select = (new org_puesto_html(html: $this->html_base))->select_org_puesto_id(cols:12,con_registros:true,id_selected:-1,
+            link: $this->link, label: "Puesto Jefe");
         if(errores::$error){
             $error = $this->errores->error(mensaje: 'Error al generar select',data:  $select);
             print_r($error);
@@ -71,7 +72,8 @@ class controlador_org_dependencia extends system {
 
         $this->inputs->select->org_puesto_jefe_id = $select;
 
-        $select = (new org_puesto_html(html: $this->html_base))->select_org_puesto_id(cols:12,con_registros:true,id_selected:-1,link: $this->link);
+        $select = (new org_puesto_html(html: $this->html_base))->select_org_puesto_id(cols:12,con_registros:true,id_selected:-1,
+            link: $this->link, label: "Puesto Empleado");
         if(errores::$error){
             $error = $this->errores->error(mensaje: 'Error al generar select',data:  $select);
             print_r($error);
@@ -100,7 +102,7 @@ class controlador_org_dependencia extends system {
 
         $this->inputs->select = new stdClass();
         $select = (new org_puesto_html(html: $this->html_base))->select_org_puesto_id(cols:12,con_registros:true,
-            id_selected: $this->row_upd->org_puesto_jefe_id,link: $this->link);
+            id_selected: $this->row_upd->org_puesto_jefe_id,link: $this->link, label: "Puesto Jefe");
         if(errores::$error){
             $error = $this->errores->error(mensaje: 'Error al generar select',data:  $select);
             print_r($error);
@@ -110,7 +112,7 @@ class controlador_org_dependencia extends system {
         $this->inputs->select->org_puesto_jefe_id = $select;
 
         $select = (new org_puesto_html(html: $this->html_base))->select_org_puesto_id(cols:12,con_registros:true,
-            id_selected:$this->row_upd->org_puesto_empleado_id,link: $this->link);
+            id_selected:$this->row_upd->org_puesto_empleado_id,link: $this->link, label: "Puesto Empleado");
         if(errores::$error){
             $error = $this->errores->error(mensaje: 'Error al generar select',data:  $select);
             print_r($error);
