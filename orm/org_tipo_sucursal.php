@@ -26,8 +26,28 @@ class org_tipo_sucursal extends _modelo_parent_sin_codigo{
 
         if(!isset($_SESSION['init'][$tabla])) {
             $catalago = array();
-            $catalago[] = array('codigo' => 'MATRIZ', 'descripcion' => 'MATRIZ');
-            $catalago[] = array('codigo' => 'SUCURSAL', 'descripcion' => 'SUCURSAL');
+
+
+
+            $existe = $this->existe_by_id(registro_id: 1);
+            if (errores::$error) {
+                $error = $this->error->error(mensaje: 'Error al verificar si existe', data: $existe);
+                print_r($error);
+                exit;
+            }
+            if(!$existe){
+                $catalago[] = array('id'=>1,'codigo' => 'MATRIZ', 'descripcion' => 'MATRIZ');
+            }
+            $existe = $this->existe_by_id(registro_id: 2);
+            if (errores::$error) {
+                $error = $this->error->error(mensaje: 'Error al verificar si existe', data: $existe);
+                print_r($error);
+                exit;
+            }
+            if(!$existe){
+                $catalago[] = array('id'=>2,'codigo' => 'SUC', 'descripcion' => 'SUCURSAL');
+            }
+
 
 
             $r_alta_bd = (new _defaults())->alta_defaults(catalago: $catalago, entidad: $this);
