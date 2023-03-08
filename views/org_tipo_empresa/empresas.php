@@ -10,11 +10,7 @@
                         <?php include (new views())->ruta_templates."head/subtitulo.php"; ?>
                         <?php include (new views())->ruta_templates."mensajes.php"; ?>
 
-                        <?php echo $controlador->inputs->select->cat_sat_regimen_fiscal_id; ?>
-                        <?php echo $controlador->inputs->select->org_tipo_empresa_id; ?>
-                        <?php echo $controlador->inputs->org_empresa_rfc; ?>
-                        <?php echo $controlador->inputs->org_empresa_razon_social; ?>
-                        <?php echo $controlador->inputs->org_empresa_nombre_comercial; ?>
+                        <?php include 'templates/inputs/_base/org_empresa/form.php' ?>
 
 
                         <?php echo $controlador->inputs->hidden_row_id; ?>
