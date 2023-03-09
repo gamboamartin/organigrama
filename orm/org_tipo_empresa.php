@@ -27,6 +27,7 @@ class org_tipo_empresa extends _modelo_parent_sin_codigo{
 
         $this->etiqueta = 'Tipo Empresa';
 
+        /*
         if(!isset($_SESSION['init'][$tabla])) {
             $catalago = array();
             $catalago[] = array('codigo' => 'OPS', 'descripcion' => 'OPERACIONES');
@@ -40,6 +41,7 @@ class org_tipo_empresa extends _modelo_parent_sin_codigo{
             }
             $_SESSION['init'][$tabla] = true;
         }
+        */
 
     }
 

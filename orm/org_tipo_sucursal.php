@@ -24,6 +24,7 @@ class org_tipo_sucursal extends _modelo_parent_sin_codigo{
 
         $this->etiqueta = 'Tipo Sucursal';
 
+        /*
         if(!isset($_SESSION['init'][$tabla])) {
             $catalago = array();
 
@@ -58,6 +59,7 @@ class org_tipo_sucursal extends _modelo_parent_sin_codigo{
             }
             $_SESSION['init'][$tabla] = true;
         }
+        */
 
     }
 
