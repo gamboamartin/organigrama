@@ -6,6 +6,7 @@ use gamboamartin\administrador\models\adm_seccion;
 use gamboamartin\errores\errores;
 use gamboamartin\organigrama\controllers\controlador_org_empresa;
 
+use gamboamartin\organigrama\tests\base_test;
 use gamboamartin\test\test;
 
 
@@ -42,6 +43,14 @@ class empresasTest extends test {
         $_SESSION['usuario_id'] = '2';
 
         unset($_POST['seccion_retorno']);
+
+
+        $del = (new base_test())->del_dp_calle_pertenece(link: $this->link);
+        if(errores::$error){
+            $error = (new errores())->error(mensaje: 'Error al eliminar', data: $del);
+            print_r($error);
+            exit;
+        }
 
         $del = (new adm_namespace(link: $this->link))->elimina_todo();
         if(errores::$error){

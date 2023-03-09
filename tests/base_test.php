@@ -335,6 +335,16 @@ class base_test{
         return $del;
     }
 
+    public function del_dp_pais(PDO $link): array
+    {
+
+        $del = (new \gamboamartin\direccion_postal\tests\base_test())->del_dp_pais($link);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al eliminar ', data: $del);
+        }
+        return $del;
+    }
+
 
 
 
@@ -438,8 +448,6 @@ class base_test{
 
     public function del_org_sucursal(PDO $link): array
     {
-
-
 
         $del = $this->del($link, 'gamboamartin\\organigrama\\models\\org_sucursal');
         if(errores::$error){

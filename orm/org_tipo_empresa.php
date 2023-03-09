@@ -27,13 +27,13 @@ class org_tipo_empresa extends _modelo_parent_sin_codigo{
 
         $this->etiqueta = 'Tipo Empresa';
 
-        /*
+
         if(!isset($_SESSION['init'][$tabla])) {
-            $catalago = array();
-            $catalago[] = array('codigo' => 'OPS', 'descripcion' => 'OPERACIONES');
+            $catalogo = array();
+            $catalogo[] = array('id'=>1,'codigo' => 'OPS', 'descripcion' => 'OPERACIONES');
 
 
-            $r_alta_bd = (new _defaults())->alta_defaults(catalago: $catalago, entidad: $this);
+            $r_alta_bd = (new _defaults())->alta_defaults(catalogo: $catalogo, entidad: $this);
             if (errores::$error) {
                 $error = $this->error->error(mensaje: 'Error al insertar', data: $r_alta_bd);
                 print_r($error);
@@ -41,7 +41,7 @@ class org_tipo_empresa extends _modelo_parent_sin_codigo{
             }
             $_SESSION['init'][$tabla] = true;
         }
-        */
+
 
     }
 
