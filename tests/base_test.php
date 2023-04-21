@@ -412,8 +412,23 @@ class base_test{
             return (new errores())->error(mensaje: 'Error al eliminar ', data: $del);
         }
 
+        $del = $this->del_org_logo($link);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al eliminar ', data: $del);
+        }
+
 
         $del = $this->del($link, 'gamboamartin\\organigrama\\models\\org_empresa');
+        if(errores::$error){
+            return (new errores())->error('Error al eliminar', $del);
+        }
+        return $del;
+    }
+
+    public function del_org_logo(PDO $link): array
+    {
+
+        $del = $this->del($link, 'gamboamartin\\organigrama\\models\\org_logo');
         if(errores::$error){
             return (new errores())->error('Error al eliminar', $del);
         }
