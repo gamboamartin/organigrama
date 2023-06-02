@@ -719,6 +719,18 @@ class controlador_org_empresa extends empresas {
         return $disabled_inputs_sucursal;
     }
 
+    public function get_empresa(bool $header, bool $ws = true): array|stdClass
+    {
+        $keys['org_empresa'] = array('id', 'descripcion', 'codigo', 'rfc');
+
+        $salida = $this->get_out(header: $header, keys: $keys, ws: $ws);
+        if (errores::$error) {
+            return $this->retorno_error(mensaje: 'Error al generar salida', data: $salida, header: $header, ws: $ws);
+        }
+
+        return $salida;
+    }
+
     private function genera_keys_disabled(bool $disabled, array $keys_disabled, stdClass $params): array|stdClass
     {
         foreach ($keys_disabled as $key_disabled){
