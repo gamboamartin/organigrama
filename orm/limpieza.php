@@ -210,6 +210,13 @@ class limpieza{
         return $controler->row_upd;
     }
 
+    /**
+     * Inicializa las llaves foraneas
+     * @param array $keys_foraneas Keys a limpiar
+     * @param stdClass $org_empresa Registro en proceso
+     * @return stdClass
+     *
+     */
     private function init_foraneas(array $keys_foraneas, stdClass $org_empresa): stdClass
     {
         foreach ($keys_foraneas as $campo){
