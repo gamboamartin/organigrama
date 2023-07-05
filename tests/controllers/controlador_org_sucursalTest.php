@@ -35,6 +35,7 @@ class controlador_org_sucursalTest extends test {
         $_SESSION['grupo_id'] = 2;
         $_GET['session_id'] = '1';
         $_GET['seccion'] = 'org_sucursal';
+        $_GET['accion'] = 'lista';
         $_SESSION['usuario_id'] = '2';
 
         $del = (new base_test())->del_adm_seccion(link: $this->link);
@@ -51,6 +52,13 @@ class controlador_org_sucursalTest extends test {
             exit;
         }
 
+        $alta = (new base_test())->alta_adm_accion(link: $this->link, adm_seccion_descripcion: 'org_sucursal',
+            descripcion: 'ubicacion');
+        if(errores::$error){
+            $error = (new errores())->error(mensaje: 'Error al insertar', data: $alta);
+            print_r($error);
+            exit;
+        }
 
         $ctl = new controlador_org_sucursal(link: $this->link, paths_conf: $this->paths_conf);
         $ctl = new liberator($ctl);

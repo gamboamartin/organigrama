@@ -7,6 +7,7 @@ use gamboamartin\test\liberator;
 use gamboamartin\test\test;
 use JsonException;
 use stdClass;
+use tests\base_test;
 
 
 class link_org_empresaTest extends test {
@@ -73,14 +74,20 @@ class link_org_empresaTest extends test {
         $_SESSION['grupo_id'] = 2;
         $_SESSION['usuario_id'] = 2;
         $_GET['session_id'] = '1';
+
         $link = new link_org_empresa($this->link,-1);
         //$link = new liberator($link);
-
+        $del = (new \gamboamartin\organigrama\tests\base_test())->del_adm_seccion(link: $this->link);
+        if(errores::$error){
+            $error = (new errores())->error('Error al del', $del);
+            print_r($error);
+            exit;
+        }
         $org_empresa_id = -1;
         $resultado = $link->link_org_sucursal_alta_bd($this->link, $org_empresa_id);
         $this->assertIsString($resultado);
         $this->assertNotTrue(errores::$error);
-        $this->assertEquals('', $resultado);
+        $this->assertEquals('./index.php?seccion=org_empresa&accion=alta_sucursal_bd&registro_id=-1&adm_menu_id=-1&session_id=1', $resultado);
         errores::$error = false;
     }
 

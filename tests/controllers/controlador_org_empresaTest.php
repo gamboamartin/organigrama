@@ -78,6 +78,14 @@ class controlador_org_empresaTest extends test {
             exit;
         }
 
+        $alta = (new base_test())->alta_adm_accion(link: $this->link, adm_seccion_descripcion: 'org_empresa',
+            descripcion: 'alta_sucursal_bd');
+        if(errores::$error){
+            $error = (new errores())->error('Error al insertar', $alta);
+            print_r($error);
+            exit;
+        }
+
 
         $ctl = new controlador_org_empresa(link: $this->link, paths_conf: $this->paths_conf);
         $ctl->registro_id = 1;
@@ -106,6 +114,15 @@ class controlador_org_empresaTest extends test {
         $_SESSION['grupo_id'] = 2;
         $_GET['session_id'] = '1';
         $_SESSION['usuario_id'] = '2';
+
+        $alta = (new base_test())->alta_adm_accion(link: $this->link, adm_seccion_descripcion: 'org_empresa',
+            descripcion: 'ubicacion');
+        if(errores::$error){
+            $error = (new errores())->error(mensaje: 'Error al insertar', data: $alta);
+            print_r($error);
+            exit;
+        }
+
         $ctl = new controlador_org_empresa(link: $this->link, paths_conf: $this->paths_conf);
         $ctl = new liberator($ctl);
         $row = new stdClass();
@@ -131,6 +148,14 @@ class controlador_org_empresaTest extends test {
         $_GET['session_id'] = '1';
         $_SESSION['usuario_id'] = '2';
 
+        $alta = (new base_test())->alta_adm_accion(link: $this->link, adm_seccion_descripcion: 'org_empresa',
+            descripcion: 'cif');
+        if(errores::$error){
+            $error = (new errores())->error(mensaje: 'Error al insertar', data: $alta);
+            print_r($error);
+            exit;
+        }
+
         $alta_org_empresa = (new base_test())->alta_org_empresa(link: $this->link);
 
         $ctl = new controlador_org_empresa(link: $this->link, paths_conf: $this->paths_conf);
@@ -154,6 +179,14 @@ class controlador_org_empresaTest extends test {
         $_SESSION['grupo_id'] = 2;
         $_GET['session_id'] = '1';
         $_SESSION['usuario_id'] = '2';
+
+        $alta = (new base_test())->alta_adm_accion(link: $this->link, adm_seccion_descripcion: 'org_empresa',
+            descripcion: 'contacto');
+        if(errores::$error){
+            $error = (new errores())->error(mensaje: 'Error al insertar', data: $alta);
+            print_r($error);
+            exit;
+        }
 
         $alta_org_empresa = (new base_test())->alta_org_empresa(link: $this->link);
 
@@ -180,6 +213,14 @@ class controlador_org_empresaTest extends test {
         $_SESSION['usuario_id'] = '2';
 
         $alta_org_empresa = (new base_test())->alta_org_empresa(link: $this->link);
+
+        $alta = (new base_test())->alta_adm_accion(link: $this->link, adm_seccion_descripcion: 'org_empresa',
+            descripcion: 'identidad');
+        if(errores::$error){
+            $error = (new errores())->error(mensaje: 'Error al insertar', data: $alta);
+            print_r($error);
+            exit;
+        }
 
         $ctl = new controlador_org_empresa(link: $this->link, paths_conf: $this->paths_conf);
         $ctl->registro_id = 1;
@@ -246,6 +287,14 @@ class controlador_org_empresaTest extends test {
             print_r($error);
         }
 
+        $alta = (new base_test())->alta_adm_accion(link: $this->link, adm_seccion_descripcion: 'org_empresa',
+            descripcion: 'modifica_departamento_bd');
+        if(errores::$error){
+            $error = (new errores())->error(mensaje: 'Error al insertar', data: $alta);
+            print_r($error);
+            exit;
+        }
+
         $ctl = new controlador_org_empresa(link: $this->link, paths_conf: $this->paths_conf);
         $ctl->org_departamento_id = 1;
         $resultado = $ctl->modifica_departamento_bd(header: false, ws: false);
@@ -279,7 +328,13 @@ class controlador_org_empresaTest extends test {
         $_POST['codigo'] = 2;
         $_POST['rfc'] = 'BBB020202DEF';
 
-
+        $alta = (new base_test())->alta_adm_accion(link: $this->link, adm_seccion_descripcion: 'org_empresa',
+            descripcion: 'modifica_identidad');
+        if(errores::$error){
+            $error = (new errores())->error(mensaje: 'Error al insertar', data: $alta);
+            print_r($error);
+            exit;
+        }
 
         $ctl = new controlador_org_empresa(link: $this->link, paths_conf: $this->paths_conf);
         $ctl->registro_id = 1;
@@ -310,7 +365,13 @@ class controlador_org_empresaTest extends test {
         $_POST = array();
         $_POST['email_sat'] = 'a@a.a';
 
-
+        $alta = (new base_test())->alta_adm_accion(link: $this->link, adm_seccion_descripcion: 'org_empresa',
+            descripcion: 'modifica_cif');
+        if(errores::$error){
+            $error = (new errores())->error(mensaje: 'Error al insertar', data: $alta);
+            print_r($error);
+            exit;
+        }
 
         $ctl = new controlador_org_empresa(link: $this->link, paths_conf: $this->paths_conf);
         $ctl->registro_id = 1;
@@ -341,7 +402,13 @@ class controlador_org_empresaTest extends test {
         $_POST = array();
         $_POST['telefono_1'] = '1234567890';
 
-
+        $alta = (new base_test())->alta_adm_accion(link: $this->link, adm_seccion_descripcion: 'org_empresa',
+            descripcion: 'modifica_contacto');
+        if(errores::$error){
+            $error = (new errores())->error(mensaje: 'Error al insertar', data: $alta);
+            print_r($error);
+            exit;
+        }
 
         $ctl = new controlador_org_empresa(link: $this->link, paths_conf: $this->paths_conf);
         $ctl->registro_id = 1;
@@ -372,7 +439,13 @@ class controlador_org_empresaTest extends test {
         $_POST = array();
         $_POST['rfc'] = 'BBB020202DEF';
 
-
+        $alta = (new base_test())->alta_adm_accion(link: $this->link, adm_seccion_descripcion: 'org_empresa',
+            descripcion: 'modifica_generales');
+        if(errores::$error){
+            $error = (new errores())->error(mensaje: 'Error al insertar', data: $alta);
+            print_r($error);
+            exit;
+        }
 
         $ctl = new controlador_org_empresa(link: $this->link, paths_conf: $this->paths_conf);
         $ctl->registro_id = 1;
@@ -458,6 +531,15 @@ class controlador_org_empresaTest extends test {
         $_SESSION['grupo_id'] = 1;
         $_GET['session_id'] = '1';
         $_SESSION['usuario_id'] = '2';
+
+        $alta = (new base_test())->alta_adm_accion(link: $this->link, adm_seccion_descripcion: 'org_empresa',
+            descripcion: 'ubicacion');
+        if(errores::$error){
+            $error = (new errores())->error(mensaje: 'Error al insertar', data: $alta);
+            print_r($error);
+            exit;
+        }
+
         $ctl = new controlador_org_empresa(link: $this->link, paths_conf: $this->paths_conf);
         $ctl = new liberator($ctl);
         $resultado = $ctl->params_empresa();

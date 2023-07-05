@@ -81,6 +81,14 @@ class empresasTest extends test {
             exit;
         }
 
+        $alta = (new base_test())->alta_adm_accion(link: $this->link, adm_seccion_descripcion: 'org_empresa',
+            descripcion: 'ubicacion');
+        if(errores::$error){
+            $error = (new errores())->error(mensaje: 'Error al insertar', data: $alta);
+            print_r($error);
+            exit;
+        }
+
 
         $ctl = new controlador_org_empresa(link: $this->link, paths_conf: $this->paths_conf);
         //$ctl = new liberator($ctl);
