@@ -10,6 +10,7 @@ use gamboamartin\organigrama\models\limpieza;
 use gamboamartin\organigrama\models\org_empresa;
 use gamboamartin\system\system;
 use html\cat_sat_regimen_fiscal_html;
+use html\cat_sat_tipo_persona_html;
 use html\inputs_html;
 use html\selects;
 use PDO;
@@ -26,6 +27,15 @@ class org_empresa_html extends org_html {
             return $this->error->error(mensaje: 'Error al generar inputs',data:  $r_inputs);
         }
 
+        $keys = array('cat_sat_regimen_fiscal_id','dp_calle_pertenece_entre1_id','dp_calle_pertenece_entre2_id',
+            'org_tipo_empresa_id','cat_sat_tipo_persona_id');
+
+        $valida = $this->validacion->valida_existencia_keys(keys: $keys,registro:  $inputs->selects);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al validar input selects',data:  $valida);
+        }
+
+
 
         $controler->inputs->email_sat = $inputs->emails->email_sat;
         $controler->inputs->fecha_ultimo_cambio_sat = $inputs->fechas->fecha_ultimo_cambio_sat;
@@ -40,6 +50,7 @@ class org_empresa_html extends org_html {
         $controler->inputs->select->dp_calle_pertenece_entre1_id = $inputs->selects->dp_calle_pertenece_entre1_id;
         $controler->inputs->select->dp_calle_pertenece_entre2_id = $inputs->selects->dp_calle_pertenece_entre2_id;
         $controler->inputs->select->org_tipo_empresa_id = $inputs->selects->org_tipo_empresa_id;
+        $controler->inputs->select->cat_sat_tipo_persona_id = $inputs->selects->cat_sat_tipo_persona_id;
 
 
         return $controler->inputs;
@@ -591,6 +602,17 @@ class org_empresa_html extends org_html {
 
         $selects->cat_sat_regimen_fiscal_id = $select;
 
+
+        $cat_sat_tipo_persona_html = new cat_sat_tipo_persona_html(html:$this->html_base);
+
+        $select = $cat_sat_tipo_persona_html->select_cat_sat_tipo_persona_id(cols: 12, con_registros:true,
+            id_selected:-1,link: $link);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar select',data:  $select);
+        }
+
+        $selects->cat_sat_tipo_persona_id = $select;
+
         $select = (new org_tipo_empresa_html(html: $this->html_base))->select_org_tipo_empresa_id(
             cols: 12, con_registros:true, id_selected:-1,link: $link);
         if(errores::$error){
@@ -635,6 +657,15 @@ class org_empresa_html extends org_html {
         }
 
         $selects->org_tipo_empresa_id = $select;
+
+        $select = (new cat_sat_tipo_persona_html(html: $this->html_base))->select_cat_sat_tipo_persona_id(
+            cols: 12, con_registros:true, id_selected:$row_upd->cat_sat_tipo_persona_id,link: $link);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar select',data:  $select);
+
+        }
+
+        $selects->cat_sat_tipo_persona_id = $select;
 
         return $selects;
     }

@@ -356,6 +356,18 @@ class base_test{
 
         return $del;
     }
+
+    public function del_cat_sat_tipo_persona(PDO $link): array
+    {
+
+
+        $del = (new \gamboamartin\cat_sat\tests\base_test())->del_cat_sat_tipo_persona($link);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al eliminar ', data: $del);
+        }
+
+        return $del;
+    }
     public function del_dp_calle_pertenece(PDO $link): array
     {
 

@@ -156,11 +156,31 @@ class controlador_org_empresaTest extends test {
             exit;
         }
 
+        $del = (new base_test())->del_cat_sat_tipo_persona(link: $this->link);
+        if(errores::$error){
+            $error = (new errores())->error(mensaje: 'Error al del', data: $alta);
+            print_r($error);
+            exit;
+        }
+
+        $alta = (new base_test())->alta_cat_sat_tipo_persona(link: $this->link);
+        if(errores::$error){
+            $error = (new errores())->error(mensaje: 'Error al insertar', data: $alta);
+            print_r($error);
+            exit;
+        }
+
         $alta_org_empresa = (new base_test())->alta_org_empresa(link: $this->link);
+        if(errores::$error){
+            $error = (new errores())->error(mensaje: 'Error al insertar', data: $alta_org_empresa);
+            print_r($error);
+            exit;
+        }
 
         $ctl = new controlador_org_empresa(link: $this->link, paths_conf: $this->paths_conf);
         $ctl->registro_id = 1;
         $resultado = $ctl->cif(header: false, ws: false);
+
         $this->assertIsObject($resultado);
         $this->assertNotTrue(errores::$error);
         errores::$error = false;
