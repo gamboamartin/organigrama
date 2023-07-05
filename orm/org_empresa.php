@@ -14,7 +14,7 @@ class org_empresa extends modelo{
             'dp_estado'=>'dp_municipio','dp_pais'=>'dp_estado','org_tipo_empresa'=>$tabla,
             'dp_colonia'=>'dp_colonia_postal','dp_calle'=>'dp_calle_pertenece');
         $campos_obligatorios = array('codigo','nombre_comercial','rfc','razon_social','org_tipo_empresa_id',
-            'dp_calle_pertenece_id','cat_sat_regimen_fiscal_id');
+            'dp_calle_pertenece_id','cat_sat_regimen_fiscal_id','cat_sat_tipo_persona_id');
 
         $no_duplicados = array('descripcion','codigo','descripcion_select','alias','codigo_bis','rfc','razon_social');
 
@@ -23,10 +23,11 @@ class org_empresa extends modelo{
         $tipo_campos['telefono_3'] = 'telefono_mx';
         $tipo_campos['rfc'] = 'rfc';
 
-
+        $atributos_criticos[] = 'cat_sat_tipo_persona_id';
 
         parent::__construct(link: $link, tabla: $tabla, campos_obligatorios: $campos_obligatorios,
-            columnas: $columnas, no_duplicados: $no_duplicados, tipo_campos: $tipo_campos);
+            columnas: $columnas, no_duplicados: $no_duplicados, tipo_campos: $tipo_campos,
+            atributos_criticos: $atributos_criticos);
 
         $this->NAMESPACE = __NAMESPACE__;
 

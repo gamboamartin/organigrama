@@ -1,6 +1,8 @@
 <?php
 namespace gamboamartin\organigrama\tests;
 use base\orm\modelo_base;
+use gamboamartin\cat_sat\models\cat_sat_regimen_fiscal;
+use gamboamartin\cat_sat\models\cat_sat_tipo_persona;
 use gamboamartin\direccion_postal\models\dp_calle_pertenece;
 use gamboamartin\errores\errores;
 use gamboamartin\organigrama\models\org_clasificacion_dep;
@@ -51,6 +53,16 @@ class base_test{
         return $alta;
     }
 
+    public function alta_cat_sat_tipo_persona(PDO $link, int $id = 1): array|\stdClass
+    {
+
+        $alta = (new \gamboamartin\cat_sat\tests\base_test())->alta_cat_sat_tipo_persona(link: $link, id: $id);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al insertar', data: $alta);
+        }
+        return $alta;
+    }
+
     public function alta_org_clasificacion_dep(PDO $link): array|\stdClass
     {
         $registro = array();
@@ -95,8 +107,9 @@ class base_test{
     }
 
 
-    public function alta_org_empresa(PDO $link, int $dp_calle_pertenece_id = 1, int $id = 1,
-                                     int $org_tipo_empresa_id = 1, int $org_tipo_sucursal_id = 1): array|\stdClass
+    public function alta_org_empresa(PDO $link, int $cat_sat_tipo_persona_id = 1, int $dp_calle_pertenece_id = 1,
+                                     int $id = 1, int $org_tipo_empresa_id = 1,
+                                     int $org_tipo_sucursal_id = 1): array|\stdClass
     {
 
         $existe = (new org_tipo_sucursal($link))->existe_by_id(registro_id: $org_tipo_sucursal_id);
@@ -133,6 +146,17 @@ class base_test{
             }
         }
 
+        $existe = (new cat_sat_tipo_persona($link))->existe_by_id(registro_id: $cat_sat_tipo_persona_id);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al validar si existe ', data: $existe);
+        }
+        if(!$existe){
+            $alta = $this->alta_cat_sat_tipo_persona(link: $link, id: $cat_sat_tipo_persona_id);
+            if(errores::$error){
+                return (new errores())->error(mensaje: 'Error al insertar ', data: $alta);
+            }
+        }
+
         $registro = array();
         $registro['id'] = $id;
         $registro['codigo'] = 1;
@@ -142,6 +166,7 @@ class base_test{
         $registro['nombre_comercial'] = 'ESCUELA KEMPER URGATE';
         $registro['org_tipo_empresa_id'] = $org_tipo_empresa_id;
         $registro['dp_calle_pertenece_id'] = $dp_calle_pertenece_id;
+        $registro['cat_sat_tipo_persona_id'] = $cat_sat_tipo_persona_id;
 
 
         $alta = (new org_empresa($link))->alta_registro($registro);
