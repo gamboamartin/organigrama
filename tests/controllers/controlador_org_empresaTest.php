@@ -51,8 +51,6 @@ class controlador_org_empresaTest extends test {
         $_GET['accion'] = 'alta_sucursal_bd';
 
 
-
-
         $_POST = array();
         $_POST['codigo'] = 2;
 
@@ -71,7 +69,15 @@ class controlador_org_empresaTest extends test {
             exit;
         }
 
-        $alta_org_empresa = (new base_test())->alta_org_empresa(link: $this->link);
+        $alta = (new base_test())->alta_cat_sat_conf_reg_tp(link: $this->link);
+        if(errores::$error){
+            $error = (new errores())->error('Error al insertar', $alta);
+            print_r($error);
+            exit;
+        }
+
+        $alta_org_empresa = (new base_test())->alta_org_empresa(link: $this->link,cat_sat_regimen_fiscal_id: 1);
+
         if(errores::$error){
             $error = (new errores())->error('Error al insertar', $alta_org_empresa);
             print_r($error);
@@ -170,7 +176,14 @@ class controlador_org_empresaTest extends test {
             exit;
         }
 
-        $alta_org_empresa = (new base_test())->alta_org_empresa(link: $this->link);
+        $alta = (new base_test())->alta_cat_sat_conf_reg_tp(link: $this->link);
+        if(errores::$error){
+            $error = (new errores())->error(mensaje: 'Error al insertar', data: $alta);
+            print_r($error);
+            exit;
+        }
+
+        $alta_org_empresa = (new base_test())->alta_org_empresa(link: $this->link, cat_sat_regimen_fiscal_id: 1);
         if(errores::$error){
             $error = (new errores())->error(mensaje: 'Error al insertar', data: $alta_org_empresa);
             print_r($error);

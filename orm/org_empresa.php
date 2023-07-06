@@ -1,6 +1,7 @@
 <?php
 namespace gamboamartin\organigrama\models;
 use base\orm\modelo;
+use gamboamartin\cat_sat\models\cat_sat_conf_reg_tp;
 use gamboamartin\errores\errores;
 use gamboamartin\organigrama\controllers\controlador_org_empresa;
 use PDO;
@@ -41,13 +42,22 @@ class org_empresa extends modelo{
         if(!isset($this->registro['org_tipo_empresa_id'])){
             $org_tipo_empresa_id = (new org_tipo_empresa(link: $this->link))->id_predeterminado();
             if(errores::$error){
-                return $this->error->error(mensaje: 'Error al obtener org_tipo_empresa_id predeterminada', data: $org_tipo_empresa_id);
+                return $this->error->error(mensaje: 'Error al obtener org_tipo_empresa_id predeterminada',
+                    data: $org_tipo_empresa_id);
             }
             $this->registro['org_tipo_empresa_id'] = $org_tipo_empresa_id;
         }
 
         if(!isset($this->registro['codigo'])){
-            $org_tipo_empresa = (new org_tipo_empresa(link: $this->link))->registro(registro_id: $this->registro['org_tipo_empresa_id'], retorno_obj: true);
+            $keys = array('rfc');
+            $valida = $this->validacion->valida_existencia_keys(keys: $keys, registro: $this->registro);
+            if(errores::$error){
+                return $this->error->error(mensaje: 'Error al validar registro', data: $valida);
+            }
+
+
+            $org_tipo_empresa = (new org_tipo_empresa(link: $this->link))->registro(
+                registro_id: $this->registro['org_tipo_empresa_id'], retorno_obj: true);
             if(errores::$error){
                 return $this->error->error(mensaje: 'Error al obtener org_tipo_empresa', data: $org_tipo_empresa);
             }
@@ -58,7 +68,7 @@ class org_empresa extends modelo{
 
         }
 
-        $keys = array('razon_social','rfc','codigo','nombre_comercial','org_tipo_empresa_id');
+        $keys = array('razon_social','rfc','codigo','nombre_comercial','org_tipo_empresa_id','cat_sat_tipo_persona_id');
         $valida = $this->validacion->valida_existencia_keys(keys: $keys, registro: $this->registro);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al validar registro', data: $valida);
@@ -68,6 +78,18 @@ class org_empresa extends modelo{
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al inicializar registro', data: $registro);
         }
+
+        $filtro['cat_sat_regimen_fiscal.id'] = $registro['cat_sat_regimen_fiscal_id'];
+        $filtro['cat_sat_tipo_persona.id'] = $registro['cat_sat_tipo_persona_id'];
+
+        $existe_conf = (new cat_sat_conf_reg_tp(link: $this->link))->existe(filtro: $filtro);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al verificar si existe configuracion de regimen', data: $existe_conf);
+        }
+        if(!$existe_conf){
+            return $this->error->error(mensaje: 'Error al no existe configuracion de regimen', data: $filtro);
+        }
+
 
         $this->registro = $registro;
 

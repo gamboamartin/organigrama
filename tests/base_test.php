@@ -1,8 +1,10 @@
 <?php
 namespace gamboamartin\organigrama\tests;
 use base\orm\modelo_base;
+
 use gamboamartin\cat_sat\models\cat_sat_regimen_fiscal;
 use gamboamartin\cat_sat\models\cat_sat_tipo_persona;
+use gamboamartin\cat_sat\tests\base;
 use gamboamartin\direccion_postal\models\dp_calle_pertenece;
 use gamboamartin\errores\errores;
 use gamboamartin\organigrama\models\org_clasificacion_dep;
@@ -42,6 +44,16 @@ class base_test{
         return $alta;
     }
 
+    public function alta_cat_sat_conf_reg_tp(PDO $link, int $id = 1): array|\stdClass
+    {
+
+        $alta = (new \gamboamartin\cat_sat\tests\base_test())->alta_cat_sat_conf_reg_tp(link: $link, id: $id);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al insertar', data: $alta);
+        }
+        return $alta;
+    }
+
     public function alta_dp_calle_pertenece(PDO $link, int $id = 1, string $predeterminado = 'inactivo'): array|\stdClass
     {
 
@@ -57,6 +69,16 @@ class base_test{
     {
 
         $alta = (new \gamboamartin\cat_sat\tests\base_test())->alta_cat_sat_tipo_persona(link: $link, id: $id);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al insertar', data: $alta);
+        }
+        return $alta;
+    }
+
+    public function alta_cat_sat_regimen_fiscal(PDO $link, int $id = 1): array|\stdClass
+    {
+
+        $alta = (new \gamboamartin\cat_sat\tests\base_test())->alta_cat_sat_regimen_fiscal(link: $link, id: $id);
         if(errores::$error){
             return (new errores())->error(mensaje: 'Error al insertar', data: $alta);
         }
@@ -107,8 +129,8 @@ class base_test{
     }
 
 
-    public function alta_org_empresa(PDO $link, int $cat_sat_tipo_persona_id = 1, int $dp_calle_pertenece_id = 1,
-                                     int $id = 1, int $org_tipo_empresa_id = 1,
+    public function alta_org_empresa(PDO $link, int $cat_sat_regimen_fiscal_id = 1, int $cat_sat_tipo_persona_id = 1,
+                                     int $dp_calle_pertenece_id = 1, int $id = 1, int $org_tipo_empresa_id = 1,
                                      int $org_tipo_sucursal_id = 1): array|\stdClass
     {
 
@@ -157,6 +179,17 @@ class base_test{
             }
         }
 
+        $existe = (new cat_sat_regimen_fiscal($link))->existe_by_id(registro_id: $cat_sat_regimen_fiscal_id);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al validar si existe ', data: $existe);
+        }
+        if(!$existe){
+            $alta = $this->alta_cat_sat_regimen_fiscal(link: $link, id: $cat_sat_regimen_fiscal_id);
+            if(errores::$error){
+                return (new errores())->error(mensaje: 'Error al insertar ', data: $alta);
+            }
+        }
+
         $registro = array();
         $registro['id'] = $id;
         $registro['codigo'] = 1;
@@ -167,6 +200,7 @@ class base_test{
         $registro['org_tipo_empresa_id'] = $org_tipo_empresa_id;
         $registro['dp_calle_pertenece_id'] = $dp_calle_pertenece_id;
         $registro['cat_sat_tipo_persona_id'] = $cat_sat_tipo_persona_id;
+        $registro['cat_sat_regimen_fiscal_id'] = $cat_sat_regimen_fiscal_id;
 
 
         $alta = (new org_empresa($link))->alta_registro($registro);
@@ -362,6 +396,18 @@ class base_test{
 
 
         $del = (new \gamboamartin\cat_sat\tests\base_test())->del_cat_sat_tipo_persona($link);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al eliminar ', data: $del);
+        }
+
+        return $del;
+    }
+
+    public function del_cat_sat_conf_reg_tp(PDO $link): array
+    {
+
+
+        $del = (new \gamboamartin\cat_sat\tests\base_test())->del_cat_sat_conf_reg_tp($link);
         if(errores::$error){
             return (new errores())->error(mensaje: 'Error al eliminar ', data: $del);
         }
