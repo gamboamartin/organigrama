@@ -115,6 +115,13 @@ class org_empresa extends modelo{
         return $controlador_org_empresa;
     }
 
+    /**
+     * inicializa los elementos para inicializar un registro de actualizacion
+     * @param array $registro Registro en proceso
+     * @param stdClass $registro_previo Registro previo
+     * @return array
+     *
+     */
     private function init_row_upd(array $registro, stdClass $registro_previo): array
     {
         if(!isset($registro['razon_social'])){
@@ -156,9 +163,7 @@ class org_empresa extends modelo{
 
     public function modifica_bd(array $registro, int $id, bool $reactiva = false): array|stdClass
     {
-        /**
-         * REFACTORIZAR
-         */
+
         $registro_previo = $this->registro(registro_id: $id, columnas_en_bruto: true, retorno_obj: true);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al obtener registro', data: $registro_previo);
