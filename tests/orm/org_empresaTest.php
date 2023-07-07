@@ -61,7 +61,7 @@ class org_empresaTest extends test {
         $resultado = $modelo->alta_bd();
 
         $this->assertTrue(errores::$error);
-        $this->assertEquals('Error al no existe configuracion de regimen',$resultado['mensaje_limpio']);
+        $this->assertEquals('Error al verificar si existe configuracion de regimen',$resultado['mensaje_limpio']);
 
         errores::$error = false;
 
@@ -81,6 +81,64 @@ class org_empresaTest extends test {
 
         $resultado = $modelo->alta_bd();
 
+        $this->assertNotTrue(errores::$error);
+        $this->assertIsObject($resultado);
+
+
+
+        errores::$error = false;
+
+    }
+
+    public function test_modifica_bd(): void
+    {
+        errores::$error = false;
+
+        $_SESSION['grupo_id'] = 2;
+        $_SESSION['usuario_id'] = 2;
+
+        $del = (new \gamboamartin\organigrama\tests\base_test())->del_cat_sat_conf_reg_tp(link: $this->link);
+        if(errores::$error){
+            $error = (new errores())->error('Error al eliminar', $del);
+            print_r($error);
+            exit;
+        }
+
+        $del = (new \gamboamartin\organigrama\tests\base_test())->del_dp_calle_pertenece(link: $this->link);
+        if(errores::$error){
+            $error = (new errores())->error('Error al eliminar', $del);
+            print_r($error);
+            exit;
+        }
+
+        $alta = (new \gamboamartin\organigrama\tests\base_test())->alta_cat_sat_conf_reg_tp(link: $this->link);
+        if(errores::$error){
+            $error = (new errores())->error('Error al insertar', $alta);
+            print_r($error);
+            exit;
+        }
+
+        $alta = (new \gamboamartin\organigrama\tests\base_test())->alta_org_empresa(link: $this->link);
+        if(errores::$error){
+            $error = (new errores())->error('Error al alta', $alta);
+            print_r($error);
+            exit;
+        }
+
+
+
+        $modelo = new org_empresa(link: $this->link);
+        //$lim = new liberator($lim);
+
+        $registro['org_tipo_empresa_id'] = 1;
+        $registro['rfc'] = 'AAA010101AAA';
+        $registro['razon_social'] = 1;
+        $registro['nombre_comercial'] = 1;
+        $registro['dp_calle_pertenece_id'] = 1;
+        $registro['cat_sat_regimen_fiscal_id'] = 1;
+        $registro['cat_sat_tipo_persona_id'] = 1;
+
+        $resultado = $modelo->modifica_bd(registro: $registro, id: 1);
         $this->assertNotTrue(errores::$error);
         $this->assertIsObject($resultado);
 
