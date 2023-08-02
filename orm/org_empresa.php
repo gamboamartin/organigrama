@@ -85,6 +85,13 @@ class org_empresa extends modelo{
             return $this->error->error(mensaje: 'Error al verificar si existe configuracion de regimen', data: $valida);
         }
 
+        if(!isset($this->registro['fecha_inicio_operaciones'])){
+            $this->registro['fecha_inicio_operaciones'] = '1900-01-01';
+        }
+        if(!isset($this->registro['fecha_ultimo_cambio_sat'])){
+            $this->registro['fecha_ultimo_cambio_sat'] = '1900-01-01';
+        }
+
 
         $this->registro = $registro;
 
