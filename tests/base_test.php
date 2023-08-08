@@ -254,7 +254,9 @@ class base_test{
         return $alta;
     }
 
-    public function alta_org_sucursal(PDO $link, int $id = 1, int $org_empresa_id = 1, int $org_tipo_sucursal_id = 1): array|\stdClass
+    public function alta_org_sucursal(PDO $link, int $cat_sat_regimen_fiscal_id = 1, int $cat_sat_tipo_persona_id = 1,
+                                      int $id = 1, int $org_empresa_id = 1,
+                                      int $org_tipo_sucursal_id = 1): array|\stdClass
     {
 
         $existe = (new org_tipo_sucursal($link))->existe_by_id(registro_id: $org_tipo_sucursal_id);
@@ -273,7 +275,8 @@ class base_test{
             return (new errores())->error(mensaje: 'Error al verificar si existe ', data: $existe);
         }
         if(!$existe) {
-            $alta = $this->alta_org_empresa(link: $link, id: $org_empresa_id);
+            $alta = $this->alta_org_empresa(link: $link, cat_sat_regimen_fiscal_id: $cat_sat_regimen_fiscal_id,
+                cat_sat_tipo_persona_id: $cat_sat_tipo_persona_id, id: $org_empresa_id);
             if (errores::$error) {
                 return (new errores())->error(mensaje: 'Error al insertar ', data: $alta);
             }
