@@ -210,7 +210,8 @@ class base_test{
         return $alta;
     }
 
-    public function alta_org_puesto(PDO $link, int $org_departamento_id = 1, int $org_tipo_puesto_id = 1,
+    public function alta_org_puesto(PDO $link, int $id = 1, string $codigo = '1', string $descripcion ='1',
+                                    int $org_departamento_id = 1, int $org_tipo_puesto_id = 1,
                                     string $predeterminado = 'inactivo'): array|\stdClass
     {
 
@@ -239,9 +240,9 @@ class base_test{
 
 
         $registro = array();
-        $registro['id'] = 1;
-        $registro['codigo'] = 1;
-        $registro['descripcion'] = 1;
+        $registro['id'] = $id;
+        $registro['codigo'] = $codigo;
+        $registro['descripcion'] = $descripcion;
         $registro['org_tipo_puesto_id'] = $org_tipo_puesto_id;
         $registro['org_departamento_id'] = $org_departamento_id;
         $registro['predeterminado'] = $predeterminado;
