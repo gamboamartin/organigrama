@@ -39,13 +39,13 @@ class org_sucursal_htmlTest extends test {
         $link= $this->link;
 
         $resultado = $html->select_org_sucursal_id($cols, $con_registros, $id_selected, $link);
-
+        //print_r($resultado);exit;
         $this->assertIsString($resultado);
         $this->assertNotTrue(errores::$error);
-        $this->assertStringContainsStringIgnoringCase("<div class='control-group col-sm-1'><label class='control-label' for='org_sucu", $resultado);
-        $this->assertStringContainsStringIgnoringCase("g_sucursal_id'>Sucursal</label><div class='controls'><select class=", $resultado);
-        $this->assertStringContainsStringIgnoringCase("s'><select class='form-control selectpicker color-secondary  org_sucursal_", $resultado);
-        $this->assertStringContainsStringIgnoringCase("ucursal_id' data-live-search='true' id='org_sucursal_id' name='org_sucu", $resultado);
+        $this->assertStringContainsStringIgnoringCase("<div class='control-group col-sm-1'><label class='control-label' for='org_sucursal_id'>Sucursal</", $resultado);
+        $this->assertStringContainsStringIgnoringCase("<div class='controls'><select class='form-control selectpicker color-secondary ", $resultado);
+        $this->assertStringContainsStringIgnoringCase("data-live-search='true' id='org_sucursal_id' name='org_sucursal_id'", $resultado);
+        $this->assertStringContainsStringIgnoringCase("required ><option value=''  >Selecciona una opcion", $resultado);
 
         errores::$error = false;
     }
