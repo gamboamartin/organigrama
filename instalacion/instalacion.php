@@ -14,7 +14,7 @@ class instalacion
         $foraneas[] = 'cat_sat_regimen_fiscal_id';
         $foraneas[] = 'dp_calle_pertenece_id';
         $foraneas[] = 'org_tipo_empresa_id';
-        $foraneas[] = 'cat_sat_tipo_personal_id';
+        $foraneas[] = 'cat_sat_tipo_persona_id';
 
         $result = $init->foraneas(foraneas: $foraneas,table:  'org_empresa');
 
