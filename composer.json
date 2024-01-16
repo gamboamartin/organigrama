@@ -17,7 +17,8 @@
           "config\\": "config/",
           "gamboamartin\\organigrama\\tests\\": "tests",
           "gamboamartin\\organigrama\\links\\": "links/",
-          "gamboamartin\\organigrama\\html\\": "templates/directivas/"
+          "gamboamartin\\organigrama\\html\\": "templates/directivas/",
+          "gamboamartin\\organigrama\\instalacion\\": "instalacion/"
 
         }
     },
