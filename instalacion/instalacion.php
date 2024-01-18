@@ -4,6 +4,7 @@ namespace gamboamartin\organigrama\instalacion;
 use gamboamartin\administrador\models\_instalacion;
 use gamboamartin\errores\errores;
 use PDO;
+use stdClass;
 
 class instalacion
 {
@@ -11,10 +12,10 @@ class instalacion
     {
         $init = (new _instalacion(link: $link));
         $foraneas = array();
-        $foraneas[] = 'cat_sat_regimen_fiscal_id';
-        $foraneas[] = 'dp_calle_pertenece_id';
-        $foraneas[] = 'org_tipo_empresa_id';
-        $foraneas[] = 'cat_sat_tipo_persona_id';
+        $foraneas['cat_sat_regimen_fiscal_id'] = new stdClass();
+        $foraneas['dp_calle_pertenece_id'] =  new stdClass();
+        $foraneas['org_tipo_empresa_id'] = new stdClass();
+        $foraneas['cat_sat_tipo_persona_id'] = new stdClass();
 
         $result = $init->foraneas(foraneas: $foraneas,table:  'org_empresa');
 
