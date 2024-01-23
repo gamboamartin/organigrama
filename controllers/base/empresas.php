@@ -11,7 +11,6 @@ class empresas extends system{
     /**
      * Limpia los datos postales previos a un modifica bd
      * @return array
-     * @version 0.230.35
      */
     public function limpia_post_dp(): array
     {
