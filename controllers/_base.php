@@ -15,8 +15,6 @@ class _base {
         $this->error = new errores();
     }
 
-
-
     public function data_retorno(string $tabla): array|stdClass
     {
         $seccion_retorno = $this->seccion_retorno(tabla: $tabla);
@@ -119,10 +117,16 @@ class _base {
     }
 
     /**
-     * Obtiene la seccion de retorno
-     * @param string $tabla Tabla o seccion en ejecucion
-     * @return string|array
-     * @version 0.374.48
+     * POR DOCUMENTAR EN WIKI
+     * Esta función se utiliza para obtener la sección de retorno a partir de una tabla dada y una solicitud POST.
+     *
+     * @param string $tabla Nombre de la tabla. Este valor se recorta y se verifica si está vacío.
+     * @return string|array Si el campo 'seccion_retorno' está configurado en la solicitud POST, este se convierte en el valor de retorno.
+     *                     De lo contrario, el nombre de la tabla se convierte en el valor de retorno.
+     *                     En caso de una tabla vacía, devuelve un array que representa un error.
+     *
+     * @throws errores si el argumento $tabla está vacío.
+     * @version 19.0.0
      */
     private function seccion_retorno(string $tabla): string|array
     {
