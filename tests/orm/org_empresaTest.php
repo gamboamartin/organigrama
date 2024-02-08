@@ -33,12 +33,7 @@ class org_empresaTest extends test {
         $_SESSION['grupo_id'] = 2;
         $_SESSION['usuario_id'] = 2;
 
-        $del = (new \gamboamartin\organigrama\tests\base_test())->del_cat_sat_conf_reg_tp(link: $this->link);
-        if(errores::$error){
-            $error = (new errores())->error('Error al eliminar', $del);
-            print_r($error);
-            exit;
-        }
+
 
         $del = (new \gamboamartin\organigrama\tests\base_test())->del_dp_calle_pertenece(link: $this->link);
         if(errores::$error){
@@ -65,12 +60,7 @@ class org_empresaTest extends test {
 
         errores::$error = false;
 
-        $alta = (new \gamboamartin\organigrama\tests\base_test())->alta_cat_sat_conf_reg_tp(link: $this->link);
-        if(errores::$error){
-            $error = (new errores())->error('Error al insertar', $alta);
-            print_r($error);
-            exit;
-        }
+
 
         $alta = (new \gamboamartin\organigrama\tests\base_test())->alta_dp_calle_pertenece(link: $this->link);
         if(errores::$error){
@@ -79,8 +69,11 @@ class org_empresaTest extends test {
             exit;
         }
 
-        $resultado = $modelo->alta_bd();
+        $modelo->registro['cat_sat_regimen_fiscal_id'] = 601;
+        $modelo->registro['cat_sat_tipo_persona_id'] = 4;
 
+        $resultado = $modelo->alta_bd();
+        //print_r($resultado);exit;
         $this->assertNotTrue(errores::$error);
         $this->assertIsObject($resultado);
 
@@ -97,12 +90,6 @@ class org_empresaTest extends test {
         $_SESSION['grupo_id'] = 2;
         $_SESSION['usuario_id'] = 2;
 
-        $del = (new \gamboamartin\organigrama\tests\base_test())->del_cat_sat_conf_reg_tp(link: $this->link);
-        if(errores::$error){
-            $error = (new errores())->error('Error al eliminar', $del);
-            print_r($error);
-            exit;
-        }
 
         $del = (new \gamboamartin\organigrama\tests\base_test())->del_dp_calle_pertenece(link: $this->link);
         if(errores::$error){
@@ -111,12 +98,6 @@ class org_empresaTest extends test {
             exit;
         }
 
-        $alta = (new \gamboamartin\organigrama\tests\base_test())->alta_cat_sat_conf_reg_tp(link: $this->link);
-        if(errores::$error){
-            $error = (new errores())->error('Error al insertar', $alta);
-            print_r($error);
-            exit;
-        }
 
         $alta = (new \gamboamartin\organigrama\tests\base_test())->alta_org_empresa(link: $this->link);
         if(errores::$error){
@@ -135,10 +116,11 @@ class org_empresaTest extends test {
         $registro['razon_social'] = 1;
         $registro['nombre_comercial'] = 1;
         $registro['dp_calle_pertenece_id'] = 1;
-        $registro['cat_sat_regimen_fiscal_id'] = 1;
-        $registro['cat_sat_tipo_persona_id'] = 1;
+        $registro['cat_sat_regimen_fiscal_id'] = 601;
+        $registro['cat_sat_tipo_persona_id'] = 4;
 
         $resultado = $modelo->modifica_bd(registro: $registro, id: 1);
+       // print_r($resultado);exit;
         $this->assertNotTrue(errores::$error);
         $this->assertIsObject($resultado);
 

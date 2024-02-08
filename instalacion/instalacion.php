@@ -10,7 +10,7 @@ class instalacion
 
 
 {
-    
+
     private function _add_org_logo(PDO $link): array|stdClass
     {
         $out = new stdClass();

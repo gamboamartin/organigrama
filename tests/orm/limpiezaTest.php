@@ -79,6 +79,8 @@ class limpiezaTest extends test {
 
         $resultado = $lim->init_data_base_org_empresa($this->link, $registro);
 
+        //print_r($resultado);exit;
+
         $this->assertIsArray($resultado);
         $this->assertNotTrue(errores::$error);
         $this->assertEquals('a',$resultado['razon_social']);

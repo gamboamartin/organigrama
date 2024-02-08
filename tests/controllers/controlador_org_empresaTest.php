@@ -40,12 +40,6 @@ class controlador_org_empresaTest extends test {
             exit;
         }
 
-        $del = (new base_test())->del_cat_sat_regimen_fiscal(link: $this->link);
-        if(errores::$error){
-            $error = (new errores())->error('Error al eliminar', $del);
-            print_r($error);
-            exit;
-        }
 
         $_GET['seccion'] = 'org_empresa';
         $_GET['accion'] = 'alta_sucursal_bd';
@@ -69,14 +63,8 @@ class controlador_org_empresaTest extends test {
             exit;
         }
 
-        $alta = (new base_test())->alta_cat_sat_conf_reg_tp(link: $this->link);
-        if(errores::$error){
-            $error = (new errores())->error('Error al insertar', $alta);
-            print_r($error);
-            exit;
-        }
 
-        $alta_org_empresa = (new base_test())->alta_org_empresa(link: $this->link,cat_sat_regimen_fiscal_id: 1);
+        $alta_org_empresa = (new base_test())->alta_org_empresa(link: $this->link,cat_sat_regimen_fiscal_id: 601);
 
         if(errores::$error){
             $error = (new errores())->error('Error al insertar', $alta_org_empresa);
@@ -162,28 +150,10 @@ class controlador_org_empresaTest extends test {
             exit;
         }
 
-        $del = (new base_test())->del_cat_sat_tipo_persona(link: $this->link);
-        if(errores::$error){
-            $error = (new errores())->error(mensaje: 'Error al del', data: $alta);
-            print_r($error);
-            exit;
-        }
 
-        $alta = (new base_test())->alta_cat_sat_tipo_persona(link: $this->link);
-        if(errores::$error){
-            $error = (new errores())->error(mensaje: 'Error al insertar', data: $alta);
-            print_r($error);
-            exit;
-        }
 
-        $alta = (new base_test())->alta_cat_sat_conf_reg_tp(link: $this->link);
-        if(errores::$error){
-            $error = (new errores())->error(mensaje: 'Error al insertar', data: $alta);
-            print_r($error);
-            exit;
-        }
 
-        $alta_org_empresa = (new base_test())->alta_org_empresa(link: $this->link, cat_sat_regimen_fiscal_id: 1);
+        $alta_org_empresa = (new base_test())->alta_org_empresa(link: $this->link, cat_sat_regimen_fiscal_id: 601);
         if(errores::$error){
             $error = (new errores())->error(mensaje: 'Error al insertar', data: $alta_org_empresa);
             print_r($error);

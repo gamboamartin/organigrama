@@ -129,7 +129,7 @@ class base_test{
     }
 
 
-    public function alta_org_empresa(PDO $link, int $cat_sat_regimen_fiscal_id = 1, int $cat_sat_tipo_persona_id = 1,
+    public function alta_org_empresa(PDO $link, int $cat_sat_regimen_fiscal_id = 601, int $cat_sat_tipo_persona_id = 4,
                                      int $dp_calle_pertenece_id = 1, int $id = 1, int $org_tipo_empresa_id = 1,
                                      int $org_tipo_sucursal_id = 1): array|\stdClass
     {
@@ -179,16 +179,6 @@ class base_test{
             }
         }
 
-        $existe = (new cat_sat_regimen_fiscal($link))->existe_by_id(registro_id: $cat_sat_regimen_fiscal_id);
-        if(errores::$error){
-            return (new errores())->error(mensaje: 'Error al validar si existe ', data: $existe);
-        }
-        if(!$existe){
-            $alta = $this->alta_cat_sat_regimen_fiscal(link: $link, id: $cat_sat_regimen_fiscal_id);
-            if(errores::$error){
-                return (new errores())->error(mensaje: 'Error al insertar ', data: $alta);
-            }
-        }
 
         $registro = array();
         $registro['id'] = $id;
