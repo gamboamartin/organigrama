@@ -58,7 +58,7 @@
         "gamboa.martin/cat_sat": "^18.0.0",
         "gamboa.martin/direccion_postal": "^20.0.0",
         "gamboa.martin/js_base": "^3.0.0",
-        "gamboa.martin/documento": "^17.0.0"
+        "gamboa.martin/documento": "^18.0.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^9.5"
