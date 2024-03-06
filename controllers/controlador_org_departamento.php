@@ -20,7 +20,6 @@ use gamboamartin\system\links_menu;
 use gamboamartin\template\html;
 use PDO;
 use stdClass;
-use Throwable;
 
 class controlador_org_departamento extends _ctl_parent_sin_codigo {
 
