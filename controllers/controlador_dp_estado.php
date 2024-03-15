@@ -13,14 +13,14 @@ use PDO;
 use stdClass;
 
 
-class controlador_dp_estado extends \controllers\controlador_dp_estado {
+class controlador_dp_estado extends \gamboamartin\cat_sat\controllers\controlador_dp_estado {
 
     public function __construct(PDO $link, stdClass $paths_conf = new stdClass()){
 
 
         parent::__construct(link: $link, paths_conf: $paths_conf);
 
-        $this->titulo_lista = 'Estados';
+
 
     }
 

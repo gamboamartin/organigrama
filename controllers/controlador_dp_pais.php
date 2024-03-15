@@ -13,7 +13,7 @@ use PDO;
 use stdClass;
 
 
-class controlador_dp_pais extends \controllers\controlador_dp_pais {
+class controlador_dp_pais extends \gamboamartin\direccion_postal\controllers\controlador_dp_pais {
 
     public function __construct(PDO $link, stdClass $paths_conf = new stdClass()){
 

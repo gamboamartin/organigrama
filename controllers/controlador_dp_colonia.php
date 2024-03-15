@@ -14,7 +14,7 @@ use PDO;
 use stdClass;
 
 
-class controlador_dp_colonia extends \controllers\controlador_dp_colonia {
+class controlador_dp_colonia extends \gamboamartin\direccion_postal\controllers\controlador_dp_colonia {
 
     public function __construct(PDO $link,  stdClass $paths_conf = new stdClass()){
 
