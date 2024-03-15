@@ -139,13 +139,30 @@ class org_sucursalTest extends test {
 
     public function test_es_matriz(): void
     {
+        $_SESSION['usuario_id'] = 1;
         errores::$error = false;
+
+        $del = (new \gamboamartin\organigrama\tests\base_test())->del_org_empresa(link: $this->link);
+        if(errores::$error){
+            $error = (new errores())->error('Error al del', $del);
+            print_r($error);
+            exit;
+        }
+
+        $alta = (new \gamboamartin\organigrama\tests\base_test())->alta_org_sucursal(
+            link: $this->link,cat_sat_regimen_fiscal_id: 601,cat_sat_tipo_persona_id: 4,org_tipo_sucursal_id: 2);
+        if(errores::$error){
+            $error = (new errores())->error('Error al insertar', $alta);
+            print_r($error);
+            exit;
+        }
 
         $modelo = new org_sucursal(link: $this->link);
         //$lim = new liberator($lim);
 
         $org_sucursal_id = 1;
         $resultado = $modelo->es_matriz($org_sucursal_id);
+        //print_r($resultado);exit;
         $this->assertNotTrue($resultado);
         $this->assertNotTrue(errores::$error);
         errores::$error = false;
@@ -156,6 +173,8 @@ class org_sucursalTest extends test {
     public function test_sucursales(): void
     {
         errores::$error = false;
+
+
 
         $modelo = new org_sucursal(link: $this->link);
         //$lim = new liberator($lim);

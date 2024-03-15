@@ -60,6 +60,14 @@ class controlador_org_sucursalTest extends test {
             exit;
         }
 
+        $alta = (new base_test())->alta_adm_accion(link: $this->link, adm_seccion_descripcion: 'org_sucursal',
+            descripcion: 'lista',id: 99);
+        if(errores::$error){
+            $error = (new errores())->error(mensaje: 'Error al insertar', data: $alta);
+            print_r($error);
+            exit;
+        }
+
         $ctl = new controlador_org_sucursal(link: $this->link, paths_conf: $this->paths_conf);
         $ctl = new liberator($ctl);
         $ctl->registro_id = 1;
