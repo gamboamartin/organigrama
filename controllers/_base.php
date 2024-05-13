@@ -15,8 +15,28 @@ class _base {
         $this->error = new errores();
     }
 
-    public function data_retorno(string $tabla): array|stdClass
+    /**
+     * TOTAL
+     * Obtiene los datos de retorno basados en el nombre de la tabla.
+     *
+     * Esta función recibe el nombre de una tabla y devuelve un objeto que contiene
+     * la sección de retorno y el ID de retorno inicializado, utilizando los valores
+     * obtenidos mediante otras funciones internas. Retorna este objeto si el nombre
+     * de la tabla proporcionado no está vacío, o un mensaje de error si está vacío.
+     *
+     * @param string $tabla El nombre de la tabla.
+     * @return array|stdClass Retorna un objeto que contiene la sección de retorno y el ID de retorno inicializado,
+     *                         o un mensaje de error si el nombre de la tabla está vacío.
+     *
+     * @url https://github.com/gamboamartin/organigrama/wiki/controllers._base.data_retorno.27.0.1
+     */
+    final public function data_retorno(string $tabla): array|stdClass
     {
+        $tabla = trim($tabla);
+        if($tabla === ''){
+            return $this->error->error(mensaje: 'Error tabla esta vacia',data:  $tabla, es_final: true);
+        }
+
         $seccion_retorno = $this->seccion_retorno(tabla: $tabla);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al obtener seccion_retorno',data:  $seccion_retorno);
@@ -59,8 +79,14 @@ class _base {
     }
 
     /**
-     * Integra el id de retorno despues de una ejecucion
-     * @return int
+     * TOTAL
+     * Inicializa el valor de retorno del ID basado en el valor enviado mediante POST.
+     *
+     * Esta función inicializa el valor de retorno del ID utilizando el valor enviado
+     * mediante POST, o asigna un valor predeterminado de -1 si no se proporciona ningún valor.
+     *
+     * @return int El valor de retorno del ID inicializado.
+     * @url https://github.com/gamboamartin/organigrama/wiki/controllers._base.id_retorno_init.27.0.0
      */
     private function id_retorno_init(): int
     {
@@ -117,7 +143,7 @@ class _base {
     }
 
     /**
-     * POR DOCUMENTAR EN WIKI
+     * TOTAL
      * Esta función se utiliza para obtener la sección de retorno a partir de una tabla dada y una solicitud POST.
      *
      * @param string $tabla Nombre de la tabla. Este valor se recorta y se verifica si está vacío.
@@ -127,12 +153,13 @@ class _base {
      *
      * @throws errores si el argumento $tabla está vacío.
      * @version 19.0.0
+     * @url https://github.com/gamboamartin/organigrama/wiki/controllers._base.seccion_retorno.27.0.0
      */
     private function seccion_retorno(string $tabla): string|array
     {
         $tabla = trim($tabla);
         if($tabla === ''){
-            return $this->error->error(mensaje: 'Error tabla esta vacia',data:  $tabla);
+            return $this->error->error(mensaje: 'Error tabla esta vacia',data:  $tabla, es_final: true);
         }
         $seccion_retorno = $tabla;
         if(isset($_POST['seccion_retorno'])){

@@ -89,10 +89,13 @@ class empresasTest extends test {
             exit;
         }
 
+        unset($_POST['id_retorno']);
 
         $ctl = new controlador_org_empresa(link: $this->link, paths_conf: $this->paths_conf);
         //$ctl = new liberator($ctl);
         $resultado = $ctl->limpia_post_dp();
+
+        //print_r($resultado);exit;
 
         $this->assertIsArray($resultado);
         $this->assertNotTrue(errores::$error);

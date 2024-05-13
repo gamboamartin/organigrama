@@ -108,7 +108,8 @@ class controlador_org_departamento extends _ctl_parent_sin_codigo {
         $retorno = (new _base())->data_retorno(tabla: $this->tabla);
         if(errores::$error){
             $this->link->rollBack();
-            return $this->retorno_error(mensaje: 'Error al obtener datos de retorno',data:  $retorno, header: $header,ws:$ws);
+            return $this->retorno_error(mensaje: 'Error al obtener datos de retorno',
+                data:  $retorno, header: $header,ws:$ws);
         }
 
 
