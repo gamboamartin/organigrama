@@ -1357,12 +1357,6 @@ class controlador_org_empresa extends empresas {
             return $this->retorno_error(mensaje: 'Error al limpiar datos',data:  $_POST, header: $header,ws:$ws);
         }
 
-        $siguiente_view = (new actions())->siguiente_view();
-        if(errores::$error){
-            return $this->retorno_error(mensaje: 'Error al obtener siguiente view sucursal',data:  $siguiente_view,
-                header: $header,ws:$ws);
-        }
-
         if(isset($_POST['guarda'])){
             unset($_POST['guarda']);
         }
@@ -1384,17 +1378,7 @@ class controlador_org_empresa extends empresas {
                 header: $header,ws:$ws);
         }
 
-        if($header){
-            $params = array('org_sucursal_id'=>$this->org_sucursal_id);
-            $retorno = (new actions())->retorno_alta_bd(link: $this->link,registro_id:$this->registro_id,seccion: $this->tabla,
-                siguiente_view: $siguiente_view, params:$params );
-            if(errores::$error){
-                return $this->retorno_error(mensaje: 'Error al dar de alta registro', data: $r_modifica_bd,
-                    header:  true, ws: $ws);
-            }
-            header('Location:'.$retorno);
-            exit;
-        }
+
         if($ws){
             header('Content-Type: application/json');
             echo json_encode($r_modifica_bd, JSON_THROW_ON_ERROR);
