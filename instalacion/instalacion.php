@@ -55,6 +55,35 @@ class instalacion
             return (new errores())->error(mensaje: 'Error al create table', data:  $create);
         }
         $out->create = $create;
+
+        $campos = new stdClass();
+
+        $campos->logo = new stdClass();
+        $campos->nombre_comercial = new stdClass();
+        $campos->fecha_inicio_operaciones = new stdClass();
+        $campos->fecha_inicio_operaciones->tipo_dato = 'DATE';
+
+        $campos->fecha_ultimo_cambio_sat = new stdClass();
+        $campos->fecha_ultimo_cambio_sat->tipo_dato = 'DATE';
+
+        $campos->exterior = new stdClass();
+        $campos->interior = new stdClass();
+        $campos->email_sat = new stdClass();
+        $campos->telefono_1 = new stdClass();
+        $campos->telefono_2 = new stdClass();
+        $campos->telefono_3 = new stdClass();
+        $campos->rfc = new stdClass();
+        $campos->razon_social = new stdClass();
+        $campos->pagina_web = new stdClass();
+
+
+        $result = (new _instalacion(link: $link))->add_columns(campos: $campos,table:  'org_sucursal');
+
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al ajustar campos', data:  $result);
+        }
+
+
         $foraneas = array();
         $foraneas['cat_sat_regimen_fiscal_id'] = new stdClass();
         $foraneas['dp_calle_pertenece_id'] = new stdClass();
