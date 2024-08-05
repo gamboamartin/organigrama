@@ -77,7 +77,7 @@ class instalacion
         $campos->pagina_web = new stdClass();
 
 
-        $result = (new _instalacion(link: $link))->add_columns(campos: $campos,table:  'org_sucursal');
+        $result = (new _instalacion(link: $link))->add_columns(campos: $campos,table:  'org_empresa');
 
         if(errores::$error){
             return (new errores())->error(mensaje: 'Error al ajustar campos', data:  $result);
