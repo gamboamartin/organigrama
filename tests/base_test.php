@@ -100,7 +100,8 @@ class base_test{
     }
 
 
-    public function alta_org_departamento(PDO $link, int $id = 1,int $org_clasificacion_dep_id = 1): array|\stdClass
+    public function alta_org_departamento(PDO $link, int $id = 1,int $org_clasificacion_dep_id = 1,
+                                          int $org_empresa_id = 1): array|\stdClass
     {
 
         $existe = (new org_clasificacion_dep($link))->existe_by_id(registro_id: $org_clasificacion_dep_id);
@@ -119,6 +120,7 @@ class base_test{
         $registro['codigo'] = 1;
         $registro['descripcion'] = 1;
         $registro['org_clasificacion_dep_id'] = $org_clasificacion_dep_id;
+        $registro['org_empresa_id'] = $org_empresa_id;
 
 
         $alta = (new org_departamento($link))->alta_registro($registro);
@@ -201,7 +203,7 @@ class base_test{
     }
 
     public function alta_org_puesto(PDO $link, int $id = 1, string $codigo = '1', string $descripcion ='1',
-                                    int $org_departamento_id = 1, int $org_tipo_puesto_id = 1,
+                                    int $org_departamento_id = 1, int $org_empresa_id = 1, int $org_tipo_puesto_id = 1,
                                     string $predeterminado = 'inactivo'): array|\stdClass
     {
 
@@ -211,7 +213,7 @@ class base_test{
             return (new errores())->error(mensaje: 'Error al validar si existe ', data: $existe);
         }
         if(!$existe){
-            $alta = $this->alta_org_departamento(link: $link, id: $org_departamento_id);
+            $alta = $this->alta_org_departamento(link: $link, id: $org_departamento_id, org_empresa_id: $org_empresa_id);
             if(errores::$error){
                 return (new errores())->error(mensaje: 'Error al insertar ', data: $alta);
             }

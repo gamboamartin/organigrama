@@ -274,6 +274,14 @@ class controlador_org_empresaTest extends test {
 
         $_POST = array();
         $_POST['org_empresa_id'] = 1;
+        $_POST['descripcion'] = mt_rand(100000,999999);
+
+
+        $alta_org_empresa = (new base_test())->alta_org_empresa(link: $this->link);
+        if(errores::$error){
+            $error = (new errores())->error('Error al insertar', $alta_org_empresa);
+            print_r($error);
+        }
 
         (new base_test())->del_org_departamento(link: $this->link);
 
@@ -284,11 +292,7 @@ class controlador_org_empresaTest extends test {
             print_r($error);
         }
 
-        $alta_org_empresa = (new base_test())->alta_org_empresa(link: $this->link);
-        if(errores::$error){
-            $error = (new errores())->error('Error al insertar', $alta_org_empresa);
-            print_r($error);
-        }
+
 
         $alta = (new base_test())->alta_adm_accion(link: $this->link, adm_seccion_descripcion: 'org_empresa',
             descripcion: 'modifica_departamento_bd');
@@ -301,6 +305,7 @@ class controlador_org_empresaTest extends test {
         $ctl = new controlador_org_empresa(link: $this->link, paths_conf: $this->paths_conf);
         $ctl->org_departamento_id = 1;
         $resultado = $ctl->modifica_departamento_bd(header: false, ws: false);
+
         $this->assertIsObject($resultado);
         $this->assertNotTrue(errores::$error);
         $this->assertEquals('exito', $resultado->salida);
