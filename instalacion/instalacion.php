@@ -487,12 +487,7 @@ class instalacion
         if(errores::$error){
             return (new errores())->error(mensaje: 'Error al ajustar org_puesto', data:  $org_puesto);
         }
-
-        $org_ejecuta = $this->org_ejecuta(link: $link);
-        if(errores::$error){
-            return (new errores())->error(mensaje: 'Error al ajustar org_ejecuta', data:  $org_ejecuta);
-        }
-
+        
         $org_logo = $this->org_logo(link: $link);
         if(errores::$error){
             return (new errores())->error(mensaje: 'Error al ajustar org_logo', data:  $org_logo);
@@ -501,6 +496,11 @@ class instalacion
         $org_actividad = $this->org_actividad(link: $link);
         if(errores::$error){
             return (new errores())->error(mensaje: 'Error al ajustar org_actividad', data:  $org_actividad);
+        }
+
+        $org_ejecuta = $this->org_ejecuta(link: $link);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al ajustar org_ejecuta', data:  $org_ejecuta);
         }
 
 
