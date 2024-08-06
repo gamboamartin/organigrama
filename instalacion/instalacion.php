@@ -102,6 +102,42 @@ class instalacion
 
     }
 
+    private function _add_org_actividad(PDO $link): array|stdClass
+    {
+        $out = new stdClass();
+        $create = (new _instalacion(link: $link))->create_table_new(table: 'org_actividad');
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al create table', data:  $create);
+        }
+        $out->create = $create;
+
+        $campos = new stdClass();
+
+        $campos->tiempo = new stdClass();
+        $campos->tiempo->tipo_dato = 'BIGINT';
+
+        $result = (new _instalacion(link: $link))->add_columns(campos: $campos,table:  'org_actividad');
+
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al ajustar campos', data:  $result);
+        }
+
+
+        $foraneas = array();
+        $foraneas['org_tipo_actividad_id'] = new stdClass();
+
+        $foraneas_r = (new _instalacion(link:$link))->foraneas(foraneas: $foraneas,table:  'org_actividad');
+
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al ajustar foranea', data:  $foraneas_r);
+        }
+        $out->foraneas_r = $foraneas_r;
+
+
+        return $out;
+
+    }
+
     private function _add_org_logo(PDO $link): array|stdClass
     {
         $out = new stdClass();
@@ -232,6 +268,19 @@ class instalacion
 
     }
 
+    private function _add_org_tipo_actividad(PDO $link): array|stdClass
+    {
+        $out = new stdClass();
+        $create = (new _instalacion(link: $link))->create_table_new(table: 'org_tipo_actividad');
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al create table', data:  $create);
+        }
+        $out->create = $create;
+
+        return $out;
+
+    }
+
     private function _add_org_tipo_puesto(PDO $link): array|stdClass
     {
         $out = new stdClass();
@@ -283,6 +332,17 @@ class instalacion
     private function org_empresa(PDO $link): array|stdClass
     {
         $create = $this->_add_org_empresa(link: $link);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al ajustar create', data:  $create);
+        }
+
+        return $create;
+
+    }
+
+    private function org_actividad(PDO $link): array|stdClass
+    {
+        $create = $this->_add_org_actividad(link: $link);
         if(errores::$error){
             return (new errores())->error(mensaje: 'Error al ajustar create', data:  $create);
         }
@@ -345,6 +405,17 @@ class instalacion
         return $create;
 
     }
+    private function org_tipo_actividad(PDO $link): array|stdClass
+    {
+        $create = $this->_add_org_tipo_actividad(link: $link);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al ajustar create', data:  $create);
+        }
+
+        return $create;
+
+    }
+
 
     private function org_tipo_sucursal(PDO $link): array|stdClass
     {
@@ -376,6 +447,11 @@ class instalacion
         if(errores::$error){
             return (new errores())->error(mensaje: 'Error al ajustar org_tipo_empresa', data:  $org_tipo_empresa);
         }
+        $org_tipo_actividad = $this->org_tipo_actividad(link: $link);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al ajustar org_tipo_actividad', data:  $org_tipo_actividad);
+        }
+
 
         $org_tipo_puesto = $this->org_tipo_puesto(link: $link);
         if(errores::$error){
@@ -420,6 +496,11 @@ class instalacion
         $org_logo = $this->org_logo(link: $link);
         if(errores::$error){
             return (new errores())->error(mensaje: 'Error al ajustar org_logo', data:  $org_logo);
+        }
+
+        $org_actividad = $this->org_actividad(link: $link);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al ajustar org_actividad', data:  $org_actividad);
         }
 
 

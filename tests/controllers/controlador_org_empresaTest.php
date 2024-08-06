@@ -72,6 +72,13 @@ class controlador_org_empresaTest extends test {
             exit;
         }
 
+        $del = (new base_test())->del_adm_seccion(link: $this->link);
+        if(errores::$error){
+            $error = (new errores())->error('Error al insertar', $del);
+            print_r($error);
+            exit;
+        }
+
         $alta = (new base_test())->alta_adm_accion(link: $this->link, adm_seccion_descripcion: 'org_empresa',
             descripcion: 'alta_sucursal_bd');
         if(errores::$error){
@@ -84,7 +91,6 @@ class controlador_org_empresaTest extends test {
         $ctl = new controlador_org_empresa(link: $this->link, paths_conf: $this->paths_conf);
         $ctl->registro_id = 1;
         $resultado = $ctl->alta_sucursal_bd(header: false, ws: false);
-
 
         $this->assertIsObject($resultado);
         $this->assertNotTrue(errores::$error);
