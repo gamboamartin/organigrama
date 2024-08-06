@@ -150,6 +150,30 @@ class instalacion
 
     }
 
+    private function _add_org_ejecuta(PDO $link): array|stdClass
+    {
+        $out = new stdClass();
+        $create = (new _instalacion(link: $link))->create_table_new(table: 'org_ejecuta');
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al create table', data:  $create);
+        }
+        $out->create = $create;
+        $foraneas = array();
+        $foraneas['org_puesto_id'] = new stdClass();
+        $foraneas['org_actividad_id'] = new stdClass();
+
+        $foraneas_r = (new _instalacion(link:$link))->foraneas(foraneas: $foraneas,table:  'org_ejecuta');
+
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al ajustar foranea', data:  $foraneas_r);
+        }
+        $out->foraneas_r = $foraneas_r;
+
+
+        return $out;
+
+    }
+
     private function _add_org_sucursal(PDO $link): array|stdClass
     {
         $out = new stdClass();
@@ -288,6 +312,17 @@ class instalacion
         return $create;
 
     }
+    private function org_ejecuta(PDO $link): array|stdClass
+    {
+        $create = $this->_add_org_ejecuta(link: $link);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al ajustar create', data:  $create);
+        }
+
+        return $create;
+
+    }
+
 
     private function org_sucursal(PDO $link): array|stdClass
     {
@@ -375,6 +410,11 @@ class instalacion
         $org_puesto = $this->org_puesto(link: $link);
         if(errores::$error){
             return (new errores())->error(mensaje: 'Error al ajustar org_puesto', data:  $org_puesto);
+        }
+
+        $org_ejecuta = $this->org_ejecuta(link: $link);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al ajustar org_ejecuta', data:  $org_ejecuta);
         }
 
         $org_logo = $this->org_logo(link: $link);
